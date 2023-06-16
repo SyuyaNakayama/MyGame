@@ -13,15 +13,6 @@ void Physics::Update()
 	forceDir.Normalize();
 	accel = force / mass;
 	vel += accel * forceDir;
-	ImGui::Text("accel : %f", accel);
-	ImGuiManager::PrintVector("vel", vel);
-	OnCollision(nullptr);
-}
-
-Physics::Physics() { CollisionManager::PushCollider(this); }
-
-void Physics::OnCollision(Physics* physics)
-{
 	float friction = 1.0f - std::clamp(mu * mass * gravity, 0.0f, 1.0f); // –€ŽC—Í
 	// ŠÈˆÕ“I‚É–€ŽC‚ð•\Œ»
 	vel *= friction;

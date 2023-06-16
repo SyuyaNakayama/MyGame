@@ -1,6 +1,6 @@
 #pragma once
 #include "WorldTransform.h"
-#include "Model.h"
+#include "Physics.h"
 #include <vector>
 #include <array>
 
@@ -32,7 +32,6 @@ class PolygonCollider;
 class RayCollider;
 class IncludeCollider;
 class MeshCollider;
-class Physics;
 
 class BaseCollider
 {
@@ -40,6 +39,7 @@ protected:
 	CollisionAttribute collisionAttribute = CollisionAttribute::All;
 	CollisionMask collisionMask = CollisionMask::All;
 	WorldTransform worldTransform;
+	std::unique_ptr<Physics> physics;
 
 public:
 	virtual ~BaseCollider() = default;
@@ -50,7 +50,6 @@ public:
 	virtual void OnCollision(PolygonCollider* sphereCollider) {}
 	virtual void OnCollision(RayCollider* sphereCollider) {}
 	virtual void OnCollision(IncludeCollider* sphereCollider) {}
-	virtual void OnCollision(Physics* physics) {}
 
 	CollisionAttribute GetCollisionAttribute() { return collisionAttribute; }
 	CollisionMask GetCollisionMask() { return collisionMask; }

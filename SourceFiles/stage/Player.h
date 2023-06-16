@@ -1,8 +1,8 @@
 #pragma once
-#include "Physics.h"
+#include "Collider.h"
 #include "PlayerCamera.h"
 
-class Player : public SphereCollider, public Physics
+class Player : public SphereCollider
 {
 	std::unique_ptr<Model> model;
 	std::unique_ptr<BaseCamera> camera;

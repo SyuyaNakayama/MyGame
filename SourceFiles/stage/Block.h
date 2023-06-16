@@ -1,7 +1,8 @@
 #pragma once
-#include "Physics.h"
+#include "Collider.h"
+#include "Model.h"
 
-class Block : public Physics
+class Block : public BoxCollider
 {
 	std::unique_ptr<Model> model;
 

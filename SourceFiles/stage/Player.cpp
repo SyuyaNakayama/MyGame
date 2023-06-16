@@ -9,6 +9,7 @@ void Player::Initialize()
 	camera = std::make_unique<PlayerCamera>();
 	Model::SetViewProjection(camera->GetViewProjection());
 	camera->Initialize(&worldTransform);
+	physics = std::make_unique<Physics>();
 }
 
 void Player::Move()
@@ -18,19 +19,21 @@ void Player::Move()
 	std::vector<Key> keys = { Key::D,Key::A,Key::W,Key::S };
 	if (input->IsAnyInput(keys))
 	{
-		force = 0.15f;
-		forceDir.x = input->IsInput(Key::D) - input->IsInput(Key::A);
-		forceDir.z = input->IsInput(Key::W) - input->IsInput(Key::S);
-		forceDir *= Matrix4::RotateY(camera->GetAngle().x);
+		physics->SetForce(0.15f);
+		Vector3 forcedir;
+		forcedir.x = input->IsInput(Key::D) - input->IsInput(Key::A);
+		forcedir.z = input->IsInput(Key::W) - input->IsInput(Key::S);
+		forcedir *= Matrix4::RotateY(camera->GetAngle().x);
+		physics->SetForceDir(forcedir);
 	}
-	else { force = 0; }
+	else { physics->SetForce(0); }
 }
 
 void Player::Update()
 {
 	Move();
 	camera->Update();
-	Physics::Update();
+	physics->Update();
 	worldTransform.Update();
 }
 

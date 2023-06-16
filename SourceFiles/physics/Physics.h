@@ -1,25 +1,25 @@
 #pragma once
-#include "Vector.h"
-#include "Collider.h"
-
-enum class Primitive { Box, Sphere };
+#include "WorldTransform.h"
 
 // •¨—ŒvŽZ
-class Physics : public virtual BaseCollider
+class Physics
 {
-protected:
+private:
 	static float gravity;
+	WorldTransform* worldTransform = nullptr;
 	Vector3 vel; // ‘¬“x
 	float accel = 0; // ‰Á‘¬“x
 	float force = 0; // —Í‚Ì‘å‚«‚³
 	Vector3 forceDir; // —Í‚ÌŒü‚«
 	float mass = 1;  // Ž¿—Ê
 	float mu = 0.1f; // –€ŽCŒW”
-	float rebE = 1.0f; // ”½”­ŒW” -> rebound e
 
 public:
-	Physics();
-	virtual ~Physics() = default;
+	static void SetGravity(float g) { gravity = g; }
+	void SetWorldTransform(WorldTransform* w) { worldTransform = w; }
+	void SetMass(float m) { mass = m; }
+	void SetForce(float f) { force = f; }
+	void SetForceDir(Vector3 dir) { forceDir = dir; }
+	void SetMu(float mu_) { mu = mu_; }
 	void Update();
-	virtual void OnCollision(Physics* physics);
 };
