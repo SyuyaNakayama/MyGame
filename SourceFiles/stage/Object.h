@@ -8,8 +8,8 @@ class Object : public SphereCollider
 	std::unique_ptr<Model> model;
 
 public:
-	void Initialize();
+	void Initialize(Vector3 pos);
 	void Update();
 	void Draw();
-
+	void OnCollision(SphereCollider* collider);
 };

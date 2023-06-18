@@ -3,9 +3,9 @@
 
 void GamePlayScene::Initialize()
 {
-	Model::SetViewProjection(&debugCamera);
 	debugCamera.Initialize();
 	stage.Initialize();
+	Model::SetViewProjection(&debugCamera);
 	for (size_t i = 1; i < 3; i++)
 	{
 		Model::GetLightGroup()->SetDirLightActive(i, false);

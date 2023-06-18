@@ -8,7 +8,6 @@ list<SphereCollider*> CollisionManager::sphereColliders;
 list<PlaneCollider*> CollisionManager::planeColliders;
 list<PolygonCollider*> CollisionManager::polygonColliders;
 list<RayCollider*> CollisionManager::rayColliders;
-list<Physics*> CollisionManager::physicsColliders;
 
 bool CollisionManager::CheckCollisionFiltering(BaseCollider* colliderA, BaseCollider* colliderB)
 {
@@ -249,16 +248,6 @@ bool CollisionManager::CheckCollisionRayBox(RayCollider* colliderA, BoxCollider*
 	return CheckCollisionRayPolygon(colliderA, &pCollider);
 }
 
-bool CollisionManager::CheckCollision2Physics(Physics* colliderA, Physics* colliderB)
-{
-	if (!CheckCollisionFiltering(colliderA, colliderB)) { return false; }
-	if (dynamic_cast<BoxCollider*>(colliderB))
-	{
-		int i = 0;
-		i++;
-	}
-}
-
 void CollisionManager::CheckBoxCollisions()
 {
 	auto itrA = boxColliders.begin();
@@ -464,23 +453,6 @@ void CollisionManager::CheckRayCastCollision(RayCollider* collider)
 		if (nearly.distance > collisionInfo[i].distance) { nearly = collisionInfo[i]; }
 	}
 	nearly.OnCollision(collider);
-}
-
-void CollisionManager::CheckPhysicsCollisions()
-{
-	auto itrA = physicsColliders.begin();
-	for (; itrA != physicsColliders.end(); itrA++)
-	{
-		list<Physics*>::iterator itrB = itrA;
-		itrB++;
-		for (; itrB != physicsColliders.end(); itrB++)
-		{
-			if (!CheckCollision2Physics(*itrA, *itrB)) { continue; }
-
-			(*itrA)->OnCollision(*itrB);
-			(*itrB)->OnCollision(*itrA);
-		}
-	}
 }
 
 void CollisionManager::CheckAllCollisions()

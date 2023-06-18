@@ -3,6 +3,7 @@
 #include "Physics.h"
 #include <vector>
 #include <array>
+#include <memory>
 
 enum class CollisionAttribute
 {
@@ -53,8 +54,9 @@ public:
 
 	CollisionAttribute GetCollisionAttribute() { return collisionAttribute; }
 	CollisionMask GetCollisionMask() { return collisionMask; }
-	void SetWorldTransform(const WorldTransform& worldTransform_) { worldTransform = worldTransform_; }
 	virtual Vector3 GetWorldPosition() { return worldTransform.GetWorldPosition(); }
+	Physics* GetPhysics() { return physics.get(); }
+	void SetWorldTransform(const WorldTransform& worldTransform_) { worldTransform = worldTransform_; }
 };
 
 class BoxCollider : public virtual BaseCollider
@@ -98,7 +100,7 @@ class PlaneCollider : public virtual BaseCollider
 {
 protected:
 	// 基準法線
-	Vector3 baseNormal = Vector3::MakeAxis(Axis::Y);
+	Vector3 baseNormal = Vector3::MakeAxis(Axis::Z);
 	float distance = 0;
 	Vector3 inter;
 
@@ -152,13 +154,13 @@ public:
 	virtual const Vector3 GetRayDirection() { return baseRayDirection * Matrix4::Rotate(worldTransform.rotation); }
 };
 
-class MeshCollider : public BaseCollider
-{
-private:
-	// ワールド行列の逆行列
-	Matrix4 invMatWorld;
-
-public:
-	std::vector<PolygonCollider> triangles;
-	void ConstructTriangles(Model* model);
-};
+//class MeshCollider : public BaseCollider
+//{
+//private:
+//	// ワールド行列の逆行列
+//	Matrix4 invMatWorld;
+//
+//public:
+//	std::vector<PolygonCollider> triangles;
+//	void ConstructTriangles(Model* model);
+//};

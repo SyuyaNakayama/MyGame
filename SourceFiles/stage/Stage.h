@@ -7,7 +7,7 @@ class Stage
 {
 	std::array<Block, 5> blocks; // ï«Ç∆è∞
 	Player player;
-	std::vector<Object> objects;
+	std::vector<std::unique_ptr<Object>> objects;
 	void SetBlocks();
 
 public:

@@ -1,6 +1,5 @@
 #pragma once
 #include "Collider.h"
-#include "Physics.h"
 #include <list>
 
 class CollisionManager final
@@ -12,7 +11,6 @@ private:
 	static std::list<PlaneCollider*> planeColliders;
 	static std::list<PolygonCollider*> polygonColliders;
 	static std::list<RayCollider*> rayColliders;
-	static std::list<Physics*> physicsColliders;
 
 public:
 	// 個別当たり判定
@@ -26,7 +24,6 @@ public:
 	static bool CheckCollisionRayPolygon(RayCollider* colliderA, PolygonCollider* colliderB, float* distance = nullptr);
 	static bool CheckCollisionRaySphere(RayCollider* colliderA, SphereCollider* colliderB, float* distance = nullptr, Vector3* inter = nullptr);
 	static bool CheckCollisionRayBox(RayCollider* colliderA, BoxCollider* colliderB);
-	static bool CheckCollision2Physics(Physics* colliderA, Physics* colliderB);
 
 	CollisionManager() = delete;
 	// コライダー登録関数
@@ -36,7 +33,6 @@ public:
 	static void PushCollider(PlaneCollider* collider) { planeColliders.push_back(collider); }
 	static void PushCollider(PolygonCollider* collider) { polygonColliders.push_back(collider); }
 	static void PushCollider(RayCollider* collider) { rayColliders.push_back(collider); }
-	static void PushCollider(Physics* collider) { physicsColliders.push_back(collider); }
 	static void PopCollider(BoxCollider* collider) { boxColliders.remove(collider); }
 	static void PopCollider(IncludeCollider* collider) { includeColliders.remove(collider); }
 	static void PopCollider(SphereCollider* collider) { sphereColliders.remove(collider); }
@@ -54,7 +50,6 @@ public:
 	static void CheckRaySphereCollisions();
 	static void CheckRayBoxCollisions();
 	static void CheckRayCastCollision(RayCollider* collider);
-	static void CheckPhysicsCollisions();
 	// 全当たり判定
 	static void CheckAllCollisions();
 };

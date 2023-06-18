@@ -1,15 +1,16 @@
 #include "Player.h"
 #include "Input.h"
+#include <imgui.h>
 
 void Player::Initialize()
 {
 	model = Model::Create("player", true);
 	worldTransform.Initialize();
-	worldTransform.translation.y = 5.0f;
+	worldTransform.translation = { 0,5.0f,-20.0f };
 	camera = std::make_unique<PlayerCamera>();
 	Model::SetViewProjection(camera->GetViewProjection());
 	camera->Initialize(&worldTransform);
-	physics = std::make_unique<Physics>();
+	physics = Physics::Create(&worldTransform);
 }
 
 void Player::Move()
@@ -34,7 +35,6 @@ void Player::Update()
 	Move();
 	camera->Update();
 	physics->Update();
-	worldTransform.Update();
 }
 
 void Player::Draw()
