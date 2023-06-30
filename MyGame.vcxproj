@@ -45,13 +45,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)External\DirectXTex;$(SolutionDir)External\imgui;$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)External\DirectXTex;$(SolutionDir)External\imgui;$(SolutionDir)External\json;$(WindowsSDK_IncludePath)</IncludePath>
     <IntDir>$(SolutionDir)..\Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)..\Generated\Outputs\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)External\DirectXTex;$(SolutionDir)External\imgui;$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)External\DirectXTex;$(SolutionDir)External\imgui;$(SolutionDir)External\json;$(WindowsSDK_IncludePath)</IncludePath>
     <IntDir>$(SolutionDir)..\Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)..\Generated\Outputs\$(Configuration)\</OutDir>
     <TargetName>燈火の迷宮</TargetName>
@@ -66,7 +66,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\2d;$(ProjectDir)SourceFiles\2d\sprite;$(ProjectDir)SourceFiles\3d;$(ProjectDir)SourceFiles\audio;$(ProjectDir)SourceFiles\base;$(ProjectDir)SourceFiles\collider;$(ProjectDir)SourceFiles\engine;$(ProjectDir)SourceFiles\functions;$(ProjectDir)SourceFiles\light;$(ProjectDir)SourceFiles\math;$(ProjectDir)SourceFiles\objects;$(ProjectDir)SourceFiles\particle;$(ProjectDir)SourceFiles\physics;$(ProjectDir)SourceFiles\scene;$(ProjectDir)SourceFiles\stage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\2d;$(ProjectDir)SourceFiles\2d\sprite;$(ProjectDir)SourceFiles\3d;$(ProjectDir)SourceFiles\audio;$(ProjectDir)SourceFiles\base;$(ProjectDir)SourceFiles\collider;$(ProjectDir)SourceFiles\engine;$(ProjectDir)SourceFiles\functions;$(ProjectDir)SourceFiles\json;$(ProjectDir)SourceFiles\light;$(ProjectDir)SourceFiles\math;$(ProjectDir)SourceFiles\objects;$(ProjectDir)SourceFiles\particle;$(ProjectDir)SourceFiles\physics;$(ProjectDir)SourceFiles\scene;$(ProjectDir)SourceFiles\stage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -90,7 +90,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\2d;$(ProjectDir)SourceFiles\2d\sprite;$(ProjectDir)SourceFiles\3d;$(ProjectDir)SourceFiles\audio;$(ProjectDir)SourceFiles\base;$(ProjectDir)SourceFiles\collider;$(ProjectDir)SourceFiles\engine;$(ProjectDir)SourceFiles\functions;$(ProjectDir)SourceFiles\light;$(ProjectDir)SourceFiles\math;$(ProjectDir)SourceFiles\objects;$(ProjectDir)SourceFiles\particle;$(ProjectDir)SourceFiles\physics;$(ProjectDir)SourceFiles\scene;$(ProjectDir)SourceFiles\stage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\2d;$(ProjectDir)SourceFiles\2d\sprite;$(ProjectDir)SourceFiles\3d;$(ProjectDir)SourceFiles\audio;$(ProjectDir)SourceFiles\base;$(ProjectDir)SourceFiles\collider;$(ProjectDir)SourceFiles\engine;$(ProjectDir)SourceFiles\functions;$(ProjectDir)SourceFiles\json;$(ProjectDir)SourceFiles\light;$(ProjectDir)SourceFiles\math;$(ProjectDir)SourceFiles\objects;$(ProjectDir)SourceFiles\particle;$(ProjectDir)SourceFiles\physics;$(ProjectDir)SourceFiles\scene;$(ProjectDir)SourceFiles\stage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -163,6 +163,7 @@
     <ClCompile Include="SourceFiles\3d\Material.cpp" />
     <ClCompile Include="SourceFiles\3d\PlayerCamera.cpp" />
     <ClCompile Include="SourceFiles\functions\Random.cpp" />
+    <ClCompile Include="SourceFiles\Json\JsonLoader.cpp" />
     <ClCompile Include="SourceFiles\math\MathUtility.cpp" />
     <ClCompile Include="SourceFiles\objects\Skydome.cpp" />
     <ClCompile Include="SourceFiles\particle\ParticleGroup.cpp" />
@@ -212,6 +213,7 @@
     <ClInclude Include="SourceFiles\3d\Material.h" />
     <ClInclude Include="SourceFiles\3d\PlayerCamera.h" />
     <ClInclude Include="SourceFiles\functions\Random.h" />
+    <ClInclude Include="SourceFiles\Json\JsonLoader.h" />
     <ClInclude Include="SourceFiles\math\MathUtility.h" />
     <ClInclude Include="SourceFiles\objects\Skydome.h" />
     <ClInclude Include="SourceFiles\particle\ParticleGroup.h" />

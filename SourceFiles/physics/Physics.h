@@ -17,8 +17,8 @@ private:
 	bool isCollided = false; // Õ“Ëˆ—‚ğs‚Á‚½‚©
 
 public:
-	static void SetGravity(float g) { gravity = g; }
 	static std::unique_ptr<Physics> Create(WorldTransform* w);
+	static void SetGravity(float g) { gravity = g; }
 	void Update();
 	Vector3 SetVelocity(Vector3 velocity) { return vel = velocity; }
 	void SetForce(float f) { force = f; }

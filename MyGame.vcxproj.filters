@@ -93,6 +93,9 @@
     <Filter Include="ソース ファイル\Engine\3d\Camera">
       <UniqueIdentifier>{53dc29c8-ede2-4c61-8e65-628d2d6031e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engine\Json">
+      <UniqueIdentifier>{0eb5dc25-4fb5-433e-ad61-6d78878c3a19}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Sprite.hlsli">
@@ -282,6 +285,9 @@
     <ClCompile Include="SourceFiles\3d\PlayerCamera.cpp">
       <Filter>ソース ファイル\Application\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFiles\Json\JsonLoader.cpp">
+      <Filter>ソース ファイル\Engine\Json</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\math\Matrix4.h">
@@ -442,6 +448,9 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\3d\PlayerCamera.h">
       <Filter>ソース ファイル\Application\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Json\JsonLoader.h">
+      <Filter>ソース ファイル\Engine\Json</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
