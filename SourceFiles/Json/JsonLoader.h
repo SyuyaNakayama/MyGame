@@ -8,14 +8,12 @@ struct LevelData
 	{
 		std::string fileName;
 		std::unique_ptr<Model> model;
-		void Initialize();
-		void Draw();
+		void Draw() { model->Draw(*this); }
 	};
 
-	std::vector<ObjectData> objects;
+	std::list<ObjectData> objects;
 
-	void LoadJsonRecursive(nlohmann::json& deserialized);
-	void Initialize() { for (auto& obj : objects) { obj.Initialize(); } }
+	void LoadJsonRecursive(nlohmann::json& object, WorldTransform* parent = nullptr);
 	void Draw() { for (auto& obj : objects) { obj.Draw(); } }
 };
 
