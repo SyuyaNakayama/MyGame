@@ -2,7 +2,7 @@
 #include <fstream>
 #include <cassert>
 
-const std::string JsonLoader::DEFAULT_BASE_DIRECTORY = "Resources/";
+const std::string JsonLoader::DEFAULT_BASE_DIRECTORY = "Resources/levels/";
 
 void LevelData::LoadJsonRecursive(nlohmann::json& object, WorldTransform* parent)
 {
@@ -13,7 +13,7 @@ void LevelData::LoadJsonRecursive(nlohmann::json& object, WorldTransform* parent
 	if (type.compare("MESH") == 0)
 	{
 		// 要素追加
-		objects.emplace_back(LevelData::ObjectData{});
+		objects.emplace_back(ObjectData{});
 		// 今追加した要素の参照を得る
 		ObjectData& objectData = objects.back();
 
@@ -35,24 +35,40 @@ void LevelData::LoadJsonRecursive(nlohmann::json& object, WorldTransform* parent
 		objectData.rotation.x = -(float)transform["rotation"][1];
 		objectData.rotation.y = -(float)transform["rotation"][2];
 		objectData.rotation.z = (float)transform["rotation"][0];
-		// 平行移動
+		// スケーリング
 		objectData.scale.x = (float)transform["scaling"][1];
 		objectData.scale.y = (float)transform["scaling"][2];
 		objectData.scale.z = (float)transform["scaling"][0];
+		
+		// コライダーのパラメータ読み込み
+		if (object.contains("collider"))
+		{
+			nlohmann::json& collider = object["collider"];
+			// 形状
+			objectData.collider.type = collider["type"];
+			// 中心
+			objectData.collider.center.x = (float)collider["center"][1];
+			objectData.collider.center.y = (float)collider["center"][2];
+			objectData.collider.center.z = -(float)collider["center"][0];
+			// サイズ
+			objectData.collider.size.x = (float)collider["size"][1];
+			objectData.collider.size.y = (float)collider["size"][2];
+			objectData.collider.size.z = (float)collider["size"][0];
+		}
 		// 初期化
 		if (objectData.fileName.empty()) { objectData.fileName = "cube"; }
 		objectData.model = Model::Create(objectData.fileName);
 		objectData.Initialize();
 		objectData.Update();
-
-		// 再帰呼出で枝を走査する
-		if (object.contains("children"))
+	}
+	// 再帰呼出で枝を走査する
+	if (object.contains("children"))
+	{
+		nlohmann::json children = object["children"].get<nlohmann::json>();
+		ObjectData& objectData = objects.back();
+		for (nlohmann::json child : children)
 		{
-			nlohmann::json children = object["children"].get<nlohmann::json>();
-			for (nlohmann::json child : children)
-			{
-				LoadJsonRecursive(child, &objectData);
-			}
+			LoadJsonRecursive(child, &objectData);
 		}
 	}
 }

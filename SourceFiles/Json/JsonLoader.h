@@ -2,15 +2,22 @@
 #include <json.hpp>
 #include "Model.h"
 
+struct ColliderData
+{
+	std::string type;
+	Vector3 center, size;
+};
+
+struct ObjectData : public WorldTransform
+{
+	std::string fileName;
+	std::unique_ptr<Model> model;
+	ColliderData collider;
+	void Draw() { model->Draw(*this); }
+};
+
 struct LevelData
 {
-	struct ObjectData : public WorldTransform
-	{
-		std::string fileName;
-		std::unique_ptr<Model> model;
-		void Draw() { model->Draw(*this); }
-	};
-
 	std::list<ObjectData> objects;
 
 	void LoadJsonRecursive(nlohmann::json& object, WorldTransform* parent = nullptr);

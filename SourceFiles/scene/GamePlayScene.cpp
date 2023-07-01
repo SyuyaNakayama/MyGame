@@ -6,7 +6,7 @@ void GamePlayScene::Initialize()
 	debugCamera.Initialize();
 	stage.Initialize();
 	Model::SetViewProjection(&debugCamera);
-	level = JsonLoader::LoadJson("map2");
+	level = JsonLoader::LoadJson("map3");
 	for (size_t i = 1; i < 3; i++)
 	{
 		Model::GetLightGroup()->SetDirLightActive(i, false);
