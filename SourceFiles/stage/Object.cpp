@@ -6,6 +6,8 @@ void Object::Initialize(Vector3 pos)
 	worldTransform.Initialize();
 	worldTransform.translation = pos;
 	worldTransform.scale *= 4.0f;
+	collisionAttribute = CollisionAttribute::Object;
+	collisionMask = CollisionMask::Object;
 	physics = Physics::Create(&worldTransform);
 	physics->SetMass(0.5f);
 	physics->SetMu(0);

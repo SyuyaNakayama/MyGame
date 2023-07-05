@@ -2,7 +2,7 @@
 #include "Collider.h"
 #include "PlayerCamera.h"
 
-class Player : public SphereCollider
+class Player : public SphereCollider, public BoxCollider
 {
 	std::unique_ptr<Model> model;
 	std::unique_ptr<BaseCamera> camera;

@@ -3,7 +3,7 @@
 #include "Model.h"
 
 // ゴールに運ぶオブジェクト
-class Object : public SphereCollider
+class Object : public SphereCollider, public BoxCollider
 {
 	std::unique_ptr<Model> model;
 

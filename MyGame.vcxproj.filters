@@ -113,6 +113,9 @@
     <None Include="Resources\shaders\PostEffectFunctions.hlsli">
       <Filter>シェーダー ファイル\postEffect</Filter>
     </None>
+    <None Include="..\..\TL1\blender\3.5\scripts\addons\level_editor.py">
+      <Filter>ソース ファイル\Application\Stage</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\SpritePS.hlsl">
@@ -221,9 +224,6 @@
     </ClCompile>
     <ClCompile Include="SourceFiles\math\MathUtility.cpp">
       <Filter>ソース ファイル\Engine\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFiles\physics\Jump.cpp">
-      <Filter>ソース ファイル\Engine\Physics</Filter>
     </ClCompile>
     <ClCompile Include="SourceFiles\physics\Physics.cpp">
       <Filter>ソース ファイル\Engine\Physics</Filter>
@@ -376,9 +376,6 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\math\MathUtility.h">
       <Filter>ソース ファイル\Engine\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\physics\Jump.h">
-      <Filter>ソース ファイル\Engine\Physics</Filter>
     </ClInclude>
     <ClInclude Include="SourceFiles\physics\Physics.h">
       <Filter>ソース ファイル\Engine\Physics</Filter>

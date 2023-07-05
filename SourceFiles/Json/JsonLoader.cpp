@@ -54,10 +54,13 @@ void LevelData::LoadJsonRecursive(nlohmann::json& object, WorldTransform* parent
 			objectData.collider.size.x = (float)collider["size"][1];
 			objectData.collider.size.y = (float)collider["size"][2];
 			objectData.collider.size.z = (float)collider["size"][0];
+			// 法線ベクトル
+			objectData.collider.normal.x = -(float)collider["normal"][1];
+			objectData.collider.normal.y = (float)collider["normal"][2];
+			objectData.collider.normal.z = (float)collider["normal"][0];
 		}
 		// 初期化
 		if (objectData.fileName.empty()) { objectData.fileName = "cube"; }
-		objectData.model = Model::Create(objectData.fileName);
 		objectData.Initialize();
 		objectData.Update();
 	}

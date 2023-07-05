@@ -11,6 +11,8 @@ void Player::Initialize()
 	Model::SetViewProjection(camera->GetViewProjection());
 	camera->Initialize(&worldTransform);
 	physics = Physics::Create(&worldTransform);
+	collisionAttribute = CollisionAttribute::Player;
+	collisionMask = CollisionMask::Player;
 }
 
 void Player::Move()

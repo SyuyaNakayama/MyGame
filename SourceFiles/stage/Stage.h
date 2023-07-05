@@ -2,14 +2,15 @@
 #include "Player.h"
 #include "Block.h"
 #include "Object.h"
+#include "JsonLoader.h"
 
 class Stage
 {
-	std::array<Block, 5> blocks; // ï«Ç∆è∞
+	std::vector<std::unique_ptr<Block>> blocks; // ï«Ç∆è∞
 	Player player;
 	std::vector<std::unique_ptr<Object>> objects;
-	void SetBlocks();
-
+	LevelData* levelData = nullptr;
+	
 public:
 	static const Vector2 STAGE_SIZE;
 	void Initialize();

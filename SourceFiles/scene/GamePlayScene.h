@@ -6,7 +6,6 @@
 class GamePlayScene : public BaseScene
 {
 	Stage stage;
-	LevelData* level = nullptr;
 
 	void Initialize();
 	void Update();

@@ -102,6 +102,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="..\..\TL1\blender\3.5\scripts\addons\level_editor.py" />
     <None Include="Resources\shaders\Obj.hlsli" />
     <None Include="Resources\shaders\Particle.hlsli" />
     <None Include="Resources\shaders\PostEffect.hlsli" />
@@ -168,7 +169,6 @@
     <ClCompile Include="SourceFiles\objects\Skydome.cpp" />
     <ClCompile Include="SourceFiles\particle\ParticleGroup.cpp" />
     <ClCompile Include="SourceFiles\particle\TrackParticle.cpp" />
-    <ClCompile Include="SourceFiles\physics\Jump.cpp" />
     <ClCompile Include="SourceFiles\particle\DiffuseParticle.cpp" />
     <ClCompile Include="SourceFiles\particle\DirectionalParticle.cpp" />
     <ClCompile Include="SourceFiles\audio\PointAudio.cpp" />
@@ -218,7 +218,6 @@
     <ClInclude Include="SourceFiles\objects\Skydome.h" />
     <ClInclude Include="SourceFiles\particle\ParticleGroup.h" />
     <ClInclude Include="SourceFiles\particle\TrackParticle.h" />
-    <ClInclude Include="SourceFiles\physics\Jump.h" />
     <ClInclude Include="SourceFiles\particle\DiffuseParticle.h" />
     <ClInclude Include="SourceFiles\particle\DirectionalParticle.h" />
     <ClInclude Include="SourceFiles\audio\PointAudio.h" />

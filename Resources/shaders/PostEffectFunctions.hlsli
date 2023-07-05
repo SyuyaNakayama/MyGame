@@ -37,12 +37,14 @@ float4 Blur(VSOutput i, float blurRange)
 {
 	float4 col = float4(0, 0, 0, 0);
 	float num = 0;
+    float2 texSize;
+    tex.GetDimensions(texSize.x, texSize.y);
 
 	for (float py = -blurRange; py <= blurRange; py++)
 	{
 		for (float px = -blurRange; px <= blurRange; px++)
 		{
-			float2 pickUV = i.uv + float2(px / 1920.0f, py / 1080.0f);
+            float2 pickUV = i.uv + float2(px / texSize.x, py / texSize.y);
 			col += tex.Sample(smp, pickUV);
 			num++;
 		}

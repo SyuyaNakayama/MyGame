@@ -9,21 +9,19 @@ enum class CollisionAttribute
 {
 	Player = 0b1,
 	Block = 0b1 << 1,
-	Door = 0b1 << 2,
-	PlayerHeal = 0b1 << 3,
-	UI = 0b1 << 4,
+	Object = 0b1 << 2,
+	Goal = 0b1 << 3,
 	All = -1
 };
 
 enum class CollisionMask
 {
 	None = 0,
-	Player = (int)CollisionAttribute::Block | (int)CollisionAttribute::UI | (int)CollisionAttribute::Door,
-	PlayerJump = (int)CollisionAttribute::Block,
-	PlayerHeal = (int)CollisionAttribute::PlayerHeal,
-	Block = (int)CollisionAttribute::Player,
-	UI = (int)CollisionAttribute::Player,
-	All = -1
+	All = -1,
+	Player = CollisionMask::All,
+	Block = (int)CollisionAttribute::Player | (int)CollisionAttribute::Object,
+	Object = (int)CollisionMask::All,
+	Goal = (int)CollisionAttribute::Player | (int)CollisionAttribute::Object,
 };
 
 class BoxCollider;

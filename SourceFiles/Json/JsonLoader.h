@@ -5,15 +5,13 @@
 struct ColliderData
 {
 	std::string type;
-	Vector3 center, size;
+	Vector3 center, size, normal;
 };
 
 struct ObjectData : public WorldTransform
 {
 	std::string fileName;
-	std::unique_ptr<Model> model;
 	ColliderData collider;
-	void Draw() { model->Draw(*this); }
 };
 
 struct LevelData
@@ -21,7 +19,6 @@ struct LevelData
 	std::list<ObjectData> objects;
 
 	void LoadJsonRecursive(nlohmann::json& object, WorldTransform* parent = nullptr);
-	void Draw() { for (auto& obj : objects) { obj.Draw(); } }
 };
 
 class JsonLoader
