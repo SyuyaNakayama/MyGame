@@ -6,13 +6,14 @@ void Player::Initialize()
 {
 	model = Model::Create("player", true);
 	worldTransform.Initialize();
-	worldTransform.translation = { 0,5.0f,-20.0f };
+	worldTransform.translation = { 0,1005.0f,-20.0f };
 	camera = std::make_unique<PlayerCamera>();
 	Model::SetViewProjection(camera->GetViewProjection());
 	camera->Initialize(&worldTransform);
 	physics = Physics::Create(&worldTransform);
 	collisionAttribute = CollisionAttribute::Player;
 	collisionMask = CollisionMask::Player;
+	physics->SetIsFreeFall(true);
 }
 
 void Player::Move()
@@ -27,6 +28,7 @@ void Player::Move()
 		forcedir.x = input->IsInput(Key::D) - input->IsInput(Key::A);
 		forcedir.z = input->IsInput(Key::W) - input->IsInput(Key::S);
 		forcedir *= Matrix4::RotateY(camera->GetAngle().x);
+		forcedir = { 0,1,0 };
 		physics->SetForceDir(forcedir);
 	}
 	else { physics->SetForce(0); }

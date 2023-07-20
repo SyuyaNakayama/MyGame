@@ -6,6 +6,7 @@
 class GamePlayScene : public BaseScene
 {
 	Stage stage;
+	ViewProjection viewProjection;
 
 	void Initialize();
 	void Update();

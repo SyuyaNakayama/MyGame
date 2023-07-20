@@ -10,6 +10,11 @@ void GamePlayScene::Initialize()
 	{
 		Model::GetLightGroup()->SetDirLightActive(i, false);
 	}
+	viewProjection.Initialize();
+	viewProjection.eye.y = 250;
+	viewProjection.eye.z = -75;
+	viewProjection.target.z = 10;
+	Model::SetViewProjection(&viewProjection);
 }
 
 void GamePlayScene::Update()
