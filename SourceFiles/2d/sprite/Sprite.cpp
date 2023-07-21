@@ -6,35 +6,32 @@ using namespace DirectX;
 using namespace Microsoft::WRL;
 
 // 平行投影行列
-Matrix4 OrthoGraphic(const Vector2& windowSize)
+Matrix4 OrthoGraphic()
 {
 	Matrix4 matProj;
 	// 平行投影行列の生成
-	matProj.m[0][0] = 2.0f / windowSize.x;
-	matProj.m[1][1] = -2.0f / windowSize.y;
+	matProj.m[0][0] = 2.0f / WindowsAPI::WIN_SIZE.x;
+	matProj.m[1][1] = -2.0f / WindowsAPI::WIN_SIZE.y;
 	matProj.m[3][0] = -1.0f;
 	matProj.m[3][1] = 1.0f;
 	return matProj;
 }
 
 string Sprite::DEFAULT_TEXTURE_DIRECTORY_PATH = "Resources/";
-ComPtr<ID3D12RootSignature> Sprite::rootSignature;
-ComPtr<ID3D12PipelineState> Sprite::pipelineState;
+PipelineManager2 Sprite::pipelineManager;
 ComPtr<ID3D12DescriptorHeap> Sprite::srvHeap;
 list<TextureData*> Sprite::textures;
-const Matrix4 Sprite::matProj = OrthoGraphic(WindowsAPI::WIN_SIZE);
+const Matrix4 Sprite::matProj = OrthoGraphic();
 
 void Sprite::StaticInitialize()
 {
-	PipelineManager pipelineManager;
-	pipelineManager.LoadShaders(L"SpriteVS", L"SpritePS");
-	pipelineManager.AddInputLayout("POSITION", DXGI_FORMAT_R32G32_FLOAT);
-	pipelineManager.AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	pipelineManager.SetBlendDesc(D3D12_BLEND_OP_ADD, D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_INV_SRC_ALPHA);
-	pipelineManager.SetPrimitiveTopologyType(D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE);
-	pipelineManager.AddRootParameter(RootParamType::CBV);
-	pipelineManager.AddRootParameter(RootParamType::DescriptorTable);
-	pipelineManager.CreatePipeline(pipelineState, rootSignature);
+	PipelineProp pipelineProp;
+	pipelineProp.shaderNames = { L"SpriteVS", L"SpritePS" };
+	pipelineProp.inputLayoutProps.push_back({ "POSITION", DXGI_FORMAT_R32G32_FLOAT });
+	pipelineProp.inputLayoutProps.push_back({ "TEXCOORD", DXGI_FORMAT_R32G32_FLOAT });
+	pipelineProp.blendProp = { D3D12_BLEND_OP_ADD, D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_INV_SRC_ALPHA };
+	pipelineProp.rootParamProp = { 1,1 };
+	pipelineManager.CreatePipeline(pipelineProp);
 
 	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
 	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc{};
@@ -133,8 +130,7 @@ void Sprite::PreDraw()
 {
 	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
 	// パイプラインステートとルートシグネチャの設定コマンド
-	cmdList->SetPipelineState(pipelineState.Get());
-	cmdList->SetGraphicsRootSignature(rootSignature.Get());
+	pipelineManager.SetPipeline();
 	// プリミティブ形状の設定コマンド
 	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); // 三角形リスト
 	// デスクリプタヒープの設定コマンド
@@ -231,11 +227,11 @@ void Sprite::Draw()
 
 	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
 	
-	cmdList->SetGraphicsRootDescriptorTable(1, tex->gpuHandle);
+	cmdList->SetGraphicsRootDescriptorTable(0, tex->gpuHandle);
 
 	// 頂点バッファビューの設定コマンド
 	cmdList->IASetVertexBuffers(0, 1, &vbView);
-	cmdList->SetGraphicsRootConstantBufferView(0, constBuff->GetGPUVirtualAddress());
+	cmdList->SetGraphicsRootConstantBufferView(1, constBuff->GetGPUVirtualAddress());
 	// 描画コマンド
 	cmdList->DrawInstanced((UINT)vertices.size(), 1, 0, 0); // 全ての頂点を使って描画
 }
