@@ -2,6 +2,7 @@
 #include <string>
 #include <memory>
 #include <cassert>
+#include <array>
 #include "DirectXCommon.h"
 
 template<class T> void CreateBuffer(ID3D12Resource** buff, T** map, UINT64 width)
@@ -41,6 +42,50 @@ public:
 };
 
 enum class RootParamType { CBV, DescriptorTable };
+
+struct PipelineProp
+{
+private:
+	struct InputLayoutProp
+	{
+		LPCSTR semanticName;
+		DXGI_FORMAT format;
+	};
+
+	struct BlendProp
+	{
+		D3D12_BLEND_OP blendOp;
+		D3D12_BLEND srcBlend;
+		D3D12_BLEND destBlend;
+	};
+
+	struct RootParameterProp
+	{
+		UINT descriptorNum;
+		UINT constBuffNum;
+	};
+
+public:
+	// VS,PS,GS
+	std::array<std::wstring, 3> shaderNames;
+	std::vector<InputLayoutProp> inputLayoutProps;
+	BlendProp blendProp;
+	D3D12_PRIMITIVE_TOPOLOGY_TYPE primitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+	bool isDepthTest = true; // 深度テストを行う = 3D用 か
+	D3D12_DEPTH_WRITE_MASK depthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+	RootParameterProp rootParamProp;
+};
+
+struct PipelineManager2
+{
+	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+	ComPtr<ID3D12RootSignature> rootSignature;
+	ComPtr<ID3D12PipelineState> pipelineState;
+
+public:
+	void CreatePipeline(const PipelineProp& pipelineProp);
+	void SetPipeline();
+};
 
 struct PipelineManager
 {

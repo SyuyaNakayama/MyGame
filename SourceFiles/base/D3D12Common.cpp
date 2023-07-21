@@ -131,3 +131,97 @@ void PipelineManager::LoadShaders(std::wstring vsShaderName, std::wstring psShad
 	LoadShader(&psBlob, psShaderName, "ps_5_0");
 	if (!gsShaderName.empty()) { LoadShader(&gsBlob, gsShaderName, "gs_5_0"); }
 }
+
+void PipelineManager2::CreatePipeline(const PipelineProp& pipelineProp)
+{
+	ComPtr<ID3DBlob> vsBlob, gsBlob, psBlob;
+	LoadShader(&vsBlob, pipelineProp.shaderNames[0], "vs_5_0");
+	LoadShader(&psBlob, pipelineProp.shaderNames[1], "ps_5_0");
+	if (!pipelineProp.shaderNames[2].empty()) { LoadShader(&gsBlob, pipelineProp.shaderNames[2], "gs_5_0"); }
+
+	std::vector<D3D12_INPUT_ELEMENT_DESC> inputLayout;
+	for (auto& inputLayoutProp : pipelineProp.inputLayoutProps)
+	{
+		inputLayout.push_back(SetInputLayout(inputLayoutProp.semanticName, inputLayoutProp.format));
+	}
+
+	// デスクリプタレンジ
+	std::vector<CD3DX12_DESCRIPTOR_RANGE> descriptorRanges;
+	for (UINT i = 0; i < pipelineProp.rootParamProp.descriptorNum; i++)
+	{
+		CD3DX12_DESCRIPTOR_RANGE descriptorRange;
+		descriptorRange.Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, i);
+		descriptorRanges.push_back(descriptorRange);
+	}
+
+	std::vector<CD3DX12_ROOT_PARAMETER> rootParams;
+	CD3DX12_ROOT_PARAMETER rootParam{};
+	rootParam.InitAsDescriptorTable(descriptorRanges.size(), descriptorRanges.data());
+	rootParams.push_back(rootParam);
+	for (UINT i = 0; i < pipelineProp.rootParamProp.constBuffNum; i++)
+	{
+		rootParam.InitAsConstantBufferView(i);
+		rootParams.push_back(rootParam);
+	}
+
+	// レンダーターゲットのブレンド設定
+	D3D12_RENDER_TARGET_BLEND_DESC blenddesc{};
+	blenddesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;	// RBGA全てのチャンネルを描画
+	blenddesc.BlendEnable = true;
+	blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;
+	blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;
+	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;
+	blenddesc.BlendOp = pipelineProp.blendProp.blendOp;
+	blenddesc.SrcBlend = pipelineProp.blendProp.srcBlend;
+	blenddesc.DestBlend = pipelineProp.blendProp.destBlend;
+
+	// スタティックサンプラー
+	CD3DX12_STATIC_SAMPLER_DESC samplerDesc = CD3DX12_STATIC_SAMPLER_DESC(0);
+
+	// ルートシグネチャの設定
+	CD3DX12_VERSIONED_ROOT_SIGNATURE_DESC rootSignatureDesc{};
+	rootSignatureDesc.Init_1_0((UINT)rootParams.size(), rootParams.data(), 1, &samplerDesc,
+		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
+
+	ComPtr<ID3DBlob> rootSigBlob, errorBlob;
+	// バージョン自動判定のシリアライズ
+	Result result = D3DX12SerializeVersionedRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob, &errorBlob);
+	// ルートシグネチャの生成
+	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
+	result = device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature));
+
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipeline{};
+	// グラフィックスパイプラインの流れを設定
+	pipeline.VS = CD3DX12_SHADER_BYTECODE(vsBlob.Get());
+	pipeline.PS = CD3DX12_SHADER_BYTECODE(psBlob.Get());
+	if (gsBlob) { pipeline.GS = CD3DX12_SHADER_BYTECODE(gsBlob.Get()); }
+	// サンプルマスク
+	pipeline.SampleMask = D3D12_DEFAULT_SAMPLE_MASK; // 標準設定
+	// ラスタライザステート
+	pipeline.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
+	// 図形の形状設定
+	pipeline.PrimitiveTopologyType = pipelineProp.primitiveTopologyType;
+	// ブレンドステートの設定
+	pipeline.BlendState.RenderTarget[0] = blenddesc;
+
+	// 頂点レイアウトの設定
+	pipeline.InputLayout.pInputElementDescs = inputLayout.data();
+	pipeline.InputLayout.NumElements = (UINT)inputLayout.size();
+
+	pipeline.NumRenderTargets = 1;	// 描画対象は1つ
+	pipeline.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB; // 0～255指定のRGBA
+	pipeline.SampleDesc.Count = 1; // 1ピクセルにつき1回サンプリング
+
+	pipeline.pRootSignature = rootSignature.Get();
+
+	// グラフィックスパイプラインの生成
+	result = device->CreateGraphicsPipelineState(&pipeline, IID_PPV_ARGS(&pipelineState));
+}
+
+void PipelineManager2::SetPipeline()
+{
+	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
+	// パイプラインステートとルートシグネチャの設定コマンド
+	cmdList->SetPipelineState(pipelineState.Get());
+	cmdList->SetGraphicsRootSignature(rootSignature.Get());
+}

@@ -4,6 +4,7 @@
 #include <d3d12.h>
 #include "Color.h"
 #include "Matrix4.h"
+#include "D3D12Common.h"
 
 class PostEffect
 {
@@ -27,8 +28,7 @@ private:
 	std::array<Vertex, 4> vertices;
 	D3D12_VERTEX_BUFFER_VIEW vbView{};
 	Microsoft::WRL::ComPtr<ID3D12Resource> constBuff;
-	ComPtr<ID3D12RootSignature> rootSignature;
-	ComPtr<ID3D12PipelineState> pipelineState;
+	PipelineManager2 pipelineManager2;
 
 	void CreateGraphicsPipelineState();
 	void CreateBuffers();

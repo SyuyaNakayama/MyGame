@@ -1,5 +1,4 @@
 #include "PostEffect.h"
-#include "D3D12Common.h"
 #include "WindowsAPI.h"
 
 const float PostEffect::CLEAR_COLOR[4] = { 0,0,0,0 };
@@ -7,15 +6,13 @@ const float PostEffect::CLEAR_COLOR[4] = { 0,0,0,0 };
 #pragma region 生成関数
 void PostEffect::CreateGraphicsPipelineState()
 {
-	PipelineManager pipelineManager;
-	pipelineManager.LoadShaders(L"PostEffectVS", L"PostEffectPS");
-	pipelineManager.AddInputLayout("POSITION", DXGI_FORMAT_R32G32_FLOAT);
-	pipelineManager.AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT);
-	pipelineManager.SetBlendDesc(D3D12_BLEND_OP_ADD, D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_INV_SRC_ALPHA);
-	pipelineManager.SetPrimitiveTopologyType(D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE);
-	pipelineManager.AddRootParameter(RootParamType::CBV);
-	pipelineManager.AddRootParameter(RootParamType::DescriptorTable);
-	pipelineManager.CreatePipeline(pipelineState, rootSignature);
+	PipelineProp pipelineProp;
+	pipelineProp.shaderNames = { L"PostEffectVS", L"PostEffectPS" };
+	pipelineProp.inputLayoutProps.push_back({ "POSITION", DXGI_FORMAT_R32G32_FLOAT });
+	pipelineProp.inputLayoutProps.push_back({ "TEXCOORD", DXGI_FORMAT_R32G32_FLOAT });
+	pipelineProp.blendProp = { D3D12_BLEND_OP_ADD, D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_INV_SRC_ALPHA };
+	pipelineProp.rootParamProp = { 1,1 };
+	pipelineManager2.CreatePipeline(pipelineProp);
 }
 
 void PostEffect::CreateBuffers()
@@ -150,19 +147,18 @@ void PostEffect::Draw()
 	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
 
 	// パイプラインステートとルートシグネチャの設定コマンド
-	cmdList->SetPipelineState(pipelineState.Get());
-	cmdList->SetGraphicsRootSignature(rootSignature.Get());
+	pipelineManager2.SetPipeline();
 	// プリミティブ形状の設定コマンド
 	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); // 三角形リスト
 	// デスクリプタヒープの設定コマンド
 	ID3D12DescriptorHeap* ppHeaps[] = { descHeapSRV.Get() };
 	cmdList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
 
-	cmdList->SetGraphicsRootDescriptorTable(1, descHeapSRV->GetGPUDescriptorHandleForHeapStart());
+	cmdList->SetGraphicsRootDescriptorTable(0, descHeapSRV->GetGPUDescriptorHandleForHeapStart());
 
 	// 頂点バッファビューの設定コマンド
 	cmdList->IASetVertexBuffers(0, 1, &vbView);
-	cmdList->SetGraphicsRootConstantBufferView(0, constBuff->GetGPUVirtualAddress());
+	cmdList->SetGraphicsRootConstantBufferView(1, constBuff->GetGPUVirtualAddress());
 	// 描画コマンド
 	cmdList->DrawInstanced((UINT)vertices.size(), 1, 0, 0); // 全ての頂点を使って描画
 }
