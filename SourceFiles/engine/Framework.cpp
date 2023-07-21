@@ -1,5 +1,6 @@
 ﻿#include "Framework.h"
 #include "Sprite.h"
+#include "D3D12Common.h"
 
 void Framework::Initialize()
 {
@@ -8,6 +9,7 @@ void Framework::Initialize()
 	Sprite::StaticInitialize();
 	input->Initialize();
 	sceneManager->Initialize();
+	PipelineManager::Initialize();
 }
 
 void Framework::Update()

@@ -18,21 +18,12 @@ Matrix4 OrthoGraphic()
 }
 
 string Sprite::DEFAULT_TEXTURE_DIRECTORY_PATH = "Resources/";
-PipelineManager2 Sprite::pipelineManager;
 ComPtr<ID3D12DescriptorHeap> Sprite::srvHeap;
 list<TextureData*> Sprite::textures;
 const Matrix4 Sprite::matProj = OrthoGraphic();
 
 void Sprite::StaticInitialize()
 {
-	PipelineProp pipelineProp;
-	pipelineProp.shaderNames = { L"SpriteVS", L"SpritePS" };
-	pipelineProp.inputLayoutProps.push_back({ "POSITION", DXGI_FORMAT_R32G32_FLOAT });
-	pipelineProp.inputLayoutProps.push_back({ "TEXCOORD", DXGI_FORMAT_R32G32_FLOAT });
-	pipelineProp.blendProp = { D3D12_BLEND_OP_ADD, D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_INV_SRC_ALPHA };
-	pipelineProp.rootParamProp = { 1,1 };
-	pipelineManager.CreatePipeline(pipelineProp);
-
 	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
 	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc{};
 	srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
@@ -130,7 +121,7 @@ void Sprite::PreDraw()
 {
 	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
 	// パイプラインステートとルートシグネチャの設定コマンド
-	pipelineManager.SetPipeline();
+	PipelineManager::SetPipeline(PipelineType::Sprite);
 	// プリミティブ形状の設定コマンド
 	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); // 三角形リスト
 	// デスクリプタヒープの設定コマンド

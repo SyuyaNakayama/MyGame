@@ -15,7 +15,6 @@ private:
 		Matrix4 matBillboard; // ビルボード行列
 	};
 
-	static PipelineManager2 pipelineManager;
 	// 定数バッファ
 	static ComPtr<ID3D12Resource> constBuff;
 	static ConstBufferData* constMap;

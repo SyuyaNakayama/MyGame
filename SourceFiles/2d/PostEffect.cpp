@@ -1,28 +1,18 @@
 #include "PostEffect.h"
 #include "WindowsAPI.h"
+#include "D3D12Common.h"
 
 const float PostEffect::CLEAR_COLOR[4] = { 0,0,0,0 };
 
 #pragma region 生成関数
-void PostEffect::CreateGraphicsPipelineState()
-{
-	PipelineProp pipelineProp;
-	pipelineProp.shaderNames = { L"PostEffectVS", L"PostEffectPS" };
-	pipelineProp.inputLayoutProps.push_back({ "POSITION", DXGI_FORMAT_R32G32_FLOAT });
-	pipelineProp.inputLayoutProps.push_back({ "TEXCOORD", DXGI_FORMAT_R32G32_FLOAT });
-	pipelineProp.blendProp = { D3D12_BLEND_OP_ADD, D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_INV_SRC_ALPHA };
-	pipelineProp.rootParamProp = { 1,1 };
-	pipelineManager2.CreatePipeline(pipelineProp);
-}
-
 void PostEffect::CreateBuffers()
 {
 	std::array<Vertex, 4> vertices =
 	{ {
-		{{-1,-1},{0,1}},
-		{{-1,+1},{0,0}},
-		{{+1,-1},{1,1}},
-		{{+1,+1},{1,0}}
+		{ { -1, -1 }, { 0, 1 } },
+		{ { -1, +1 }, { 0, 0 } },
+		{ { +1, -1 }, { 1, 1 } },
+		{ { +1, +1 }, { 1, 0 } }
 	} };
 
 	Vertex* vertMap = nullptr;
@@ -139,7 +129,6 @@ void PostEffect::Initialize()
 	CreateSRV();
 	CreateRTV();
 	CreateDSV();
-	CreateGraphicsPipelineState();
 }
 
 void PostEffect::Draw()
@@ -147,7 +136,7 @@ void PostEffect::Draw()
 	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
 
 	// パイプラインステートとルートシグネチャの設定コマンド
-	pipelineManager2.SetPipeline();
+	PipelineManager::SetPipeline(PipelineType::PostEffect);
 	// プリミティブ形状の設定コマンド
 	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); // 三角形リスト
 	// デスクリプタヒープの設定コマンド

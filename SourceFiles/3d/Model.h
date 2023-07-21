@@ -11,7 +11,6 @@ private:
 	// Microsoft::WRL::‚ğÈ—ª
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-	static PipelineManager2 pipelineManager;
 	// ƒ‰ƒCƒg
 	static std::unique_ptr<LightGroup> lightGroup;
 	// “Ç‚İ‚ñ‚¾ƒ‚ƒfƒ‹î•ñ

@@ -3,6 +3,8 @@
 #pragma comment(lib, "d3dcompiler.lib")
 using namespace std;
 
+map<PipelineType, PipelineManager> PipelineManager::pipelines;
+
 D3D12_INPUT_ELEMENT_DESC SetInputLayout(LPCSTR semanticName, DXGI_FORMAT format)
 {
 	D3D12_INPUT_ELEMENT_DESC inputLayout =
@@ -43,96 +45,40 @@ void LoadShader(ID3DBlob** shaderBlob, wstring shaderName, LPCSTR target)
 	}
 }
 
-void PipelineManager::CreatePipeline(ComPtr<ID3D12PipelineState>& pipelinestate, ComPtr<ID3D12RootSignature>& rootsignature)
+void PipelineManager::Initialize()
 {
-	// グラフィックスパイプラインの流れを設定
-	pipeline.VS = CD3DX12_SHADER_BYTECODE(vsBlob.Get());
-	pipeline.PS = CD3DX12_SHADER_BYTECODE(psBlob.Get());
-	if (gsBlob) { pipeline.GS = CD3DX12_SHADER_BYTECODE(gsBlob.Get()); }
+	PipelineProp pipelineProp;
+	pipelineProp.shaderNames = { L"SpriteVS", L"SpritePS" };
+	pipelineProp.inputLayoutProps.push_back({ "POSITION", DXGI_FORMAT_R32G32_FLOAT });
+	pipelineProp.inputLayoutProps.push_back({ "TEXCOORD", DXGI_FORMAT_R32G32_FLOAT });
+	pipelineProp.rootParamProp = { 1,1 };
+	pipelines[PipelineType::Sprite].CreatePipeline(pipelineProp);
 
-	// サンプルマスク
-	pipeline.SampleMask = D3D12_DEFAULT_SAMPLE_MASK; // 標準設定
-	// ラスタライザステート
-	pipeline.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
+	pipelineProp.shaderNames = { L"PostEffectVS", L"PostEffectPS" };
+	pipelines[PipelineType::PostEffect].CreatePipeline(pipelineProp);
 
-	// レンダーターゲットのブレンド設定
-	blenddesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;	// RBGA全てのチャンネルを描画
-	blenddesc.BlendEnable = true;
-	blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;
-	blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;
-	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;
+	pipelineProp.shaderNames = { L"ObjVS", L"ObjPS" };
+	pipelineProp.inputLayoutProps.clear();
+	pipelineProp.inputLayoutProps.push_back({ "POSITION", DXGI_FORMAT_R32G32B32_FLOAT });
+	pipelineProp.inputLayoutProps.push_back({ "NORMAL", DXGI_FORMAT_R32G32B32_FLOAT });
+	pipelineProp.inputLayoutProps.push_back({ "TEXCOORD", DXGI_FORMAT_R32G32_FLOAT });
+	pipelineProp.isDepthTest = true;
+	pipelineProp.rootParamProp = { 1,4 };
+	pipelines[PipelineType::Object].CreatePipeline(pipelineProp);
 
-	// ブレンドステートの設定
-	pipeline.BlendState.RenderTarget[0] = blenddesc;
+	pipelineProp.shaderNames = { L"ParticleVS", L"ParticlePS", L"ParticleGS" };
+	pipelineProp.inputLayoutProps.clear();
+	pipelineProp.inputLayoutProps.push_back({ "POSITION", DXGI_FORMAT_R32G32B32_FLOAT });
+	pipelineProp.inputLayoutProps.push_back({ "TEXCOORD", DXGI_FORMAT_R32_FLOAT });
+	pipelineProp.blendProp = { D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE, D3D12_BLEND_ONE };
+	pipelineProp.rootParamProp = { 1,1 };
+	pipelineProp.depthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
+	pipelineProp.primitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT;
+	pipelines[PipelineType::Particle].CreatePipeline(pipelineProp);
 
-	// 頂点レイアウトの設定
-	pipeline.InputLayout.pInputElementDescs = inputLayout.data();
-	pipeline.InputLayout.NumElements = (UINT)inputLayout.size();
-
-	pipeline.NumRenderTargets = 1;	// 描画対象は1つ
-	pipeline.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB; // 0～255指定のRGBA
-	pipeline.SampleDesc.Count = 1; // 1ピクセルにつき1回サンプリング
-
-	// スタティックサンプラー
-	CD3DX12_STATIC_SAMPLER_DESC samplerDesc = CD3DX12_STATIC_SAMPLER_DESC(0);
-
-	// ルートシグネチャの設定
-	CD3DX12_VERSIONED_ROOT_SIGNATURE_DESC rootSignatureDesc{};
-	rootSignatureDesc.Init_1_0((UINT)rootParams.size(), rootParams.data(), 1, &samplerDesc,
-		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
-
-	ComPtr<ID3DBlob> rootSigBlob, errorBlob;
-	// バージョン自動判定のシリアライズ
-	Result result = D3DX12SerializeVersionedRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob, &errorBlob);
-	// ルートシグネチャの生成
-	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
-	result = device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&rootsignature));
-
-	pipeline.pRootSignature = rootsignature.Get();
-
-	// グラフィックスパイプラインの生成
-	result = device->CreateGraphicsPipelineState(&pipeline, IID_PPV_ARGS(&pipelinestate));
 }
 
-void PipelineManager::AddRootParameter(RootParamType paramType)
-{
-	// デスクリプタレンジ
-	CD3DX12_DESCRIPTOR_RANGE descriptorRange{};
-	descriptorRange.Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
-
-	CD3DX12_ROOT_PARAMETER rootParam{};
-	switch (paramType)
-	{
-	case RootParamType::CBV:
-		rootParam.InitAsConstantBufferView(shaderRegister++);
-		break;
-	case RootParamType::DescriptorTable:
-		rootParam.InitAsDescriptorTable(1, &descriptorRange);
-		break;
-	}
-	rootParams.push_back(rootParam);
-}
-
-void PipelineManager::AddInputLayout(LPCSTR semanticName, DXGI_FORMAT format)
-{
-	inputLayout.push_back(SetInputLayout(semanticName, format));
-}
-
-void PipelineManager::SetBlendDesc(D3D12_BLEND_OP blendOp, D3D12_BLEND SrcBlend, D3D12_BLEND DestBlend)
-{
-	blenddesc.BlendOp = blendOp;
-	blenddesc.SrcBlend = SrcBlend;
-	blenddesc.DestBlend = DestBlend;
-}
-
-void PipelineManager::LoadShaders(std::wstring vsShaderName, std::wstring psShaderName, std::wstring gsShaderName)
-{
-	LoadShader(&vsBlob, vsShaderName, "vs_5_0");
-	LoadShader(&psBlob, psShaderName, "ps_5_0");
-	if (!gsShaderName.empty()) { LoadShader(&gsBlob, gsShaderName, "gs_5_0"); }
-}
-
-void PipelineManager2::CreatePipeline(const PipelineProp& pipelineProp)
+void PipelineManager::CreatePipeline(const PipelineProp& pipelineProp)
 {
 	ComPtr<ID3DBlob> vsBlob, gsBlob, psBlob;
 	LoadShader(&vsBlob, pipelineProp.shaderNames[0], "vs_5_0");
@@ -228,10 +174,10 @@ void PipelineManager2::CreatePipeline(const PipelineProp& pipelineProp)
 	result = device->CreateGraphicsPipelineState(&pipeline, IID_PPV_ARGS(&pipelineState));
 }
 
-void PipelineManager2::SetPipeline()
+void PipelineManager::SetPipeline(PipelineType type)
 {
 	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
 	// パイプラインステートとルートシグネチャの設定コマンド
-	cmdList->SetPipelineState(pipelineState.Get());
-	cmdList->SetGraphicsRootSignature(rootSignature.Get());
+	cmdList->SetPipelineState(pipelines[type].pipelineState.Get());
+	cmdList->SetGraphicsRootSignature(pipelines[type].rootSignature.Get());
 }

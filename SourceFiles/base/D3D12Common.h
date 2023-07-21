@@ -3,6 +3,7 @@
 #include <memory>
 #include <cassert>
 #include <array>
+#include <map>
 #include "DirectXCommon.h"
 
 template<class T> void CreateBuffer(ID3D12Resource** buff, T** map, UINT64 width)
@@ -76,40 +77,17 @@ public:
 	RootParameterProp rootParamProp;
 };
 
-struct PipelineManager2
+enum class PipelineType { Sprite, PostEffect, Object, Particle };
+
+class PipelineManager
 {
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+	static std::map<PipelineType, PipelineManager> pipelines;
 	ComPtr<ID3D12RootSignature> rootSignature;
 	ComPtr<ID3D12PipelineState> pipelineState;
 
 public:
 	void CreatePipeline(const PipelineProp& pipelineProp);
-	void SetPipeline();
-};
-
-struct PipelineManager
-{
-private:
-	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-
-	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipeline{};
-	ComPtr<ID3DBlob> vsBlob, gsBlob, psBlob;
-	std::vector<D3D12_INPUT_ELEMENT_DESC> inputLayout;
-	D3D12_RENDER_TARGET_BLEND_DESC blenddesc{};
-	UINT shaderRegister = 0;
-	std::vector<CD3DX12_ROOT_PARAMETER> rootParams;
-
-public:
-	void LoadShaders(std::wstring vsShaderName, std::wstring psShaderName, std::wstring gsShaderName = L"");
-	void AddInputLayout(LPCSTR semanticName, DXGI_FORMAT format);
-	void AddRootParameter(RootParamType paramType);
-	void SetBlendDesc(D3D12_BLEND_OP blendOp, D3D12_BLEND srcBlend, D3D12_BLEND destBlend);
-	// 図形の形状設定
-	void SetPrimitiveTopologyType(D3D12_PRIMITIVE_TOPOLOGY_TYPE primitiveTopologyType) { pipeline.PrimitiveTopologyType = primitiveTopologyType; }
-	// デプスステンシルステート
-	void InitDepthStencilState() { pipeline.DepthStencilState = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT); }
-	// 深度バッファのフォーマット
-	void InitDSVFormat() { pipeline.DSVFormat = DXGI_FORMAT_D32_FLOAT; }
-	void SetDepthWriteMask(D3D12_DEPTH_WRITE_MASK depthWriteMask) { pipeline.DepthStencilState.DepthWriteMask = depthWriteMask; }
-	void CreatePipeline(ComPtr<ID3D12PipelineState>& pipelinestate, ComPtr<ID3D12RootSignature>& rootsignature);
+	static void Initialize();
+	static void SetPipeline(PipelineType pipelineType);
 };

@@ -3,7 +3,6 @@
 #include <memory>
 #include "Color.h"
 #include "DirectXCommon.h"
-#include "D3D12Common.h"
 
 struct TextureData
 {
@@ -49,7 +48,6 @@ private:
 	static const uint32_t MIP_LEVELS_DEFAULT = -1;
 	// デフォルトディレクトリ
 	static std::string DEFAULT_TEXTURE_DIRECTORY_PATH;
-	static PipelineManager2 pipelineManager;
 	static ComPtr<ID3D12DescriptorHeap> srvHeap;
 	static std::list<TextureData*> textures;
 	const static Matrix4 matProj;
