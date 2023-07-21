@@ -212,6 +212,16 @@ void PipelineManager2::CreatePipeline(const PipelineProp& pipelineProp)
 	pipeline.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB; // 0～255指定のRGBA
 	pipeline.SampleDesc.Count = 1; // 1ピクセルにつき1回サンプリング
 
+	// 3D用パイプライン
+	if (pipelineProp.isDepthTest)
+	{
+		// デプスステンシルステート
+		pipeline.DepthStencilState = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT);
+		// 深度バッファのフォーマット
+		pipeline.DSVFormat = DXGI_FORMAT_D32_FLOAT;
+		pipeline.DepthStencilState.DepthWriteMask = pipelineProp.depthWriteMask;
+	}
+
 	pipeline.pRootSignature = rootSignature.Get();
 
 	// グラフィックスパイプラインの生成

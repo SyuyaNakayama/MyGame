@@ -3,6 +3,7 @@
 #include "ViewProjection.h"
 #include "LightGroup.h"
 #include "Mesh.h"
+#include "D3D12Common.h"
 
 class Model
 {
@@ -10,10 +11,7 @@ private:
 	// Microsoft::WRL::を省略
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-	// パイプラインステートオブジェクト
-	static ComPtr<ID3D12PipelineState> pipelinestate;
-	// ルートシグネチャ
-	static ComPtr<ID3D12RootSignature> rootsignature;
+	static PipelineManager2 pipelineManager;
 	// ライト
 	static std::unique_ptr<LightGroup> lightGroup;
 	// 読み込んだモデル情報

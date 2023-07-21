@@ -54,9 +54,9 @@ private:
 
 	struct BlendProp
 	{
-		D3D12_BLEND_OP blendOp;
-		D3D12_BLEND srcBlend;
-		D3D12_BLEND destBlend;
+		D3D12_BLEND_OP blendOp = D3D12_BLEND_OP_ADD;
+		D3D12_BLEND srcBlend = D3D12_BLEND_SRC_ALPHA;
+		D3D12_BLEND destBlend = D3D12_BLEND_INV_SRC_ALPHA;
 	};
 
 	struct RootParameterProp
