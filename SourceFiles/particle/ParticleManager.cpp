@@ -6,26 +6,23 @@
 using namespace Microsoft::WRL;
 
 // 静的メンバ変数の実体
-ComPtr<ID3D12RootSignature> ParticleManager::rootsignature;
-ComPtr<ID3D12PipelineState> ParticleManager::pipelinestate;
+PipelineManager2 ParticleManager::pipelineManager;
 ComPtr<ID3D12Resource> ParticleManager::constBuff;
 ParticleManager::ConstBufferData* ParticleManager::constMap = nullptr;
 std::vector<ParticleGroup> ParticleManager::particleGroups;
 
 void ParticleManager::Initialize()
 {
-	PipelineManager pipelineManager;
-	pipelineManager.LoadShaders(L"ParticleVS", L"ParticlePS", L"ParticleGS");
-	pipelineManager.AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT);
-	pipelineManager.AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32B32_FLOAT);
-	pipelineManager.InitDepthStencilState();
-	pipelineManager.SetBlendDesc(D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE, D3D12_BLEND_ONE);
-	pipelineManager.InitDSVFormat();
-	pipelineManager.SetDepthWriteMask(D3D12_DEPTH_WRITE_MASK_ZERO);
-	pipelineManager.SetPrimitiveTopologyType(D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT);
-	pipelineManager.AddRootParameter(RootParamType::CBV);
-	pipelineManager.AddRootParameter(RootParamType::DescriptorTable);
-	pipelineManager.CreatePipeline(pipelinestate, rootsignature);
+	PipelineProp pipelineProp;
+	pipelineProp.shaderNames = { L"ParticleVS", L"ParticlePS", L"ParticleGS" };
+	pipelineProp.inputLayoutProps.push_back({ "POSITION", DXGI_FORMAT_R32G32B32_FLOAT });
+	pipelineProp.inputLayoutProps.push_back({ "TEXCOORD", DXGI_FORMAT_R32G32B32_FLOAT });
+	pipelineProp.isDepthTest = true;
+	pipelineProp.blendProp = { D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE, D3D12_BLEND_ONE };
+	pipelineProp.rootParamProp = { 1,1 };
+	pipelineProp.depthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
+	pipelineProp.primitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT;
+	pipelineManager.CreatePipeline(pipelineProp);
 	
 	CreateBuffer(&constBuff, &constMap, (sizeof(ConstBufferData) + 0xff) & ~0xff);
 }
@@ -42,14 +39,11 @@ void ParticleManager::Draw()
 {
 	// コマンドリストをセット
 	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
-	// パイプラインステートの設定
-	cmdList->SetPipelineState(pipelinestate.Get());
-	// ルートシグネチャの設定
-	cmdList->SetGraphicsRootSignature(rootsignature.Get());
+	pipelineManager.SetPipeline();
 	// プリミティブ形状を設定
 	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
 	// 定数バッファビューをセット
-	cmdList->SetGraphicsRootConstantBufferView(0, constBuff->GetGPUVirtualAddress());
+	cmdList->SetGraphicsRootConstantBufferView(1, constBuff->GetGPUVirtualAddress());
 	for (auto& particleGroup : particleGroups) { particleGroup.Draw(); }
 }
 

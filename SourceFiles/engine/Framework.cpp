@@ -3,7 +3,7 @@
 
 void Framework::Initialize()
 {
-	wAPI->Initialize(L"燈火の迷宮");
+	wAPI->Initialize(L"クアッドホッケー");
 	dxCommon->Initialize();
 	Sprite::StaticInitialize();
 	input->Initialize();

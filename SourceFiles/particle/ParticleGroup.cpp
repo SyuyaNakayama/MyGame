@@ -56,7 +56,7 @@ void ParticleGroup::Draw()
 	// デスクリプタヒープセット
 	Sprite::SetDescriptorHeaps();
 	// シェーダリソースビューをセット
-	cmdList->SetGraphicsRootDescriptorTable(1, texture->gpuHandle);
+	cmdList->SetGraphicsRootDescriptorTable(0, texture->gpuHandle);
 	// 描画コマンド
 	cmdList->DrawInstanced((UINT)AllParticleNum(), 1, 0, 0);
 }

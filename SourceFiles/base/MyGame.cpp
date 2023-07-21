@@ -9,6 +9,7 @@ void MyGame::Initialize()
 	sceneManager->ChangeScene(Scene::Play, false);
 	Model::StaticInitialize();
 	ParticleManager::Initialize();
+	ParticleManager::AddParticleGroup("Particle.png");
 	ImGuiManager::Initialize();
 	Audio::StaticInitialize();
 	postEffect = std::make_unique<PostEffect>();

@@ -54,7 +54,7 @@
     <IncludePath>$(SolutionDir)External\DirectXTex;$(SolutionDir)External\imgui;$(SolutionDir)External\json;$(WindowsSDK_IncludePath)</IncludePath>
     <IntDir>$(SolutionDir)..\Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)..\Generated\Outputs\$(Configuration)\</OutDir>
-    <TargetName>燈火の迷宮</TargetName>
+    <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

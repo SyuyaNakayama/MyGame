@@ -15,10 +15,7 @@ private:
 		Matrix4 matBillboard; // ビルボード行列
 	};
 
-	// ルートシグネチャ
-	static ComPtr<ID3D12RootSignature> rootsignature;
-	// パイプラインステートオブジェクト
-	static ComPtr<ID3D12PipelineState> pipelinestate;
+	static PipelineManager2 pipelineManager;
 	// 定数バッファ
 	static ComPtr<ID3D12Resource> constBuff;
 	static ConstBufferData* constMap;
