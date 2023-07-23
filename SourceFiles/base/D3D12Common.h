@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 #include <memory>
 #include <cassert>
 #include <array>
@@ -75,6 +74,8 @@ public:
 	bool isDepthTest = true; // 深度テストを行う = 3D用 か
 	D3D12_DEPTH_WRITE_MASK depthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
 	RootParameterProp rootParamProp;
+	D3D12_TEXTURE_ADDRESS_MODE textureAddressMode = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	D3D12_CULL_MODE cullMode = D3D12_CULL_MODE_BACK;
 };
 
 enum class PipelineType { Sprite, PostEffect, Object, Particle };

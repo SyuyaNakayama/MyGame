@@ -55,6 +55,7 @@ void PipelineManager::Initialize()
 	pipelines[PipelineType::Sprite].CreatePipeline(pipelineProp);
 
 	pipelineProp.shaderNames = { L"PostEffectVS", L"PostEffectPS" };
+	pipelineProp.textureAddressMode = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
 	pipelines[PipelineType::PostEffect].CreatePipeline(pipelineProp);
 
 	pipelineProp.shaderNames = { L"ObjVS", L"ObjPS" };
@@ -62,8 +63,10 @@ void PipelineManager::Initialize()
 	pipelineProp.inputLayoutProps.push_back({ "POSITION", DXGI_FORMAT_R32G32B32_FLOAT });
 	pipelineProp.inputLayoutProps.push_back({ "NORMAL", DXGI_FORMAT_R32G32B32_FLOAT });
 	pipelineProp.inputLayoutProps.push_back({ "TEXCOORD", DXGI_FORMAT_R32G32_FLOAT });
+	pipelineProp.textureAddressMode = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
 	pipelineProp.isDepthTest = true;
 	pipelineProp.rootParamProp = { 1,4 };
+	pipelineProp.cullMode = D3D12_CULL_MODE_NONE;
 	pipelines[PipelineType::Object].CreatePipeline(pipelineProp);
 
 	pipelineProp.shaderNames = { L"ParticleVS", L"ParticlePS", L"ParticleGS" };
@@ -74,8 +77,8 @@ void PipelineManager::Initialize()
 	pipelineProp.rootParamProp = { 1,1 };
 	pipelineProp.depthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
 	pipelineProp.primitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT;
+	pipelineProp.cullMode = D3D12_CULL_MODE_BACK;
 	pipelines[PipelineType::Particle].CreatePipeline(pipelineProp);
-
 }
 
 void PipelineManager::CreatePipeline(const PipelineProp& pipelineProp)
@@ -122,7 +125,8 @@ void PipelineManager::CreatePipeline(const PipelineProp& pipelineProp)
 	blenddesc.DestBlend = pipelineProp.blendProp.destBlend;
 
 	// スタティックサンプラー
-	CD3DX12_STATIC_SAMPLER_DESC samplerDesc = CD3DX12_STATIC_SAMPLER_DESC(0);
+	CD3DX12_STATIC_SAMPLER_DESC samplerDesc = CD3DX12_STATIC_SAMPLER_DESC(0, D3D12_FILTER_MIN_MAG_MIP_POINT,
+		pipelineProp.textureAddressMode, pipelineProp.textureAddressMode);
 
 	// ルートシグネチャの設定
 	CD3DX12_VERSIONED_ROOT_SIGNATURE_DESC rootSignatureDesc{};
@@ -145,6 +149,7 @@ void PipelineManager::CreatePipeline(const PipelineProp& pipelineProp)
 	pipeline.SampleMask = D3D12_DEFAULT_SAMPLE_MASK; // 標準設定
 	// ラスタライザステート
 	pipeline.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
+	pipeline.RasterizerState.CullMode = pipelineProp.cullMode;
 	// 図形の形状設定
 	pipeline.PrimitiveTopologyType = pipelineProp.primitiveTopologyType;
 	// ブレンドステートの設定

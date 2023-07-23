@@ -116,6 +116,9 @@
     <None Include="..\..\TL1\blender\3.5\scripts\addons\level_editor.py">
       <Filter>ソース ファイル\Application\Stage</Filter>
     </None>
+    <None Include="Resources\shaders\Light.hlsli">
+      <Filter>シェーダー ファイル</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\SpritePS.hlsl">
