@@ -65,7 +65,7 @@ void PipelineManager::Initialize()
 	pipelineProp.inputLayoutProps.push_back({ "TEXCOORD", DXGI_FORMAT_R32G32_FLOAT });
 	pipelineProp.textureAddressMode = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
 	pipelineProp.isDepthTest = true;
-	pipelineProp.rootParamProp = { 1,4 };
+	pipelineProp.rootParamProp = { 5,4 };
 	pipelineProp.cullMode = D3D12_CULL_MODE_NONE;
 	pipelines[PipelineType::Object].CreatePipeline(pipelineProp);
 
@@ -94,21 +94,20 @@ void PipelineManager::CreatePipeline(const PipelineProp& pipelineProp)
 		inputLayout.push_back(SetInputLayout(inputLayoutProp.semanticName, inputLayoutProp.format));
 	}
 
+	std::vector<CD3DX12_ROOT_PARAMETER> rootParams;
 	// デスクリプタレンジ
-	std::vector<CD3DX12_DESCRIPTOR_RANGE> descriptorRanges;
 	for (UINT i = 0; i < pipelineProp.rootParamProp.descriptorNum; i++)
 	{
-		CD3DX12_DESCRIPTOR_RANGE descriptorRange;
-		descriptorRange.Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, i);
-		descriptorRanges.push_back(descriptorRange);
+		CD3DX12_DESCRIPTOR_RANGE* descriptorRange = new CD3DX12_DESCRIPTOR_RANGE();
+		descriptorRange->Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, i);
+		CD3DX12_ROOT_PARAMETER rootParam{};
+		rootParam.InitAsDescriptorTable(1, descriptorRange);
+		rootParams.push_back(rootParam);
 	}
 
-	std::vector<CD3DX12_ROOT_PARAMETER> rootParams;
-	CD3DX12_ROOT_PARAMETER rootParam{};
-	rootParam.InitAsDescriptorTable(descriptorRanges.size(), descriptorRanges.data());
-	rootParams.push_back(rootParam);
 	for (UINT i = 0; i < pipelineProp.rootParamProp.constBuffNum; i++)
 	{
+		CD3DX12_ROOT_PARAMETER rootParam{};
 		rootParam.InitAsConstantBufferView(i);
 		rootParams.push_back(rootParam);
 	}

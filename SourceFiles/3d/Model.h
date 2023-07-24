@@ -5,6 +5,8 @@
 #include "Mesh.h"
 #include "D3D12Common.h"
 
+enum class RootParamNum { MatWorld = (int)TexType::Num, Material, Light, Camera };
+
 class Model
 {
 private:
@@ -17,7 +19,7 @@ private:
 	static std::list<std::unique_ptr<Mesh>> meshes;
 	// ビュープロジェクションのポインタ
 	static ViewProjection* viewProjection;
-	
+
 	Mesh* mesh = nullptr; // メッシュのポインタ
 	Material material;
 
@@ -35,7 +37,7 @@ public:
 	static LightGroup* GetLightGroup() { return lightGroup.get(); }
 	static void SetViewProjection(ViewProjection* viewProjection_) { viewProjection = viewProjection_; }
 	static ViewProjection* GetViewProjection() { return viewProjection; }
-	
+
 	Material* GetMaterial() { return &material; }
 	void Update();
 	void Draw(const WorldTransform& worldTransform);

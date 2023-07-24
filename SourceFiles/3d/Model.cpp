@@ -48,9 +48,9 @@ void Model::PreDraw()
 	// プリミティブ形状を設定
 	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	// ライトの描画
-	lightGroup->Draw(3);
+	lightGroup->Draw((UINT)RootParamNum::Light);
 	// カメラ
-	cmdList->SetGraphicsRootConstantBufferView(4, viewProjection->constBuffer->GetGPUVirtualAddress());
+	cmdList->SetGraphicsRootConstantBufferView((UINT)RootParamNum::Camera, viewProjection->constBuffer->GetGPUVirtualAddress());
 	// デスクリプタヒープセット
 	Sprite::SetDescriptorHeaps();
 }
@@ -63,7 +63,7 @@ void Model::Update()
 void Model::Draw(const WorldTransform& worldTransform)
 {
 	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
-	cmdList->SetGraphicsRootConstantBufferView(1, worldTransform.constBuffer->GetGPUVirtualAddress());
+	cmdList->SetGraphicsRootConstantBufferView((UINT)RootParamNum::MatWorld, worldTransform.constBuffer->GetGPUVirtualAddress());
 	material.Draw();
 	mesh->Draw();
 }

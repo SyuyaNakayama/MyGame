@@ -10,8 +10,6 @@ class GamePlayScene : public BaseScene
 	Quaternion rotQ;
 	Angle rotAngle = 0;
 
-
-
 	void Initialize();
 	void Update();
 	void Draw();

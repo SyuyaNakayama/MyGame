@@ -3,6 +3,7 @@
 #include <sstream>
 #include "D3D12Common.h"
 #include "Mesh.h"
+#include "Model.h"
 using namespace std;
 
 void LoadColorRGBStream(istringstream& stream, ColorRGB& color)
@@ -40,13 +41,16 @@ void Material::Load(Mesh* mesh)
 			line_stream >> textureFilename;
 			string path = mesh->directoryPath;
 			path.erase(path.begin(), path.begin() + 10);
-			sprite = Sprite::Create(path + textureFilename);
+			sprites[(size_t)TexType::Main] = Sprite::Create(path + textureFilename);
 		}
 	}
 	file.close();
 
 	// デフォルトテクスチャのセット
-	if(!sprite){ sprite = Sprite::Create("white1x1.png"); }
+	for (auto& sprite : sprites)
+	{
+		if (!sprite) { sprite = Sprite::Create("white1x1.png"); }
+	}
 
 	// 定数バッファ生成
 	CreateBuffer(&constBuffer, &constMap, (sizeof(ConstBufferData) + 0xff) & ~0xff);
@@ -61,20 +65,21 @@ void Material::Load(Mesh* mesh)
 
 void Material::Update()
 {
-	sprite->Update();
+	for (auto& sprite : sprites) { sprite->Update(); }
+
 	constMap->tiling =
 	{
-		sprite->textureSize.x / sprite->size.x,
-		sprite->textureSize.y / sprite->size.y
+		sprites[(size_t)TexType::Main]->textureSize.x / sprites[(size_t)TexType::Main]->size.x,
+		sprites[(size_t)TexType::Main]->textureSize.y / sprites[(size_t)TexType::Main]->size.y
 	};
 
 	constMap->uvOffset =
 	{
-		sprite->textureLeftTop.x / sprite->size.x,
-		sprite->textureLeftTop.y / sprite->size.y
+		sprites[(size_t)TexType::Main]->textureLeftTop.x / sprites[(size_t)TexType::Main]->size.x,
+		sprites[(size_t)TexType::Main]->textureLeftTop.y / sprites[(size_t)TexType::Main]->size.y
 	};
 
-	constMap->color = sprite->color;
+	constMap->color = sprites[(size_t)TexType::Main]->color;
 	constMap->ambient = ambient;
 	constMap->diffuse = diffuse;
 	constMap->specular = specular;
@@ -83,7 +88,10 @@ void Material::Update()
 void Material::Draw()
 {
 	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
-	cmdList->SetGraphicsRootConstantBufferView(2, constBuffer->GetGPUVirtualAddress());
+	cmdList->SetGraphicsRootConstantBufferView((UINT)RootParamNum::Material, constBuffer->GetGPUVirtualAddress());
 	// シェーダリソースビューをセット
-	cmdList->SetGraphicsRootDescriptorTable(0, sprite->GetGPUHandle());
+	for (UINT i = 0; i < (UINT)TexType::Num; i++)
+	{
+		cmdList->SetGraphicsRootDescriptorTable(i, sprites[i]->GetGPUHandle());
+	}
 }

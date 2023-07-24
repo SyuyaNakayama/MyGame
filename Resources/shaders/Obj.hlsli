@@ -5,12 +5,6 @@ cbuffer cbuff0 : register(b0)
 	matrix world; // ワールド行列
 };
 
-cbuffer cbuff3 : register(b3)
-{
-	matrix viewproj; // ビュープロジェクション行列
-	float3 cameraPos; // カメラ座標(ワールド座標)
-};
-
 cbuffer cbuff1 : register(b1)
 {
     Material material;
@@ -23,6 +17,12 @@ cbuffer cbuff2 : register(b2)
 {
     LightGroup lightGroup;
 }
+
+cbuffer cbuff3 : register(b3)
+{
+	matrix viewproj; // ビュープロジェクション行列
+	float3 cameraPos; // カメラ座標(ワールド座標)
+};
 
 // 頂点シェーダーからピクセルシェーダーへのやり取りに使用する構造体
 struct VSOutput

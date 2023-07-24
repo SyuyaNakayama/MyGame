@@ -6,9 +6,9 @@ void GamePlayScene::Initialize()
 {
 	debugCamera.Initialize({ 0,10 });
 	stage.Initialize();
-	for (size_t i = 0; i < 3; i++)
+	for (size_t i = 1; i < 3; i++)
 	{
-		Model::GetLightGroup()->SetDirLightActive(i, false);
+		//Model::GetLightGroup()->SetDirLightActive(i, false);
 	}
 	Model::GetLightGroup()->SetPointLightActive(0, true);
 	Model::GetLightGroup()->SetPointLightAtten(0, { 0,0.01f,0.001f });
