@@ -47,9 +47,12 @@ void Material::Load(Mesh* mesh)
 	file.close();
 
 	// デフォルトテクスチャのセット
-	for (auto& sprite : sprites)
+	for (auto& sprite : sprites) { if (!sprite) { sprite = Sprite::Create("white1x1.png"); } }
+
+	// ブレンドテクスチャがデフォルトの場合、マスク値は使わない
+	if (sprites[(size_t)TexType::Blend]->tex->fileName == "white1x1.png")
 	{
-		if (!sprite) { sprite = Sprite::Create("white1x1.png"); }
+		sprites[(size_t)TexType::Blend]->color.r = 0;
 	}
 
 	// 定数バッファ生成
@@ -58,28 +61,42 @@ void Material::Load(Mesh* mesh)
 	constMap->ambient = ambient;
 	constMap->diffuse = diffuse;
 	constMap->specular = specular;
-	constMap->tiling = { 1,1 };
-	constMap->uvOffset = { 0,0 };
-	constMap->color = { 1,1,1,1 };
+	for (auto& texTrans : constMap->texTrans)
+	{
+		texTrans.tiling = { 1,1 };
+		texTrans.uvOffset = { 0,0 };
+	}
+	for (auto& color : constMap->color) { color = { 1,1,1,1 }; }
+	for (size_t i = 0; i < constMap->maskPow.size(); i++)
+	{
+		constMap->maskPow[i] = sprites[(size_t)TexType::Blend + i]->color.r;
+	}
 }
 
 void Material::Update()
 {
 	for (auto& sprite : sprites) { sprite->Update(); }
 
-	constMap->tiling =
+	for (size_t i = 0; i < constMap->texTrans.size(); i++)
 	{
-		sprites[(size_t)TexType::Main]->textureSize.x / sprites[(size_t)TexType::Main]->size.x,
-		sprites[(size_t)TexType::Main]->textureSize.y / sprites[(size_t)TexType::Main]->size.y
-	};
+		constMap->texTrans[i].tiling =
+		{
+			sprites[i]->textureSize.x / sprites[i]->size.x,
+			sprites[i]->textureSize.y / sprites[i]->size.y
+		};
 
-	constMap->uvOffset =
+		constMap->texTrans[i].uvOffset =
+		{
+			sprites[i]->textureLeftTop.x / sprites[i]->size.x,
+			sprites[i]->textureLeftTop.y / sprites[i]->size.y
+		};
+	}
+
+	for (size_t i = 0; i < constMap->color.size(); i++) { constMap->color[i] = sprites[i]->color; }
+	for (size_t i = 0; i < constMap->maskPow.size(); i++)
 	{
-		sprites[(size_t)TexType::Main]->textureLeftTop.x / sprites[(size_t)TexType::Main]->size.x,
-		sprites[(size_t)TexType::Main]->textureLeftTop.y / sprites[(size_t)TexType::Main]->size.y
-	};
-
-	constMap->color = sprites[(size_t)TexType::Main]->color;
+		constMap->maskPow[i] = sprites[(size_t)TexType::Blend + i]->color.r;
+	}
 	constMap->ambient = ambient;
 	constMap->diffuse = diffuse;
 	constMap->specular = specular;

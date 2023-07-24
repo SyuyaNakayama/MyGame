@@ -22,11 +22,9 @@ private:
 		ColorRGBA ambient; // パディング含む
 		ColorRGBA diffuse;
 		ColorRGBA specular;
-		//TextureTransform texTrans[4];
-		//ColorRGBA color[2]; // 色
-		Vector2 uvOffset;  // uvずらし
-		Vector2 tiling; // タイリング
-		ColorRGBA color; // 色
+		std::array<TextureTransform, 4> texTrans;
+		std::array<ColorRGBA, 2> color; // 色
+		std::array<float, 2> maskPow; // マスクの強さ
 	};
 
 	std::string materialName;
@@ -35,7 +33,7 @@ private:
 	ColorRGB specular;
 	Microsoft::WRL::ComPtr<ID3D12Resource> constBuffer;	// 定数バッファ
 	ConstBufferData* constMap = nullptr;
-	std::array<std::unique_ptr<Sprite>,(size_t)TexType::Num> sprites; // テクスチャの連想配列
+	std::array<std::unique_ptr<Sprite>, (size_t)TexType::Num> sprites; // テクスチャの配列
 
 public:
 	void Load(Mesh* mesh); // マテリアル読み込み

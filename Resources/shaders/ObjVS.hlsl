@@ -9,6 +9,6 @@ VSOutput main(float4 pos : POSITION, float3 normal : NORMAL, float2 uv : TEXCOOR
 	output.svpos = mul(mul(viewproj, world), pos);
 	output.worldpos = mul(world, pos);
 	output.normal = wnormal.xyz;
-	output.uv = uv * tiling + uvOffset;
+	output.uv = uv;
 	return output;
 }

@@ -5,12 +5,24 @@ cbuffer cbuff0 : register(b0)
 	matrix world; // ワールド行列
 };
 
+struct TextureTransform
+{
+    float2 uvOffset;
+    float2 tiling;
+	
+	// テクスチャ変形後のUV値を取得
+    float2 GetUV(float2 uv)
+    {
+        return uv * tiling + uvOffset;
+    }
+};
+
 cbuffer cbuff1 : register(b1)
 {
     Material material;
-	float2 uvOffset;
-	float2 tiling;
-	float4 color;
+    TextureTransform texTrans[4];
+	float4 color[2];
+    float maskPow[2]; // マスクの強さ
 }
 
 cbuffer cbuff2 : register(b2)

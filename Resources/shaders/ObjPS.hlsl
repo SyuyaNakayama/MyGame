@@ -1,20 +1,25 @@
 #include "Obj.hlsli"
 
-Texture2D<float4> tex : register(t0); // 0番スロットに設定されたテクスチャ
-//Texture2D<float4> tex1 : register(t1); // 1番スロットに設定されたテクスチャ
-//Texture2D<float4> tex2 : register(t2); // 2番スロットに設定されたテクスチャ
-//Texture2D<float4> tex3 : register(t3); // 3番スロットに設定されたテクスチャ
-//Texture2D<float4> tex4 : register(t4); // 4番スロットに設定されたテクスチャ
+Texture2D<float4> mainTex : register(t0); // 0番スロットに設定されたテクスチャ
+Texture2D<float4> subTex : register(t1); // 1番スロットに設定されたテクスチャ
+Texture2D<float4> blendMask : register(t2); // 2番スロットに設定されたテクスチャ
+Texture2D<float4> specularMask : register(t3); // 3番スロットに設定されたテクスチャ
+Texture2D<float4> dissolveMask : register(t4); // 4番スロットに設定されたテクスチャ
 SamplerState smp : register(s0); // 0番スロットに設定されたサンプラー
 
 float4 main(VSOutput input) : SV_TARGET
 {
 	// テクスチャマッピング
-    float4 texcolor = tex.Sample(smp, input.uv);
-    //float4 texcolor2 = tex1.Sample(smp, input.uv);
+    float4 mainTexColor = mainTex.Sample(smp, texTrans[0].GetUV(input.uv)) * color[0];
+    float4 subTexColor = subTex.Sample(smp, texTrans[1].GetUV(input.uv)) * color[1];
     
-    //float s = (input.uv.x + input.uv.y) / 2;
-    //float4 texcolor = lerp(texcolor1, texcolor2, s);
+    // マスク値の取得
+    float blendMaskVal = blendMask.Sample(smp, texTrans[2].GetUV(input.uv)).r * maskPow[0];
+    float specularMaskVal = specularMask.Sample(smp, texTrans[3].GetUV(input.uv)).r * maskPow[1];
+    float dissolveMaskVal = dissolveMask.Sample(smp, input.uv).r;
+    
+    // テクスチャブレンド
+    float4 texcolor = lerp(mainTexColor, subTexColor, blendMaskVal);
     
 	// 環境反射光
     float3 ambient = material.ambient;
@@ -31,5 +36,5 @@ float4 main(VSOutput input) : SV_TARGET
     shadecolor.rgb += lightGroup.ComputeLightEffect(lightData, material);
 
     shadecolor.a = 1.0f;
-    return shadecolor * texcolor * color;
+    return shadecolor * texcolor;
 }

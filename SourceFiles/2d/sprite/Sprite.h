@@ -24,6 +24,7 @@ struct Sprite
 	bool isInvisible = false;
 	Vector2 textureLeftTop; // 切り取り領域の左上座標
 	Vector2 textureSize; // 切り取り領域のサイズ
+	TextureData* tex = nullptr;
 
 private:
 	struct Vertex { Vector2 pos, uv; };
@@ -57,7 +58,6 @@ private:
 	ConstBufferData* constMap = nullptr;
 	Vertex* vertMap = nullptr;
 	Matrix4 matWorld;
-	TextureData* tex = nullptr;
 
 	void AdjustTextureSize();
 	void Initialize();
