@@ -38,15 +38,6 @@ static const uint POINTLIGHT_NUM = 3;
 static const uint SPOTLIGHT_NUM = 3;
 static const uint CIRCLESHADOW_NUM = 1;
 
-struct LightGroup
-{
-    float3 ambientColor;
-    DirLight dirLights[DIRLIGHT_NUM];
-    PointLight pointLights[POINTLIGHT_NUM];
-    SpotLight spotLights[SPOTLIGHT_NUM];
-    CircleShadow circleShadows[CIRCLESHADOW_NUM];
-};
-
 struct Material
 {
     float3 ambient; // アンビエント係数
@@ -62,6 +53,21 @@ struct LightData
     float shininess;
 };
 
+struct LightGroup
+{
+    float3 ambientColor;
+    DirLight dirLights[DIRLIGHT_NUM];
+    PointLight pointLights[POINTLIGHT_NUM];
+    SpotLight spotLights[SPOTLIGHT_NUM];
+    CircleShadow circleShadows[CIRCLESHADOW_NUM];
+
+    float3 ComputeDirLight(LightData lightData, Material material);
+    float3 ComputePointLight(LightData lightData, Material material);
+    float3 ComputeSpotLight(LightData lightData, Material material);
+    float3 ComputeCircleShadow(float3 worldpos, Material material);
+    float3 ComputeLightEffect(LightData lightData, Material material);
+};
+
 float3 ComputeDiffuseSpecular(float3 lightv, LightData lightData, Material material)
 {
     // ライトに向かうベクトルと法線の内積
@@ -75,12 +81,12 @@ float3 ComputeDiffuseSpecular(float3 lightv, LightData lightData, Material mater
     return diffuse + specular;
 }
 
-float3 ComputeDirLight(LightGroup lightGroup, LightData lightData, Material material)
+float3 LightGroup::ComputeDirLight(LightData lightData, Material material)
 {
     float3 sumColor;
     for (int i = 0; i < DIRLIGHT_NUM; i++)
     {
-        DirLight dirLight = lightGroup.dirLights[i];
+        DirLight dirLight = dirLights[i];
         if (!dirLight.active)
         {
             continue;
@@ -91,13 +97,13 @@ float3 ComputeDirLight(LightGroup lightGroup, LightData lightData, Material mate
     return sumColor;
 }
 
-float3 ComputePointLight(LightGroup lightGroup, LightData lightData, Material material)
+float3 LightGroup::ComputePointLight(LightData lightData, Material material)
 {
     float3 sumColor;
     // 点光源
     for (int i = 0; i < POINTLIGHT_NUM; i++)
     {
-        PointLight pointLight = lightGroup.pointLights[i];
+        PointLight pointLight = pointLights[i];
         if (!pointLight.active)
         {
             continue;
@@ -116,12 +122,12 @@ float3 ComputePointLight(LightGroup lightGroup, LightData lightData, Material ma
     return sumColor;
 }
 
-float3 ComputeSpotLight(LightGroup lightGroup, LightData lightData, Material material)
+float3 LightGroup::ComputeSpotLight(LightData lightData, Material material)
 {
     float3 sumColor;
     for (int i = 0; i < SPOTLIGHT_NUM; i++)
     {
-        SpotLight spotLight = lightGroup.spotLights[i];
+        SpotLight spotLight = spotLights[i];
         if (!spotLight.active)
         {
             continue;
@@ -145,12 +151,12 @@ float3 ComputeSpotLight(LightGroup lightGroup, LightData lightData, Material mat
     return sumColor;
 }
 
-float3 ComputeCircleShadow(LightGroup lightGroup, float3 worldpos, Material material)
+float3 LightGroup::ComputeCircleShadow(float3 worldpos, Material material)
 {
     float3 sumColor = float3(0, 0, 0);
     for (int i = 0; i < CIRCLESHADOW_NUM; i++)
     {
-        CircleShadow circleShadow = lightGroup.circleShadows[i];
+        CircleShadow circleShadow = circleShadows[i];
         if (!circleShadow.active)
         {
             continue;
@@ -181,15 +187,15 @@ float3 ComputeCircleShadow(LightGroup lightGroup, float3 worldpos, Material mate
 }
 
 // ライト計算
-float3 ComputeLightEffect(LightGroup lightGroup, LightData lightData, Material material)
+float3 LightGroup::ComputeLightEffect(LightData lightData, Material material)
 {
 	// 平行光源
-    float3 sumColor = ComputeDirLight(lightGroup, lightData, material);
+    float3 sumColor = ComputeDirLight(lightData, material);
     // 点光源
-    sumColor += ComputePointLight(lightGroup, lightData, material);
+    sumColor += ComputePointLight(lightData, material);
 	// スポットライト
-    sumColor += ComputeSpotLight(lightGroup, lightData, material);
+    sumColor += ComputeSpotLight(lightData, material);
 	// 丸影
-    sumColor += ComputeCircleShadow(lightGroup, lightData.worldpos, material);
+    sumColor += ComputeCircleShadow(lightData.worldpos, material);
     return sumColor;
 }

@@ -48,7 +48,7 @@ void Model::PreDraw()
 	// プリミティブ形状を設定
 	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	// ライトの描画
-	lightGroup->Draw();
+	lightGroup->Draw(3);
 	// カメラ
 	cmdList->SetGraphicsRootConstantBufferView(4, viewProjection->constBuffer->GetGPUVirtualAddress());
 	// デスクリプタヒープセット
