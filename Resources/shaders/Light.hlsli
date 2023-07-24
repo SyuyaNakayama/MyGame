@@ -91,7 +91,7 @@ float3 ComputeDirLight(LightGroup lightGroup, LightData lightData, Material mate
     return sumColor;
 }
 
-float3 ComputePointLight(LightGroup lightGroup, float3 worldpos, LightData lightData, Material material)
+float3 ComputePointLight(LightGroup lightGroup, LightData lightData, Material material)
 {
     float3 sumColor;
     // 点光源
@@ -103,7 +103,7 @@ float3 ComputePointLight(LightGroup lightGroup, float3 worldpos, LightData light
             continue;
         }
 		// ライトへのベクトル
-        float3 lightv = pointLight.lightpos - worldpos;
+        float3 lightv = pointLight.lightpos - lightData.worldpos;
 		// ベクトルの長さ
         float d = length(lightv);
 		// 正規化し、単位ベクトルにする
@@ -116,7 +116,7 @@ float3 ComputePointLight(LightGroup lightGroup, float3 worldpos, LightData light
     return sumColor;
 }
 
-float3 ComputeSpotLight(LightGroup lightGroup, float3 worldpos, LightData lightData, Material material)
+float3 ComputeSpotLight(LightGroup lightGroup, LightData lightData, Material material)
 {
     float3 sumColor;
     for (int i = 0; i < SPOTLIGHT_NUM; i++)
@@ -127,7 +127,7 @@ float3 ComputeSpotLight(LightGroup lightGroup, float3 worldpos, LightData lightD
             continue;
         }
 		// ライトへの方向ベクトル
-        float3 lightv = spotLight.lightpos - worldpos;
+        float3 lightv = spotLight.lightpos - lightData.worldpos;
         float d = length(lightv);
         lightv = normalize(lightv);
 		// 距離減衰係数
@@ -177,5 +177,19 @@ float3 ComputeCircleShadow(LightGroup lightGroup, float3 worldpos, Material mate
 		// 全て減算する
         sumColor -= atten;
     }
+    return sumColor;
+}
+
+// ライト計算
+float3 ComputeLightEffect(LightGroup lightGroup, LightData lightData, Material material)
+{
+	// 平行光源
+    float3 sumColor = ComputeDirLight(lightGroup, lightData, material);
+    // 点光源
+    sumColor += ComputePointLight(lightGroup, lightData, material);
+	// スポットライト
+    sumColor += ComputeSpotLight(lightGroup, lightData, material);
+	// 丸影
+    sumColor += ComputeCircleShadow(lightGroup, lightData.worldpos, material);
     return sumColor;
 }

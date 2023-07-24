@@ -12,20 +12,14 @@ float4 main(VSOutput input) : SV_TARGET
 	// 光計算関数へ送るデータ
     LightData lightData;
     lightData.normal = input.normal;
+    lightData.worldpos = input.worldpos.xyz;
 	// 頂点から視点への方向ベクトル
-    lightData.eyedir = normalize(cameraPos - input.worldpos.xyz);;
+    lightData.eyedir = normalize(cameraPos - input.worldpos.xyz);
 	// 光沢度
     lightData.shininess = 4.0f;
 	// シェーディングによる色
     float4 shadecolor = float4(lightGroup.ambientColor * ambient, 1.0f);
-	// 平行光源
-    shadecolor.rgb += ComputeDirLight(lightGroup, lightData, material);
-	// 点光源
-    shadecolor.rgb += ComputePointLight(lightGroup, input.worldpos.xyz, lightData, material);
-	// スポットライト
-    shadecolor.rgb += ComputeSpotLight(lightGroup, input.worldpos.xyz, lightData, material);
-	// 丸影
-    shadecolor.rgb += ComputeCircleShadow(lightGroup, input.worldpos.xyz, material);
+    shadecolor.rgb += ComputeLightEffect(lightGroup, lightData, material);
 
     shadecolor.a = 1.0f;
     return shadecolor * texcolor * color;
