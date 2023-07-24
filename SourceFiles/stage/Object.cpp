@@ -3,6 +3,8 @@
 void Object::Initialize(Vector3 pos)
 {
 	model = Model::Create("player", true);
+	model->GetMaterial()->SetAnbient({ 0,0,0 });
+	model->Update();
 	worldTransform.Initialize();
 	worldTransform.translation = pos;
 	worldTransform.scale *= 4.0f;

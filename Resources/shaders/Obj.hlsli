@@ -13,9 +13,7 @@ cbuffer cbuff3 : register(b3)
 
 cbuffer cbuff1 : register(b1)
 {
-	float3 m_ambient;	// アンビエント係数
-	float3 m_diffuse;	// ディフューズ係数
-	float3 m_specular;	// スペキュラー係数
+    Material material;
 	float2 uvOffset;
 	float2 tiling;
 	float4 color;
@@ -23,11 +21,7 @@ cbuffer cbuff1 : register(b1)
 
 cbuffer cbuff2 : register(b2)
 {
-	float3 ambientColor;
-	DirLight dirLights[DIRLIGHT_NUM];
-	PointLight pointLights[POINTLIGHT_NUM];
-	SpotLight spotLights[SPOTLIGHT_NUM];
-	CircleShadow circleShadows[CIRCLESHADOW_NUM];
+    LightGroup lightGroup;
 }
 
 // 頂点シェーダーからピクセルシェーダーへのやり取りに使用する構造体

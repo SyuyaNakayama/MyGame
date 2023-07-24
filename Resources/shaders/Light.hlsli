@@ -54,7 +54,28 @@ struct Material
     float3 specular; // スペキュラー係数
 };
 
-float3 ComputeDirLight(LightGroup lightGroup, float3 normal, float3 eyedir, const float shininess, Material material)
+struct LightData
+{
+    float3 normal;
+    float3 worldpos;
+    float3 eyedir;
+    float shininess;
+};
+
+float3 ComputeDiffuseSpecular(float3 lightv, LightData lightData, Material material)
+{
+    // ライトに向かうベクトルと法線の内積
+    float3 dotlightnormal = dot(lightv, lightData.normal);
+    // 反射光ベクトル
+    float3 reflect = normalize(-lightv + 2 * dotlightnormal * lightData.normal);
+	// 拡散反射光
+    float3 diffuse = saturate(dotlightnormal * material.diffuse);
+	// 鏡面反射光
+    float3 specular = pow(saturate(dot(reflect, lightData.eyedir)), lightData.shininess) * material.specular;
+    return diffuse + specular;
+}
+
+float3 ComputeDirLight(LightGroup lightGroup, LightData lightData, Material material)
 {
     float3 sumColor;
     for (int i = 0; i < DIRLIGHT_NUM; i++)
@@ -64,16 +85,97 @@ float3 ComputeDirLight(LightGroup lightGroup, float3 normal, float3 eyedir, cons
         {
             continue;
         }
-		// ライトに向かうベクトルと法線の内積
-        float3 dotlightnormal = dot(dirLight.lightv, normal);
-		// 反射光ベクトル
-        float3 reflect = normalize(-dirLight.lightv + 2 * dotlightnormal * normal);
-		// 拡散反射光
-        float3 diffuse = saturate(dotlightnormal * diffuse);
-		// 鏡面反射光
-        float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * specular;
 		// 全て加算する
-        sumColor += (diffuse + specular) * dirLight.lightcolor;
+        sumColor += ComputeDiffuseSpecular(dirLight.lightv, lightData, material) * dirLight.lightcolor;
+    }
+    return sumColor;
+}
+
+float3 ComputePointLight(LightGroup lightGroup, float3 worldpos, LightData lightData, Material material)
+{
+    float3 sumColor;
+    // 点光源
+    for (int i = 0; i < POINTLIGHT_NUM; i++)
+    {
+        PointLight pointLight = lightGroup.pointLights[i];
+        if (!pointLight.active)
+        {
+            continue;
+        }
+		// ライトへのベクトル
+        float3 lightv = pointLight.lightpos - worldpos;
+		// ベクトルの長さ
+        float d = length(lightv);
+		// 正規化し、単位ベクトルにする
+        lightv = normalize(lightv);
+		// 距離減衰係数
+        float atten = 1.0f / (pointLight.lightatten.x + pointLight.lightatten.y * d + pointLight.lightatten.z * d * d);
+		// 全て加算する
+        sumColor += atten * ComputeDiffuseSpecular(lightv, lightData, material) * pointLight.lightcolor;
+    }
+    return sumColor;
+}
+
+float3 ComputeSpotLight(LightGroup lightGroup, float3 worldpos, LightData lightData, Material material)
+{
+    float3 sumColor;
+    for (int i = 0; i < SPOTLIGHT_NUM; i++)
+    {
+        SpotLight spotLight = lightGroup.spotLights[i];
+        if (!spotLight.active)
+        {
+            continue;
+        }
+		// ライトへの方向ベクトル
+        float3 lightv = spotLight.lightpos - worldpos;
+        float d = length(lightv);
+        lightv = normalize(lightv);
+		// 距離減衰係数
+        float atten = saturate(1.0f / (spotLight.lightatten.x + spotLight.lightatten.y * d + spotLight.lightatten.z * d * d));
+		// 角度減衰
+        float cos = dot(lightv, spotLight.lightv);
+		// 減衰開始角度から、減衰終了角度にかけて減衰
+		// 減衰開始角度の内側は1倍、減衰終了角度の外側は0倍の輝度
+        float angleatten = smoothstep(spotLight.lightfactoranglecos.y, spotLight.lightfactoranglecos.x, cos);
+		// 角度減衰を乗算
+        atten *= angleatten;
+		// 全て加算する
+        sumColor += atten * ComputeDiffuseSpecular(lightv, lightData, material) * spotLight.lightcolor;
+    }
+    return sumColor;
+}
+
+float3 ComputeCircleShadow(LightGroup lightGroup, float3 worldpos, Material material)
+{
+    float3 sumColor = float3(0, 0, 0);
+    for (int i = 0; i < CIRCLESHADOW_NUM; i++)
+    {
+        CircleShadow circleShadow = lightGroup.circleShadows[i];
+        if (!circleShadow.active)
+        {
+            continue;
+        }
+		// オブジェクト表面からキャスターへのベクトル
+        float3 casterv = circleShadow.casterPos - worldpos;
+		// 投影方向での距離
+        float d = dot(casterv, circleShadow.dir);
+		// 距離減衰係数
+        float atten = saturate(1.0f / (circleShadow.atten.x + circleShadow.atten.y * d + circleShadow.atten.z * d * d));
+		// 距離がマイナスなら0にする
+        atten *= step(0, d);
+		// 仮想ライトの座標
+        float3 lightpos = circleShadow.casterPos + circleShadow.dir * circleShadow.distanceCasterLight;
+		// オブジェクト表面からライトへのベクトル(単位ベクトル)
+        float3 lightv = normalize(lightpos - worldpos);
+		// 角度減衰
+        float cos = dot(lightv, circleShadow.dir);
+		// 減衰開始角度から、減衰終了角度にかけて減衰
+		// 減衰開始角度の内側は1倍、減衰終了角度の外側は0倍の輝度
+        float angleatten = smoothstep(circleShadow.factorAngleCos.y, circleShadow.factorAngleCos.x, cos);
+		// 角度減衰を乗算
+        atten *= angleatten;
+		// 全て減算する
+        sumColor -= atten;
     }
     return sumColor;
 }

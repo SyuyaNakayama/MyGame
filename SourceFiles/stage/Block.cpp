@@ -4,6 +4,7 @@
 void Block::Initialize(const ObjectData& objectData)
 {
 	model = Model::Create("cube");
+	model->GetMaterial()->SetAnbient({ 0,0,0 });
 	Sprite* modelSprite = model->GetMaterial()->GetSprite();
 	modelSprite->textureSize.x *= objectData.scale.x / 5.0f;
 	modelSprite->textureSize.y *= objectData.scale.z / 5.0f;

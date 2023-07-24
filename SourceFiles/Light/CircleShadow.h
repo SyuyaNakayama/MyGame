@@ -10,7 +10,7 @@ private:
 	float distanceCasterLight = 100.0f;
 	Vector3 casterPos;
 	Vector3 atten = { 0.5f,0.6f };
-	Vector2 factorAngleCos = { 0.2f,0.5f };
+	Vector2 factorAngleCos = { 0.5f,0.2f };
 	bool active = false;
 
 public:
