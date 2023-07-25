@@ -41,7 +41,7 @@ void Material::Load(Mesh* mesh)
 			line_stream >> textureFilename;
 			string path = mesh->directoryPath;
 			path.erase(path.begin(), path.begin() + 10);
-			sprites[(size_t)TexType::Main] = Sprite::Create(path + textureFilename);
+			sprites[textureNum++] = Sprite::Create(path + textureFilename);
 		}
 	}
 	file.close();

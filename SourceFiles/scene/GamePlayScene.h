@@ -9,6 +9,8 @@ class GamePlayScene : public BaseScene
 	ViewProjection viewProjection;
 	Quaternion rotQ;
 	Angle rotAngle = 0;
+	std::unique_ptr<Model> multiTexModel;
+	WorldTransform multiTexModelWT;
 
 	void Initialize();
 	void Update();

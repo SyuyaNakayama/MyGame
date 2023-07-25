@@ -34,14 +34,15 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12Resource> constBuffer;	// 定数バッファ
 	ConstBufferData* constMap = nullptr;
 	std::array<std::unique_ptr<Sprite>, (size_t)TexType::Num> sprites; // テクスチャの配列
+	size_t textureNum = 0;
 
 public:
 	void Load(Mesh* mesh); // マテリアル読み込み
 	void SetAnbient(ColorRGB anbient_) { ambient = anbient_; }
 	void SetDiffuse(ColorRGB diffuse_) { diffuse = diffuse_; }
 	void SetSpecular(ColorRGB specular_) { specular = specular_; }
-	void SetSprite(std::unique_ptr<Sprite> sprite_) { sprites[(size_t)TexType::Main] = move(sprite_); }
-	Sprite* GetSprite() { return sprites[(size_t)TexType::Main].get(); }
+	void SetSprite(std::unique_ptr<Sprite> sprite, TexType type) { sprites[(size_t)type] = move(sprite); }
+	Sprite* GetSprite(TexType type) { return sprites[(size_t)type].get(); }
 	void Update();
 	void Draw();
 };

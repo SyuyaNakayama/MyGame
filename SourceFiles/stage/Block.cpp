@@ -5,7 +5,7 @@ void Block::Initialize(const ObjectData& objectData)
 {
 	model = Model::Create("cube");
 	model->GetMaterial()->SetAnbient({ 0,0,0 });
-	Sprite* modelSprite = model->GetMaterial()->GetSprite();
+	Sprite* modelSprite = model->GetMaterial()->GetSprite(TexType::Main);
 	modelSprite->textureSize.x *= objectData.scale.x / 5.0f;
 	modelSprite->textureSize.y *= objectData.scale.z / 5.0f;
 	model->Update();
@@ -38,7 +38,7 @@ void Block::OnCollision(BoxCollider* collider)
 void Goal::Initialize(const ObjectData& objectData)
 {
 	model = Model::Create("cube");
-	Sprite* modelSprite = model->GetMaterial()->GetSprite();
+	Sprite* modelSprite = model->GetMaterial()->GetSprite(TexType::Main);
 	modelSprite->textureSize.x *= objectData.scale.x / 5.0f;
 	modelSprite->textureSize.y *= objectData.scale.z / 5.0f;
 	model->Update();
@@ -47,7 +47,7 @@ void Goal::Initialize(const ObjectData& objectData)
 	collisionAttribute = CollisionAttribute::Goal;
 	collisionMask = CollisionMask::Goal;
 	Material* material = model->GetMaterial();
-	material->SetSprite(Sprite::Create("white1x1.png"));
+	material->SetSprite(Sprite::Create("white1x1.png"), TexType::Main);
 	material->SetAnbient({ 1,1,1 });
 	material->SetDiffuse({ 1,1,1 });
 	model->Update();
