@@ -1,6 +1,7 @@
 #include "GamePlayScene.h"
 #include "Sprite.h"
 #include "ParticleManager.h"
+#include <imgui.h>
 
 void GamePlayScene::Initialize()
 {
@@ -17,8 +18,7 @@ void GamePlayScene::Initialize()
 	Model::SetViewProjection(&viewProjection);
 	Model::SetViewProjection(&debugCamera);
 	multiTexModel = Model::Create("multiTexSphere", true);
-	multiTexModel->GetMaterial()->GetSprite(TexType::Main)->color = { 0,0,1,1 };
-	multiTexModel->Update();
+	multiTexModel->GetMaterial()->GetSprite(TexType::Main)->color = { 1,1,0,1 };
 	multiTexModelWT.Initialize();
 	multiTexModelWT.translation.y = -50;
 	multiTexModelWT.scale *= 10;
@@ -29,6 +29,12 @@ void GamePlayScene::Update()
 {
 	debugCamera.Update();
 	stage.Update();
+	static Angle angle = 0;
+	float dissolvePow = -(std::cos(angle) - 0.9f) * 0.55f;
+	multiTexModel->GetMaterial()->SetDissolvePow(dissolvePow);
+	ImGui::Text("dissolvePow = %f", dissolvePow);
+	angle += 2;
+	multiTexModel->Update();
 }
 
 void GamePlayScene::Draw()

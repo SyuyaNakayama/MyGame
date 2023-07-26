@@ -8,6 +8,8 @@ void Block::Initialize(const ObjectData& objectData)
 	Sprite* modelSprite = model->GetMaterial()->GetSprite(TexType::Main);
 	modelSprite->textureSize.x *= objectData.scale.x / 5.0f;
 	modelSprite->textureSize.y *= objectData.scale.z / 5.0f;
+	model->GetMaterial()->SetSpecular({ 0,0,0 });
+	model->GetMaterial()->SetSprite(Sprite::Create("Scales.png"), TexType::Specular);
 	model->Update();
 	worldTransform = objectData;
 	if (objectData.collider.type == "PLANE") { normal = objectData.collider.normal; }
@@ -17,7 +19,6 @@ void Block::Initialize(const ObjectData& objectData)
 
 void Block::Update()
 {
-
 }
 
 void Block::Draw()

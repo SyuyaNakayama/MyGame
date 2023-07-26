@@ -29,7 +29,6 @@ void Physics::Update()
 		fallSpd += gravity - k_air * fallSpd / mass;
 		vel += fallSpd * gravityDir;
 	}
-	ImGui::Text("PlayerSpd = %f", vel.Length());
 	float friction = 1.0f - std::clamp(mu * mass * gravity, 0.0f, 1.0f); // –€ŽC—Í 
 	// ŠÈˆÕ“I‚É–€ŽC‚ð•\Œ»
 	vel *= friction;

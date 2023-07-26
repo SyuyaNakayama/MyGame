@@ -22,7 +22,7 @@ cbuffer cbuff1 : register(b1)
     Material material;
     TextureTransform texTrans[4];
 	float4 color[2];
-    float maskPow[2]; // マスクの強さ
+    float3 maskPow; // マスクの強さ
 }
 
 cbuffer cbuff2 : register(b2)
