@@ -111,6 +111,8 @@ void Material::Update()
 
 void Material::Draw()
 {
+	if (constMap->maskPow[2] <= 0) { PipelineManager::SetPipeline(PipelineType::Object); }
+	else { PipelineManager::SetPipeline(PipelineType::Dissolve); }
 	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
 	cmdList->SetGraphicsRootConstantBufferView((UINT)RootParamNum::Material, constBuffer->GetGPUVirtualAddress());
 	// シェーダリソースビューをセット

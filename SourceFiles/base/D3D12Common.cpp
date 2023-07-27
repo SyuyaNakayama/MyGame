@@ -66,8 +66,10 @@ void PipelineManager::Initialize()
 	pipelineProp.textureAddressMode = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
 	pipelineProp.isDepthTest = true;
 	pipelineProp.rootParamProp = { 5,4 };
-	pipelineProp.cullMode = D3D12_CULL_MODE_NONE;
 	pipelines[PipelineType::Object].CreatePipeline(pipelineProp);
+	
+	pipelineProp.cullMode = D3D12_CULL_MODE_NONE;
+	pipelines[PipelineType::Dissolve].CreatePipeline(pipelineProp);
 
 	pipelineProp.shaderNames = { L"ParticleVS", L"ParticlePS", L"ParticleGS" };
 	pipelineProp.inputLayoutProps.clear();

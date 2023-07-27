@@ -21,14 +21,14 @@ void Stage::Initialize()
 			newGoal->Initialize(objectData);
 			goals.push_back(std::move(newGoal));
 		}
-	}
-	player.Initialize();
-	for (size_t i = 0; i < 11; i++)
-	{
-		for (size_t j = 0; j < 5; j++)
+		else if (objectData.fileName == "Player")
+		{
+			player.Initialize(objectData);
+		}
+		else if (objectData.fileName == "Object")
 		{
 			std::unique_ptr<Object> newObj = std::make_unique<Object>();
-			newObj->Initialize({ -50 + 10 * (float)i,5,15 * (float)j });
+			newObj->Initialize(objectData);
 			objects.push_back(std::move(newObj));
 		}
 	}

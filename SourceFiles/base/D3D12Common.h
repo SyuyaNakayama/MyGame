@@ -78,7 +78,7 @@ public:
 	D3D12_CULL_MODE cullMode = D3D12_CULL_MODE_BACK;
 };
 
-enum class PipelineType { Sprite, PostEffect, Object, Particle };
+enum class PipelineType { Sprite, PostEffect, Object, Dissolve, Particle };
 
 class PipelineManager
 {

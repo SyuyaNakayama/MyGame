@@ -20,16 +20,22 @@ void Physics::Update()
 	if (mass == 0) { return; } // 0‚ÅŠ„‚é‚Ì‚ğ‘j~
 	worldTransform->translation += vel; // ˆÊ’u‚É‘¬“x‰ÁZ
 	worldTransform->Update();
+
 	forceDir.Normalize(); // —Í‚ÌŒü‚«³‹K‰»
 	accel = force / mass; // ‰^“®•û’ö® F = ma ‚Ì‰—p
 	vel += accel * forceDir; // ‘¬“x‚É‰Á‘¬“x‚ğ‰ÁZ
+	
 	// —‰ºˆ—
 	if (isFreeFall)
 	{
 		fallSpd += gravity - k_air * fallSpd / mass;
 		vel += fallSpd * gravityDir;
 	}
-	float friction = 1.0f - std::clamp(mu * mass * gravity, 0.0f, 1.0f); // –€C—Í 
-	// ŠÈˆÕ“I‚É–€C‚ğ•\Œ»
-	vel *= friction;
+	else
+	{
+		// –€C‚ğ•\Œ»
+		float friction = mu * mass * gravity; // –€C—Í
+		float nextSpd = max(vel.Length() - friction, 0);
+		vel = Normalize(vel) * nextSpd;
+	}
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include "Collider.h"
 #include "PlayerCamera.h"
+#include "JsonLoader.h"
 
 class Player : public SphereCollider, public BoxCollider
 {
@@ -10,7 +11,7 @@ class Player : public SphereCollider, public BoxCollider
 	void Move();
 
 public:
-	void Initialize();
+	void Initialize(const ObjectData& objectData);
 	void Update();
 	void Draw();
 };

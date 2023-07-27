@@ -5,7 +5,7 @@
 class BaseCamera
 {
 protected:
-	float distance = 5.0f; // 注視点から視点までの距離
+	float distance = 50.0f; // 注視点から視点までの距離
 	ViewProjection viewProjection;
 	Vector2 angle = { 0,0.3f }; // カメラ回転量
 	WorldTransform worldTransform;

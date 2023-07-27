@@ -1,6 +1,7 @@
 #pragma once
 #include "Collider.h"
 #include "Model.h"
+#include "JsonLoader.h"
 
 // ゴールに運ぶオブジェクト
 class Object : public SphereCollider, public BoxCollider
@@ -9,7 +10,7 @@ class Object : public SphereCollider, public BoxCollider
 	bool isDestroy = false;
 
 public:
-	void Initialize(Vector3 pos);
+	void Initialize(const ObjectData& objectData);
 	void Update();
 	void Draw();
 	void OnCollision(SphereCollider* collider);
