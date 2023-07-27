@@ -162,7 +162,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Object3d.cpp" />
+    <ClCompile Include="SourceFiles\3d\Object3d.cpp" />
     <ClCompile Include="SourceFiles\3d\Material.cpp" />
     <ClCompile Include="SourceFiles\3d\PlayerCamera.cpp" />
     <ClCompile Include="SourceFiles\functions\Random.cpp" />
@@ -212,7 +212,7 @@
     <ClCompile Include="SourceFiles\stage\Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Object3d.h" />
+    <ClInclude Include="SourceFiles\3d\Object3d.h" />
     <ClInclude Include="SourceFiles\3d\Material.h" />
     <ClInclude Include="SourceFiles\3d\PlayerCamera.h" />
     <ClInclude Include="SourceFiles\functions\Random.h" />

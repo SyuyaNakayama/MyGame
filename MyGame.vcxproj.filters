@@ -291,7 +291,7 @@
     <ClCompile Include="SourceFiles\Json\JsonLoader.cpp">
       <Filter>ソース ファイル\Engine\Json</Filter>
     </ClCompile>
-    <ClCompile Include="Object3d.cpp">
+    <ClCompile Include="SourceFiles\3d\Object3d.cpp">
       <Filter>ソース ファイル\Engine\3d\Object</Filter>
     </ClCompile>
   </ItemGroup>
@@ -455,7 +455,7 @@
     <ClInclude Include="SourceFiles\Json\JsonLoader.h">
       <Filter>ソース ファイル\Engine\Json</Filter>
     </ClInclude>
-    <ClInclude Include="Object3d.h">
+    <ClInclude Include="SourceFiles\3d\Object3d.h">
       <Filter>ソース ファイル\Engine\3d\Object</Filter>
     </ClInclude>
   </ItemGroup>
