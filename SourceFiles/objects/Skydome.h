@@ -1,14 +1,13 @@
 #pragma once
-#include "Model.h"
+#include "Object3d.h"
 
 class Skydome
 {
 private:
-	WorldTransform worldTransform;
-	std::unique_ptr<Model> model;
+	std::unique_ptr<Object3d> object;
 
 public:
 	void Initialize(float scale);
-	void Update() { worldTransform.Update(); model->Update(); }
-	void Draw() { model->Draw(worldTransform); }
+	void Update() { object->Update(); }
+	void Draw() { object->Draw(); }
 };

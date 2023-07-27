@@ -5,7 +5,7 @@
 
 class Player : public SphereCollider, public BoxCollider
 {
-	std::unique_ptr<Model> model;
+	std::unique_ptr<Object3d> object;
 	std::unique_ptr<BaseCamera> camera;
 
 	void Move();

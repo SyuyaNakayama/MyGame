@@ -4,11 +4,11 @@
 
 void Player::Initialize(const ObjectData& objectData)
 {
-	model = Model::Create("player", true);
+	object = ModelManager::Create("player", true);
 	worldTransform.Initialize();
 	worldTransform.translation = objectData.translation;
 	camera = std::make_unique<PlayerCamera>();
-	Model::SetViewProjection(camera->GetViewProjection());
+	ModelManager::SetViewProjection(camera->GetViewProjection());
 	camera->Initialize(&worldTransform);
 	physics = Physics::Create(&worldTransform);
 	collisionAttribute = CollisionAttribute::Player;
@@ -42,5 +42,5 @@ void Player::Update()
 
 void Player::Draw()
 {
-	model->Draw(worldTransform);
+	object->Draw();
 }

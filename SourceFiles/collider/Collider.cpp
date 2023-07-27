@@ -49,7 +49,7 @@ void PolygonCollider::UpdateVertices()
 	for (Vector3& vertex : vertices) { vertex *= worldTransform.matWorld; }
 }
 
-//void MeshCollider::ConstructTriangles(Model* model)
+//void MeshCollider::ConstructTriangles(ModelManager* model)
 //{
 //	triangles.clear();
 //

@@ -1,45 +1,24 @@
-#include "Model.h"
+#include "ModelManager.h"
 #include "Sprite.h"
 using namespace Microsoft::WRL;
 using namespace std;
 
 // 静的メンバ変数の実体
-unique_ptr<LightGroup> Model::lightGroup;
-list<unique_ptr<Mesh>> Model::meshes;
-ViewProjection* Model::viewProjection = nullptr;
+unique_ptr<LightGroup> ModelManager::lightGroup;
+list<unique_ptr<Mesh>> ModelManager::meshes;
+ViewProjection* ModelManager::viewProjection = nullptr;
 
-void Model::StaticInitialize()
+void ModelManager::StaticInitialize()
 {
 	// ライトグループ生成
 	lightGroup = LightGroup::Create();
 	// カメラ生成
 	ViewProjection* viewProjection = new ViewProjection;
 	viewProjection->Initialize();
-	Model::viewProjection = viewProjection;
+	ModelManager::viewProjection = viewProjection;
 }
 
-std::unique_ptr<Model> Model::Create(const string& modelName, bool smoothing)
-{
-	unique_ptr<Model> newModel = make_unique<Model>();
-
-	for (auto& mesh : meshes)
-	{
-		if (!mesh->IsLoaded(modelName, smoothing)) { continue; }
-		// 既に読み込んでいたモデルの場合
-		newModel->mesh = mesh.get();
-		newModel->material.Load(mesh.get());
-		return newModel;
-	}
-
-	unique_ptr<Mesh> newMesh = make_unique<Mesh>();
-	newMesh->LoadOBJ(modelName, smoothing);
-	newModel->mesh = newMesh.get();
-	newModel->material.Load(newMesh.get());
-	meshes.push_back(move(newMesh));
-	return newModel;
-}
-
-std::unique_ptr<Object3d> Model::Create2(const std::string& modelName, bool smoothing)
+std::unique_ptr<Object3d> ModelManager::Create(const std::string& modelName, bool smoothing)
 {
 	unique_ptr<Object3d> newModel = make_unique<Object3d>();
 
@@ -62,7 +41,7 @@ std::unique_ptr<Object3d> Model::Create2(const std::string& modelName, bool smoo
 	return newModel;
 }
 
-void Model::PreDraw()
+void ModelManager::PreDraw()
 {
 	// コマンドリストをセット
 	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
@@ -78,20 +57,7 @@ void Model::PreDraw()
 	Sprite::SetDescriptorHeaps();
 }
 
-void Model::Update()
-{
-	material.Update();
-}
-
-void Model::Draw(const WorldTransform& worldTransform)
-{
-	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
-	cmdList->SetGraphicsRootConstantBufferView((UINT)RootParamNum::MatWorld, worldTransform.constBuffer->GetGPUVirtualAddress());
-	material.Draw();
-	mesh->Draw();
-}
-
-void Model::StaticUpdate()
+void ModelManager::StaticUpdate()
 {
 	lightGroup->Update();
 	viewProjection->Update();

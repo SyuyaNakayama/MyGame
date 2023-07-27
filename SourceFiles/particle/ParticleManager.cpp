@@ -2,7 +2,7 @@
 #include "ParticleManager.h"
 #include "Sprite.h"
 #include "D3D12Common.h"
-#include "Model.h"
+#include "ModelManager.h"
 using namespace Microsoft::WRL;
 
 // 静的メンバ変数の実体
@@ -19,7 +19,7 @@ void ParticleManager::Update()
 {
 	for (auto& particleGroup : particleGroups) { particleGroup.Update(); }
 	// 定数バッファへデータ転送
-	constMap->mat = Model::GetViewProjection()->GetViewProjectionMatrix();
+	constMap->mat = ModelManager::GetViewProjection()->GetViewProjectionMatrix();
 	constMap->matBillboard = Matrix4::GetBillboard();
 }
 

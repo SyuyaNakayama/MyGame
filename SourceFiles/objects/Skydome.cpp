@@ -1,8 +1,8 @@
 #include "Skydome.h"
+#include "ModelManager.h"
 
 void Skydome::Initialize(float scale)
 {
-	worldTransform.Initialize();
-	worldTransform.scale *= scale;
-	model = Model::Create("skydome");
+	object = ModelManager::Create("skydome", true);
+	object->worldTransform.scale *= scale;
 }

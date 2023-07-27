@@ -4,7 +4,7 @@
 
 struct Object3d
 {
-	friend class Model;
+	friend class ModelManager;
 	
 	Material material;
 	WorldTransform worldTransform;

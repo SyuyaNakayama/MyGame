@@ -1,4 +1,4 @@
-#include "Model.h"
+#include "ModelManager.h"
 #include "DirectXCommon.h"
 #include <cmath>
 #include <cassert>
@@ -221,7 +221,7 @@ Vector3 Normalize(const Vector3& v) { return Vector3(v).Normalize(); }
 Vector2 To2DVector(const Vector3& vec)
 {
 	Vector3 v = vec;
-	v *= Model::GetViewProjection()->GetViewProjectionMatrix();
+	v *= ModelManager::GetViewProjection()->GetViewProjectionMatrix();
 	v *= DirectXCommon::GetInstance()->GetViewportMatrix();
 	return v;
 }

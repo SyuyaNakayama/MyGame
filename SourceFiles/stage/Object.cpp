@@ -2,9 +2,9 @@
 
 void Object::Initialize(const ObjectData& objectData)
 {
-	model = Model::Create("player", true);
-	model->GetMaterial()->ambient = { 0,0,0 };
-	model->Update();
+	object = ModelManager::Create("player", true);
+	object->material.ambient = { 0,0,0 };
+	object->Update();
 	worldTransform.Initialize();
 	worldTransform.translation = objectData.translation;
 	worldTransform.scale = objectData.scale;
@@ -23,7 +23,7 @@ void Object::Update()
 
 void Object::Draw()
 {
-	model->Draw(worldTransform);
+	object->Draw();
 }
 
 void Object::OnCollision(SphereCollider* collider)

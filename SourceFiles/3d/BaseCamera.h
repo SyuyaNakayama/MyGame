@@ -1,5 +1,5 @@
 #pragma once
-#include "Model.h"
+#include "ModelManager.h"
 
 // オブジェクトに追従するカメラ
 class BaseCamera

@@ -1,12 +1,12 @@
 #pragma once
 #include "Collider.h"
-#include "Model.h"
+#include "Object3d.h"
 #include "JsonLoader.h"
 
 // ゴールに運ぶオブジェクト
 class Object : public SphereCollider, public BoxCollider
 {
-	std::unique_ptr<Model> model;
+	std::unique_ptr<Object3d> object;
 	bool isDestroy = false;
 
 public:

@@ -1,11 +1,11 @@
 #pragma once
 #include "Collider.h"
-#include "Model.h"
+#include "Object3d.h"
 #include "JsonLoader.h"
 
 class Block : public BoxCollider
 {
-	std::unique_ptr<Model> model;
+	std::unique_ptr<Object3d> object;
 	Vector3 normal;
 
 public:
@@ -17,7 +17,7 @@ public:
 
 class Goal : public BoxCollider
 {
-	std::unique_ptr<Model> model;
+	std::unique_ptr<Object3d> object;
 	Vector3 normal;
 
 public:

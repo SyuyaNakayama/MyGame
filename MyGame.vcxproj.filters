@@ -186,7 +186,7 @@
     <ClCompile Include="SourceFiles\3d\Mesh.cpp">
       <Filter>ソース ファイル\Engine\3d\Object</Filter>
     </ClCompile>
-    <ClCompile Include="SourceFiles\3d\Model.cpp">
+    <ClCompile Include="SourceFiles\3d\ModelManager.cpp">
       <Filter>ソース ファイル\Engine\3d\Object</Filter>
     </ClCompile>
     <ClCompile Include="SourceFiles\3d\WorldTransform.cpp">
@@ -344,7 +344,7 @@
     <ClInclude Include="SourceFiles\3d\Mesh.h">
       <Filter>ソース ファイル\Engine\3d\Object</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\3d\Model.h">
+    <ClInclude Include="SourceFiles\3d\ModelManager.h">
       <Filter>ソース ファイル\Engine\3d\Object</Filter>
     </ClInclude>
     <ClInclude Include="SourceFiles\3d\WorldTransform.h">

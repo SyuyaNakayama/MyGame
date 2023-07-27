@@ -160,5 +160,5 @@ public:
 //
 //public:
 //	std::vector<PolygonCollider> triangles;
-//	void ConstructTriangles(Model* model);
+//	void ConstructTriangles(ModelManager* model);
 //};

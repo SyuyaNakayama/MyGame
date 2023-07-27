@@ -1,5 +1,5 @@
 ﻿#include "MyGame.h"
-#include "Model.h"
+#include "ModelManager.h"
 #include "ImGuiManager.h"
 #include "Audio.h"
 
@@ -7,7 +7,7 @@ void MyGame::Initialize()
 {
 	Framework::Initialize();
 	sceneManager->ChangeScene(Scene::Play, false);
-	Model::StaticInitialize();
+	ModelManager::StaticInitialize();
 	ParticleManager::Initialize();
 	ParticleManager::AddParticleGroup("Particle.png");
 	ImGuiManager::Initialize();
@@ -20,7 +20,7 @@ void MyGame::Update()
 {
 	ImGuiManager::Begin();
 	Framework::Update();
-	Model::StaticUpdate();
+	ModelManager::StaticUpdate();
 	ParticleManager::Update();
 	ImGuiManager::End();
 }

@@ -3,14 +3,15 @@
 
 void Block::Initialize(const ObjectData& objectData)
 {
-	model = Model::Create("cube");
-	model->GetMaterial()->ambient = { 0,0,0 };
-	Sprite* modelSprite = model->GetMaterial()->GetSprite(TexType::Main);
-	modelSprite->textureSize.x *= objectData.scale.x / 5.0f;
-	modelSprite->textureSize.y *= objectData.scale.z / 5.0f;
-	model->GetMaterial()->specular = { 0,0,0 };
-	model->GetMaterial()->SetSprite(Sprite::Create("Scales.png"), TexType::Specular);
-	model->Update();
+	object = ModelManager::Create("cube");
+	Material& material = object->material;
+	material.ambient = { 0,0,0 };
+	Sprite* objectSprite = material.GetSprite(TexType::Main);
+	objectSprite->textureSize.x *= objectData.scale.x / 5.0f;
+	objectSprite->textureSize.y *= objectData.scale.z / 5.0f;
+	material.specular = { 0,0,0 };
+	material.SetSprite(Sprite::Create("Scales.png"), TexType::Specular);
+	object->Update();
 	worldTransform = objectData;
 	if (objectData.collider.type == "PLANE") { normal = objectData.collider.normal; }
 	collisionAttribute = CollisionAttribute::Block;
@@ -19,11 +20,12 @@ void Block::Initialize(const ObjectData& objectData)
 
 void Block::Update()
 {
+	object->Update();
 }
 
 void Block::Draw()
 {
-	model->Draw(worldTransform);
+	object->Draw();
 }
 
 void Block::OnCollision(BoxCollider* collider)
@@ -38,20 +40,19 @@ void Block::OnCollision(BoxCollider* collider)
 
 void Goal::Initialize(const ObjectData& objectData)
 {
-	model = Model::Create("cube");
-	Sprite* modelSprite = model->GetMaterial()->GetSprite(TexType::Main);
+	object = ModelManager::Create("cube");
+	Material& material = object->material;
+	material.SetSprite(Sprite::Create("white1x1.png"), TexType::Main);
+	material.ambient = { 1,1,1 };
+	material.diffuse = { 1,1,1 };
+	Sprite* modelSprite = material.GetSprite(TexType::Main);
 	modelSprite->textureSize.x *= objectData.scale.x / 5.0f;
 	modelSprite->textureSize.y *= objectData.scale.z / 5.0f;
-	model->Update();
+	object->Update();
 	worldTransform = objectData;
 	if (objectData.collider.type == "PLANE") { normal = objectData.collider.normal; }
 	collisionAttribute = CollisionAttribute::Goal;
 	collisionMask = CollisionMask::Goal;
-	Material* material = model->GetMaterial();
-	material->SetSprite(Sprite::Create("white1x1.png"), TexType::Main);
-	material->ambient = { 1,1,1 };
-	material->diffuse = { 1,1,1 };
-	model->Update();
 }
 
 void Goal::Update()
@@ -61,7 +62,7 @@ void Goal::Update()
 
 void Goal::Draw()
 {
-	model->Draw(worldTransform);
+	object->Draw();
 }
 
 void Goal::OnCollision(BoxCollider* collider)

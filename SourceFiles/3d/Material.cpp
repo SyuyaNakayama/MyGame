@@ -2,7 +2,7 @@
 #include <fstream>
 #include "D3D12Common.h"
 #include "Mesh.h"
-#include "Model.h"
+#include "ModelManager.h"
 using namespace std;
 
 void LoadColorRGBStream(istringstream& stream, ColorRGB& color)

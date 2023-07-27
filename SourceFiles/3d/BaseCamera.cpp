@@ -5,7 +5,7 @@ void BaseCamera::Initialize(WorldTransform* parent)
 	worldTransform.Initialize();
 	worldTransform.translation = { 0,10.0f,-10.0f };
 	worldTransform.parent = parent;
-	Model::SetViewProjection(&viewProjection);
+	ModelManager::SetViewProjection(&viewProjection);
 	viewProjection.Initialize();
 }
 

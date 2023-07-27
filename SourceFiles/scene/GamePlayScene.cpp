@@ -8,17 +8,17 @@ void GamePlayScene::Initialize()
 	debugCamera.Initialize({ 0,10 });
 	for (size_t i = 1; i < 3; i++)
 	{
-		//Model::GetLightGroup()->SetDirLightActive(i, false);
+		//ModelManager::GetLightGroup()->SetDirLightActive(i, false);
 	}
 	viewProjection.Initialize();
 	viewProjection.eye.y = 250;
 	viewProjection.eye.z = -75;
 	viewProjection.target.z = 10;
-	Model::SetViewProjection(&viewProjection);
+	ModelManager::SetViewProjection(&viewProjection);
 	stage.Initialize();
-	Model::SetViewProjection(&debugCamera);
+	ModelManager::SetViewProjection(&debugCamera);
 
-	object = Model::Create2("cube");
+	object = ModelManager::Create("cube");
 }
 
 void GamePlayScene::Update()
@@ -32,8 +32,8 @@ void GamePlayScene::Update()
 
 void GamePlayScene::Draw()
 {
-	Model::PreDraw();
+	ModelManager::PreDraw();
 	stage.Draw();
 	object->Draw();
-	Model::PostDraw();
+	ModelManager::PostDraw();
 }
