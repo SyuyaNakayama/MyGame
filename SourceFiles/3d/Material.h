@@ -26,6 +26,7 @@ struct Material
 	void Draw();
 	Sprite* GetSprite(TexType texType) { return sprites[(size_t)texType].get(); }
 	void SetSprite(std::unique_ptr<Sprite> sprite, TexType type) { sprites[(size_t)type] = move(sprite); }
+	void TransferCBV();
 
 private:
 	// ƒ}ƒeƒŠƒAƒ‹

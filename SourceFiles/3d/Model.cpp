@@ -39,6 +39,29 @@ std::unique_ptr<Model> Model::Create(const string& modelName, bool smoothing)
 	return newModel;
 }
 
+std::unique_ptr<Object3d> Model::Create2(const std::string& modelName, bool smoothing)
+{
+	unique_ptr<Object3d> newModel = make_unique<Object3d>();
+
+	for (auto& mesh : meshes)
+	{
+		if (!mesh->IsLoaded(modelName, smoothing)) { continue; }
+		// 既に読み込んでいたモデルの場合
+		newModel->mesh = mesh.get();
+		newModel->material.Load(mesh.get());
+		newModel->worldTransform.Initialize();
+		return newModel;
+	}
+
+	unique_ptr<Mesh> newMesh = make_unique<Mesh>();
+	newMesh->LoadOBJ(modelName, smoothing);
+	newModel->mesh = newMesh.get();
+	newModel->material.Load(newMesh.get());
+	newModel->worldTransform.Initialize();
+	meshes.push_back(move(newMesh));
+	return newModel;
+}
+
 void Model::PreDraw()
 {
 	// コマンドリストをセット

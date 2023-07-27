@@ -25,6 +25,34 @@ void Material::LoadSprite(istringstream& line_stream, Mesh* mesh, TexType sprite
 	sprites[(size_t)spriteIndex] = Sprite::Create(path + textureFilename);
 }
 
+void Material::TransferCBV()
+{
+	for (size_t i = 0; i < constMap->texTrans.size(); i++)
+	{
+		constMap->texTrans[i].tiling =
+		{
+			sprites[i]->textureSize.x / sprites[i]->size.x,
+			sprites[i]->textureSize.y / sprites[i]->size.y
+		};
+
+		constMap->texTrans[i].uvOffset =
+		{
+			sprites[i]->textureLeftTop.x / sprites[i]->size.x,
+			sprites[i]->textureLeftTop.y / sprites[i]->size.y
+		};
+	}
+
+	for (size_t i = 0; i < constMap->color.size(); i++) { constMap->color[i] = sprites[i]->color; }
+	for (size_t i = 0; i < constMap->maskPow.size() - 1; i++)
+	{
+		constMap->maskPow[i] = sprites[(size_t)TexType::Blend + i]->color.r;
+	}
+
+	constMap->ambient = ambient;
+	constMap->diffuse = diffuse;
+	constMap->specular = specular;
+}
+
 void Material::Load(Mesh* mesh)
 {
 	ifstream file;
@@ -63,50 +91,13 @@ void Material::Load(Mesh* mesh)
 	// 定数バッファ生成
 	CreateBuffer(&constBuffer, &constMap, (sizeof(ConstBufferData) + 0xff) & ~0xff);
 
-	constMap->ambient = ambient;
-	constMap->diffuse = diffuse;
-	constMap->specular = specular;
-	for (auto& texTrans : constMap->texTrans)
-	{
-		texTrans.tiling = { 1,1 };
-		texTrans.uvOffset = { 0,0 };
-	}
-	for (auto& color : constMap->color) { color = { 1,1,1,1 }; }
-	for (size_t i = 0; i < constMap->maskPow.size(); i++)
-	{
-		constMap->maskPow[i] = sprites[(size_t)TexType::Blend + i]->color.r;
-	}
-	constMap->maskPow[2] = 0;
+	TransferCBV();
 }
 
 void Material::Update()
 {
 	for (auto& sprite : sprites) { sprite->Update(); }
-
-	for (size_t i = 0; i < constMap->texTrans.size(); i++)
-	{
-		constMap->texTrans[i].tiling =
-		{
-			sprites[i]->textureSize.x / sprites[i]->size.x,
-			sprites[i]->textureSize.y / sprites[i]->size.y
-		};
-
-		constMap->texTrans[i].uvOffset =
-		{
-			sprites[i]->textureLeftTop.x / sprites[i]->size.x,
-			sprites[i]->textureLeftTop.y / sprites[i]->size.y
-		};
-	}
-
-	for (size_t i = 0; i < constMap->color.size(); i++) { constMap->color[i] = sprites[i]->color; }
-	for (size_t i = 0; i < constMap->maskPow.size() - 1; i++)
-	{
-		constMap->maskPow[i] = sprites[(size_t)TexType::Blend + i]->color.r;
-	}
-	constMap->maskPow[2];
-	constMap->ambient = ambient;
-	constMap->diffuse = diffuse;
-	constMap->specular = specular;
+	TransferCBV();
 }
 
 void Material::Draw()

@@ -1,9 +1,8 @@
 #pragma once
-#include "WorldTransform.h"
 #include "ViewProjection.h"
 #include "LightGroup.h"
-#include "Mesh.h"
 #include "D3D12Common.h"
+#include "Object3d.h"
 
 enum class RootParamNum { MatWorld = (int)TexType::Num, Material, Light, Camera };
 
@@ -34,6 +33,7 @@ public:
 	static void PostDraw() {}
 	// ÉÇÉfÉãçÏê¨
 	static std::unique_ptr<Model> Create(const std::string& modelName, bool smoothing = false);
+	static std::unique_ptr<Object3d> Create2(const std::string& modelName, bool smoothing = false);
 	static LightGroup* GetLightGroup() { return lightGroup.get(); }
 	static void SetViewProjection(ViewProjection* viewProjection_) { viewProjection = viewProjection_; }
 	static ViewProjection* GetViewProjection() { return viewProjection; }

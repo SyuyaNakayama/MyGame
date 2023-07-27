@@ -25,8 +25,8 @@ void Player::Move()
 	{
 		physics->SetForce(0.2f);
 		Vector3 forcedir;
-		forcedir.x = input->IsInput(Key::D) - input->IsInput(Key::A);
-		forcedir.z = input->IsInput(Key::W) - input->IsInput(Key::S);
+		forcedir.x = (float)(input->IsInput(Key::D) - input->IsInput(Key::A));
+		forcedir.z = (float)(input->IsInput(Key::W) - input->IsInput(Key::S));
 		forcedir *= Matrix4::RotateY(camera->GetAngle().x);
 		physics->SetForceDir(forcedir);
 	}

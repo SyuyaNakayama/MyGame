@@ -4,10 +4,11 @@
 
 struct Object3d
 {
+	friend class Model;
+	
 	Material material;
 	WorldTransform worldTransform;
 
-	void Initialize(const std::string& modelName);
 	void Update();
 	void Draw();
 
