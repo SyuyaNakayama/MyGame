@@ -6,6 +6,7 @@ struct Object3d
 {
 	Material material;
 	WorldTransform worldTransform;
+
 private:
 	Mesh* mesh;
 };

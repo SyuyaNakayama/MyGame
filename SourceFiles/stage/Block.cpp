@@ -4,11 +4,11 @@
 void Block::Initialize(const ObjectData& objectData)
 {
 	model = Model::Create("cube");
-	model->GetMaterial()->SetAnbient({ 0,0,0 });
+	model->GetMaterial()->ambient = { 0,0,0 };
 	Sprite* modelSprite = model->GetMaterial()->GetSprite(TexType::Main);
 	modelSprite->textureSize.x *= objectData.scale.x / 5.0f;
 	modelSprite->textureSize.y *= objectData.scale.z / 5.0f;
-	model->GetMaterial()->SetSpecular({ 0,0,0 });
+	model->GetMaterial()->specular = { 0,0,0 };
 	model->GetMaterial()->SetSprite(Sprite::Create("Scales.png"), TexType::Specular);
 	model->Update();
 	worldTransform = objectData;
@@ -49,8 +49,8 @@ void Goal::Initialize(const ObjectData& objectData)
 	collisionMask = CollisionMask::Goal;
 	Material* material = model->GetMaterial();
 	material->SetSprite(Sprite::Create("white1x1.png"), TexType::Main);
-	material->SetAnbient({ 1,1,1 });
-	material->SetDiffuse({ 1,1,1 });
+	material->ambient = { 1,1,1 };
+	material->diffuse = { 1,1,1 };
 	model->Update();
 }
 

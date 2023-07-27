@@ -3,7 +3,7 @@
 void Object::Initialize(const ObjectData& objectData)
 {
 	model = Model::Create("player", true);
-	model->GetMaterial()->SetAnbient({ 0,0,0 });
+	model->GetMaterial()->ambient = { 0,0,0 };
 	model->Update();
 	worldTransform.Initialize();
 	worldTransform.translation = objectData.translation;
@@ -31,11 +31,11 @@ void Object::OnCollision(SphereCollider* collider)
 	Physics* _physics = collider->GetPhysics();
 	if (!_physics) { return; }
 	// 自分と相手が衝突済なら処理をスキップ
-	if (physics->IsCollided() && _physics->IsCollided()) 
+	if (physics->IsCollided() && _physics->IsCollided())
 	{
 		physics->SetIsCollided(false);
 		_physics->SetIsCollided(false);
-		return; 
+		return;
 	}
 
 	// 弾性衝突
