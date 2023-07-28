@@ -1,6 +1,13 @@
 #include "Object3d.h"
 #include "ModelManager.h"
 
+void Object3d::Initialize(Mesh* mesh_)
+{
+	mesh = mesh_;
+	material.Load(mesh_);
+	worldTransform.Initialize();
+}
+
 void Object3d::Update()
 {
 	material.Update();

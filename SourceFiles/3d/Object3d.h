@@ -14,4 +14,5 @@ struct Object3d
 
 private:
 	Mesh* mesh;
+	void Initialize(Mesh* mesh);
 };

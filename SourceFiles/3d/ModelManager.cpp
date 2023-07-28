@@ -1,5 +1,6 @@
 #include "ModelManager.h"
 #include "Sprite.h"
+#include "D3D12Common.h"
 using namespace Microsoft::WRL;
 using namespace std;
 
@@ -26,17 +27,13 @@ std::unique_ptr<Object3d> ModelManager::Create(const std::string& modelName, boo
 	{
 		if (!mesh->IsLoaded(modelName, smoothing)) { continue; }
 		// Šù‚É“Ç‚Ýž‚ñ‚Å‚¢‚½ƒ‚ƒfƒ‹‚Ìê‡
-		newModel->mesh = mesh.get();
-		newModel->material.Load(mesh.get());
-		newModel->worldTransform.Initialize();
+		newModel->Initialize(mesh.get());
 		return newModel;
 	}
 
 	unique_ptr<Mesh> newMesh = make_unique<Mesh>();
 	newMesh->LoadOBJ(modelName, smoothing);
-	newModel->mesh = newMesh.get();
-	newModel->material.Load(newMesh.get());
-	newModel->worldTransform.Initialize();
+	newModel->Initialize(newMesh.get());
 	meshes.push_back(move(newMesh));
 	return newModel;
 }

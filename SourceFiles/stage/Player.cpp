@@ -5,15 +5,15 @@
 void Player::Initialize(const ObjectData& objectData)
 {
 	object = ModelManager::Create("player", true);
-	worldTransform.Initialize();
-	worldTransform.translation = objectData.translation;
+	worldTransform = &object->worldTransform;
+	worldTransform->translation = objectData.translation;
 	camera = std::make_unique<PlayerCamera>();
 	ModelManager::SetViewProjection(camera->GetViewProjection());
-	camera->Initialize(&worldTransform);
-	physics = Physics::Create(&worldTransform);
+	camera->Initialize(worldTransform);
+	physics = Physics::Create(worldTransform);
 	collisionAttribute = CollisionAttribute::Player;
 	collisionMask = CollisionMask::Player;
-	physics->SetMu(0.3f);
+	physics->SetMu(0.22f);
 }
 
 void Player::Move()
@@ -23,7 +23,7 @@ void Player::Move()
 	std::vector<Key> keys = { Key::D,Key::A,Key::W,Key::S };
 	if (input->IsAnyInput(keys))
 	{
-		physics->SetForce(0.2f);
+		physics->SetForce(0.15f);
 		Vector3 forcedir;
 		forcedir.x = (float)(input->IsInput(Key::D) - input->IsInput(Key::A));
 		forcedir.z = (float)(input->IsInput(Key::W) - input->IsInput(Key::S));

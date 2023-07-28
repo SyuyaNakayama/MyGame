@@ -1,5 +1,5 @@
 #pragma once
-#include "WorldTransform.h"
+#include "worldTransform.h"
 #include "Physics.h"
 #include <vector>
 #include <array>
@@ -37,7 +37,7 @@ class BaseCollider
 protected:
 	CollisionAttribute collisionAttribute = CollisionAttribute::All;
 	CollisionMask collisionMask = CollisionMask::All;
-	WorldTransform worldTransform;
+	WorldTransform* worldTransform = nullptr;
 	std::unique_ptr<Physics> physics;
 
 public:
@@ -52,9 +52,9 @@ public:
 
 	CollisionAttribute GetCollisionAttribute() { return collisionAttribute; }
 	CollisionMask GetCollisionMask() { return collisionMask; }
-	virtual Vector3 GetWorldPosition() { return worldTransform.GetWorldPosition(); }
+	virtual Vector3 GetWorldPosition() { return worldTransform->GetWorldPosition(); }
 	Physics* GetPhysics() { return physics.get(); }
-	void SetWorldTransform(const WorldTransform& worldTransform_) { worldTransform = worldTransform_; }
+	void SetWorldTransform(WorldTransform* worldTransform_) { worldTransform = worldTransform_; }
 };
 
 class BoxCollider : public virtual BaseCollider
@@ -63,7 +63,7 @@ public:
 	BoxCollider();
 	virtual ~BoxCollider();
 
-	virtual Vector3 GetRadius3D() { return worldTransform.scale; }
+	virtual Vector3 GetRadius3D() { return worldTransform->scale; }
 };
 
 class IncludeCollider : public virtual BaseCollider
@@ -91,7 +91,7 @@ public:
 	SphereCollider();
 	virtual ~SphereCollider();
 
-	virtual float GetRadius() { return worldTransform.scale.x; }
+	virtual float GetRadius() { return worldTransform->scale.x; }
 };
 
 class PlaneCollider : public virtual BaseCollider
@@ -108,9 +108,9 @@ public:
 
 	void SetInter(const Vector3& inter_) { inter = inter_; }
 	void SetDistance(float distance_) { distance = distance_; }
-	void SetRotation(const Vector3& rotation) { worldTransform.rotation = rotation; }
+	void SetRotation(const Vector3& rotation) { worldTransform->rotation = rotation; }
 	void SetBaseNormal(const Vector3& baseNormal_) { baseNormal = baseNormal_; }
-	virtual Vector3 GetNormal() { return baseNormal * Matrix4::Rotate(worldTransform.rotation); }
+	virtual Vector3 GetNormal() { return baseNormal * Matrix4::Rotate(worldTransform->rotation); }
 	virtual Vector3* GetInter() { return &inter; }
 	virtual float GetDistance() { return distance; }
 };
@@ -136,7 +136,7 @@ public:
 	void ToPlaneCollider(PlaneCollider* planeCollider);
 	void AddVertices(Vector3 pos) { vertices.push_back(pos); }
 	void SetBaseNormal(Vector3 baseNormal_) { baseNormal = baseNormal_; }
-	virtual Vector3 GetNormal() { return baseNormal * Matrix4::Rotate(worldTransform.rotation); }
+	virtual Vector3 GetNormal() { return baseNormal * Matrix4::Rotate(worldTransform->rotation); }
 	virtual void SetVertices();
 	virtual std::vector<Vector3> GetVertices() { return vertices; }
 };
@@ -149,7 +149,7 @@ public:
 	RayCollider();
 	virtual ~RayCollider();
 
-	virtual const Vector3 GetRayDirection() { return baseRayDirection * Matrix4::Rotate(worldTransform.rotation); }
+	virtual const Vector3 GetRayDirection() { return baseRayDirection * Matrix4::Rotate(worldTransform->rotation); }
 };
 
 //class MeshCollider : public BaseCollider

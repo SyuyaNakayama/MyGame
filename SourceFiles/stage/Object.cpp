@@ -5,12 +5,12 @@ void Object::Initialize(const ObjectData& objectData)
 	object = ModelManager::Create("player", true);
 	object->material.ambient = { 0,0,0 };
 	object->Update();
-	worldTransform.Initialize();
-	worldTransform.translation = objectData.translation;
-	worldTransform.scale = objectData.scale;
+	worldTransform = &object->worldTransform;
+	worldTransform->translation = objectData.translation;
+	worldTransform->scale = objectData.scale;
 	collisionAttribute = CollisionAttribute::Object;
 	collisionMask = CollisionMask::Object;
-	physics = Physics::Create(&worldTransform);
+	physics = Physics::Create(worldTransform);
 	physics->SetMass(0.5f);
 	//physics->SetMu(0.00f);
 }

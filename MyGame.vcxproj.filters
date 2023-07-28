@@ -39,9 +39,6 @@
     <Filter Include="ソース ファイル\Engine\Audio">
       <UniqueIdentifier>{1a47c7de-a104-490c-a030-9fc0100adf4f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Engine\Collider">
-      <UniqueIdentifier>{805bdbf2-d804-43b6-b7e8-fe0bd2617915}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Engine\Functions">
       <UniqueIdentifier>{823e7a3e-f66c-4d55-a1f7-a5ed16915fdf}</UniqueIdentifier>
     </Filter>
@@ -177,12 +174,6 @@
     <ClCompile Include="SourceFiles\audio\Audio.cpp">
       <Filter>ソース ファイル\Engine\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="SourceFiles\collider\Collider.cpp">
-      <Filter>ソース ファイル\Engine\Collider</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFiles\collider\CollisionManager.cpp">
-      <Filter>ソース ファイル\Engine\Collider</Filter>
-    </ClCompile>
     <ClCompile Include="SourceFiles\3d\Mesh.cpp">
       <Filter>ソース ファイル\Engine\3d\Object</Filter>
     </ClCompile>
@@ -294,6 +285,12 @@
     <ClCompile Include="SourceFiles\3d\Object3d.cpp">
       <Filter>ソース ファイル\Engine\3d\Object</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFiles\collider\Collider.cpp">
+      <Filter>ソース ファイル\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\collider\CollisionManager.cpp">
+      <Filter>ソース ファイル\Engine\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\math\Matrix4.h">
@@ -334,12 +331,6 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\audio\Audio.h">
       <Filter>ソース ファイル\Engine\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\collider\Collider.h">
-      <Filter>ソース ファイル\Engine\Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\collider\CollisionManager.h">
-      <Filter>ソース ファイル\Engine\Collider</Filter>
     </ClInclude>
     <ClInclude Include="SourceFiles\3d\Mesh.h">
       <Filter>ソース ファイル\Engine\3d\Object</Filter>
@@ -457,6 +448,12 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\3d\Object3d.h">
       <Filter>ソース ファイル\Engine\3d\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\collider\Collider.h">
+      <Filter>ソース ファイル\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\collider\CollisionManager.h">
+      <Filter>ソース ファイル\Engine\Physics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

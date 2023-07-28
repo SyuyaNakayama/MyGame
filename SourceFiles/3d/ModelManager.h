@@ -1,7 +1,6 @@
 #pragma once
 #include "ViewProjection.h"
 #include "LightGroup.h"
-#include "D3D12Common.h"
 #include "Object3d.h"
 
 enum class RootParamNum { MatWorld = (int)TexType::Num, Material, Light, Camera };
@@ -16,6 +15,8 @@ private:
 	static std::unique_ptr<LightGroup> lightGroup;
 	// 読み込んだモデル情報
 	static std::list<std::unique_ptr<Mesh>> meshes;
+	// 生成したオブジェクト
+	static std::list<std::unique_ptr<Object3d>> objects;
 	// ビュープロジェクションのポインタ
 	static ViewProjection* viewProjection;
 

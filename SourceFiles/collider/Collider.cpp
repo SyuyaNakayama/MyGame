@@ -19,8 +19,8 @@ IncludeCollider::~IncludeCollider() { CollisionManager::PopCollider(this); }
 
 void PolygonCollider::SetVertices()
 {
-	Vector3 objPos = worldTransform.translation;
-	Vector3 objRad = worldTransform.scale;
+	Vector3 objPos = worldTransform->translation;
+	Vector3 objRad = worldTransform->scale;
 	vertices.clear();
 	vertices.push_back(objPos + Vector3(-objRad.x, objRad.y, -objRad.z));
 	vertices.push_back(objPos + Vector3(objRad.x, objRad.y, -objRad.z));
@@ -40,13 +40,13 @@ void PolygonCollider::ComputeNormal()
 void PolygonCollider::ToPlaneCollider(PlaneCollider* planeCollider)
 {
 	planeCollider->SetDistance(distance);
-	planeCollider->SetRotation(worldTransform.rotation);
+	planeCollider->SetRotation(worldTransform->rotation);
 	planeCollider->SetBaseNormal(baseNormal);
 }
 
 void PolygonCollider::UpdateVertices()
 {
-	for (Vector3& vertex : vertices) { vertex *= worldTransform.matWorld; }
+	for (Vector3& vertex : vertices) { vertex *= worldTransform->matWorld; }
 }
 
 //void MeshCollider::ConstructTriangles(ModelManager* model)
