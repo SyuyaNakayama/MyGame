@@ -5,7 +5,7 @@
 
 void GamePlayScene::Initialize()
 {
-	debugCamera.Initialize({ 0,10 });
+	debugCamera.Initialize({ 0,0 });
 	for (size_t i = 1; i < 3; i++)
 	{
 		//ModelManager::GetLightGroup()->SetDirLightActive(i, false);

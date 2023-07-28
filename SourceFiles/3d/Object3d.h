@@ -7,7 +7,7 @@ struct Object3d
 	Material material;
 	WorldTransform worldTransform;
 	bool isDestroy = false;
-	bool isDraw = true;
+	bool isInvisible = false;
 
 private:
 	friend class ModelManager;	
