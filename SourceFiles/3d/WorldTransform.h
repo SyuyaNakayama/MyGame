@@ -19,6 +19,7 @@ public:
 	Microsoft::WRL::ComPtr<ID3D12Resource> constBuffer;
 	Vector3 scale = { 1,1,1 }, rotation, translation;
 	WorldTransform* parent = nullptr;
+	bool isUpdated = false;
 
 	void Initialize();
 	void Update();

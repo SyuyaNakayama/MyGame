@@ -4,15 +4,15 @@
 
 struct Object3d
 {
-	friend class ModelManager;
-	
 	Material material;
 	WorldTransform worldTransform;
-
-	void Update();
-	void Draw();
+	bool isDestroy = false;
+	bool isDraw = true;
 
 private:
+	friend class ModelManager;	
 	Mesh* mesh;
 	void Initialize(Mesh* mesh);
+	void Update();
+	void Draw();
 };

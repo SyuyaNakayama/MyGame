@@ -7,12 +7,11 @@
 class Object : public SphereCollider, public BoxCollider
 {
 	Object3d* object;
-	bool isDestroy = false;
 
 public:
 	void Initialize(const ObjectData& objectData);
 	void Update();
 	void OnCollision(SphereCollider* collider);
-	void Destroy() { isDestroy = true; } // ”j‰ó‚·‚é
-	bool IsDestroy() { return isDestroy; }
+	void Destroy() { object->isDestroy = true; } // ”j‰ó‚·‚é
+	bool IsDestroy() { return object->isDestroy; }
 };

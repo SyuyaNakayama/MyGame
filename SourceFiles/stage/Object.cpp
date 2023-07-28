@@ -4,7 +4,6 @@ void Object::Initialize(const ObjectData& objectData)
 {
 	object = ModelManager::Create("player", true);
 	object->material.ambient = { 0,0,0 };
-	object->Update();
 	worldTransform = &object->worldTransform;
 	worldTransform->translation = objectData.translation;
 	worldTransform->scale = objectData.scale;

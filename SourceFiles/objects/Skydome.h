@@ -8,6 +8,4 @@ private:
 
 public:
 	void Initialize(float scale);
-	void Update() { object->Update(); }
-	void Draw() { object->Draw(); }
 };

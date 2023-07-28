@@ -7,7 +7,7 @@ void MyGame::Initialize()
 {
 	Framework::Initialize();
 	sceneManager->ChangeScene(Scene::Play, false);
-	ModelManager::StaticInitialize();
+	ModelManager::Initialize();
 	ParticleManager::Initialize();
 	ParticleManager::AddParticleGroup("Particle.png");
 	ImGuiManager::Initialize();
