@@ -8,7 +8,6 @@ class GamePlayScene : public BaseScene
 {
 	Stage stage;
 	ViewProjection viewProjection;
-	std::unique_ptr<Object3d> object;
 
 	void Initialize();
 	void Update();

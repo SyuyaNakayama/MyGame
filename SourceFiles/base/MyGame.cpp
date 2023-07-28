@@ -20,7 +20,7 @@ void MyGame::Update()
 {
 	ImGuiManager::Begin();
 	Framework::Update();
-	ModelManager::StaticUpdate();
+	ModelManager::Update();
 	ParticleManager::Update();
 	ImGuiManager::End();
 }
@@ -29,6 +29,7 @@ void MyGame::Draw()
 {
 	postEffect->PreDrawScene();
 	sceneManager->Draw();
+	ModelManager::DrawObjects();
 	ParticleManager::Draw();
 	postEffect->PostDrawScene();
 	

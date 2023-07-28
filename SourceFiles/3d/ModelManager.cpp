@@ -7,6 +7,7 @@ using namespace std;
 // 静的メンバ変数の実体
 unique_ptr<LightGroup> ModelManager::lightGroup;
 list<unique_ptr<Mesh>> ModelManager::meshes;
+list<unique_ptr<Object3d>> ModelManager::objects;
 ViewProjection* ModelManager::viewProjection = nullptr;
 
 void ModelManager::StaticInitialize()
@@ -19,7 +20,7 @@ void ModelManager::StaticInitialize()
 	ModelManager::viewProjection = viewProjection;
 }
 
-std::unique_ptr<Object3d> ModelManager::Create(const std::string& modelName, bool smoothing)
+Object3d* ModelManager::Create(const string& modelName, bool smoothing)
 {
 	unique_ptr<Object3d> newModel = make_unique<Object3d>();
 
@@ -28,17 +29,19 @@ std::unique_ptr<Object3d> ModelManager::Create(const std::string& modelName, boo
 		if (!mesh->IsLoaded(modelName, smoothing)) { continue; }
 		// 既に読み込んでいたモデルの場合
 		newModel->Initialize(mesh.get());
-		return newModel;
+		objects.push_back(move(newModel));
+		return objects.back().get();
 	}
 
 	unique_ptr<Mesh> newMesh = make_unique<Mesh>();
 	newMesh->LoadOBJ(modelName, smoothing);
 	newModel->Initialize(newMesh.get());
 	meshes.push_back(move(newMesh));
-	return newModel;
+	objects.push_back(move(newModel));
+	return objects.back().get();
 }
 
-void ModelManager::PreDraw()
+void ModelManager::DrawObjects()
 {
 	// コマンドリストをセット
 	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
@@ -52,10 +55,12 @@ void ModelManager::PreDraw()
 	cmdList->SetGraphicsRootConstantBufferView((UINT)RootParamNum::Camera, viewProjection->constBuffer->GetGPUVirtualAddress());
 	// デスクリプタヒープセット
 	Sprite::SetDescriptorHeaps();
+	for (auto& object : objects) { object->Draw(); }
 }
 
-void ModelManager::StaticUpdate()
+void ModelManager::Update()
 {
 	lightGroup->Update();
 	viewProjection->Update();
+	for (auto& object : objects) { object->Update(); }
 }

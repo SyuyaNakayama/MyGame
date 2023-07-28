@@ -21,11 +21,6 @@ void Object::Update()
 	physics->SetForce(0);
 }
 
-void Object::Draw()
-{
-	object->Draw();
-}
-
 void Object::OnCollision(SphereCollider* collider)
 {
 	Physics* _physics = collider->GetPhysics();

@@ -11,7 +11,6 @@ void Block::Initialize(const ObjectData& objectData)
 	objectSprite->textureSize.y *= objectData.scale.z / 5.0f;
 	material.specular = { 0,0,0 };
 	material.SetSprite(Sprite::Create("Scales.png"), TexType::Specular);
-	object->Update();
 	worldTransform = &object->worldTransform;
 	object->worldTransform = objectData;
 	if (objectData.collider.type == "PLANE") { normal = objectData.collider.normal; }
@@ -21,12 +20,6 @@ void Block::Initialize(const ObjectData& objectData)
 
 void Block::Update()
 {
-	object->Update();
-}
-
-void Block::Draw()
-{
-	object->Draw();
 }
 
 void Block::OnCollision(BoxCollider* collider)
@@ -52,7 +45,6 @@ void Goal::Initialize(const ObjectData& objectData)
 	worldTransform = &object->worldTransform;
 	object->worldTransform = objectData;
 	if (objectData.collider.type == "PLANE") { normal = objectData.collider.normal; }
-	object->Update();
 	collisionAttribute = CollisionAttribute::Goal;
 	collisionMask = CollisionMask::Goal;
 }
@@ -60,11 +52,6 @@ void Goal::Initialize(const ObjectData& objectData)
 void Goal::Update()
 {
 
-}
-
-void Goal::Draw()
-{
-	object->Draw();
 }
 
 void Goal::OnCollision(BoxCollider* collider)

@@ -42,11 +42,3 @@ void Stage::Update()
 	for (auto& goal : goals) { goal->Update(); }
 	//ImGui::Text("score = %d", score);
 }
-
-void Stage::Draw()
-{
-	for (auto& block : blocks) { block->Draw(); }
-	player.Draw();
-	for (auto& object : objects) { object->Draw(); }
-	for (auto& goal : goals) { goal->Draw(); }
-}

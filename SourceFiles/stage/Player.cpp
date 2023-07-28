@@ -39,8 +39,3 @@ void Player::Update()
 	camera->Update();
 	physics->Update();
 }
-
-void Player::Draw()
-{
-	object->Draw();
-}

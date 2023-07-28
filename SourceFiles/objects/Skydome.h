@@ -4,7 +4,7 @@
 class Skydome
 {
 private:
-	std::unique_ptr<Object3d> object;
+	Object3d* object;
 
 public:
 	void Initialize(float scale);

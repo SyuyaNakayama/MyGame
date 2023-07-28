@@ -17,23 +17,14 @@ void GamePlayScene::Initialize()
 	ModelManager::SetViewProjection(&viewProjection);
 	stage.Initialize();
 	ModelManager::SetViewProjection(&debugCamera);
-
-	object = ModelManager::Create("cube");
 }
 
 void GamePlayScene::Update()
 {
 	debugCamera.Update();
 	stage.Update();
-
-	object->worldTransform.translation.y -= 0.01f;
-	object->Update();
 }
 
 void GamePlayScene::Draw()
 {
-	ModelManager::PreDraw();
-	stage.Draw();
-	object->Draw();
-	ModelManager::PostDraw();
 }

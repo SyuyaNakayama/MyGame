@@ -17,7 +17,6 @@ public:
 	static const Vector2 STAGE_SIZE;
 	void Initialize();
 	void Update();
-	void Draw();
 	static void AddScore(int score) { Stage::score += score; }
 	static void Reset() { score = 0; }
 };

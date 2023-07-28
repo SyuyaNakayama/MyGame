@@ -24,13 +24,13 @@ public:
 	// 静的初期化
 	static void StaticInitialize();
 	// 静的更新
-	static void StaticUpdate();
+	static void Update();
 	// 描画前処理
-	static void PreDraw();
+	static void DrawObjects();
 	// 描画後処理
 	static void PostDraw() {}
 	// モデル作成
-	static std::unique_ptr<Object3d> Create(const std::string& modelName, bool smoothing = false);
+	static Object3d* Create(const std::string& modelName, bool smoothing = false);
 	static LightGroup* GetLightGroup() { return lightGroup.get(); }
 	static void SetViewProjection(ViewProjection* viewProjection_) { viewProjection = viewProjection_; }
 	static ViewProjection* GetViewProjection() { return viewProjection; }
