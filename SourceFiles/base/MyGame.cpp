@@ -2,6 +2,7 @@
 #include "ModelManager.h"
 #include "ImGuiManager.h"
 #include "Audio.h"
+#include "CollisionManager.h"
 
 void MyGame::Initialize()
 {
@@ -21,6 +22,7 @@ void MyGame::Update()
 	ImGuiManager::Begin();
 	Framework::Update();
 	ModelManager::Update();
+	CollisionManager::CheckAllCollisions();
 	ParticleManager::Update();
 	ImGuiManager::End();
 }

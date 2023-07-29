@@ -19,7 +19,6 @@ void Physics::Update()
 {
 	if (mass == 0) { return; } // 0‚ÅŠ„‚é‚Ì‚ð‘jŽ~
 	worldTransform->translation += vel; // ˆÊ’u‚É‘¬“x‰ÁŽZ
-	worldTransform->Update();
 
 	forceDir.Normalize(); // —Í‚ÌŒü‚«³‹K‰»
 	accel = force / mass; // ‰^“®•û’öŽ® F = ma ‚Ì‰ž—p
