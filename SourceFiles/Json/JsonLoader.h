@@ -1,6 +1,6 @@
 #pragma once
 #include <json.hpp>
-#include "ModelManager.h"
+#include "Object3d.h"
 
 struct ColliderData
 {
@@ -8,10 +8,11 @@ struct ColliderData
 	Vector3 center, size, normal;
 };
 
-struct ObjectData : public WorldTransform
+struct ObjectData
 {
 	std::string fileName;
 	ColliderData collider;
+	Object3d* object;
 };
 
 struct LevelData

@@ -1,6 +1,7 @@
 #include "JsonLoader.h"
 #include <fstream>
 #include <cassert>
+#include "ModelManager.h"
 
 const std::string JsonLoader::DEFAULT_BASE_DIRECTORY = "Resources/levels/";
 
@@ -23,22 +24,27 @@ void LevelData::LoadJsonRecursive(nlohmann::json& object, WorldTransform* parent
 			objectData.fileName = object["file_name"];
 		}
 
+		// 初期化
+		if (objectData.fileName.empty()) { objectData.fileName = "cube"; }
+		objectData.object = ModelManager::Create(objectData.fileName);
+		WorldTransform* worldTransform = &objectData.object->worldTransform;
+
 		// 親子関係を作る
-		objectData.parent = parent;
+		worldTransform->parent = parent;
 		// トランスフォームのパラメータ読み込み
 		nlohmann::json& transform = object["transform"];
 		// 平行移動
-		objectData.translation.x = (float)transform["translation"][1];
-		objectData.translation.y = (float)transform["translation"][2];
-		objectData.translation.z = -(float)transform["translation"][0];
+		worldTransform->translation.x = (float)transform["translation"][1];
+		worldTransform->translation.y = (float)transform["translation"][2];
+		worldTransform->translation.z = -(float)transform["translation"][0];
 		// 回転角
-		objectData.rotation.x = -(float)transform["rotation"][1];
-		objectData.rotation.y = -(float)transform["rotation"][2];
-		objectData.rotation.z = (float)transform["rotation"][0];
+		worldTransform->rotation.x = -(float)transform["rotation"][1];
+		worldTransform->rotation.y = -(float)transform["rotation"][2];
+		worldTransform->rotation.z = (float)transform["rotation"][0];
 		// スケーリング
-		objectData.scale.x = (float)transform["scaling"][1];
-		objectData.scale.y = (float)transform["scaling"][2];
-		objectData.scale.z = (float)transform["scaling"][0];
+		worldTransform->scale.x = (float)transform["scaling"][1];
+		worldTransform->scale.y = (float)transform["scaling"][2];
+		worldTransform->scale.z = (float)transform["scaling"][0];
 		
 		// コライダーのパラメータ読み込み
 		if (object.contains("collider"))
@@ -59,10 +65,6 @@ void LevelData::LoadJsonRecursive(nlohmann::json& object, WorldTransform* parent
 			objectData.collider.normal.y = (float)collider["normal"][2];
 			objectData.collider.normal.z = (float)collider["normal"][0];
 		}
-		// 初期化
-		if (objectData.fileName.empty()) { objectData.fileName = "cube"; }
-		objectData.Initialize();
-		objectData.Update();
 	}
 	// 再帰呼出で枝を走査する
 	if (object.contains("children"))
@@ -71,7 +73,7 @@ void LevelData::LoadJsonRecursive(nlohmann::json& object, WorldTransform* parent
 		ObjectData& objectData = objects.back();
 		for (nlohmann::json child : children)
 		{
-			LoadJsonRecursive(child, &objectData);
+			LoadJsonRecursive(child, &objectData.object->worldTransform);
 		}
 	}
 }
