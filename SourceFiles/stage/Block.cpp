@@ -20,6 +20,7 @@ void Block::Initialize(const ObjectData& objectData)
 
 void Block::Update()
 {
+	object->worldTransform.translation.y += 0.1f;
 }
 
 void Block::OnCollision(BoxCollider* collider)

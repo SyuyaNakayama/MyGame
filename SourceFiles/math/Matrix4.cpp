@@ -19,6 +19,13 @@ Matrix4 Matrix4::operator*=(const Matrix4& m2)
 	return *this;
 }
 
+void Matrix4::InportVector(const Vector3& vec, size_t row)
+{
+	m[row][0] = vec.x;
+	m[row][1] = vec.y;
+	m[row][2] = vec.z;
+}
+
 Matrix4 Matrix4::Identity()
 {
 	Matrix4 result
@@ -155,7 +162,7 @@ Matrix4 Matrix4::Inverse(const Matrix4& m)
 	mat[2][6] = 1;
 	mat[3][7] = 1;
 
-	for (int n = 0; n < 4; n++) 
+	for (int n = 0; n < 4; n++)
 	{
 		// 最大の絶対値を探索する(とりあえず対象成分を最大と仮定しておく)
 		float max = abs(mat[n][n]);
@@ -163,7 +170,7 @@ Matrix4 Matrix4::Inverse(const Matrix4& m)
 
 		for (int i = n + 1; i < 4; i++)
 		{
-			if (abs(mat[i][n]) > max) 
+			if (abs(mat[i][n]) > max)
 			{
 				max = abs(mat[i][n]);
 				maxIndex = i;
@@ -171,15 +178,15 @@ Matrix4 Matrix4::Inverse(const Matrix4& m)
 		}
 
 		// 最大の絶対値が0だったら逆行列は求められない
-		if (abs(mat[maxIndex][n]) <= 1.0e-6f) 
+		if (abs(mat[maxIndex][n]) <= 1.0e-6f)
 		{
-			return result; // とりあえず単位行列返しちゃう
+			return result; // 単位行列を返す
 		}
 
 		// 入れ替え
-		if (n != maxIndex) 
+		if (n != maxIndex)
 		{
-			for (int i = 0; i < 8; i++) 
+			for (int i = 0; i < 8; i++)
 			{
 				float f = mat[maxIndex][i];
 				mat[maxIndex][i] = mat[n][i];
@@ -194,7 +201,7 @@ Matrix4 Matrix4::Inverse(const Matrix4& m)
 		for (int i = 0; i < 8; i++) { mat[n][i] *= mul; }
 
 		// 他全部0にする
-		for (int i = 0; i < 4; i++) 
+		for (int i = 0; i < 4; i++)
 		{
 			if (n == i) { continue; }
 
@@ -205,7 +212,7 @@ Matrix4 Matrix4::Inverse(const Matrix4& m)
 	}
 
 	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 4; j++) 
+		for (int j = 0; j < 4; j++)
 		{
 			result.m[i][j] = mat[i][j + 4];
 		}

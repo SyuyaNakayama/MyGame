@@ -17,7 +17,8 @@ void Object3d::Update()
 void Object3d::Draw()
 {
 	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
-	cmdList->SetGraphicsRootConstantBufferView((UINT)RootParamNum::MatWorld, worldTransform.constBuffer->GetGPUVirtualAddress());
+	cmdList->SetGraphicsRootConstantBufferView(
+		(UINT)RootParamNum::MatWorld, worldTransform.constBuffer->GetGPUVirtualAddress());
 	worldTransform.isUpdated = false;
 	material.Draw();
 	mesh->Draw();
