@@ -4,8 +4,9 @@
 
 void Player::Initialize(const ObjectData& objectData)
 {
-	object = objectData.object;
-	worldTransform = &object->worldTransform;
+	object = ModelManager::Create("player", true);
+	object->worldTransform.reset(objectData.worldTransform);
+	worldTransform = object->worldTransform.get();
 	camera = std::make_unique<PlayerCamera>();
 	ModelManager::SetViewProjection(camera->GetViewProjection());
 	camera->Initialize(worldTransform);

@@ -3,8 +3,9 @@
 
 void Block::Initialize(const ObjectData& objectData)
 {
-	object = objectData.object;
-	worldTransform = &object->worldTransform;
+	object = ModelManager::Create("cube", true);
+	object->worldTransform.reset(objectData.worldTransform);
+	worldTransform = object->worldTransform.get();
 	Material& material = object->material;
 	material.ambient = { 0,0,0 };
 	Sprite* objectSprite = material.GetSprite(TexType::Main);
@@ -19,7 +20,6 @@ void Block::Initialize(const ObjectData& objectData)
 
 void Block::Update()
 {
-	object->worldTransform.translation.y += 0.1f;
 }
 
 void Block::OnCollision(BoxCollider* collider)
@@ -34,8 +34,9 @@ void Block::OnCollision(BoxCollider* collider)
 
 void Goal::Initialize(const ObjectData& objectData)
 {
-	object = objectData.object;
-	worldTransform = &object->worldTransform;
+	object = ModelManager::Create("cube", true);
+	object->worldTransform.reset(objectData.worldTransform);
+	worldTransform = object->worldTransform.get();
 	Material& material = object->material;
 	material.SetSprite(Sprite::Create("white1x1.png"), TexType::Main);
 	material.ambient = { 1,1,1 };

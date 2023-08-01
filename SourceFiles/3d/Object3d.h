@@ -5,10 +5,9 @@
 struct Object3d
 {
 	Material material;
-	WorldTransform worldTransform;
+	std::unique_ptr<WorldTransform> worldTransform;
 	bool isDestroy = false;
 	bool isInvisible = false;
-
 
 private:
 	friend class ModelManager;	

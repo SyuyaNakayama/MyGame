@@ -12,7 +12,7 @@ struct ObjectData
 {
 	std::string fileName;
 	ColliderData collider;
-	Object3d* object;
+	WorldTransform* worldTransform;
 };
 
 struct LevelData

@@ -4,5 +4,5 @@
 void Skydome::Initialize(float scale)
 {
 	object = ModelManager::Create("skydome", true);
-	object->worldTransform.scale *= scale;
+	object->worldTransform->scale *= scale;
 }

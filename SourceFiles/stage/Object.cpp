@@ -3,9 +3,10 @@
 
 void Object::Initialize(const ObjectData& objectData)
 {
-	object = objectData.object;
+	object = ModelManager::Create("player", true);
+	object->worldTransform.reset(objectData.worldTransform);
 	object->material.ambient = { 0,0,0 };
-	worldTransform = &object->worldTransform;
+	worldTransform = object->worldTransform.get();
 	collisionAttribute = CollisionAttribute::Object;
 	collisionMask = CollisionMask::Object;
 	physics = Physics::Create(worldTransform);

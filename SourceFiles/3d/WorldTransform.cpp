@@ -1,6 +1,7 @@
 #include "WorldTransform.h"
 #include "D3D12Common.h"
 #include "ImGuiManager.h"
+#include "ModelManager.h"
 
 void WorldTransform::Initialize()
 {
@@ -21,4 +22,12 @@ void WorldTransform::Update()
 	}
 	isUpdated = true;
 	constMap->world = matWorld;
+}
+
+void WorldTransform::Draw()
+{
+	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
+	cmdList->SetGraphicsRootConstantBufferView(
+		(UINT)RootParamNum::MatWorld, constBuffer->GetGPUVirtualAddress());
+	isUpdated = false;
 }
