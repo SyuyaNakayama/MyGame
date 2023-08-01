@@ -1,13 +1,11 @@
 #include "Object.h"
+#include "ModelManager.h"
 
 void Object::Initialize(const ObjectData& objectData)
 {
-	object = ModelManager::Create("player", true);
+	object = objectData.object;
 	object->material.ambient = { 0,0,0 };
 	worldTransform = &object->worldTransform;
-	worldTransform->parent = objectData.parent;
-	worldTransform->translation = objectData.translation;
-	worldTransform->scale = objectData.scale;
 	collisionAttribute = CollisionAttribute::Object;
 	collisionMask = CollisionMask::Object;
 	physics = Physics::Create(worldTransform);

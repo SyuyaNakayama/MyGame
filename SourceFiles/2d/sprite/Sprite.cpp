@@ -99,7 +99,7 @@ TextureData* Sprite::LoadTexture(const std::string& FILE_NAME, uint32_t mipLevel
 	if (mipLevels == MIP_LEVELS_DEFAULT) { srvDesc.Texture2D.MipLevels = textureResourceDesc.MipLevels; }
 	else { srvDesc.Texture2D.MipLevels = mipLevels; }
 
-	uint32_t textureIndex = textures.size();
+	UINT textureIndex = (UINT)textures.size();
 	CD3DX12_CPU_DESCRIPTOR_HANDLE srvHandle = CD3DX12_CPU_DESCRIPTOR_HANDLE(
 		srvHeap->GetCPUDescriptorHandleForHeapStart(), textureIndex,
 		device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV));

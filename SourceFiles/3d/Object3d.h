@@ -9,6 +9,7 @@ struct Object3d
 	bool isDestroy = false;
 	bool isInvisible = false;
 
+
 private:
 	friend class ModelManager;	
 	Mesh* mesh;

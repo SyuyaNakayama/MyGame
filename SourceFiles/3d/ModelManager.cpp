@@ -41,13 +41,6 @@ Object3d* ModelManager::Create(const string& modelName, bool smoothing)
 	return objects.back().get();
 }
 
-void ModelManager::RemoveObject(Object3d* object)
-{
-	std::unique_ptr<Object3d> instance;
-	instance.reset(object);
-	objects.remove(instance);
-}
-
 void ModelManager::DrawObjects()
 {
 	// コマンドリストをセット

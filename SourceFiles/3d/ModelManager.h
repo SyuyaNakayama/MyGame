@@ -26,8 +26,6 @@ public:
 	static void DrawObjects();
 	// モデル作成
 	static Object3d* Create(const std::string& modelName, bool smoothing = false);
-	// オブジェクトの除外
-	static void RemoveObject(Object3d* object);
 	static LightGroup* GetLightGroup() { return lightGroup.get(); }
 	static void SetViewProjection(ViewProjection* viewProjection_) { viewProjection = viewProjection_; }
 	static ViewProjection* GetViewProjection() { return viewProjection; }

@@ -26,7 +26,7 @@ void LevelData::LoadJsonRecursive(nlohmann::json& object, WorldTransform* parent
 
 		// ‰Šú‰»
 		if (objectData.fileName.empty()) { objectData.fileName = "cube"; }
-		objectData.object = ModelManager::Create(objectData.fileName);
+		objectData.object = ModelManager::Create("cube");
 		WorldTransform* worldTransform = &objectData.object->worldTransform;
 
 		// eqŠÖŒW‚ğì‚é

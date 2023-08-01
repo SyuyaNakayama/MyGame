@@ -3,16 +3,15 @@
 
 void Block::Initialize(const ObjectData& objectData)
 {
-	object = ModelManager::Create("cube");
+	object = objectData.object;
+	worldTransform = &object->worldTransform;
 	Material& material = object->material;
 	material.ambient = { 0,0,0 };
 	Sprite* objectSprite = material.GetSprite(TexType::Main);
-	objectSprite->textureSize.x *= objectData.scale.x / 5.0f;
-	objectSprite->textureSize.y *= objectData.scale.z / 5.0f;
+	objectSprite->textureSize.x *= worldTransform->scale.x / 5.0f;
+	objectSprite->textureSize.y *= worldTransform->scale.z / 5.0f;
 	material.specular = { 0,0,0 };
 	material.SetSprite(Sprite::Create("Scales.png"), TexType::Specular);
-	worldTransform = &object->worldTransform;
-	object->worldTransform = objectData;
 	if (objectData.collider.type == "PLANE") { normal = objectData.collider.normal; }
 	collisionAttribute = CollisionAttribute::Block;
 	collisionMask = CollisionMask::Block;
@@ -35,16 +34,15 @@ void Block::OnCollision(BoxCollider* collider)
 
 void Goal::Initialize(const ObjectData& objectData)
 {
-	object = ModelManager::Create("cube");
+	object = objectData.object;
+	worldTransform = &object->worldTransform;
 	Material& material = object->material;
 	material.SetSprite(Sprite::Create("white1x1.png"), TexType::Main);
 	material.ambient = { 1,1,1 };
 	material.diffuse = { 1,1,1 };
 	Sprite* modelSprite = material.GetSprite(TexType::Main);
-	modelSprite->textureSize.x *= objectData.scale.x / 5.0f;
-	modelSprite->textureSize.y *= objectData.scale.z / 5.0f;
-	worldTransform = &object->worldTransform;
-	object->worldTransform = objectData;
+	modelSprite->textureSize.x *= worldTransform->scale.x / 5.0f;
+	modelSprite->textureSize.y *= worldTransform->scale.z / 5.0f;
 	if (objectData.collider.type == "PLANE") { normal = objectData.collider.normal; }
 	collisionAttribute = CollisionAttribute::Goal;
 	collisionMask = CollisionMask::Goal;
