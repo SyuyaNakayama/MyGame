@@ -3,7 +3,7 @@
 
 void Block::Initialize(const ObjectData& objectData)
 {
-	object = ModelManager::Create("cube", true);
+	object = ModelManager::Create("cube");
 	object->worldTransform.reset(objectData.worldTransform);
 	worldTransform = object->worldTransform.get();
 	Material& material = object->material;
@@ -34,7 +34,7 @@ void Block::OnCollision(BoxCollider* collider)
 
 void Goal::Initialize(const ObjectData& objectData)
 {
-	object = ModelManager::Create("cube", true);
+	object = ModelManager::Create("cube");
 	object->worldTransform.reset(objectData.worldTransform);
 	worldTransform = object->worldTransform.get();
 	Material& material = object->material;

@@ -6,7 +6,7 @@ using namespace std;
 
 // 静的メンバ変数の実体
 unique_ptr<LightGroup> ModelManager::lightGroup;
-list<unique_ptr<Mesh>> ModelManager::meshes;
+unordered_map<string, array<unique_ptr<Mesh>, 2>> ModelManager::meshes;
 list<unique_ptr<Object3d>> ModelManager::objects;
 ViewProjection* ModelManager::viewProjection = nullptr;
 
@@ -22,22 +22,23 @@ void ModelManager::Initialize()
 
 Object3d* ModelManager::Create(const string& modelName, bool smoothing)
 {
-	unique_ptr<Object3d> newModel = make_unique<Object3d>();
+	unique_ptr<Object3d> newObj3d = make_unique<Object3d>();
 
-	for (auto& mesh : meshes)
+	// モデルの再読み込みをチェック
+	Mesh* mesh = meshes[modelName][smoothing].get();
+	if (mesh)
 	{
-		if (!mesh->IsLoaded(modelName, smoothing)) { continue; }
 		// 既に読み込んでいたモデルの場合
-		newModel->Initialize(mesh.get());
-		objects.push_back(move(newModel));
+		newObj3d->Initialize(mesh);
+		objects.push_back(move(newObj3d));
 		return objects.back().get();
 	}
 
 	unique_ptr<Mesh> newMesh = make_unique<Mesh>();
 	newMesh->LoadOBJ(modelName, smoothing);
-	newModel->Initialize(newMesh.get());
-	meshes.push_back(move(newMesh));
-	objects.push_back(move(newModel));
+	newObj3d->Initialize(newMesh.get());
+	meshes[modelName][smoothing] = move(newMesh);
+	objects.push_back(move(newObj3d));
 	return objects.back().get();
 }
 
