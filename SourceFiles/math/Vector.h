@@ -22,6 +22,7 @@ public:
 	Vector2& operator-=(const Vector2& v);
 	Vector2& operator*=(float s);
 	Vector2& operator/=(float s);
+	float operator[](size_t index);
 };
 
 class Matrix4;

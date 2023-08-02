@@ -12,7 +12,8 @@ public:
 		0.0f,0.0f,0.0f,1.0f
 	};
 	Matrix4 operator*=(const Matrix4& m2);
-	void InportVector(const Vector3& vec, size_t row); // ベクトルの代入
+	void SetVector(Vector3& vec, size_t row); // ベクトルの代入
+	Vector3 GetVector(size_t row) const; // 行列からベクトルを得る
 
 	// 静的関数
 	static Matrix4 Identity();

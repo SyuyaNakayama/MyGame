@@ -38,6 +38,16 @@ Vector2& Vector2::operator/=(float s)
 	return *this;
 }
 
+float Vector2::operator[](size_t index)
+{
+	switch (index)
+	{
+	case (size_t)Axis::X: return x;
+	case (size_t)Axis::Y: return y;
+	default: assert(0); return x;
+	}
+}
+
 const Vector2 operator+(const Vector2& v1, const Vector2& v2)
 {
 	Vector2 temp(v1);
@@ -155,9 +165,9 @@ float& Vector3::operator[](size_t index)
 {
 	switch (index)
 	{
-	case 0: return x;
-	case 1:	return y;
-	case 2:	return z;
+	case (size_t)Axis::X: return x;
+	case (size_t)Axis::Y: return y;
+	case (size_t)Axis::Z: return z;
 	default: assert(0); return z;
 	}
 }

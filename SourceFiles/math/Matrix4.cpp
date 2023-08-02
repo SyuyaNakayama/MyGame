@@ -19,11 +19,14 @@ Matrix4 Matrix4::operator*=(const Matrix4& m2)
 	return *this;
 }
 
-void Matrix4::InportVector(const Vector3& vec, size_t row)
+void Matrix4::SetVector(Vector3& vec, size_t row)
 {
-	m[row][0] = vec.x;
-	m[row][1] = vec.y;
-	m[row][2] = vec.z;
+	for (size_t i = 0; i < 3; i++) { m[row][i] = vec[i]; }
+}
+
+Vector3 Matrix4::GetVector(size_t row) const
+{
+	return Vector3(m[row][0], m[row][1], m[row][2]);
 }
 
 Matrix4 Matrix4::Identity()

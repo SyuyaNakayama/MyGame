@@ -25,4 +25,5 @@ public:
 	void Update();
 	void Draw();
 	Vector3 GetWorldPosition() { return { matWorld.m[3][0],matWorld.m[3][1],matWorld.m[3][2] }; }
+	Vector3 GetScale();
 };

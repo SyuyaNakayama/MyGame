@@ -1,6 +1,5 @@
 #include "WorldTransform.h"
 #include "D3D12Common.h"
-#include "ImGuiManager.h"
 #include "ModelManager.h"
 
 void WorldTransform::Initialize()
@@ -15,10 +14,10 @@ void WorldTransform::Update()
 	Matrix4 matScale = Matrix4::Scale(scale);
 	Matrix4 matRot = Matrix4::Rotate(rotation);
 	matWorld = matScale * matRot;
-	matWorld.InportVector(translation, 3);
+	matWorld.SetVector(translation, 3);
 	if (parent)
 	{
-		matWorld *= parent->matWorld; 
+		matWorld *= parent->matWorld;
 	}
 	isUpdated = true;
 	constMap->world = matWorld;
@@ -30,4 +29,12 @@ void WorldTransform::Draw()
 	cmdList->SetGraphicsRootConstantBufferView(
 		(UINT)RootParamNum::MatWorld, constBuffer->GetGPUVirtualAddress());
 	isUpdated = false;
+}
+
+Vector3 WorldTransform::GetScale()
+{
+	Vector3 scale;
+	// グローバル行列からスケール値を抽出
+	for (size_t i = 0; i < 3; i++) { scale[i] = matWorld.GetVector(i).Length(); }
+	return scale;
 }
