@@ -3,7 +3,7 @@
 
 void Block::Initialize(const ObjectData& objectData)
 {
-	object = ModelManager::Create("cube");
+	object = ModelManager::Create("cube",true);
 	object->worldTransform.reset(objectData.worldTransform);
 	worldTransform = object->worldTransform.get();
 	Material& material = object->material;
@@ -11,8 +11,8 @@ void Block::Initialize(const ObjectData& objectData)
 	Sprite* objectSprite = material.GetSprite(TexType::Main);
 	objectSprite->textureSize.x *= worldTransform->scale.x / 5.0f;
 	objectSprite->textureSize.y *= worldTransform->scale.z / 5.0f;
-	material.specular = { 0,0,0 };
-	material.SetSprite(Sprite::Create("Scales.png"), TexType::Specular);
+	//material.specular = { 0,0,0 };
+	material.specular = { 0.5f,0.5f,0.5f };
 	if (objectData.collider.type == "PLANE") { normal = objectData.collider.normal; }
 	collisionAttribute = CollisionAttribute::Block;
 	collisionMask = CollisionMask::Block;

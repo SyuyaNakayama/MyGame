@@ -1,4 +1,5 @@
 #include "Obj.hlsli"
+#include "Functions.hlsli"
 
 Texture2D<float4> mainTex : register(t0); // 0番スロットに設定されたテクスチャ
 Texture2D<float4> subTex : register(t1); // 1番スロットに設定されたテクスチャ
@@ -27,7 +28,10 @@ float4 main(VSOutput input) : SV_TARGET
     // テクスチャブレンド
     float4 texcolor = lerp(mainTexColor, subTexColor, blendMaskVal);
     
-    lightData.normal = input.normal;
+    float pnR = FractalSumNoise(10, input.uv);
+    float pnG = FractalSumNoise(10, input.uv + 1.0);
+    lightData.normal = (float3(pnR, pnG, pnR + pnG));
+    //lightData.normal = input.normal;
     lightData.worldpos = input.worldpos.xyz;
 	// 頂点から視点への方向ベクトル
     lightData.eyedir = normalize(cameraPos - input.worldpos.xyz);
@@ -40,5 +44,6 @@ float4 main(VSOutput input) : SV_TARGET
     float4 shadecolor = float4(lightGroup.ambientColor * ambient, 1.0f);
     shadecolor.rgb += lightGroup.ComputeLightEffect(lightData, material);
     shadecolor.a = 1.0f;
+    
     return shadecolor;
 }

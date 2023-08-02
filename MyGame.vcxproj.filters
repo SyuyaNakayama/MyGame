@@ -116,6 +116,9 @@
     <None Include="Resources\shaders\Light.hlsli">
       <Filter>シェーダー ファイル</Filter>
     </None>
+    <None Include="Resources\shaders\Functions.hlsli">
+      <Filter>シェーダー ファイル</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\SpritePS.hlsl">
