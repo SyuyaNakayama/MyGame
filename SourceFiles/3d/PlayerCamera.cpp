@@ -29,4 +29,5 @@ void PlayerCamera::Update()
 	angle.y = std::clamp(angle.y, -PI / 2.5f, PI / 2.5f);
 	BaseCamera::Update();
 	parentPrePos = worldTransform.parent->GetWorldPosition();
+	if (input->IsTrigger(Key::_3)) { ModelManager::SetViewProjection(&viewProjection); }
 }

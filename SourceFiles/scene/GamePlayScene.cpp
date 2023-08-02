@@ -14,13 +14,14 @@ void GamePlayScene::Initialize()
 	viewProjection.eye.y = 250;
 	viewProjection.eye.z = -75;
 	viewProjection.target.z = 10;
-	ModelManager::SetViewProjection(&viewProjection);
 	stage.Initialize();
 	ModelManager::SetViewProjection(&debugCamera);
 }
 
 void GamePlayScene::Update()
 {
+	if(input->IsTrigger(Key::_1)){ ModelManager::SetViewProjection(&viewProjection); }
+	if(input->IsTrigger(Key::_2)){ ModelManager::SetViewProjection(&debugCamera); }
 	debugCamera.Update();
 	stage.Update();
 }
