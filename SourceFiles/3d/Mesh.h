@@ -37,5 +37,4 @@ private:
 public:
 	void LoadOBJ(const std::string& modelName, bool isSmooth);
 	void Draw();
-	bool IsLoaded(const std::string& modelName, bool isSmooth);
 };

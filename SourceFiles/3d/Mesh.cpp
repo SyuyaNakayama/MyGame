@@ -19,7 +19,7 @@ void Mesh::CalculateSmoothedVertexNormals()
 		std::vector<UINT16>& v = itr.second;
 		// 全頂点の法線を平均する
 		Vector3 normal;
-		for (UINT16 index : v) { normal += vertices[index].normal; }
+		for (UINT16 index : v) { normal += Normalize(vertices[index].normal); }
 		normal = Normalize(normal / (float)v.size());
 		// 共通法線を使用する全ての頂点データに書き込む
 		for (UINT16 index : v) { vertices[index].normal = normal; }
@@ -160,11 +160,4 @@ void Mesh::Draw()
 	cmdList->IASetIndexBuffer(&ibView);
 	// 描画コマンド
 	cmdList->DrawIndexedInstanced((UINT)indices.size(), 1, 0, 0, 0);
-}
-
-bool Mesh::IsLoaded(const std::string& modelName_, bool isSmooth_)
-{
-	bool flag1 = modelName == modelName_;
-	bool flag2 = isSmooth == isSmooth_; // スムージングあり/なしを区別
-	return flag1 && flag2;
 }

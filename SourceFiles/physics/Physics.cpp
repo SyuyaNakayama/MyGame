@@ -15,6 +15,35 @@ std::unique_ptr<Physics> Physics::Create(WorldTransform* w)
 	return instance;
 }
 
+void Physics::Backlash(const Vector3& wallNormal, float e)
+{
+	Vector3 v = vel;
+	// 物体の変化後の速度
+	Vector3 vel_ = -(1.0f + e) * Dot(v + wallNormal, wallNormal) * wallNormal / 2.0f + v;
+	vel = vel_;
+}
+
+void Physics::Backlash(Physics* p1, Physics* p2, float e)
+{
+	// 衝突の法線ベクトル
+	Vector3 n = Normalize(p1->worldTransform->GetWorldPosition() - p2->worldTransform->GetWorldPosition());
+	// 2物体の速度
+	Vector3 v0 = p1->vel;
+	Vector3 V0 = p2->vel;
+	// 2物体の質量
+	float m = p1->mass;
+	float M = p2->mass;
+	// 速度計算の共通部分
+	float m_t = ((1.0f + e) * M * m) / (M + m);
+	// 2物体の変化後の速度
+	Vector3 v = -(m_t * Dot(v0 - V0, n) * n) / m + v0;
+	Vector3 V = -(m_t * Dot(V0 - v0, n) * n) / M + V0;
+	p1->vel = v;
+	p2->vel = V;
+	p1->isCollided = true;
+	p2->isCollided = true;
+}
+
 void Physics::Update()
 {
 	if (mass == 0) { return; } // 0で割るのを阻止
@@ -23,7 +52,7 @@ void Physics::Update()
 	forceDir.Normalize(); // 力の向き正規化
 	accel = force / mass; // 運動方程式 F = ma の応用
 	vel += accel * forceDir; // 速度に加速度を加算
-	
+
 	// 落下処理
 	if (isFreeFall)
 	{

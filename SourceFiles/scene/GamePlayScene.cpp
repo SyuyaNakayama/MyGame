@@ -6,10 +6,6 @@
 void GamePlayScene::Initialize()
 {
 	debugCamera.Initialize({ 0,0 });
-	for (size_t i = 1; i < 3; i++)
-	{
-		//ModelManager::GetLightGroup()->SetDirLightActive(i, false);
-	}
 	viewProjection.Initialize();
 	viewProjection.eye.y = 250;
 	viewProjection.eye.z = -75;

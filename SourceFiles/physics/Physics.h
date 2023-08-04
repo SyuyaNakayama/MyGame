@@ -22,8 +22,12 @@ private:
 
 public:
 	static std::unique_ptr<Physics> Create(WorldTransform* w);
+	void Backlash(const Vector3& wallNormal, float e); // 動く物体と動かない物体の反発後の速度を計算
+	static void Backlash(Physics* p1, Physics* p2, float e); // 動く2物体の反発後の速度を計算
 	static void SetGravity(float g) { gravity = g; }
+	
 	void Update();
+	
 	Vector3 SetVelocity(Vector3 velocity) { return vel = velocity; }
 	void SetForce(float f) { force = f; }
 	void SetForceDir(Vector3 dir) { forceDir = Normalize(dir); } // dirは自動的に正規化される
