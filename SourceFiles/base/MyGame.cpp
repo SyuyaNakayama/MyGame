@@ -23,6 +23,7 @@ void MyGame::Update()
 	Framework::Update();
 	ModelManager::Update();
 	CollisionManager::CheckAllCollisions();
+	Physics::ResetCollideList();
 	ParticleManager::Update();
 	ImGuiManager::End();
 }

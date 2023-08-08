@@ -24,13 +24,6 @@ void Object::OnCollision(SphereCollider* collider)
 {
 	Physics* _physics = collider->GetPhysics();
 	if (!_physics) { return; }
-	// 自分と相手が衝突済なら処理をスキップ
-	if (physics->IsCollided() && _physics->IsCollided())
-	{
-		physics->SetIsCollided(false);
-		_physics->SetIsCollided(false);
-		return;
-	}
 
 	// 弾性衝突
 	Physics::Backlash(physics.get(), _physics, 1.0f);

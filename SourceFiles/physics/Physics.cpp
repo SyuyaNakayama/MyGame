@@ -3,6 +3,7 @@
 #include <imgui.h>
 #include "ImGuiManager.h"
 
+std::vector<std::array<Physics*, 2>> Physics::collideList;
 float Physics::gravity = 0.5f; // 重力加速度 g
 Vector3 Physics::gravityDir = { 0,-1,0 }; // 下向き重力
 float Physics::k_air = 1.0f;
@@ -25,6 +26,17 @@ void Physics::Backlash(const Vector3& wallNormal, float e)
 
 void Physics::Backlash(Physics* p1, Physics* p2, float e)
 {
+	// 自分と相手が衝突済なら処理をスキップ
+	for (auto& collidedPair : collideList)
+	{
+		int isCollided = 0;
+		for (size_t i = 0; i < collidedPair.size(); i++)
+		{
+			if (collidedPair[i] == p1) { isCollided |= 0b1; }
+			if (collidedPair[i] == p2) { isCollided |= 0b10; }
+		}
+		if (isCollided == 0b11) { return; }
+	}
 	// 衝突の法線ベクトル
 	Vector3 n = Normalize(p1->worldTransform->GetWorldPosition() - p2->worldTransform->GetWorldPosition());
 	// 2物体の速度
@@ -40,16 +52,14 @@ void Physics::Backlash(Physics* p1, Physics* p2, float e)
 	Vector3 V = -(m_t * Dot(V0 - v0, n) * n) / M + V0;
 	p1->vel = v;
 	p2->vel = V;
-	p1->isCollided = true;
-	p2->isCollided = true;
+	collideList.push_back({ p1,p2 });
 }
 
 void Physics::Update()
 {
-	if (mass == 0) { return; } // 0で割るのを阻止
+	if (mass <= 0) { return; } // 0以下で割るのを阻止
 	worldTransform->translation += vel; // 位置に速度加算
 
-	forceDir.Normalize(); // 力の向き正規化
 	accel = force / mass; // 運動方程式 F = ma の応用
 	vel += accel * forceDir; // 速度に加速度を加算
 
@@ -66,4 +76,11 @@ void Physics::Update()
 		float nextSpd = max(vel.Length() - friction, 0);
 		vel = Normalize(vel) * nextSpd;
 	}
+	//vel -= Normalize(vel) * k_air * vel.Length() / mass;
+}
+
+void Physics::SetMass(float m)
+{
+	assert(m > 0);
+	mass = m;
 }
