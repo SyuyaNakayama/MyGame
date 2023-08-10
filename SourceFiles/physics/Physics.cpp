@@ -6,7 +6,7 @@
 std::vector<std::array<Physics*, 2>> Physics::collideList;
 float Physics::gravity = 0.5f; // 重力加速度 g
 Vector3 Physics::gravityDir = { 0,-1,0 }; // 下向き重力
-float Physics::k_air = 1.0f;
+float Physics::k_air = 0.1f;
 
 // 物理クラス生成 (Unityでいう Rigidbody)
 std::unique_ptr<Physics> Physics::Create(WorldTransform* w)
@@ -18,10 +18,8 @@ std::unique_ptr<Physics> Physics::Create(WorldTransform* w)
 
 void Physics::Backlash(const Vector3& wallNormal, float e)
 {
-	Vector3 v = vel;
 	// 物体の変化後の速度
-	Vector3 vel_ = -(1.0f + e) * Dot(v + wallNormal, wallNormal) * wallNormal / 2.0f + v;
-	vel = vel_;
+	vel = -(1.0f + e) * Dot(vel + wallNormal, wallNormal) * wallNormal / 2.0f + vel;
 }
 
 void Physics::Backlash(Physics* p1, Physics* p2, float e)
@@ -57,7 +55,6 @@ void Physics::Backlash(Physics* p1, Physics* p2, float e)
 
 void Physics::Update()
 {
-	if (mass <= 0) { return; } // 0以下で割るのを阻止
 	worldTransform->translation += vel; // 位置に速度加算
 
 	accel = force / mass; // 運動方程式 F = ma の応用
@@ -66,7 +63,8 @@ void Physics::Update()
 	// 落下処理
 	if (isFreeFall)
 	{
-		fallSpd += gravity - k_air * fallSpd / mass;
+		fallSpd += gravity;
+		fallSpd -= k_air * fallSpd / mass;
 		vel += fallSpd * gravityDir;
 	}
 	else

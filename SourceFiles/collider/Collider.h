@@ -1,5 +1,5 @@
 #pragma once
-#include "worldTransform.h"
+#include "WorldTransform.h"
 #include "Physics.h"
 #include <vector>
 #include <array>
@@ -9,8 +9,9 @@ enum class CollisionAttribute
 {
 	Player = 0b1,
 	Block = 0b1 << 1,
-	Object = 0b1 << 2,
-	Goal = 0b1 << 3,
+	Ground = 0b1 << 2,
+	Object = 0b1 << 3,
+	Goal = 0b1 << 4,
 	All = -1
 };
 

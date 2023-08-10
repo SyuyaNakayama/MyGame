@@ -14,7 +14,8 @@ void Block::Initialize(const ObjectData& objectData)
 	objectSprite->textureSize.x *= worldTransform->scale.x / 5.0f;
 	objectSprite->textureSize.y *= worldTransform->scale.z / 5.0f;
 	if (objectData.collider.type == "PLANE") { normal = objectData.collider.normal; }
-	collisionAttribute = CollisionAttribute::Block;
+	if (objectData.fileName == "Ground") { collisionAttribute = CollisionAttribute::Ground; }
+	else { collisionAttribute = CollisionAttribute::Block; }
 	collisionMask = CollisionMask::Block;
 }
 
@@ -27,7 +28,16 @@ void Block::OnCollision(BoxCollider* collider)
 	Physics* physics = collider->GetPhysics();
 	if (!physics) { return; }
 	if (normal.Length() <= 0.001f) { return; }
-	physics->Backlash(normal, 1.0f);
+	if (collisionAttribute == CollisionAttribute::Ground && physics->IsFreeFall()) 
+	{
+		physics->SetIsFreeFall(false);
+		physics->SetVelocity({});
+		return; 
+	}
+	if (collisionAttribute == CollisionAttribute::Block)
+	{
+		physics->Backlash(normal, 1.0f);
+	}
 }
 
 void Goal::Initialize(const ObjectData& objectData)

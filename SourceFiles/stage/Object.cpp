@@ -1,10 +1,13 @@
 #include "Object.h"
 #include "ModelManager.h"
+#include <imgui.h>
+#include "Input.h"
 
 void Object::Initialize(const ObjectData& objectData)
 {
 	object = ModelManager::Create("player", true);
 	object->worldTransform.reset(objectData.worldTransform);
+	object->worldTransform->translation.y = 40.0f;
 	object->material.ambient = { 0,0,0 };
 	worldTransform = object->worldTransform.get();
 	collisionAttribute = CollisionAttribute::Object;
@@ -16,7 +19,9 @@ void Object::Initialize(const ObjectData& objectData)
 
 void Object::Update()
 {
+	if (Input::GetInstance()->IsTrigger(Key::Q)) { physics->SetIsFreeFall(true); }
 	physics->Update();
+	ImGui::Text("speed = %f", physics->GetVelocity().Length());
 	physics->SetForce(0);
 }
 

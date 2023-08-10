@@ -9,7 +9,7 @@ void Stage::Initialize()
 	levelData = JsonLoader::LoadJson("stage");
 	for (auto& objectData : levelData->objects)
 	{
-		if (objectData.fileName == "cube")
+		if (objectData.fileName == "cube" || objectData.fileName == "Ground")
 		{
 			std::unique_ptr<Block> newBlock = std::make_unique<Block>();
 			newBlock->Initialize(objectData);
