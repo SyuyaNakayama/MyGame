@@ -32,6 +32,7 @@ void Block::OnCollision(BoxCollider* collider)
 	{
 		physics->SetIsFreeFall(false);
 		physics->SetVelocity({});
+		physics->GetWorldTransform()->translation.y = worldTransform->GetWorldPosition().y + worldTransform->scale.y;
 		return; 
 	}
 	if (collisionAttribute == CollisionAttribute::Block)

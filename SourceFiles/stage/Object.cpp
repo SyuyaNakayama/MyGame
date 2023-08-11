@@ -21,7 +21,6 @@ void Object::Update()
 {
 	if (Input::GetInstance()->IsTrigger(Key::Q)) { physics->SetIsFreeFall(true); }
 	physics->Update();
-	ImGui::Text("speed = %f", physics->GetVelocity().Length());
 	physics->SetForce(0);
 }
 

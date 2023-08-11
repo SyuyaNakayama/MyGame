@@ -9,7 +9,7 @@ void Player::Initialize(const ObjectData& objectData)
 	worldTransform = object->worldTransform.get();
 	camera = std::make_unique<PlayerCamera>();
 	ModelManager::SetViewProjection(camera->GetViewProjection());
-	camera->Initialize(worldTransform);
+	camera->Initialize(object->worldTransform.get());
 	physics = Physics::Create(worldTransform);
 	collisionAttribute = CollisionAttribute::Player;
 	collisionMask = CollisionMask::Player;
@@ -36,6 +36,6 @@ void Player::Move()
 void Player::Update()
 {
 	Move();
-	camera->Update();
 	physics->Update();
+	camera->Update();
 }

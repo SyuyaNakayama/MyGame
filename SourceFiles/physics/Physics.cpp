@@ -6,7 +6,7 @@
 std::vector<std::array<Physics*, 2>> Physics::collideList;
 float Physics::gravity = 0.5f; // 重力加速度 g
 Vector3 Physics::gravityDir = { 0,-1,0 }; // 下向き重力
-float Physics::k_air = 0.1f;
+float Physics::k_air = 0.4f;
 
 // 物理クラス生成 (Unityでいう Rigidbody)
 std::unique_ptr<Physics> Physics::Create(WorldTransform* w)
@@ -56,8 +56,7 @@ void Physics::Backlash(Physics* p1, Physics* p2, float e)
 void Physics::Update()
 {
 	worldTransform->translation += vel; // 位置に速度加算
-
-	accel = force / mass; // 運動方程式 F = ma の応用
+	accel = force / mass; // 加速度を計算
 	vel += accel * forceDir; // 速度に加速度を加算
 
 	// 落下処理
@@ -65,8 +64,10 @@ void Physics::Update()
 	{
 		fallSpd += gravity;
 		fallSpd -= k_air * fallSpd / mass;
+		fallSpd = max(fallSpd, 0);
 		vel += fallSpd * gravityDir;
 	}
+	// 接地処理
 	else
 	{
 		// 摩擦を表現
@@ -74,7 +75,6 @@ void Physics::Update()
 		float nextSpd = max(vel.Length() - friction, 0);
 		vel = Normalize(vel) * nextSpd;
 	}
-	//vel -= Normalize(vel) * k_air * vel.Length() / mass;
 }
 
 void Physics::SetMass(float m)

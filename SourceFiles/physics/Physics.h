@@ -39,6 +39,7 @@ public:
 	Vector3 GetVelocity() { return vel; }
 	float GetForce() { return accel * mass; }
 	float GetMass() { return mass; }
+	WorldTransform* GetWorldTransform() { return worldTransform; }
 	bool IsFreeFall() { return isFreeFall; }
 	float GetMomentum() { return mass * vel.Length(); } // ‰^“®—Ê‚ðŽæ“¾
 };
