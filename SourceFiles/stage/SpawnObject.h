@@ -1,0 +1,15 @@
+#pragma once
+#include "BaseSpawnPoint.h"
+#include "Object.h"
+#include "JsonLoader.h"
+
+class SpawnObject : public BaseSpawnPoint
+{
+	static std::list<std::unique_ptr<Object>>* objects;
+	ObjectData objectData;
+
+public:
+	void Initialize(const ObjectData& objectData_, int spawnInterval);
+	void Spawn();
+	static void SetObjectList(std::list<std::unique_ptr<Object>>* list) { objects = list; }
+};

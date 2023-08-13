@@ -6,6 +6,7 @@ int Stage::score = 0;
 
 void Stage::Initialize()
 {
+	SpawnObject::SetObjectList(&objects);
 	levelData = JsonLoader::LoadJson("stage");
 	for (auto& objectData : levelData->objects)
 	{
@@ -31,6 +32,12 @@ void Stage::Initialize()
 			newObj->Initialize(objectData);
 			objects.push_back(std::move(newObj));
 		}
+		else if (objectData.fileName == "SpawnPoint")
+		{
+			SpawnObject spawnPoint;
+			spawnPoint.Initialize(objectData, 200);
+			spawnPoints.push_back(spawnPoint);
+		}
 	}
 }
 
@@ -38,6 +45,8 @@ void Stage::Update()
 {
 	player.Update();
 	objects.remove_if([](std::unique_ptr<Object>& object) { return object->IsDestroy(); });
+	for (auto& spawnPoint : spawnPoints) { spawnPoint.Spawn(); }
+	ImGui::Text("%d", objects.size());
 	for (auto& block : blocks) { block->Update(); }
 	for (auto& object : objects) { object->Update(); }
 	for (auto& goal : goals) { goal->Update(); }

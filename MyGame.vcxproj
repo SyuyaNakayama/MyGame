@@ -212,12 +212,14 @@
     <ClCompile Include="SourceFiles\stage\Block.cpp" />
     <ClCompile Include="SourceFiles\stage\Object.cpp" />
     <ClCompile Include="SourceFiles\stage\Player.cpp" />
+    <ClCompile Include="SourceFiles\stage\SpawnObject.cpp" />
     <ClCompile Include="SourceFiles\stage\Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\3d\Object3d.h" />
     <ClInclude Include="SourceFiles\3d\Material.h" />
     <ClInclude Include="SourceFiles\3d\PlayerCamera.h" />
+    <ClInclude Include="SourceFiles\functions\BaseSpawnPoint.h" />
     <ClInclude Include="SourceFiles\functions\Random.h" />
     <ClInclude Include="SourceFiles\Json\JsonLoader.h" />
     <ClInclude Include="SourceFiles\math\MathUtility.h" />
@@ -268,6 +270,7 @@
     <ClInclude Include="SourceFiles\stage\Block.h" />
     <ClInclude Include="SourceFiles\stage\Object.h" />
     <ClInclude Include="SourceFiles\stage\Player.h" />
+    <ClInclude Include="SourceFiles\stage\SpawnObject.h" />
     <ClInclude Include="SourceFiles\stage\Stage.h" />
   </ItemGroup>
   <ItemGroup>

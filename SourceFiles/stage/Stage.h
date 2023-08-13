@@ -1,7 +1,7 @@
 #pragma once
 #include "Player.h"
 #include "Block.h"
-#include "Object.h"
+#include "SpawnObject.h"
 #include "JsonLoader.h"
 
 class Stage
@@ -11,6 +11,7 @@ class Stage
 	std::list<std::unique_ptr<Object>> objects;
 	std::list<std::unique_ptr<Goal>> goals;
 	LevelData* levelData = nullptr;
+	std::list<SpawnObject> spawnPoints;
 	static int score;
 	
 public:

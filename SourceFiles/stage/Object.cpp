@@ -7,7 +7,7 @@ void Object::Initialize(const ObjectData& objectData)
 {
 	object = ModelManager::Create("player", true);
 	object->worldTransform.reset(objectData.worldTransform);
-	object->worldTransform->translation.y = 40.0f;
+	//object->worldTransform->translation.y = 40.0f;
 	object->material.ambient = { 0,0,0 };
 	worldTransform = object->worldTransform.get();
 	collisionAttribute = CollisionAttribute::Object;
@@ -15,13 +15,12 @@ void Object::Initialize(const ObjectData& objectData)
 	physics = Physics::Create(worldTransform);
 	physics->SetMass(0.5f);
 	physics->SetMu(0.00f);
+	physics->SetIsFreeFall(true);
 }
 
 void Object::Update()
 {
-	if (Input::GetInstance()->IsTrigger(Key::Q)) { physics->SetIsFreeFall(true); }
 	physics->Update();
-	physics->SetForce(0);
 }
 
 void Object::OnCollision(SphereCollider* collider)

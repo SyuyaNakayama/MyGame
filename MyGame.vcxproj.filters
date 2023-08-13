@@ -294,6 +294,9 @@
     <ClCompile Include="SourceFiles\collider\CollisionManager.cpp">
       <Filter>ソース ファイル\Engine\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFiles\stage\SpawnObject.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\math\Matrix4.h">
@@ -458,5 +461,9 @@
     <ClInclude Include="SourceFiles\collider\CollisionManager.h">
       <Filter>ソース ファイル\Engine\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="SourceFiles\functions\BaseSpawnPoint.h">
+      <Filter>ソース ファイル\Engine\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\stage\SpawnObject.h" />
   </ItemGroup>
 </Project>

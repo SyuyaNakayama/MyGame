@@ -17,17 +17,5 @@ void BaseCamera::Update()
 	worldTransform.Update();
 	viewProjection.target = worldTransform.parent->GetWorldPosition();
 	viewProjection.eye = worldTransform.GetWorldPosition();
-	ImGuiManager::PrintVector("EyePos", viewProjection.eye);
 	worldTransform.isUpdated = false;
-	Vector3 v1 = Normalize({ -1,1,0 });
-	Vector3 v2 = Normalize({ 1,1,0 });
-	Matrix4 mat = Matrix4::CreateFromVector({ 0,0,-1 }, { 0,1,0 }, { -1,0,0 }, { 1,0,0 });
-	//Matrix4 mat = Matrix4::CreateFromVector({ 1,0,0 }, { 0,1,0 }, { 0,0,1 }, { 0,0,0 });
-	Matrix4 mat2 = Matrix4::CreateFromVector({ 1,0,0 }, { 0,1,0 }, { 0,0,1 }, { 5,0,0 });
-	mat = mat2 * mat;
-	v1 *= mat;
-	v2 *= mat;
-	v1.Normalize();
-	v2.Normalize();
-	float d = Dot(v1, v2);
 }
