@@ -7,6 +7,8 @@ class SpawnObject : public BaseSpawnPoint
 {
 	static std::list<std::unique_ptr<Object>>* objects;
 	ObjectData objectData;
+	Angle spawnPosAngle = 0;
+	Vector3 initialPos;
 
 public:
 	void Initialize(const ObjectData& objectData_, int spawnInterval);

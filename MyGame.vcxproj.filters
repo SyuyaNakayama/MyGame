@@ -295,7 +295,7 @@
       <Filter>ソース ファイル\Engine\Physics</Filter>
     </ClCompile>
     <ClCompile Include="SourceFiles\stage\SpawnObject.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Application\Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -464,6 +464,8 @@
     <ClInclude Include="SourceFiles\functions\BaseSpawnPoint.h">
       <Filter>ソース ファイル\Engine\Functions</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\stage\SpawnObject.h" />
+    <ClInclude Include="SourceFiles\stage\SpawnObject.h">
+      <Filter>ソース ファイル\Application\Stage</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,7 +1,6 @@
 #include "Stage.h"
 #include <imgui.h>
 
-const Vector2 Stage::STAGE_SIZE = { 75,75 };
 int Stage::score = 0;
 
 void Stage::Initialize()
@@ -35,7 +34,7 @@ void Stage::Initialize()
 		else if (objectData.fileName == "SpawnPoint")
 		{
 			SpawnObject spawnPoint;
-			spawnPoint.Initialize(objectData, 200);
+			spawnPoint.Initialize(objectData, 50);
 			spawnPoints.push_back(spawnPoint);
 		}
 	}

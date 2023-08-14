@@ -7,7 +7,7 @@ void GamePlayScene::Initialize()
 {
 	debugCamera.Initialize({ 0,0 });
 	viewProjection.Initialize();
-	viewProjection.eye.y = 250;
+	viewProjection.eye.y = 350;
 	viewProjection.eye.z = -75;
 	viewProjection.target.z = 10;
 	stage.Initialize();

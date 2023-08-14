@@ -1,4 +1,5 @@
 #include "SpawnObject.h"
+#include "Quaternion.h"
 
 std::list<std::unique_ptr<Object>>* SpawnObject::objects;
 
@@ -6,10 +7,14 @@ void SpawnObject::Initialize(const ObjectData& objectData_, int spawnInterval)
 {
 	objectData = objectData_;
 	spawnTimer = spawnInterval;
+	initialPos = objectData_.worldTransform->translation;
 }
 
 void SpawnObject::Spawn()
 {
+	Quaternion rotQ = Quaternion::MakeAxisAngle(Vector3::MakeAxis(Axis::Y), spawnPosAngle);
+	objectData.worldTransform->translation = Quaternion::RotateVector(initialPos, rotQ);
+	spawnPosAngle++;
 	if (!spawnTimer.CountDown()) { return; }
 	std::unique_ptr<Object> newObj = std::make_unique<Object>();
 	ObjectData objectDataTemp = objectData;
