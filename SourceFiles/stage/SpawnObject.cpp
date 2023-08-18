@@ -1,5 +1,6 @@
 #include "SpawnObject.h"
 #include "Quaternion.h"
+#include "Input.h"
 
 std::list<std::unique_ptr<Object>>* SpawnObject::objects;
 
@@ -12,6 +13,9 @@ void SpawnObject::Initialize(const ObjectData& objectData_, int spawnInterval)
 
 void SpawnObject::Spawn()
 {
+	static bool a = false;
+	if (Input::GetInstance()->IsTrigger(Key::Q)) { a = true; }
+	if (!a) { return; }
 	Quaternion rotQ = Quaternion::MakeAxisAngle(Vector3::MakeAxis(Axis::Y), spawnPosAngle);
 	objectData.worldTransform->translation = Quaternion::RotateVector(initialPos, rotQ);
 	spawnPosAngle++;

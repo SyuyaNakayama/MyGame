@@ -45,18 +45,18 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)External\DirectXTex;$(SolutionDir)External\imgui;$(SolutionDir)External\json;$(SolutionDir)External\freetype\include;$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)External\DirectXTex;$(SolutionDir)External\imgui;$(SolutionDir)External\json;$(SolutionDir)External\opencv\include;$(SolutionDir)External\freetype\include;$(WindowsSDK_IncludePath)</IncludePath>
     <IntDir>$(SolutionDir)..\Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)..\Generated\Outputs\$(Configuration)\</OutDir>
-    <LibraryPath>$(SolutionDir)External\freetype;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)External\opencv;$(SolutionDir)External\freetype;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)External\DirectXTex;$(SolutionDir)External\imgui;$(SolutionDir)External\json;$(SolutionDir)External\freetype\include;$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)External\DirectXTex;$(SolutionDir)External\imgui;$(SolutionDir)External\json;$(SolutionDir)External\opencv\include;$(SolutionDir)External\freetype\include;$(WindowsSDK_IncludePath)</IncludePath>
     <IntDir>$(SolutionDir)..\Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)..\Generated\Outputs\$(Configuration)\</OutDir>
     <TargetName>$(ProjectName)</TargetName>
-    <LibraryPath>$(SolutionDir)External\freetype;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)External\opencv;$(SolutionDir)External\freetype;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -68,14 +68,14 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\2d;$(ProjectDir)SourceFiles\2d\sprite;$(ProjectDir)SourceFiles\3d;$(ProjectDir)SourceFiles\audio;$(ProjectDir)SourceFiles\base;$(ProjectDir)SourceFiles\collider;$(ProjectDir)SourceFiles\engine;$(ProjectDir)SourceFiles\functions;$(ProjectDir)SourceFiles\json;$(ProjectDir)SourceFiles\light;$(ProjectDir)SourceFiles\math;$(ProjectDir)SourceFiles\objects;$(ProjectDir)SourceFiles\particle;$(ProjectDir)SourceFiles\physics;$(ProjectDir)SourceFiles\scene;$(ProjectDir)SourceFiles\stage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\2d;$(ProjectDir)SourceFiles\2d\sprite;$(ProjectDir)SourceFiles\3d;$(ProjectDir)SourceFiles\audio;$(ProjectDir)SourceFiles\base;$(ProjectDir)SourceFiles\collider;$(ProjectDir)SourceFiles\engine;$(ProjectDir)SourceFiles\font;$(ProjectDir)SourceFiles\functions;$(ProjectDir)SourceFiles\json;$(ProjectDir)SourceFiles\light;$(ProjectDir)SourceFiles\math;$(ProjectDir)SourceFiles\objects;$(ProjectDir)SourceFiles\particle;$(ProjectDir)SourceFiles\physics;$(ProjectDir)SourceFiles\scene;$(ProjectDir)SourceFiles\stage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <LanguageStandard_C>Default</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>strmiids.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>strmiids.lib;freetype.lib;opencv_world480d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
@@ -93,7 +93,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\2d;$(ProjectDir)SourceFiles\2d\sprite;$(ProjectDir)SourceFiles\3d;$(ProjectDir)SourceFiles\audio;$(ProjectDir)SourceFiles\base;$(ProjectDir)SourceFiles\collider;$(ProjectDir)SourceFiles\engine;$(ProjectDir)SourceFiles\functions;$(ProjectDir)SourceFiles\json;$(ProjectDir)SourceFiles\light;$(ProjectDir)SourceFiles\math;$(ProjectDir)SourceFiles\objects;$(ProjectDir)SourceFiles\particle;$(ProjectDir)SourceFiles\physics;$(ProjectDir)SourceFiles\scene;$(ProjectDir)SourceFiles\stage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\2d;$(ProjectDir)SourceFiles\2d\sprite;$(ProjectDir)SourceFiles\3d;$(ProjectDir)SourceFiles\audio;$(ProjectDir)SourceFiles\base;$(ProjectDir)SourceFiles\collider;$(ProjectDir)SourceFiles\engine;$(ProjectDir)SourceFiles\font;$(ProjectDir)SourceFiles\functions;$(ProjectDir)SourceFiles\json;$(ProjectDir)SourceFiles\light;$(ProjectDir)SourceFiles\math;$(ProjectDir)SourceFiles\objects;$(ProjectDir)SourceFiles\particle;$(ProjectDir)SourceFiles\physics;$(ProjectDir)SourceFiles\scene;$(ProjectDir)SourceFiles\stage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <LanguageStandard_C>Default</LanguageStandard_C>
     </ClCompile>
@@ -102,7 +102,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>strmiids.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>strmiids.lib;freetype.lib;opencv_world480.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -170,6 +171,7 @@
     <ClCompile Include="SourceFiles\3d\Object3d.cpp" />
     <ClCompile Include="SourceFiles\3d\Material.cpp" />
     <ClCompile Include="SourceFiles\3d\PlayerCamera.cpp" />
+    <ClCompile Include="SourceFiles\font\FontManager.cpp" />
     <ClCompile Include="SourceFiles\functions\Random.cpp" />
     <ClCompile Include="SourceFiles\Json\JsonLoader.cpp" />
     <ClCompile Include="SourceFiles\math\MathUtility.cpp" />
@@ -221,6 +223,7 @@
     <ClInclude Include="SourceFiles\3d\Object3d.h" />
     <ClInclude Include="SourceFiles\3d\Material.h" />
     <ClInclude Include="SourceFiles\3d\PlayerCamera.h" />
+    <ClInclude Include="SourceFiles\font\FontManager.h" />
     <ClInclude Include="SourceFiles\functions\BaseSpawnPoint.h" />
     <ClInclude Include="SourceFiles\functions\Random.h" />
     <ClInclude Include="SourceFiles\Json\JsonLoader.h" />

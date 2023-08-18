@@ -2,6 +2,8 @@
 #include "BaseSpawnPoint.h"
 #include "Object.h"
 #include "JsonLoader.h"
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 class SpawnObject : public BaseSpawnPoint
 {

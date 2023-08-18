@@ -93,6 +93,9 @@
     <Filter Include="ソース ファイル\Engine\Json">
       <UniqueIdentifier>{0eb5dc25-4fb5-433e-ad61-6d78878c3a19}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engine\Font">
+      <UniqueIdentifier>{ec234468-081d-43ff-a576-17077cd51b41}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Sprite.hlsli">
@@ -297,6 +300,9 @@
     <ClCompile Include="SourceFiles\stage\SpawnObject.cpp">
       <Filter>ソース ファイル\Application\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFiles\font\FontManager.cpp">
+      <Filter>ソース ファイル\Engine\Font</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\math\Matrix4.h">
@@ -466,6 +472,9 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\stage\SpawnObject.h">
       <Filter>ソース ファイル\Application\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\font\FontManager.h">
+      <Filter>ソース ファイル\Engine\Font</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -19,4 +19,5 @@ public:
 	void Update();
 	static void AddScore(int score) { Stage::score += score; }
 	static void Reset() { score = 0; }
+	static int GetScore() { return score; }
 };
