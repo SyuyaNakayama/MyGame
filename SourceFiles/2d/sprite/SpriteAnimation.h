@@ -8,7 +8,7 @@ class SpriteAnimation
 private:
 	std::unique_ptr<Sprite> sprite;
 	size_t width;
-	Timer interval;
+	FrameTimer interval;
 	size_t animeNum = 0;
 	size_t animeNumMax = 0;
 
