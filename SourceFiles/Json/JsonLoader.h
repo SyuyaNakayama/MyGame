@@ -28,6 +28,6 @@ private:
 	const static std::string DEFAULT_BASE_DIRECTORY;
 
 public:
-	/// <param name = "fileName">Šg’£Žq‚È‚µ•¶Žš—ñ< / param>
+	/// <param name = "fileName">Šg’£Žq‚È‚µ•¶Žš—ñ</param>
 	static LevelData* LoadJson(const std::string& fileName);
 };

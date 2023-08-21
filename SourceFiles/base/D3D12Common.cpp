@@ -70,7 +70,7 @@ void PipelineManager::Initialize()
 	
 	pipelineProp.cullMode = D3D12_CULL_MODE_NONE;
 	pipelines[PipelineType::Dissolve].CreatePipeline(pipelineProp);
-
+	
 	pipelineProp.shaderNames = { L"ParticleVS", L"ParticlePS", L"ParticleGS" };
 	pipelineProp.inputLayoutProps.clear();
 	pipelineProp.inputLayoutProps.push_back({ "POSITION", DXGI_FORMAT_R32G32B32_FLOAT });

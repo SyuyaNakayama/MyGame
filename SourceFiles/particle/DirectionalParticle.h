@@ -17,7 +17,7 @@ public:
 		unsigned short splitNum = 1;
 		float angle = 0;
 		float radius = 0;
-		Timer frame;
+		FrameTimer frame;
 		std::vector<Vector3> controlPoints; // êßå‰ì_
 
 		void ComputeControlPoints();

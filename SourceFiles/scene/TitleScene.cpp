@@ -1,5 +1,6 @@
 #include "TitleScene.h"
 #include "SceneManager.h"
+#include "ModelManager.h"
 
 void TitleScene::Initialize()
 {
@@ -7,6 +8,8 @@ void TitleScene::Initialize()
 	ui->position = WindowsAPI::WIN_SIZE / 2.0f;
 	ui->anchorPoint = { 0.5f,0.5f };
 	ui->Update();
+	debugCamera.Initialize({ 0,0 });
+	ModelManager::SetViewProjection(&debugCamera);
 }
 
 void TitleScene::Update()

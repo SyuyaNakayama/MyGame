@@ -14,7 +14,7 @@ public:
 		Vector3 position{}; // 座標
 		Vector3 velocity{}; // 速度
 		Vector3 accel{}; // 加速度
-		Timer frame = 0;
+		FrameTimer frame = 0;
 		float scale = 1.0f; // スケール
 		float s_scale = 1.0f; // 初期値
 		float e_scale = 0.0f;	// 最終値

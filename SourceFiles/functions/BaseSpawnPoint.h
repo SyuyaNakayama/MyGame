@@ -4,7 +4,7 @@
 class BaseSpawnPoint
 {
 protected:
-	Timer spawnTimer;
+	FrameTimer spawnTimer;
 
 public:
 	virtual void Spawn() = 0;

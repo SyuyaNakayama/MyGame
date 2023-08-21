@@ -1,5 +1,6 @@
 #include "Stage.h"
 #include <imgui.h>
+using namespace std::chrono;
 
 int Stage::score = 0;
 
@@ -38,10 +39,14 @@ void Stage::Initialize()
 			spawnPoints.push_back(spawnPoint);
 		}
 	}
+
+	stageTime = 5;
 }
 
 void Stage::Update()
 {
+	if (stageTime.Update()) { isFinished = true; }
+
 	player.Update();
 	objects.remove_if([](std::unique_ptr<Object>& object) { return object->IsDestroy(); });
 	for (auto& spawnPoint : spawnPoints) { spawnPoint.Spawn(); }
@@ -49,4 +54,5 @@ void Stage::Update()
 	for (auto& object : objects) { object->Update(); }
 	for (auto& goal : goals) { goal->Update(); }
 	//ImGui::Text("score = %d", score);
+	ImGui::Text("time = %f", stageTime.GetRemainTime());
 }

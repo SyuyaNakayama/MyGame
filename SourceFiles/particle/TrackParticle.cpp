@@ -36,6 +36,6 @@ void TrackParticle::Add(const AddProp& particleProp)
 
 void TrackParticle::Update()
 {
-	particles.remove_if([](Particle& particle) { return particle.frame.CountDown(); });
+	particles.remove_if([](Particle& particle) { return particle.frame.Update(); });
 	for (auto& particle : particles) { particle.Update(); }
 }
