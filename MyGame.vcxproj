@@ -210,9 +210,11 @@
     <ClCompile Include="SourceFiles\collider\Collider.cpp" />
     <ClCompile Include="SourceFiles\collider\CollisionManager.cpp" />
     <ClCompile Include="SourceFiles\physics\Physics.cpp" />
+    <ClCompile Include="SourceFiles\scene\ResultScene.cpp" />
     <ClCompile Include="SourceFiles\scene\SceneFactory.cpp" />
     <ClCompile Include="SourceFiles\scene\SceneManager.cpp" />
     <ClCompile Include="SourceFiles\scene\GamePlayScene.cpp" />
+    <ClCompile Include="SourceFiles\scene\TitleScene.cpp" />
     <ClCompile Include="SourceFiles\stage\Block.cpp" />
     <ClCompile Include="SourceFiles\stage\Object.cpp" />
     <ClCompile Include="SourceFiles\stage\Player.cpp" />
@@ -268,10 +270,12 @@
     <ClInclude Include="SourceFiles\functions\FadeManager.h" />
     <ClInclude Include="SourceFiles\collider\Collider.h" />
     <ClInclude Include="SourceFiles\collider\CollisionManager.h" />
+    <ClInclude Include="SourceFiles\scene\ResultScene.h" />
     <ClInclude Include="SourceFiles\scene\Scene.h" />
     <ClInclude Include="SourceFiles\scene\SceneFactory.h" />
     <ClInclude Include="SourceFiles\scene\SceneManager.h" />
     <ClInclude Include="SourceFiles\scene\GamePlayScene.h" />
+    <ClInclude Include="SourceFiles\scene\TitleScene.h" />
     <ClInclude Include="SourceFiles\stage\Block.h" />
     <ClInclude Include="SourceFiles\stage\Object.h" />
     <ClInclude Include="SourceFiles\stage\Player.h" />

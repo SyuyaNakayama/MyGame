@@ -1,3 +1,3 @@
 #pragma once
 
-enum class Scene { Null, Play };
+enum class Scene { Null, Title, Play, Result };

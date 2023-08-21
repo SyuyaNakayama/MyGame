@@ -7,7 +7,6 @@ class GamePlayScene : public BaseScene
 {
 	Stage stage;
 	ViewProjection viewProjection;
-	std::unique_ptr<Sprite> ui;
 
 	void Initialize();
 	void Update();

@@ -10,9 +10,6 @@ void GamePlayScene::Initialize()
 	viewProjection.target.z = 10;
 	stage.Initialize();
 	ModelManager::SetViewProjection(&debugCamera);
-	ui = Sprite::Create("ui/–³‘è149_20230821175205.png");
-	ui->position = WindowsAPI::WIN_SIZE / 2.0f;
-	ui->Update();
 }
 
 void GamePlayScene::Update()
@@ -25,6 +22,4 @@ void GamePlayScene::Update()
 
 void GamePlayScene::Draw()
 {
-	Sprite::PreDraw();
-	ui->Draw();
 }
