@@ -13,13 +13,11 @@ void SpawnObject::Initialize(const ObjectData& objectData_, int spawnInterval)
 
 void SpawnObject::Spawn()
 {
-	static bool a = false;
-	if (Input::GetInstance()->IsTrigger(Key::Q)) { a = true; }
-	if (!a) { return; }
-	Quaternion rotQ = Quaternion::MakeAxisAngle(Vector3::MakeAxis(Axis::Y), spawnPosAngle);
-	objectData.worldTransform->translation = Quaternion::RotateVector(initialPos, rotQ);
+	objectData.worldTransform->translation.x = cos(spawnPosAngle) * distance;
+	objectData.worldTransform->translation.z = sin(spawnPosAngle * PI) * distance;
 	spawnPosAngle++;
 	if (!spawnTimer.CountDown()) { return; }
+	if (objects->size() >= 10) { return; }
 	std::unique_ptr<Object> newObj = std::make_unique<Object>();
 	ObjectData objectDataTemp = objectData;
 	objectDataTemp.worldTransform = new WorldTransform;

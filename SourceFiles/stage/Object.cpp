@@ -7,20 +7,20 @@ void Object::Initialize(const ObjectData& objectData)
 {
 	object = ModelManager::Create("player", true);
 	object->worldTransform.reset(objectData.worldTransform);
-	//object->worldTransform->translation.y = 40.0f;
 	object->material.ambient = { 0,0,0 };
 	worldTransform = object->worldTransform.get();
 	collisionAttribute = CollisionAttribute::Object;
 	collisionMask = CollisionMask::Object;
 	physics = Physics::Create(worldTransform);
 	physics->SetMass(0.5f);
-	physics->SetMu(0.00f);
+	physics->SetMu(0.1f);
 	physics->SetIsFreeFall(true);
 }
 
 void Object::Update()
 {
 	physics->Update();
+	if (worldTransform->GetWorldPosition().Length() >= 250.0f) { Destroy(); }
 }
 
 void Object::OnCollision(SphereCollider* collider)

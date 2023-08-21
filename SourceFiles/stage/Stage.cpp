@@ -45,7 +45,6 @@ void Stage::Update()
 	player.Update();
 	objects.remove_if([](std::unique_ptr<Object>& object) { return object->IsDestroy(); });
 	for (auto& spawnPoint : spawnPoints) { spawnPoint.Spawn(); }
-	//ImGui::Text("%d", objects.size());
 	for (auto& block : blocks) { block->Update(); }
 	for (auto& object : objects) { object->Update(); }
 	for (auto& goal : goals) { goal->Update(); }

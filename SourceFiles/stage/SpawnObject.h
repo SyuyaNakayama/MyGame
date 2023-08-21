@@ -11,6 +11,7 @@ class SpawnObject : public BaseSpawnPoint
 	ObjectData objectData;
 	Angle spawnPosAngle = 0;
 	Vector3 initialPos;
+	float distance = 100;
 
 public:
 	void Initialize(const ObjectData& objectData_, int spawnInterval);

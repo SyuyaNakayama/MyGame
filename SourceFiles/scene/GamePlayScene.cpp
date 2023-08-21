@@ -1,6 +1,5 @@
 #include "GamePlayScene.h"
 #include <imgui.h>
-#include <opencv2/opencv.hpp>
 
 void GamePlayScene::Initialize()
 {
@@ -11,9 +10,9 @@ void GamePlayScene::Initialize()
 	viewProjection.target.z = 10;
 	stage.Initialize();
 	ModelManager::SetViewProjection(&debugCamera);
-
-	fm.Initialize();
-	fm.SetFont("resources/Inkfree.ttf", 16, 34);
+	ui = Sprite::Create("ui/無題149_20230821175205.png");
+	ui->position = WindowsAPI::WIN_SIZE / 2.0f;
+	ui->Update();
 }
 
 void GamePlayScene::Update()
@@ -22,14 +21,10 @@ void GamePlayScene::Update()
 	if (input->IsTrigger(Key::_2)) { ModelManager::SetViewProjection(&debugCamera); }
 	debugCamera.Update();
 	stage.Update();
-
-	//レンダリング
-	fm.DrawString("Hello World!");
-	image = fm.GetImage();
 }
 
 void GamePlayScene::Draw()
 {
-	cv::Mat image_cv(200, 500, CV_8UC1, image);
-	cv::imshow("クアッドホッケー", image_cv);
+	Sprite::PreDraw();
+	ui->Draw();
 }
