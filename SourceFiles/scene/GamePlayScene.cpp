@@ -19,9 +19,9 @@ void GamePlayScene::Update()
 	if (input->IsTrigger(Key::_2)) { ModelManager::SetViewProjection(&debugCamera); }
 	debugCamera.Update();
 	stage.Update();
-	if (stage.IsFinished()||input->IsTrigger(Key::Space))
+	if (stage.IsFinished() || input->IsTrigger(Key::Space))
 	{
-		sceneManager->ChangeScene(Scene::Result); 
+		sceneManager->ChangeScene(Scene::Result);
 		ModelManager::ClearObjects();
 	}
 }
