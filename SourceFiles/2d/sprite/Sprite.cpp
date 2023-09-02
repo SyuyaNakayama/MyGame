@@ -217,7 +217,7 @@ void Sprite::Draw()
 	if (isInvisible) { return; }
 
 	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
-	
+
 	cmdList->SetGraphicsRootDescriptorTable(0, tex->gpuHandle);
 
 	// 頂点バッファビューの設定コマンド

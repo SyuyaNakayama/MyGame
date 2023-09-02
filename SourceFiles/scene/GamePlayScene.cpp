@@ -10,22 +10,24 @@ void GamePlayScene::Initialize()
 	viewProjection.eye.z = -75;
 	viewProjection.target.z = 10;
 	stage.Initialize();
-	ModelManager::SetViewProjection(&debugCamera);
+	//ModelManager::SetViewProjection(&debugCamera);
+	font.Initialize();
 }
 
 void GamePlayScene::Update()
 {
-	if (input->IsTrigger(Key::_1)) { ModelManager::SetViewProjection(&viewProjection); }
-	if (input->IsTrigger(Key::_2)) { ModelManager::SetViewProjection(&debugCamera); }
+	//if (input->IsTrigger(Key::_1)) { ModelManager::SetViewProjection(&viewProjection); }
+	//if (input->IsTrigger(Key::_2)) { ModelManager::SetViewProjection(&debugCamera); }
 	debugCamera.Update();
 	stage.Update();
-	if (stage.IsFinished() || input->IsTrigger(Key::Space))
-	{
-		sceneManager->ChangeScene(Scene::Result);
-		ModelManager::ClearObjects();
-	}
+	//if (stage.IsFinished() || input->IsTrigger(Key::Space))
+	//{
+	//	sceneManager->ChangeScene(Scene::Result);
+	//	ModelManager::ClearObjects();
+	//}
 }
 
 void GamePlayScene::Draw()
 {
+	font.Draw();
 }

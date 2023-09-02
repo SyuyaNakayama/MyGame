@@ -1,77 +1,128 @@
 #include "FontManager.h"
 #include <assert.h>
-#include <codecvt>
-constexpr auto WIDTH = 500;
-constexpr auto HEIGHT = 300;
+#include <locale.h>
+
+// lib
+#pragma comment( lib, "d2d1.lib" )
+#pragma comment( lib, "dwrite.lib" )
 
 void FontManager::Initialize()
 {
-	// libraryを初期化
-	if (image != nullptr) { free(image); }
-	image = nullptr;
-	auto error = FT_Init_FreeType(&library);
-	assert(!error);
+	//// 標準出力にユニコードを表示できるようにする
+	//setlocale(LC_ALL, "Japanese");
+	//
+	//hdc = WindowsAPI::GetInstance()->SetFont(L"");
+	//// フォントビットマップ取得
+	//const wchar_t* c = L"S";
+	//UINT code = (UINT)*c;
+	//const int gradFlag = GGO_GRAY4_BITMAP;
+	//// 階調の最大値
+	//int grad = 0;
+	//switch (gradFlag)
+	//{
+	//case GGO_GRAY2_BITMAP:
+	//	grad = 4;
+	//	break;
+	//case GGO_GRAY4_BITMAP:
+	//	grad = 16;
+	//	break;
+	//case GGO_GRAY8_BITMAP:
+	//	grad = 64;
+	//	break;
+	//}
+
+	//TEXTMETRIC tm;
+	//GetTextMetrics(hdc, &tm);
+	//GLYPHMETRICS gm;
+	//CONST MAT2 mat = { {0,1},{0,0},{0,0},{0,1} };
+	//DWORD size = GetGlyphOutlineW(hdc, code, gradFlag, &gm, 0, NULL, &mat);
+	//BYTE* pMono = new BYTE[size];
+	//GetGlyphOutlineW(hdc, code, gradFlag, &gm, size, pMono, &mat);
+
+	//D2D1CreateFactory(D2D1_FACTORY_TYPE_MULTI_THREADED, &pD2d1Factory);
+
+	winApp = WindowsAPI::GetInstance();
+
+	 /*
+				ID2D1Factoryの生成
+			*/
+	HRESULT hResult = ::D2D1CreateFactory(D2D1_FACTORY_TYPE_MULTI_THREADED, &pD2d1Factory);
+	assert(SUCCEEDED(hResult));
+
+
+	/*
+		IDWriteFactoryの生成
+	*/
+	hResult = DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), reinterpret_cast<IUnknown**>(&pDWFactory));
+	assert(SUCCEEDED(hResult));
+
+	/*
+		ID2D1HwndRenderTargetの生成
+	*/
+	{
+		D2D1_SIZE_U oPixelSize = {
+			  WindowsAPI::WIN_SIZE.x
+			, WindowsAPI::WIN_SIZE.y
+		};
+
+		D2D1_RENDER_TARGET_PROPERTIES oRenderTargetProperties = D2D1::RenderTargetProperties();
+
+		D2D1_HWND_RENDER_TARGET_PROPERTIES oHwndRenderTargetProperties = D2D1::HwndRenderTargetProperties(winApp->GetHwnd(), oPixelSize);
+
+
+		/*
+			ID2D1HwndRenderTargetの生成
+		*/
+		hResult = pD2d1Factory->CreateHwndRenderTarget(
+			oRenderTargetProperties
+			, oHwndRenderTargetProperties
+			, &pRenderTarget
+		);
+		assert(SUCCEEDED(hResult));
+	}
+
+
+
+	// 背景のクリア
+	D2D1_COLOR_F oBKColor = { 1.0f, 1.0f, 1.0f, 1.0f };
+	pRenderTarget->Clear(oBKColor);
+
+	// ブラシの生成
+		pRenderTarget->CreateSolidColorBrush(
+			D2D1::ColorF(D2D1::ColorF::Black)
+			, &pBrush
+		);
+	// テキストフォーマットの生成
+		pDWFactory->CreateTextFormat(
+			L"Meiryo"
+			, NULL
+			, DWRITE_FONT_WEIGHT_NORMAL
+			, DWRITE_FONT_STYLE_NORMAL
+			, DWRITE_FONT_STRETCH_NORMAL
+			, 128
+			, L""
+			, &pTextFormat
+		);
 }
 
-void FontManager::SetFont(const char* font_file_name, int char_width, int char_height)
+void FontManager::Draw()
 {
-	// 2. faceを作成
-	auto error = FT_New_Face(library, font_file_name, 0, &face);
-	assert(!error);
-
-	// 3. 文字サイズを設定
-	error = FT_Set_Char_Size(face, 0,
-		char_width * char_height, // 幅と高さ
-		300, 300);  // 水平、垂直解像度*/
-	assert(!error);
+	// 描画開始(Direct2D)
+	pRenderTarget->BeginDraw();
 	
-	slot = face->glyph;  // グリフへのショートカット
-}
-
-void FontManager::DrawBitmap(int x, int y)
-{
-	int  i, j, p, q;
-	const int  x_max = x + (slot->bitmap).width;
-	const int  y_max = y + (slot->bitmap).rows;
-
-	for (i = x, p = 0; i < x_max; i++, p++) {
-		for (j = y, q = 0; j < y_max; j++, q++) {
-			if (i < 0 || j < 0 || i >= WIDTH || j >= HEIGHT) continue;
-			image[j * WIDTH + i] |= (slot->bitmap).buffer[q * (slot->bitmap).width + p];
-		}
-	}
-}
-
-void FontManager::DrawString(const std::string& text)
-{
-	image = new unsigned char[WIDTH * HEIGHT];
-
-	int curPosX = 0;
-	int curPosY = 60; //現在のカーソル位置
-	int last_height = 0; //最後に文字を書いたときの文字の大きさ
-
-	for (int n = 0; n < text.size(); n++) {
-		if (text[n] == '\n') {
-			curPosX = 0;
-			curPosY += last_height + 20;
-		}
-		else {
-			if (FT_Load_Char(face, text[n], FT_LOAD_RENDER)) continue; //一文字レンダリング
-			// int yMax = face->bbox.yMax;
-			// int yMin = face->bbox.yMin;
-			// int baseline = bitmap->rows * yMax / (yMax - yMin);
-			DrawBitmap(curPosX, curPosY - slot->bitmap_top); //imageにslot->bitmapの中身をコピーする
-		}
-		last_height = (slot->bitmap).rows;
-
-		curPosX += slot->advance.x >> 6;
-		curPosY += slot->advance.y >> 6;
-	}
-}
-
-FontManager::~FontManager()
-{
-	if (image != nullptr) free(image);
-	FT_Done_Face(face);
-	FT_Done_FreeType(library);
+	std::wstring strText = L"Hello World!!";
+	// ターゲットサイズの取得
+	D2D1_SIZE_F oTargetSize = pRenderTarget->GetSize();
+	// テキストの描画
+	pRenderTarget->DrawText(
+		strText.c_str(),   // 文字列
+		strText.size(),   // 文字数
+		pTextFormat,
+		&D2D1::RectF(0, 0, oTargetSize.width, oTargetSize.height),
+		pBrush,
+		D2D1_DRAW_TEXT_OPTIONS_NONE
+	);
+	
+	// 描画終了(Direct2D)
+	pRenderTarget->EndDraw();
 }

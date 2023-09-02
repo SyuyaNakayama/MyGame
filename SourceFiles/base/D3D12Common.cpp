@@ -57,7 +57,7 @@ void PipelineManager::Initialize()
 	pipelineProp.shaderNames = { L"PostEffectVS", L"PostEffectPS" };
 	pipelineProp.textureAddressMode = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
 	pipelines[PipelineType::PostEffect].CreatePipeline(pipelineProp);
-
+	
 	pipelineProp.shaderNames = { L"ObjVS", L"ObjPS" };
 	pipelineProp.inputLayoutProps.clear();
 	pipelineProp.inputLayoutProps.push_back({ "POSITION", DXGI_FORMAT_R32G32B32_FLOAT });

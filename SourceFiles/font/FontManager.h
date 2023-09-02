@@ -1,23 +1,20 @@
 #pragma once
-#include <ft2build.h>
-#include FT_FREETYPE_H
-#include <string>
+#include "WindowsAPI.h"
+#include <d2d1.h>
+#include <dwrite.h>
 
 class FontManager
 {
 private:
-	FT_Library library;   /* handle to library     */
-	FT_Face face;      /* handle to face object */
-	unsigned char* image;
-	FT_GlyphSlot slot;  // グリフへのショートカット
-	void DrawBitmap(int x, int y);
+	HDC hdc;
+	ID2D1Factory* pD2d1Factory = NULL;
+	IDWriteFactory* pDWFactory = NULL;
+	ID2D1HwndRenderTarget* pRenderTarget = NULL;
+	IDWriteTextFormat* pTextFormat = NULL;
+	ID2D1SolidColorBrush* pBrush = NULL;
+	WindowsAPI* winApp = NULL;
 
 public:
 	void Initialize();
-	~FontManager();
-	
-	void SetFont(const char* font_file_name, int char_width, int char_height);
-	void DrawString(const std::string& text);
-	unsigned char* GetImage() { return image; }
-
+	void Draw();
 };

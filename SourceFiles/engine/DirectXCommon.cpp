@@ -24,7 +24,7 @@ void DirectXCommon::Initialize()
 	InitializeRenderTargetView();	// レンダーターゲットビューの初期化
 	InitializeDepthBuffer();		// 深度バッファの初期化
 	InitializeFence();				// フェンスの初期化
-
+	
 	// ビューポート設定コマンド
 	viewport = CD3DX12_VIEWPORT(0.0f, 0.0f, WIN_SIZE.x, WIN_SIZE.y);
 }
@@ -110,7 +110,7 @@ void DirectXCommon::InitializeDevice()
 void DirectXCommon::InitializeCommand()
 {
 	Result result = device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocator));
-
+	
 	result = device->CreateCommandList(0,
 		D3D12_COMMAND_LIST_TYPE_DIRECT,
 		commandAllocator.Get(), nullptr,

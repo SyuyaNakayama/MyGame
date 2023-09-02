@@ -20,7 +20,7 @@ void Object::Initialize(const ObjectData& objectData)
 void Object::Update()
 {
 	physics->Update();
-	if (worldTransform->GetWorldPosition().Length() >= 250.0f) { Destroy(); }
+	if (worldTransform->GetWorldPosition().y < 0.0f) { Destroy(); }
 }
 
 void Object::OnCollision(SphereCollider* collider)

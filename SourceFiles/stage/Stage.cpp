@@ -54,5 +54,5 @@ void Stage::Update()
 	for (auto& object : objects) { object->Update(); }
 	for (auto& goal : goals) { goal->Update(); }
 	//ImGui::Text("score = %d", score);
-	ImGui::Text("time = %f", stageTime.GetRemainTime());
+	//ImGui::Text("time = %f", stageTime.GetRemainTime());
 }
