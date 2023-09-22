@@ -11,12 +11,14 @@ void Object3d::Initialize(Mesh* mesh_)
 
 void Object3d::Update()
 {
+	if (isInvisible) { return; }
 	material.Update();
 	worldTransform->Update();
 }
 
 void Object3d::Draw()
 {
+	if (isInvisible) { return; }
 	worldTransform->Draw();
 	material.Draw();
 	mesh->Draw();

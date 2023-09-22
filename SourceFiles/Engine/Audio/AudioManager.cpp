@@ -1,7 +1,19 @@
 #include "AudioManager.h"
+#include "D3D12Common.h"
 
 std::map<bool, std::list<std::unique_ptr<Audio>>> AudioManager::audios;
 std::map<bool, std::list<std::unique_ptr<PointAudio>>> AudioManager::pointAudios;
+
+void AudioManager::Initialize()
+{
+	// COMを初期化
+	Result result = CoInitialize(NULL);
+}
+
+void AudioManager::Finalize()
+{
+	CoUninitialize(); // COM終了
+}
 
 Audio* AudioManager::CreateAudio(const std::string& fileName, bool isLoop)
 {
@@ -22,7 +34,9 @@ PointAudio* AudioManager::CreatePointAudio(const std::string& fileName,
 
 void AudioManager::Update()
 {
+	// ループ再生
 	for (auto& audio : audios[true]) { if (audio->IsFinished()) { audio->SetPlayPosition(0); } }
 	for (auto& audio : pointAudios[true]) { if (audio->IsFinished()) { audio->SetPlayPosition(0); } }
+	// 音量の更新
 	for (auto& audios : pointAudios) { for (auto& audio : audios.second) { audio->Update(); } }
 }

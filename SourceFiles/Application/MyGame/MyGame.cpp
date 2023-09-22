@@ -13,7 +13,7 @@ void MyGame::Initialize()
 	ParticleManager::Initialize();
 	ParticleManager::AddParticleGroup("Particle.png");
 	ImGuiManager::Initialize();
-	Audio::StaticInitialize();
+	AudioManager::Initialize();
 	postEffect = std::make_unique<PostEffect>();
 	postEffect->Initialize();
 }
@@ -47,6 +47,6 @@ void MyGame::Draw()
 void MyGame::Finalize()
 {
 	ImGuiManager::Finalize();
-	Audio::Finalize();
+	AudioManager::Finalize();
 	Framework::Finalize();
 }

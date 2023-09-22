@@ -13,11 +13,11 @@ private:
 	float sPressRate = 1.0f; // 原曲との音圧の比率
 	long panStrength = 2500; // パンの強さ(大きいほど左右の音量差が大きくなる)
 
-public:
-	/// <param name="useCamera">trueにするとカメラの位置がマイク座標になる</param>
-	/// <param name="usePan">trueにすると音源が左右移動する</param>
 	void Initialize(const std::string& fileName, Vector3 audioPos, bool useCamera, bool usePan);
 	void Update();
+
+public:
+	friend AudioManager;
 	void SetAudioPos(Vector3 pos) { audioPos = pos; }
 	void SetMicPos(Vector3 pos) { micPos = pos; }
 	void SetForward(Vector3 forward_) { forward = forward_; }

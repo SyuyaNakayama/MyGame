@@ -4,12 +4,6 @@
 
 std::string Audio::DEFAULT_TEXTURE_DIRECTORY_PATH = "Resources/Sounds/";
 
-void Audio::StaticInitialize()
-{
-	// COMÇèâä˙âª
-	Result result = CoInitialize(NULL);
-}
-
 void Audio::Initialize(const std::string& fileName)
 {
 	Result result;
@@ -41,9 +35,4 @@ bool Audio::IsFinished()
 	mediaPosition->get_CurrentPosition(&currentTime);
 	mediaPosition->get_Duration(&duration);
 	return currentTime == duration;
-}
-
-void Audio::Finalize()
-{
-	CoUninitialize(); // COMèIóπ
 }
