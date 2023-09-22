@@ -171,6 +171,7 @@
     <ClCompile Include="SourceFiles\Engine\3d\Object\Object3d.cpp" />
     <ClCompile Include="SourceFiles\Engine\3d\Object\Material.cpp" />
     <ClCompile Include="SourceFiles\Application\Camera\PlayerCamera.cpp" />
+    <ClCompile Include="SourceFiles\Engine\Audio\AudioManager.cpp" />
     <ClCompile Include="SourceFiles\Engine\Font\FontManager.cpp" />
     <ClCompile Include="SourceFiles\Engine\Functions\Random.cpp" />
     <ClCompile Include="SourceFiles\Engine\Json\JsonLoader.cpp" />
@@ -225,6 +226,7 @@
     <ClInclude Include="SourceFiles\Engine\3d\Object\Object3d.h" />
     <ClInclude Include="SourceFiles\Engine\3d\Object\Material.h" />
     <ClInclude Include="SourceFiles\Application\Camera\PlayerCamera.h" />
+    <ClInclude Include="SourceFiles\Engine\Audio\AudioManager.h" />
     <ClInclude Include="SourceFiles\Engine\Font\FontManager.h" />
     <ClInclude Include="SourceFiles\Engine\Functions\BaseSpawnPoint.h" />
     <ClInclude Include="SourceFiles\Engine\Functions\Random.h" />

@@ -2,13 +2,13 @@
 #include "BaseScene.h"
 #include "Stage.h"
 #include "Object3d.h"
-#include "FontManager.h"
+#include "AudioManager.h"
 
 class GamePlayScene : public BaseScene
 {
 	Stage stage;
 	ViewProjection viewProjection;
-	FontManager font;
+	Audio* audio = nullptr;
 
 	void Initialize();
 	void Update();

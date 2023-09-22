@@ -11,7 +11,6 @@ void GamePlayScene::Initialize()
 	viewProjection.target.z = 10;
 	stage.Initialize();
 	//ModelManager::SetViewProjection(&debugCamera);
-	font.Initialize();
 }
 
 void GamePlayScene::Update()
@@ -29,5 +28,4 @@ void GamePlayScene::Update()
 
 void GamePlayScene::Draw()
 {
-	font.Draw();
 }

@@ -66,7 +66,7 @@ public:
 	void Update();
 	void Draw();
 	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUHandle() { return tex->gpuHandle; }
-	static std::unique_ptr<Sprite> Create(const std::string& FILE_NAME);
+	static std::unique_ptr<Sprite> Create(const std::string& fileName);
 	static void StaticInitialize();
 	static TextureData* LoadTexture(const std::string& FILE_NAME, uint32_t mipLevels = MIP_LEVELS_DEFAULT);
 	static void PreDraw();

@@ -1,8 +1,9 @@
 #include "PointAudio.h"
 #include "ModelManager.h"
+#include "ViewProjection.h"
 #include <cmath>
 
-void PointAudio::Initialize(const std::wstring& fileName, Vector3 audioPos_, bool useCamera_, bool usePan_)
+void PointAudio::Initialize(const std::string& fileName, Vector3 audioPos_, bool useCamera_, bool usePan_)
 {
 	Audio::Initialize(fileName);
 	useCamera = useCamera_;

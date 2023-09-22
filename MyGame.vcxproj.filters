@@ -33,9 +33,6 @@
     <Filter Include="ソース ファイル\Engine\2d">
       <UniqueIdentifier>{408bae9d-c56d-4842-9e14-613b9a653ee2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Engine\2d\sprite">
-      <UniqueIdentifier>{836082f9-d9fa-49ec-b44b-7a61c0272e4e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Engine\Audio">
       <UniqueIdentifier>{1a47c7de-a104-490c-a030-9fc0100adf4f}</UniqueIdentifier>
     </Filter>
@@ -198,12 +195,6 @@
     <ClCompile Include="SourceFiles\Engine\2d\PostEffect.cpp">
       <Filter>ソース ファイル\Engine\2d</Filter>
     </ClCompile>
-    <ClCompile Include="SourceFiles\Engine\2d\Sprite.cpp">
-      <Filter>ソース ファイル\Engine\2d\sprite</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFiles\Engine\2d\SpriteAnimation.cpp">
-      <Filter>ソース ファイル\Engine\2d\sprite</Filter>
-    </ClCompile>
     <ClCompile Include="SourceFiles\Engine\main.cpp">
       <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
@@ -309,6 +300,15 @@
     <ClCompile Include="SourceFiles\Application\GameScenes\TitleScene.cpp">
       <Filter>ソース ファイル\Application\GameScenes</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFiles\Engine\2d\Sprite.cpp">
+      <Filter>ソース ファイル\Engine\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Engine\2d\SpriteAnimation.cpp">
+      <Filter>ソース ファイル\Engine\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Engine\Audio\AudioManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\Engine\Math\Matrix4.h">
@@ -367,12 +367,6 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\2d\PostEffect.h">
       <Filter>ソース ファイル\Engine\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\Engine\2d\Sprite.h">
-      <Filter>ソース ファイル\Engine\2d\sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\Engine\2d\SpriteAnimation.h">
-      <Filter>ソース ファイル\Engine\2d\sprite</Filter>
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\Audio\PointAudio.h">
       <Filter>ソース ファイル\Engine\Audio</Filter>
@@ -488,5 +482,12 @@
     <ClInclude Include="SourceFiles\Application\GameScenes\TitleScene.h">
       <Filter>ソース ファイル\Application\GameScenes</Filter>
     </ClInclude>
+    <ClInclude Include="SourceFiles\Engine\2d\Sprite.h">
+      <Filter>ソース ファイル\Engine\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Engine\2d\SpriteAnimation.h">
+      <Filter>ソース ファイル\Engine\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Engine\Audio\AudioManager.h" />
   </ItemGroup>
 </Project>

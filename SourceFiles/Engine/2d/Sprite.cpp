@@ -40,19 +40,19 @@ void Sprite::SetDescriptorHeaps()
 	cmdList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
 }
 
-TextureData* Sprite::LoadTexture(const std::string& FILE_NAME, uint32_t mipLevels)
+TextureData* Sprite::LoadTexture(const std::string& fileName, uint32_t mipLevels)
 {
 	// テクスチャの重複読み込みを検出
 	for (auto& texture : textures)
 	{
-		if (texture->fileName.find(FILE_NAME) == string::npos) { continue; }
+		if (texture->fileName.find(fileName) == string::npos) { continue; }
 		return texture;
 	}
 
 	TexMetadata metadata{};
 	ScratchImage scratchImg{}, mipChain{};
 
-	string fullPath = DEFAULT_TEXTURE_DIRECTORY_PATH + FILE_NAME;
+	string fullPath = DEFAULT_TEXTURE_DIRECTORY_PATH + fileName;
 
 	// ワイド文字列に変換した際の文字列バッファサイズを計算
 	int filePathBufferSize = MultiByteToWideChar(CP_ACP, 0, fullPath.c_str(), -1, nullptr, 0);
@@ -106,7 +106,7 @@ TextureData* Sprite::LoadTexture(const std::string& FILE_NAME, uint32_t mipLevel
 
 	device->CreateShaderResourceView(texture->buffer.Get(), &srvDesc, srvHandle);
 
-	texture->fileName = FILE_NAME;
+	texture->fileName = fileName;
 	texture->cpuHandle = srvHandle;
 	texture->gpuHandle = CD3DX12_GPU_DESCRIPTOR_HANDLE(
 		srvHeap->GetGPUDescriptorHandleForHeapStart(), textureIndex,

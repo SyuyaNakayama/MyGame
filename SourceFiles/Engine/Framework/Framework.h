@@ -5,6 +5,7 @@
 class Framework
 {
 protected:
+	std::wstring windowName;
 	WindowsAPI* wAPI = WindowsAPI::GetInstance();
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 	Input* input = Input::GetInstance();

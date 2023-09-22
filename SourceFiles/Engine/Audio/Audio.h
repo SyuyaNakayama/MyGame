@@ -15,11 +15,13 @@ private:
 	Microsoft::WRL::ComPtr<IMediaControl> mediaControl;
 	Microsoft::WRL::ComPtr<IMediaPosition> mediaPosition;
 	Microsoft::WRL::ComPtr<IBasicAudio> basicAudio;
+	// デフォルトディレクトリ
+	static std::string DEFAULT_TEXTURE_DIRECTORY_PATH;
 
-public:
+public:	
 	virtual ~Audio() = default;
 	static void StaticInitialize();
-	void Initialize(const std::wstring& fileName);
+	void Initialize(const std::string& fileName);
 	void Play() { mediaControl->Run(); SetPlayPosition(0); }
 	void Stop() { mediaControl->Stop(); }
 	void SetSpeed(double playSpd) { mediaPosition->put_Rate(playSpd); }
@@ -28,5 +30,6 @@ public:
 	void SetVolume(long volume) { basicAudio->put_Volume(volume); }
 	// -10000(左)～10000(右)
 	void SetBalance(long balance) { basicAudio->put_Balance(balance); }
+	bool IsFinished();
 	static void Finalize();
 };

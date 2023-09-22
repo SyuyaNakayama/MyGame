@@ -4,7 +4,7 @@
 
 void Framework::Initialize()
 {
-	wAPI->Initialize(L"クアッドホッケー");
+	wAPI->Initialize(windowName);
 	dxCommon->Initialize();
 	Sprite::StaticInitialize();
 	input->Initialize();

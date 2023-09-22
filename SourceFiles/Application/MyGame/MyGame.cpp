@@ -1,11 +1,12 @@
 ﻿#include "MyGame.h"
 #include "ModelManager.h"
 #include "ImGuiManager.h"
-#include "Audio.h"
+#include "AudioManager.h"
 #include "CollisionManager.h"
 
 void MyGame::Initialize()
 {
+	windowName = L"クアッドホッケー";
 	Framework::Initialize();
 	sceneManager->ChangeScene(Scene::Play, false);
 	ModelManager::Initialize();
@@ -25,6 +26,7 @@ void MyGame::Update()
 	CollisionManager::CheckAllCollisions();
 	Physics::ResetCollideList();
 	ParticleManager::Update();
+	AudioManager::Update();
 	ImGuiManager::End();
 }
 
