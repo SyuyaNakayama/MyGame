@@ -53,6 +53,8 @@ public:
 
 	CollisionAttribute GetCollisionAttribute() { return collisionAttribute; }
 	CollisionMask GetCollisionMask() { return collisionMask; }
+	void SetCollisionAttribute(CollisionAttribute collisionAttribute_) { collisionAttribute = collisionAttribute_; }
+	void SetCollisionMask(CollisionMask collisionMask_) { collisionMask = collisionMask_; }
 	virtual Vector3 GetWorldPosition() { return worldTransform->GetWorldPosition(); }
 	Physics* GetPhysics() { return physics.get(); }
 	void SetWorldTransform(WorldTransform* worldTransform_) { worldTransform = worldTransform_; }

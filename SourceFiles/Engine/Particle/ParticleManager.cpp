@@ -1,5 +1,4 @@
-﻿#include <random>
-#include "ParticleManager.h"
+﻿#include "ParticleManager.h"
 #include "Sprite.h"
 #include "D3D12Common.h"
 #include "ModelManager.h"

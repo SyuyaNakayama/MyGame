@@ -11,7 +11,8 @@ void MyGame::Initialize()
 	sceneManager->ChangeScene(Scene::Play, false);
 	ModelManager::Initialize();
 	ParticleManager::Initialize();
-	ParticleManager::AddParticleGroup("Particle.png");
+	ParticleManager::AddParticleGroup("Fire.png");
+	ParticleManager::AddParticleGroup("CollisionParticle.png");
 	ImGuiManager::Initialize();
 	AudioManager::Initialize();
 	postEffect = std::make_unique<PostEffect>();

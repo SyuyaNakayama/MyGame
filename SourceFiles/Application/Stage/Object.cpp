@@ -2,25 +2,35 @@
 #include "ModelManager.h"
 #include <imgui.h>
 #include "Input.h"
+#include "ParticleManager.h"
 
 void Object::Initialize(const ObjectData& objectData)
 {
 	object = ModelManager::Create("player", true);
 	object->worldTransform.reset(objectData.worldTransform);
 	object->material.ambient = { 0,0,0 };
+	object->material.SetSprite(Sprite::Create("DissolveMap.png"), TexType::Dissolve);
 	worldTransform = object->worldTransform.get();
 	collisionAttribute = CollisionAttribute::Object;
 	collisionMask = CollisionMask::Object;
 	physics = Physics::Create(worldTransform);
 	physics->SetMass(0.5f);
-	physics->SetMu(0.1f);
+	physics->SetMu(0.0f);
 	physics->SetIsFreeFall(true);
 }
 
 void Object::Update()
 {
-	physics->Update();
-	if (worldTransform->GetWorldPosition().y < 0.0f) { Destroy(); }
+	if (!isGoal)
+	{
+		physics->Update();
+		if (worldTransform->GetWorldPosition().y < 0.0f) { Destroy(); }
+		if (worldTransform->GetWorldPosition().y > 45.0f) { Destroy(); }
+		return;
+	}
+	dissolvePow += 0.05f;
+	object->material.SetDissolvePow(dissolvePow);
+	if (dissolvePow >= 1.0f) { Destroy(); }
 }
 
 void Object::OnCollision(SphereCollider* collider)
@@ -30,4 +40,11 @@ void Object::OnCollision(SphereCollider* collider)
 
 	// ’e«Õ“Ë
 	Physics::Backlash(physics.get(), _physics, 1.0f);
+
+	DiffuseParticle::AddProp addProp;
+	addProp.addNum = 10;
+	addProp.start_scale = 5;
+	addProp.posOffset = worldTransform->translation;
+	ParticleGroup* particleGroup = ParticleManager::GetParticleGroup(1);
+	particleGroup->Add(addProp);
 }

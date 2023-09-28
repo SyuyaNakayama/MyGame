@@ -1,5 +1,6 @@
 #include "Block.h"
 #include "Stage.h"
+#include "ParticleManager.h"
 
 void Block::Initialize(const ObjectData& objectData)
 {
@@ -28,12 +29,12 @@ void Block::OnCollision(BoxCollider* collider)
 	Physics* physics = collider->GetPhysics();
 	if (!physics) { return; }
 	if (normal.Length() <= 0.001f) { return; }
-	if (collisionAttribute == CollisionAttribute::Ground && physics->IsFreeFall()) 
+	if (collisionAttribute == CollisionAttribute::Ground && physics->IsFreeFall())
 	{
 		physics->SetIsFreeFall(false);
 		physics->SetVelocity({});
 		physics->GetWorldTransform()->translation.y = worldTransform->GetWorldPosition().y + worldTransform->scale.y;
-		return; 
+		return;
 	}
 	if (collisionAttribute == CollisionAttribute::Block)
 	{
@@ -48,7 +49,8 @@ void Goal::Initialize(const ObjectData& objectData)
 	worldTransform = object->worldTransform.get();
 	Material& material = object->material;
 	material.SetSprite(Sprite::Create("white1x1.png"), TexType::Main);
-	material.ambient = { 1,1,1 };
+	//material.ambient = { 1,1,1 };
+	material.ambient = { 0.2f,0.2f,0.2f };
 	if (objectData.collider.type == "PLANE") { normal = objectData.collider.normal; }
 	collisionAttribute = CollisionAttribute::Goal;
 	collisionMask = CollisionMask::Goal;
@@ -72,7 +74,16 @@ void Goal::OnCollision(BoxCollider* collider)
 	{
 		Object* object = dynamic_cast<Object*>(collider);
 		assert(object);
-		object->Destroy();
+		collider->SetCollisionMask(CollisionMask::None);
+		object->Goal();
 		Stage::AddScore(10);
+
+		ParticleGroup* pGroup = ParticleManager::GetParticleGroup(0);
+		DiffuseParticle::AddProp addProp;
+		addProp.addNum = 30;
+		addProp.start_scale = 10;
+		addProp.posOffset = collider->GetWorldPosition();
+		addProp.accOffset.y = 0.01f;
+		pGroup->Add(addProp);
 	}
 }

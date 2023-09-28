@@ -13,7 +13,7 @@ void Player::Initialize(const ObjectData& objectData)
 	physics = Physics::Create(worldTransform);
 	collisionAttribute = CollisionAttribute::Player;
 	collisionMask = CollisionMask::Player;
-	physics->SetMu(0.22f);
+	physics->SetMu(0.23f);
 }
 
 void Player::Move()
@@ -31,6 +31,7 @@ void Player::Move()
 		physics->SetForceDir(forcedir);
 	}
 	else { physics->SetForce(0); }
+	worldTransform->translation.y = 5;
 }
 
 void Player::Update()

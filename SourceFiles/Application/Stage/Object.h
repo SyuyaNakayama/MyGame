@@ -7,6 +7,8 @@
 class Object : public SphereCollider, public BoxCollider
 {
 	Object3d* object;
+	bool isGoal = false;
+	float dissolvePow = 0;
 
 public:
 	void Initialize(const ObjectData& objectData);
@@ -14,4 +16,5 @@ public:
 	void OnCollision(SphereCollider* collider);
 	void Destroy() { object->isDestroy = true; } // ”j‰ó‚·‚é
 	bool IsDestroy() { return object->isDestroy; }
+	void Goal() { isGoal = true; }
 };

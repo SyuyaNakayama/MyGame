@@ -14,7 +14,7 @@ void ParticleGroup::CreateVertexBuffer()
 void ParticleGroup::Initialize(const std::string& textureName)
 {
 	// テクスチャ読み込み
-	texture = Sprite::LoadTexture(textureName, 1);
+	texture = Sprite::LoadTexture("Particle/" + textureName, 1);
 	CreateVertexBuffer();
 }
 
@@ -64,6 +64,17 @@ void ParticleGroup::Draw()
 void ParticleGroup::Add(const DiffuseParticle::AddProp& particleProp)
 {
 	if (IsParticleMax()) { return; }
+	
+	// 最大パーティクル量を超えるのを阻止
+	UINT16 nextParticleNum = (UINT16)diffuseParticle.GetParticles().size() + particleProp.addNum;
+	if (nextParticleNum > PARTICLE_MAX)
+	{
+		DiffuseParticle::AddProp p = particleProp;
+		p.addNum -= nextParticleNum - PARTICLE_MAX;
+		diffuseParticle.Add(p);
+		return;
+	}
+	
 	diffuseParticle.Add(particleProp);
 }
 
@@ -76,6 +87,17 @@ void ParticleGroup::Add(const DirectionalParticle::AddProp& particleProp)
 void ParticleGroup::Add(const TrackParticle::AddProp& particleProp)
 {
 	if (IsParticleMax()) { return; }
+	
+	// 最大パーティクル量を超えるのを阻止
+	UINT16 nextParticleNum = (UINT16)trackParticle.GetParticles().size() + particleProp.addNum;
+	if (nextParticleNum > PARTICLE_MAX)
+	{
+		TrackParticle::AddProp p = particleProp;
+		p.addNum -= nextParticleNum - PARTICLE_MAX;
+		trackParticle.Add(p);
+		return;
+	}
+	
 	trackParticle.Add(particleProp);
 }
 
