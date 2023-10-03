@@ -168,6 +168,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SourceFiles\Engine\2d\BitMapNumber.cpp" />
     <ClCompile Include="SourceFiles\Engine\3d\Object\Object3d.cpp" />
     <ClCompile Include="SourceFiles\Engine\3d\Object\Material.cpp" />
     <ClCompile Include="SourceFiles\Application\Camera\PlayerCamera.cpp" />
@@ -223,6 +224,7 @@
     <ClCompile Include="SourceFiles\Application\Stage\Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SourceFiles\Engine\2d\BitMapNumber.h" />
     <ClInclude Include="SourceFiles\Engine\3d\Object\Object3d.h" />
     <ClInclude Include="SourceFiles\Engine\3d\Object\Material.h" />
     <ClInclude Include="SourceFiles\Application\Camera\PlayerCamera.h" />

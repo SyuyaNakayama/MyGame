@@ -15,7 +15,7 @@ void Object::Initialize(const ObjectData& objectData)
 	collisionMask = CollisionMask::Object;
 	physics = Physics::Create(worldTransform);
 	physics->SetMass(0.5f);
-	physics->SetMu(0.0f);
+	physics->SetMu(0.01f);
 	physics->SetIsFreeFall(true);
 }
 

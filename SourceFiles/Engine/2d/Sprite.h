@@ -70,7 +70,6 @@ public:
 	static void StaticInitialize();
 	static TextureData* LoadTexture(const std::string& FILE_NAME, uint32_t mipLevels = MIP_LEVELS_DEFAULT);
 	static void PreDraw();
-	static void PostDraw() {}
 	static ID3D12DescriptorHeap* GetDescriptorHeap() { return srvHeap.Get(); }
 	static void SetDescriptorHeaps();
 };

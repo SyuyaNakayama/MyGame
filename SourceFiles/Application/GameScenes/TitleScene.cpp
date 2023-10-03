@@ -4,7 +4,7 @@
 
 void TitleScene::Initialize()
 {
-	ui = Sprite::Create("ui/–³‘è149_20230821175205.png");
+	ui = Sprite::Create("ui/title_JP.png");
 	ui->position = WindowsAPI::WIN_SIZE / 2.0f;
 	ui->anchorPoint = { 0.5f,0.5f };
 	ui->Update();

@@ -34,9 +34,10 @@ void MyGame::Update()
 void MyGame::Draw()
 {
 	postEffect->PreDrawScene();
-	sceneManager->Draw();
 	ModelManager::DrawObjects();
 	ParticleManager::Draw();
+	Sprite::PreDraw();
+	sceneManager->Draw();
 	postEffect->PostDrawScene();
 	
 	dxCommon->PreDraw();

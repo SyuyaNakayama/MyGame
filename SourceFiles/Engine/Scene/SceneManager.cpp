@@ -46,7 +46,6 @@ void SceneManager::Draw()
 	if (!fadeManager_.IsFade()) { return; }
 	Sprite::PreDraw();
 	fadeManager_.Draw();
-	Sprite::PostDraw();
 }
 
 void SceneManager::ChangeScene(Scene nextScene, bool isUseFade)

@@ -309,6 +309,9 @@
     <ClCompile Include="SourceFiles\Engine\Audio\AudioManager.cpp">
       <Filter>ソース ファイル\Engine\Audio</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFiles\Engine\2d\BitMapNumber.cpp">
+      <Filter>ソース ファイル\Engine\2d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\Engine\Math\Matrix4.h">
@@ -490,6 +493,9 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\Audio\AudioManager.h">
       <Filter>ソース ファイル\Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Engine\2d\BitMapNumber.h">
+      <Filter>ソース ファイル\Engine\2d</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
