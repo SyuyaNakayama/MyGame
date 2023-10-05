@@ -1,5 +1,6 @@
 #include "Stage.h"
 #include <imgui.h>
+#include "SceneManager.h"
 using namespace std::chrono;
 
 int Stage::score = 0;
@@ -35,7 +36,11 @@ void Stage::Initialize()
 		else if (objectData.fileName == "SpawnPoint")
 		{
 			SpawnObject spawnPoint;
-			spawnPoint.Initialize(objectData, 50);
+			int spawnInterval = 0;
+			if (SceneManager::GetInstance()->GetNowScene() == Scene::Play) { spawnInterval = 50; }
+			else { spawnInterval = 180; }
+
+			spawnPoint.Initialize(objectData, spawnInterval);
 			spawnPoints.push_back(spawnPoint);
 		}
 	}

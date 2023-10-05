@@ -1,6 +1,9 @@
 #include "Player.h"
 #include "Input.h"
+#include "SceneManager.h"
 #include <imgui.h>
+
+const float Player::PLAYER_MOVE_FORCE = 0.15f;
 
 void Player::Initialize(const ObjectData& objectData)
 {
@@ -14,16 +17,17 @@ void Player::Initialize(const ObjectData& objectData)
 	collisionAttribute = CollisionAttribute::Player;
 	collisionMask = CollisionMask::Player;
 	physics->SetMu(0.23f);
+	if (SceneManager::GetInstance()->GetNowScene() == Scene::Play) { Move = &Player::Move_Play; }
 }
 
-void Player::Move()
+void Player::Move_Play()
 {
 	Input* input = Input::GetInstance();
 
 	std::vector<Key> keys = { Key::D,Key::A,Key::W,Key::S };
 	if (input->IsAnyInput(keys))
 	{
-		physics->SetForce(0.15f);
+		physics->SetForce(PLAYER_MOVE_FORCE);
 		Vector3 forcedir;
 		forcedir.x = (float)(input->IsInput(Key::D) - input->IsInput(Key::A));
 		forcedir.z = (float)(input->IsInput(Key::W) - input->IsInput(Key::S));
@@ -34,9 +38,23 @@ void Player::Move()
 	worldTransform->translation.y = 5;
 }
 
+void Player::Move_Title()
+{
+	physics->SetForce(PLAYER_MOVE_FORCE);
+	bool mt = moveTimer.Update();
+	isTurn = NumberLoop(isTurn + mt, 2);
+	if (isTurn == 0) { physics->SetForceDir(Vector3::MakeAxis(Axis::Z)); if (mt) moveTimer = 70; }
+	if (isTurn == 1) { physics->SetForce(0); if (mt)moveTimer = 50; }
+	if (isTurn == 2) { physics->SetForceDir(-Vector3::MakeAxis(Axis::Z)); if (mt)moveTimer = 60; }
+}
+
 void Player::Update()
 {
-	Move();
+	if (Move) { (this->*Move)(); }
+	else if (SceneManager::GetInstance()->GetNowScene() == Scene::Title)
+	{
+		if (moveTimer.Update()) { moveTimer = 80; Move = &Player::Move_Title; }
+	}
 	physics->Update();
 	camera->Update();
 }

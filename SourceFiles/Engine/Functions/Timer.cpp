@@ -1,11 +1,13 @@
 #include "Timer.h"
 using namespace std::chrono;
+#include <imgui.h>
 
 bool FrameTimer::Update()
 {
 	if (--timer <= 0)
 	{
 		timer = timeMem;
+		ImGui::Text("Hello,World!");
 		return true;
 	}
 	return false;

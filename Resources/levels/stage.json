@@ -602,7 +602,7 @@
             "name": "Player",
             "transform": {
                 "translation": [
-                    20.0,
+                    0.0,
                     0.0,
                     5.0
                 ],
@@ -624,8 +624,8 @@
             "name": "SpawnPoint",
             "transform": {
                 "translation": [
-                    -13.125862121582031,
-                    -80.52175903320312,
+                    -50.0,
+                    0.0,
                     40.0
                 ],
                 "rotation": [

@@ -1,6 +1,7 @@
 #include "SpawnObject.h"
 #include "Quaternion.h"
 #include "Input.h"
+#include "SceneManager.h"
 
 std::list<std::unique_ptr<Object>>* SpawnObject::objects;
 
@@ -13,11 +14,13 @@ void SpawnObject::Initialize(const ObjectData& objectData_, int spawnInterval)
 
 void SpawnObject::Spawn()
 {
-	objectData.worldTransform->translation.x = cos(spawnPosAngle) * distance;
-	objectData.worldTransform->translation.z = sin(spawnPosAngle * PI) * distance;
-	spawnPosAngle++;
-	if (!spawnTimer.Update()) { return; }
-	if (objects->size() > SPAWN_MAX) { return; }
+	if (SceneManager::GetInstance()->GetNowScene() == Scene::Play)
+	{
+		objectData.worldTransform->translation.x = cos(spawnPosAngle) * distance;
+		objectData.worldTransform->translation.z = sin(spawnPosAngle * PI) * distance;
+		spawnPosAngle++;
+	}
+	if (!spawnTimer.Update() || objects->size() > SPAWN_MAX) { return; }
 	std::unique_ptr<Object> newObj = std::make_unique<Object>();
 	ObjectData objectDataTemp = objectData;
 	objectDataTemp.worldTransform = new WorldTransform;

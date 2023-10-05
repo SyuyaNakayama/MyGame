@@ -42,10 +42,12 @@ void SceneManager::Update()
 
 void SceneManager::Draw()
 {
+	if (fadeManager_.IsFade())
+	{
+		Sprite::PreDraw();
+		fadeManager_.Draw();
+	}
 	scene_->Draw();
-	if (!fadeManager_.IsFade()) { return; }
-	Sprite::PreDraw();
-	fadeManager_.Draw();
 }
 
 void SceneManager::ChangeScene(Scene nextScene, bool isUseFade)

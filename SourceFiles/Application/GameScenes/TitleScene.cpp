@@ -9,16 +9,18 @@ void TitleScene::Initialize()
 	ui->anchorPoint = { 0.5f,0.5f };
 	ui->Update();
 	debugCamera.Initialize({ 0,0 });
+	stage.Initialize();
 	ModelManager::SetViewProjection(&debugCamera);
 }
 
 void TitleScene::Update()
 {
-	if (input->IsTrigger(Key::Space)) { sceneManager->ChangeScene(Scene::Play); }
+	if (input->IsTrigger(Key::Space)) { sceneManager->ChangeScene(Scene::Play); return; }
+	debugCamera.Update();
+	stage.Update();
 }
 
 void TitleScene::Draw()
 {
-	Sprite::PreDraw();
 	ui->Draw();
 }
