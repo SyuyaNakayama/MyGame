@@ -1,10 +1,10 @@
-ï»¿#include "ParticleManager.h"
+#include "ParticleManager.h"
 #include "Sprite.h"
 #include "D3D12Common.h"
 #include "ModelManager.h"
 using namespace Microsoft::WRL;
 
-// é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°ã®å®Ÿä½“
+// Ã“Iƒƒ“ƒo•Ï”‚ÌÀ‘Ì
 ComPtr<ID3D12Resource> ParticleManager::constBuff;
 ParticleManager::ConstBufferData* ParticleManager::constMap = nullptr;
 std::vector<ParticleGroup> ParticleManager::particleGroups;
@@ -17,19 +17,19 @@ void ParticleManager::Initialize()
 void ParticleManager::Update()
 {
 	for (auto& particleGroup : particleGroups) { particleGroup.Update(); }
-	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¸ãƒ‡ãƒ¼ã‚¿è»¢é€
+	// ’è”ƒoƒbƒtƒ@‚Öƒf[ƒ^“]‘—
 	constMap->mat = ModelManager::GetViewProjection()->GetViewProjectionMatrix();
 	constMap->matBillboard = Matrix4::GetBillboard();
 }
 
 void ParticleManager::Draw()
 {
-	// ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã‚’ã‚»ãƒƒãƒˆ
+	// ƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğƒZƒbƒg
 	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
 	PipelineManager::SetPipeline(PipelineType::Particle);
-	// ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–å½¢çŠ¶ã‚’è¨­å®š
+	// ƒvƒŠƒ~ƒeƒBƒuŒ`ó‚ğİ’è
 	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
-	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã‚’ã‚»ãƒƒãƒˆ
+	// ’è”ƒoƒbƒtƒ@ƒrƒ…[‚ğƒZƒbƒg
 	cmdList->SetGraphicsRootConstantBufferView(1, constBuff->GetGPUVirtualAddress());
 	for (auto& particleGroup : particleGroups) { particleGroup.Draw(); }
 }

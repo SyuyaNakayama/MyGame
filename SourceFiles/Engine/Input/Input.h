@@ -1,4 +1,5 @@
 #pragma once
+#define DIRECTINPUT_VERSION  0x0800
 #include <dinput.h>
 #include <wrl.h>
 #include <array>
@@ -183,7 +184,7 @@ private:
 
 public:
 	static const int PADSTICK_MAX_VAL = 1000;
-	
+
 	struct MouseMove
 	{
 		long lX;

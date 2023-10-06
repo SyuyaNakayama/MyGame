@@ -1,4 +1,4 @@
-ï»¿#include "MyGame.h"
+#include "MyGame.h"
 #include "ModelManager.h"
 #include "ImGuiManager.h"
 #include "AudioManager.h"
@@ -6,7 +6,7 @@
 
 void MyGame::Initialize()
 {
-	windowName = L"ã‚¯ã‚¢ãƒƒãƒ‰ãƒ›ãƒƒã‚±ãƒ¼";
+	windowName = L"ƒNƒAƒbƒhƒzƒbƒP[";
 	Framework::Initialize();
 	sceneManager->ChangeScene(Scene::Title, false);
 	ModelManager::Initialize();

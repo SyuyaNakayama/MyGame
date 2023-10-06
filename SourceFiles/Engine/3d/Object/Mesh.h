@@ -1,36 +1,36 @@
-ï»¿#pragma once
+#pragma once
 #include "Material.h"
 #include <unordered_map>
 
-// å½¢çŠ¶ãƒ‡ãƒ¼ã‚¿
+// Œ`óƒf[ƒ^
 class Mesh
 {
 private:
-	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
+	// ’¸“_ƒf[ƒ^\‘¢‘Ì
 	struct VertexData
 	{
-		Vector3 pos; // xyzåº§æ¨™
-		Vector3 normal; // æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
-		Vector2 uv;  // uvåº§æ¨™
+		Vector3 pos; // xyzÀ•W
+		Vector3 normal; // –@üƒxƒNƒgƒ‹
+		Vector2 uv;  // uvÀ•W
 	};
 
 	friend Material;
-	// Microsoft::WRL::ã‚’çœç•¥
+	// Microsoft::WRL::‚ğÈ—ª
 	template<class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-	std::vector<VertexData> vertices;	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿é…åˆ—
-	std::vector<UINT16> indices;		// é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—
-	std::unordered_map<UINT16, std::vector<UINT16>> smoothData;	// é ‚ç‚¹åº§æ¨™ã‚¹ãƒ ãƒ¼ã‚¸ãƒ³ã‚°ç”¨ãƒ‡ãƒ¼ã‚¿
-	ComPtr<ID3D12Resource> vertBuff;	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
-	D3D12_VERTEX_BUFFER_VIEW vbView{};	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
-	ComPtr<ID3D12Resource> indexBuff;	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡
-	D3D12_INDEX_BUFFER_VIEW ibView{};	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
-	bool isSmooth = false;	// ã‚¹ãƒ ãƒ¼ã‚¸ãƒ³ã‚°
-	std::string modelName;	// ãƒ¢ãƒ‡ãƒ«å
-	std::string materialFileName;	// ãƒãƒ†ãƒªã‚¢ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«å
-	std::string directoryPath;	// ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹å
+	std::vector<VertexData> vertices;	// ’¸“_ƒf[ƒ^”z—ñ
+	std::vector<UINT16> indices;		// ’¸“_ƒCƒ“ƒfƒbƒNƒX”z—ñ
+	std::unordered_map<UINT16, std::vector<UINT16>> smoothData;	// ’¸“_À•WƒXƒ€[ƒWƒ“ƒO—pƒf[ƒ^
+	ComPtr<ID3D12Resource> vertBuff;	// ’¸“_ƒoƒbƒtƒ@
+	D3D12_VERTEX_BUFFER_VIEW vbView{};	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[
+	ComPtr<ID3D12Resource> indexBuff;	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@
+	D3D12_INDEX_BUFFER_VIEW ibView{};	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒrƒ…[
+	bool isSmooth = false;	// ƒXƒ€[ƒWƒ“ƒO
+	std::string modelName;	// ƒ‚ƒfƒ‹–¼
+	std::string materialFileName;	// ƒ}ƒeƒŠƒAƒ‹ƒtƒ@ƒCƒ‹–¼
+	std::string directoryPath;	// ƒfƒBƒŒƒNƒgƒŠƒpƒX–¼
 
-	// é ‚ç‚¹æ³•ç·šã®å¹³å‡åŒ–
+	// ’¸“_–@ü‚Ì•½‹Ï‰»
 	void CalculateSmoothedVertexNormals();
 	void CreateBuffers();
 

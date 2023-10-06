@@ -1,34 +1,34 @@
-ï»¿#pragma once
+#pragma once
 #include "Matrix4.h"
 #include "ParticleGroup.h"
 
 class ParticleManager final
 {
 private:
-	// Microsoft::WRL::ã‚’çœç•¥
+	// Microsoft::WRL::‚ğÈ—ª
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
+	// ’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì
 	struct ConstBufferData
 	{
-		Matrix4 mat;	// 3Då¤‰æ›è¡Œåˆ—
-		Matrix4 matBillboard; // ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—
+		Matrix4 mat;	// 3D•ÏŠ·s—ñ
+		Matrix4 matBillboard; // ƒrƒ‹ƒ{[ƒhs—ñ
 	};
 
-	// å®šæ•°ãƒãƒƒãƒ•ã‚¡
+	// ’è”ƒoƒbƒtƒ@
 	static ComPtr<ID3D12Resource> constBuff;
 	static ConstBufferData* constMap;
-	// ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚°ãƒ«ãƒ¼ãƒ—ã®é…åˆ—
+	// ƒp[ƒeƒBƒNƒ‹ƒOƒ‹[ƒv‚Ì”z—ñ
 	static std::vector<ParticleGroup> particleGroups;
 
 	ParticleManager() = delete;
 	ParticleManager(const ParticleManager& obj) = delete;
 
 public:
-	static void Initialize(); // é™çš„åˆæœŸåŒ–
-	static void Update(); // æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‡¦ç†
-	static void Draw(); // æç”»
-	static void Clear(); // ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®å‰Šé™¤
-	static void AddParticleGroup(const std::string& textureName); // ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚°ãƒ«ãƒ¼ãƒ—ã®è¿½åŠ 
+	static void Initialize(); // Ã“I‰Šú‰»
+	static void Update(); // –ˆƒtƒŒ[ƒ€ˆ—
+	static void Draw(); // •`‰æ
+	static void Clear(); // ƒp[ƒeƒBƒNƒ‹‚Ìíœ
+	static void AddParticleGroup(const std::string& textureName); // ƒp[ƒeƒBƒNƒ‹ƒOƒ‹[ƒv‚Ì’Ç‰Á
 	static ParticleGroup* GetParticleGroup(size_t index) { return &particleGroups[index]; }
 };

@@ -61,8 +61,8 @@ void FontManager::Initialize()
 	*/
 	{
 		D2D1_SIZE_U oPixelSize = {
-			  WindowsAPI::WIN_SIZE.x
-			, WindowsAPI::WIN_SIZE.y
+			  (UINT32)WindowsAPI::WIN_SIZE.x
+			, (UINT32)WindowsAPI::WIN_SIZE.y
 		};
 
 		D2D1_RENDER_TARGET_PROPERTIES oRenderTargetProperties = D2D1::RenderTargetProperties();
@@ -116,7 +116,7 @@ void FontManager::Draw()
 	// テキストの描画
 	pRenderTarget->DrawText(
 		strText.c_str(),   // 文字列
-		strText.size(),   // 文字数
+		(UINT32)strText.size(),   // 文字数
 		pTextFormat,
 		&D2D1::RectF(0, 0, oTargetSize.width, oTargetSize.height),
 		pBrush,

@@ -1,4 +1,4 @@
-ï»¿#include "Framework.h"
+#include "Framework.h"
 #include "Sprite.h"
 #include "D3D12Common.h"
 
@@ -26,9 +26,9 @@ void Framework::Finalize()
 
 bool Framework::IsEndRequest()
 {
-	// Xãƒœã‚¿ãƒ³ã§çµ‚äº†ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒæ¥ãŸã‚‰ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹
+	// Xƒ{ƒ^ƒ“‚ÅI—¹ƒƒbƒZ[ƒW‚ª—ˆ‚½‚çƒQ[ƒ€ƒ‹[ƒv‚ð”²‚¯‚é
 	if (wAPI->ProcessMessage()) { return true; }
-	// ESCã‚­ãƒ¼ã‚’æŠ¼ã—ãŸã‚‰ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹
+	// ESCƒL[‚ð‰Ÿ‚µ‚½‚çƒQ[ƒ€ƒ‹[ƒv‚ð”²‚¯‚é
 	if (input->IsTrigger(Key::Escape)) { return true; }
 	return false;
 }

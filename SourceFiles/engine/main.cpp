@@ -1,4 +1,4 @@
-﻿#include "MyGame.h"
+#include "MyGame.h"
 #pragma warning(push)
 #pragma warning(disable:28251)
 

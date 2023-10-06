@@ -55,7 +55,7 @@ HDC WindowsAPI::SetFont(const std::wstring& fontName)
 		fontSize, 0, 0, 0, fontWeight, 0, 0, 0,
 		SHIFTJIS_CHARSET, OUT_TT_ONLY_PRECIS, CLIP_DEFAULT_PRECIS,
 		PROOF_QUALITY, DEFAULT_PITCH | FF_MODERN,
-		(WCHAR)"‚l‚r ‚o–¾’©"
+		L"‚l‚r ‚o–¾’©"
 		//(WCHAR)fontName.data()
 	};
 	HFONT hFont = CreateFontIndirectW(&lf);
