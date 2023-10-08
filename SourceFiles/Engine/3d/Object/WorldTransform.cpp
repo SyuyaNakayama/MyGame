@@ -33,8 +33,8 @@ void WorldTransform::Draw()
 
 Vector3 WorldTransform::GetScale()
 {
-	Vector3 scale;
+	Vector3 scale_;
 	// グローバル行列からスケール値を抽出
-	for (size_t i = 0; i < 3; i++) { scale[i] = matWorld.GetVector(i).Length(); }
-	return scale;
+	for (size_t i = 0; i < 3; i++) { scale_[i] = matWorld.GetVector(i).Length(); }
+	return scale_;
 }

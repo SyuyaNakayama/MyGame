@@ -100,19 +100,19 @@ void Mesh::LoadOBJ(const std::string& modelName_, bool isSmooth_)
 				vertex.pos = positions[(size_t)indexPosition - 1];
 				vertex.normal = normals[(size_t)indexNormal - 1];
 				vertex.uv = texcoords[(size_t)indexTexcoord - 1];
-				vertices.emplace_back(vertex);
-				if (isSmooth) { smoothData[indexPosition].emplace_back((UINT16)vertices.size() - 1); }
+				vertices.emplace_back<Mesh::VertexData&>(vertex);
+				if (isSmooth) { smoothData[indexPosition].emplace_back<UINT16>((UINT16)vertices.size() - 1); }
 
 				// インデックスデータの追加
 				if (faceIndexCount >= 3)
 				{
 					// 四角形ポリゴンの4点目なので、
 					// 四角形の0,1,2,3の内 2,3,0で三角形を構築する
-					indices.emplace_back(indexCountTex - 1);
-					indices.emplace_back(indexCountTex);
-					indices.emplace_back(indexCountTex - 3);
+					indices.emplace_back<UINT16>((UINT16)indexCountTex - 1);
+					indices.emplace_back<UINT16>((UINT16)indexCountTex);
+					indices.emplace_back<UINT16>((UINT16)indexCountTex - 3);
 				}
-				else { indices.emplace_back(indexCountTex); }
+				else { indices.emplace_back<UINT16>((UINT16)indexCountTex); }
 
 				indexCountTex++;
 				faceIndexCount++;

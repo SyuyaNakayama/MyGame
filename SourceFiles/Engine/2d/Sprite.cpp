@@ -76,14 +76,14 @@ TextureData* Sprite::LoadTexture(const std::string& fileName, uint32_t mipLevels
 
 	TextureData* texture = new TextureData;
 
+	D3D12_HEAP_PROPERTIES heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_CPU_PAGE_PROPERTY_WRITE_BACK, D3D12_MEMORY_POOL_L0);
+
 	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
 	result = device->CreateCommittedResource(
-		&CD3DX12_HEAP_PROPERTIES(D3D12_CPU_PAGE_PROPERTY_WRITE_BACK, D3D12_MEMORY_POOL_L0),
-		D3D12_HEAP_FLAG_NONE,
+		&heapProp, D3D12_HEAP_FLAG_NONE,
 		&textureResourceDesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
-		nullptr,
-		IID_PPV_ARGS(&texture->buffer));
+		nullptr, IID_PPV_ARGS(&texture->buffer));
 
 	for (size_t i = 0; i < metadata.mipLevels; i++)
 	{

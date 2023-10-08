@@ -33,7 +33,8 @@ void Input::Initialize()
 	result = directInput->CreateDevice(GUID_SysMouse, &mouse, NULL);
 	result = mouse->SetDataFormat(&c_dfDIMouse2);
 	result = mouse->SetCooperativeLevel(wAPI->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
-#pragma region ゲームパッド
+
+	//ゲームパッド
 	DeviceEnumParameter parameter{};
 
 	parameter.findCount = 0;
@@ -60,7 +61,6 @@ void Input::Initialize()
 
 	// 制御開始
 	StartGamePadControl();
-#pragma endregion
 }
 
 bool SetUpGamePadProperty(LPDIRECTINPUTDEVICE8 device)
@@ -144,7 +144,6 @@ void Input::StartGamePadControl()
 	// ポーリング判定
 	if (cap.dwFlags & DIDC_POLLEDDATAFORMAT)
 	{
-		DWORD error = GetLastError();
 		// ポーリング開始
 		joystick->Acquire();
 		Result result = joystick->Poll();
@@ -169,7 +168,7 @@ void Input::Update()
 
 bool Input::IsAnyInput(std::vector<Key>& keys)
 {
-	for (auto& key : keys) { if (IsInput(key)) { return true; } }
+	for (auto& key_ : keys) { if (IsInput(key_)) { return true; } }
 	return false;
 }
 

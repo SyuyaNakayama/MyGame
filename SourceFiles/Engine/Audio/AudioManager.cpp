@@ -38,5 +38,5 @@ void AudioManager::Update()
 	for (auto& audio : audios[true]) { if (audio->IsFinished()) { audio->SetPlayPosition(0); } }
 	for (auto& audio : pointAudios[true]) { if (audio->IsFinished()) { audio->SetPlayPosition(0); } }
 	// ‰¹—Ê‚ÌXV
-	for (auto& audios : pointAudios) { for (auto& audio : audios.second) { audio->Update(); } }
+	for (auto& audios_ : pointAudios) { for (auto& audio : audios_.second) { audio->Update(); } }
 }

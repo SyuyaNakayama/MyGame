@@ -111,8 +111,8 @@ void ClosestPtPoint2Triangle(const Vector3& point, PolygonCollider* triangle, Ve
 				d[NumberLoop(3 + 4 * roopNum, 1, 6)] * d[NumberLoop(2 + 4 * roopNum, 1, 6)]);
 			if (v[0 + roopNum] <= 0.0f && d[1 + roopNum] >= 0.0f && d[3 * i] <= 0.0f)
 			{
-				float v = d[1 + roopNum] / (d[1 + roopNum] - d[3 * i]);
-				*closest = triangle->GetVertices()[0] + v * p0_p[i];
+				float v_ = d[1 + roopNum] / (d[1 + roopNum] - d[3 * i]);
+				*closest = triangle->GetVertices()[0] + v_ * p0_p[i];
 				return;
 			}
 

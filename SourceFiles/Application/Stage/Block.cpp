@@ -26,19 +26,19 @@ void Block::Update()
 
 void Block::OnCollision(BoxCollider* collider)
 {
-	Physics* physics = collider->GetPhysics();
-	if (!physics) { return; }
+	Physics* physics_ = collider->GetPhysics();
+	if (!physics_) { return; }
 	if (normal.Length() <= 0.001f) { return; }
-	if (collisionAttribute == CollisionAttribute::Ground && physics->IsFreeFall())
+	if (collisionAttribute == CollisionAttribute::Ground && physics_->IsFreeFall())
 	{
-		physics->SetIsFreeFall(false);
-		physics->SetVelocity({});
-		physics->GetWorldTransform()->translation.y = worldTransform->GetWorldPosition().y + worldTransform->scale.y;
+		physics_->SetIsFreeFall(false);
+		physics_->SetVelocity({});
+		physics_->GetWorldTransform()->translation.y = worldTransform->GetWorldPosition().y + worldTransform->scale.y;
 		return;
 	}
 	if (collisionAttribute == CollisionAttribute::Block)
 	{
-		physics->Backlash(normal, 1.0f);
+		physics_->Backlash(normal, 1.0f);
 	}
 }
 
@@ -63,19 +63,19 @@ void Goal::Update()
 
 void Goal::OnCollision(BoxCollider* collider)
 {
-	Physics* physics = collider->GetPhysics();
-	if (!physics) { return; }
+	Physics* physics_ = collider->GetPhysics();
+	if (!physics_) { return; }
 	if (normal.Length() <= 0.001f) { return; }
 	if (collider->GetCollisionAttribute() == CollisionAttribute::Player)
 	{
-		physics->Backlash(normal, 1.0f);
+		physics_->Backlash(normal, 1.0f);
 	}
 	else if (collider->GetCollisionAttribute() == CollisionAttribute::Object)
 	{
-		Object* object = dynamic_cast<Object*>(collider);
-		assert(object);
+		Object* object_ = dynamic_cast<Object*>(collider);
+		assert(object_);
 		collider->SetCollisionMask(CollisionMask::None);
-		object->Goal();
+		object_->Goal();
 		Stage::AddScore(10);
 
 		ParticleGroup* pGroup = ParticleManager::GetParticleGroup(0);

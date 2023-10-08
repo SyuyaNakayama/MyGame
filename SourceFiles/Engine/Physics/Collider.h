@@ -44,12 +44,12 @@ protected:
 public:
 	virtual ~BaseCollider() = default;
 
-	virtual void OnCollision(BoxCollider* boxCollider) {}
-	virtual void OnCollision(SphereCollider* sphereCollider) {}
-	virtual void OnCollision(PlaneCollider* boxCollider) {}
-	virtual void OnCollision(PolygonCollider* sphereCollider) {}
-	virtual void OnCollision(RayCollider* sphereCollider) {}
-	virtual void OnCollision(IncludeCollider* sphereCollider) {}
+	virtual void OnCollision([[maybe_unused]]BoxCollider* boxCollider) {}
+	virtual void OnCollision([[maybe_unused]]SphereCollider* sphereCollider) {}
+	virtual void OnCollision([[maybe_unused]]PlaneCollider* boxCollider) {}
+	virtual void OnCollision([[maybe_unused]]PolygonCollider* sphereCollider) {}
+	virtual void OnCollision([[maybe_unused]]RayCollider* sphereCollider) {}
+	virtual void OnCollision([[maybe_unused]]IncludeCollider* sphereCollider) {}
 
 	CollisionAttribute GetCollisionAttribute() { return collisionAttribute; }
 	CollisionMask GetCollisionMask() { return collisionMask; }

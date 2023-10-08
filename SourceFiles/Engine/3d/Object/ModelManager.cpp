@@ -15,9 +15,8 @@ void ModelManager::Initialize()
 	// ライトグループ生成
 	lightGroup = LightGroup::Create();
 	// カメラ生成
-	ViewProjection* viewProjection = new ViewProjection;
+	viewProjection = new ViewProjection;
 	viewProjection->Initialize();
-	ModelManager::viewProjection = viewProjection;
 }
 
 Object3d* ModelManager::Create(const string& modelName, bool smoothing)

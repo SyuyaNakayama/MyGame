@@ -217,7 +217,7 @@ public:
 	// いづれかのキーが押されたらtrueを返す
 	bool IsAnyInput() { return std::accumulate(key.begin(), key.end(), false); }
 	bool IsAnyInput(std::vector<Key>& keys);
-	float Input::Move(Key KEY1, Key KEY2, const float spd) { return (IsInput(KEY1) - IsInput(KEY2)) * spd; } // KEY1が押されてたらプラス、KEY2が押されてたらマイナス
+	float Move(Key KEY1, Key KEY2, const float spd) { return (IsInput(KEY1) - IsInput(KEY2)) * spd; } // KEY1が押されてたらプラス、KEY2が押されてたらマイナス
 	size_t KeyInputNum() { return std::accumulate(key.begin(), key.end(), 0U) / 128; }
 
 	bool IsInput(Mouse KEY) { return mouseState.rgbButtons[(int)KEY]; }
@@ -228,6 +228,6 @@ public:
 	bool IsInput(JoyPad button) { return joyState.rgbButtons[(int)button]; }
 	bool IsTrigger(JoyPad button) { return !joyStatePre.rgbButtons[(int)button] && joyState.rgbButtons[(int)button]; }
 	bool IsConnectGamePad() { return joystick; }
-	Vector2 Input::ConLStick(const float spd);
-	Vector2 Input::ConRStick(const float spd);
+	Vector2 ConLStick(const float spd);
+	Vector2 ConRStick(const float spd);
 };

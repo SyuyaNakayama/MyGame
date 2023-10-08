@@ -20,7 +20,7 @@ public:
 	void Initialize(const std::wstring& windowName = L"");
 	bool ProcessMessage();
 	void Finalize();
-	HDC SetFont(const std::wstring& fontName);
+	//HDC SetFont(const std::wstring& fontName);
 	HWND GetHwnd() const { return hwnd; }
 	HINSTANCE GetHInstance() const { return w.hInstance; }
 };

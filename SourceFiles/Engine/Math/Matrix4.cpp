@@ -208,9 +208,9 @@ Matrix4 Matrix4::Inverse(const Matrix4& m)
 		{
 			if (n == i) { continue; }
 
-			float mul = -mat[i][n];
+			float mul_ = -mat[i][n];
 
-			for (int j = 0; j < 8; j++) { mat[i][j] += mat[n][j] * mul; }
+			for (int j = 0; j < 8; j++) { mat[i][j] += mat[n][j] * mul_; }
 		}
 	}
 

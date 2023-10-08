@@ -21,7 +21,7 @@ public:
 	void Initialize();
 	void Update();
 	bool IsFinished() { return isFinished; }
-	static void AddScore(int score) { Stage::score += score; }
+	static void AddScore(int score_) { score += score_; }
 	static void Reset() { score = 0; }
 	static int GetScore() { return score; }
 	float GetRemainTime() { return stageTime.GetRemainTime(); }

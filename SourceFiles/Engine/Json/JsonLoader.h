@@ -1,5 +1,8 @@
 #pragma once
+#pragma warning(push)
+#pragma warning(disable:4459)
 #include <json.hpp>
+#pragma warning(pop)
 #include "Object3d.h"
 
 struct ColliderData

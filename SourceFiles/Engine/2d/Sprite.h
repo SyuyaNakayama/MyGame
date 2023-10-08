@@ -46,7 +46,7 @@ private:
 	template<class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	
 	static const size_t MAX_SRV_COUNT = 2056;
-	static const uint32_t MIP_LEVELS_DEFAULT = -1;
+	static const uint32_t MIP_LEVELS_DEFAULT = UINT32_MAX;
 	// デフォルトディレクトリ
 	static std::string DEFAULT_TEXTURE_DIRECTORY_PATH;
 	static ComPtr<ID3D12DescriptorHeap> srvHeap;
