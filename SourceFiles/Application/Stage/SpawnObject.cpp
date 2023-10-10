@@ -3,16 +3,16 @@
 #include "Input.h"
 #include "SceneManager.h"
 
-std::list<std::unique_ptr<Object>>* SpawnObject::objects;
+std::list<std::unique_ptr<GameObject>>* SpawnObject::objects;
 
-void SpawnObject::Initialize(const ObjectData& objectData_, int spawnInterval)
+void SpawnObject::Initialize(const ObjectData& objectData_)
 {
 	objectData = objectData_;
-	spawnTimer = spawnInterval;
+	spawnTimer = objectData_.spawnInterval;
 	initialPos = objectData_.worldTransform->translation;
 }
 
-void SpawnObject::Spawn()
+void SpawnObject::Update()
 {
 	if (SceneManager::GetInstance()->GetNowScene() == Scene::Play)
 	{

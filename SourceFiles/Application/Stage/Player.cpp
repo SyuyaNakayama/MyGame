@@ -52,7 +52,7 @@ void Player::Move_Title()
 	{
 		if (worldTransform->translation.z <= 0)
 		{
-			if(stage->GetObjectNum()!=0)
+			if (Object::GetInstanceNum() != 0)
 			{
 				physics->SetForceDir(Vector3::MakeAxis(Axis::Z)); isTurn = 0;
 			}
@@ -61,7 +61,7 @@ void Player::Move_Title()
 				physics->SetForce(0);
 			}
 		}
-	
+
 	}
 }
 

@@ -13,7 +13,7 @@ public:
 	void OnCollision(BoxCollider* collider);
 };
 
-class Goal : public BoxCollider
+class Goal : public BoxCollider, public GameObject
 {
 	Object3d* object;
 	Vector3 normal;

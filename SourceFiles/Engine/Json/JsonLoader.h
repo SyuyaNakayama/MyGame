@@ -16,6 +16,7 @@ struct ObjectData
 	std::string fileName;
 	ColliderData collider;
 	WorldTransform* worldTransform;
+	int spawnInterval; // ã‚¹ãƒãƒ¼ãƒ³é »åº¦(SpawnObjectã‚¯ãƒ©ã‚¹å°‚ç”¨å¤‰æ•°)
 };
 
 struct LevelData
@@ -31,6 +32,6 @@ private:
 	const static std::string DEFAULT_BASE_DIRECTORY;
 
 public:
-	/// <param name = "fileName">Šg’£q‚È‚µ•¶š—ñ</param>
+	/// <param name = "fileName">æ‹¡å¼µå­ãªã—æ–‡å­—åˆ—</param>
 	static LevelData* LoadJson(const std::string& fileName);
 };

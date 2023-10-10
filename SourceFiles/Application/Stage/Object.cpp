@@ -1,8 +1,9 @@
 #include "Object.h"
 #include "ModelManager.h"
 #include <imgui.h>
-#include "Input.h"
 #include "ParticleManager.h"
+
+int Object::instanceNum = 0;
 
 void Object::Initialize(const ObjectData& objectData)
 {
@@ -38,7 +39,7 @@ void Object::OnCollision(SphereCollider* collider)
 	Physics* _physics = collider->GetPhysics();
 	if (!_physics) { return; }
 
-	// ’e«Õ“Ë
+	// å¼¾æ€§è¡çª
 	Physics::Backlash(physics.get(), _physics, 1.0f);
 
 	DiffuseParticle::AddProp addProp;

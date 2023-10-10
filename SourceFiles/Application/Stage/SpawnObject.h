@@ -1,11 +1,10 @@
 #pragma once
 #include "BaseSpawnPoint.h"
 #include "Object.h"
-#include "JsonLoader.h"
 
-class SpawnObject : public BaseSpawnPoint
+class SpawnObject : public BaseSpawnPoint, public GameObject
 {
-	static std::list<std::unique_ptr<Object>>* objects;
+	static std::list<std::unique_ptr<GameObject>>* objects;
 	ObjectData objectData;
 	Angle spawnPosAngle = 0;
 	Vector3 initialPos;
@@ -13,7 +12,7 @@ class SpawnObject : public BaseSpawnPoint
 	static const int SPAWN_MAX = 30;
 
 public:
-	void Initialize(const ObjectData& objectData_, int spawnInterval);
-	void Spawn();
-	static void SetObjectList(std::list<std::unique_ptr<Object>>* list) { objects = list; }
+	void Initialize(const ObjectData& objectData_);
+	void Update();
+	static void SetObjectList(std::list<std::unique_ptr<GameObject>>* list) { objects = list; }
 };

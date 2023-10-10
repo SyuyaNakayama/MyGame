@@ -7,42 +7,41 @@ int Stage::score = 0;
 
 void Stage::Initialize()
 {
-	SpawnObject::SetObjectList(&objects);
+	SpawnObject::SetObjectList(&gameObjects);
 	levelData = JsonLoader::LoadJson("stage");
+
+	std::unique_ptr<GameObject> gameObject;
 	for (auto& objectData : levelData->objects)
 	{
 		if (objectData.fileName == "cube" || objectData.fileName == "Ground")
 		{
-			std::unique_ptr<Block> newBlock = std::make_unique<Block>();
-			newBlock->Initialize(objectData);
-			blocks.push_back(std::move(newBlock));
+			gameObject = std::make_unique<Block>();
 		}
 		else if (objectData.fileName == "Goal")
 		{
-			std::unique_ptr<Goal> newGoal = std::make_unique<Goal>();
-			newGoal->Initialize(objectData);
-			goals.push_back(std::move(newGoal));
+			gameObject = std::make_unique<Goal>();
 		}
 		else if (objectData.fileName == "Player")
 		{
-			player.Initialize(objectData);
-			player.SetStage(this);
+			gameObject = std::make_unique<Player>();
 		}
 		else if (objectData.fileName == "Object")
 		{
-			std::unique_ptr<Object> newObj = std::make_unique<Object>();
-			newObj->Initialize(objectData);
-			objects.push_back(std::move(newObj));
+			gameObject = std::make_unique<Object>();
 		}
 		else if (objectData.fileName == "SpawnPoint")
 		{
-			SpawnObject spawnPoint;
+			gameObject = std::make_unique<SpawnObject>();
 			int spawnInterval = 0;
 			if (SceneManager::GetInstance()->GetNowScene() == Scene::Play) { spawnInterval = 50; }
 			else { spawnInterval = 180; }
-
-			spawnPoint.Initialize(objectData, spawnInterval);
-			spawnPoints.push_back(spawnPoint);
+			objectData.spawnInterval = spawnInterval;
+		}
+		// オブジェクトの登録
+		if (gameObject)
+		{
+			gameObject->Initialize(objectData);
+			gameObjects.push_back(std::move(gameObject));
 		}
 	}
 
@@ -52,11 +51,16 @@ void Stage::Initialize()
 void Stage::Update()
 {
 	if (stageTime.Update()) { isFinished = true; }
+	// 消えた障害物のインスタンス削除
+	gameObjects.remove_if([](std::unique_ptr<GameObject>& gameObject)
+		{
+			Object* object = dynamic_cast<Object*>(gameObject.get());
+			if (object)
+			{
+				if (object->IsDestroy()) { return true; }
+			}
+			return false;
+		});
 
-	player.Update();
-	objects.remove_if([](std::unique_ptr<Object>& object) { return object->IsDestroy(); });
-	for (auto& spawnPoint : spawnPoints) { spawnPoint.Spawn(); }
-	for (auto& block : blocks) { block->Update(); }
-	for (auto& object : objects) { object->Update(); }
-	for (auto& goal : goals) { goal->Update(); }
+	for (auto& gameObject : gameObjects) { gameObject->Update(); }
 }

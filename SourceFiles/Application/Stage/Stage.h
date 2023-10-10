@@ -7,12 +7,8 @@
 
 class Stage
 {
-	std::vector<std::unique_ptr<Block>> blocks; // 壁と床
-	Player player;
-	std::list<std::unique_ptr<Object>> objects;
-	std::list<std::unique_ptr<Goal>> goals;
+	std::list<std::unique_ptr<GameObject>> gameObjects; // プレイヤー、壁、床、ゴール、障害物
 	LevelData* levelData = nullptr;
-	std::list<SpawnObject> spawnPoints;
 	static int score;
 	RealTimer stageTime;
 	bool isFinished;
@@ -22,7 +18,6 @@ public:
 	void Update();
 	bool IsFinished() { return isFinished; }
 	float GetRemainTime() { return stageTime.GetRemainTime(); }
-	size_t GetObjectNum() { return objects.size(); }
 	static void AddScore(int score_) { score += score_; }
 	static void Reset() { score = 0; }
 	static int GetScore() { return score; }

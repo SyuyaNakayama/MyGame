@@ -14,7 +14,6 @@ private:
 	std::unique_ptr<BaseCamera> camera;
 	int isTurn = 0; // falseの時z+の方向に移動、trueの時にz-の方向に移動
 	FrameTimer moveTimer = 180;
-	Stage* stage = nullptr;
 
 	void Move_Play();
 	void Move_Title();
@@ -23,6 +22,5 @@ private:
 
 public:
 	void Initialize(const ObjectData& objectData);
-	void SetStage(Stage* stage_) { stage = stage_; }
 	void Update();
 };

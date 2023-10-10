@@ -7,5 +7,5 @@ protected:
 	FrameTimer spawnTimer;
 
 public:
-	virtual void Spawn() = 0;
+	virtual void Update() = 0;
 };
