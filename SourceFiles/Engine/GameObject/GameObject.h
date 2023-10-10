@@ -1,8 +1,8 @@
 #pragma once
+#include "JsonLoader.h"
 
 class GameObject
 {
-	virtual void Initialize() = 0;
+	virtual void Initialize(const ObjectData& objectData) = 0;
 	virtual void Update() = 0;
-	virtual void Draw() = 0;
 };

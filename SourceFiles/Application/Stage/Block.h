@@ -1,9 +1,8 @@
 #pragma once
 #include "Collider.h"
-#include "Object3d.h"
-#include "JsonLoader.h"
+#include "GameObject.h"
 
-class Block : public BoxCollider
+class Block : public BoxCollider, public GameObject
 {
 	Object3d* object;
 	Vector3 normal;

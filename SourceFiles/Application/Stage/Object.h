@@ -1,10 +1,9 @@
 #pragma once
 #include "Collider.h"
-#include "Object3d.h"
-#include "JsonLoader.h"
+#include "GameObject.h"
 
-// ƒS[ƒ‹‚É‰^‚ÔƒIƒuƒWƒFƒNƒg
-class Object : public SphereCollider, public BoxCollider
+// ã‚´ãƒ¼ãƒ«ã«é‹ã¶ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+class Object : public SphereCollider, public BoxCollider, public GameObject
 {
 	Object3d* object;
 	bool isGoal = false;
@@ -14,7 +13,7 @@ public:
 	void Initialize(const ObjectData& objectData);
 	void Update();
 	void OnCollision(SphereCollider* collider);
-	void Destroy() { object->isDestroy = true; } // ”j‰ó‚·‚é
+	void Destroy() { object->isDestroy = true; } // ç ´å£Šã™ã‚‹
 	bool IsDestroy() { return object->isDestroy; }
 	void Goal() { isGoal = true; }
 };

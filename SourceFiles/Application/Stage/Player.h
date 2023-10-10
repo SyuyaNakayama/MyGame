@@ -1,12 +1,12 @@
 #pragma once
 #include "Collider.h"
 #include "PlayerCamera.h"
-#include "JsonLoader.h"
 #include "Timer.h"
+#include "GameObject.h"
 
 class Stage;
 
-class Player : public SphereCollider, public BoxCollider
+class Player : public SphereCollider, public BoxCollider, public GameObject
 {
 private:
 	static const float PLAYER_MOVE_FORCE;
