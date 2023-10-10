@@ -69,7 +69,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\Engine\2d;$(ProjectDir)SourceFiles\Engine\3d\Camera;$(ProjectDir)SourceFiles\Engine\3d\Object;$(ProjectDir)SourceFiles\Engine\Audio;$(ProjectDir)SourceFiles\Engine\DirectX;$(ProjectDir)SourceFiles\Engine\Font;$(ProjectDir)SourceFiles\Engine\Framework;$(ProjectDir)SourceFiles\Engine\Functions;$(ProjectDir)SourceFiles\Engine\Input;$(ProjectDir)SourceFiles\Engine\Json;$(ProjectDir)SourceFiles\Engine\Light;$(ProjectDir)SourceFiles\Engine\Math;$(ProjectDir)SourceFiles\Engine\Particle;$(ProjectDir)SourceFiles\Engine\Physics;$(ProjectDir)SourceFiles\Engine\Scene;$(ProjectDir)SourceFiles\Engine\WinApp;$(ProjectDir)SourceFiles\Application\Stage;$(ProjectDir)SourceFiles\Application\MyGame;$(ProjectDir)SourceFiles\Application\Camera;$(ProjectDir)SourceFiles\Application\GameScenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
       <LanguageStandard_C>Default</LanguageStandard_C>
     </ClCompile>
     <Link>
@@ -94,7 +94,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\Engine\2d;$(ProjectDir)SourceFiles\Engine\3d\Camera;$(ProjectDir)SourceFiles\Engine\3d\Object;$(ProjectDir)SourceFiles\Engine\Audio;$(ProjectDir)SourceFiles\Engine\DirectX;$(ProjectDir)SourceFiles\Engine\Font;$(ProjectDir)SourceFiles\Engine\Framework;$(ProjectDir)SourceFiles\Engine\Functions;$(ProjectDir)SourceFiles\Engine\Input;$(ProjectDir)SourceFiles\Engine\Json;$(ProjectDir)SourceFiles\Engine\Light;$(ProjectDir)SourceFiles\Engine\Math;$(ProjectDir)SourceFiles\Engine\Particle;$(ProjectDir)SourceFiles\Engine\Physics;$(ProjectDir)SourceFiles\Engine\Scene;$(ProjectDir)SourceFiles\Engine\WinApp;$(ProjectDir)SourceFiles\Application\Stage;$(ProjectDir)SourceFiles\Application\MyGame;$(ProjectDir)SourceFiles\Application\Camera;$(ProjectDir)SourceFiles\Application\GameScenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
       <LanguageStandard_C>Default</LanguageStandard_C>
     </ClCompile>
     <Link>
@@ -230,6 +230,7 @@
     <ClInclude Include="SourceFiles\Engine\Audio\AudioManager.h" />
     <ClInclude Include="SourceFiles\Engine\Functions\BaseSpawnPoint.h" />
     <ClInclude Include="SourceFiles\Engine\Functions\Random.h" />
+    <ClInclude Include="SourceFiles\Engine\GameObject\GameObject.h" />
     <ClInclude Include="SourceFiles\Engine\Json\JsonLoader.h" />
     <ClInclude Include="SourceFiles\Engine\Math\MathUtility.h" />
     <ClInclude Include="SourceFiles\Engine\Skydome\Skydome.h" />

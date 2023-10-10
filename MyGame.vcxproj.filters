@@ -90,6 +90,12 @@
     <Filter Include="ソース ファイル\Engine\Json">
       <UniqueIdentifier>{0eb5dc25-4fb5-433e-ad61-6d78878c3a19}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Application\Stage\GameObjects">
+      <UniqueIdentifier>{3a720f82-37bb-4e25-8ba3-40778b61d0e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\GameObject">
+      <UniqueIdentifier>{3662b9ab-1bc1-48b5-ab85-528e8383608a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Sprite.hlsli">
@@ -228,9 +234,6 @@
     <ClCompile Include="SourceFiles\Engine\Particle\TrackParticle.cpp">
       <Filter>ソース ファイル\Engine\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="SourceFiles\Engine\Skydome\Skydome.cpp">
-      <Filter>ソース ファイル\Engine\Skydome</Filter>
-    </ClCompile>
     <ClCompile Include="SourceFiles\Engine\DirectX\DirectXCommon.cpp">
       <Filter>ソース ファイル\Engine\DirectX</Filter>
     </ClCompile>
@@ -257,15 +260,6 @@
     </ClCompile>
     <ClCompile Include="SourceFiles\Application\MyGame\MyGame.cpp">
       <Filter>ソース ファイル\Application\MyGame</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFiles\Application\Stage\Block.cpp">
-      <Filter>ソース ファイル\Application\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFiles\Application\Stage\Object.cpp">
-      <Filter>ソース ファイル\Application\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFiles\Application\Stage\Player.cpp">
-      <Filter>ソース ファイル\Application\Stage</Filter>
     </ClCompile>
     <ClCompile Include="SourceFiles\Application\Stage\Stage.cpp">
       <Filter>ソース ファイル\Application\Stage</Filter>
@@ -305,6 +299,18 @@
     </ClCompile>
     <ClCompile Include="SourceFiles\Engine\2d\BitMapNumber.cpp">
       <Filter>ソース ファイル\Engine\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\Stage\Block.cpp">
+      <Filter>ソース ファイル\Application\Stage\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\Stage\Object.cpp">
+      <Filter>ソース ファイル\Application\Stage\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\Stage\Player.cpp">
+      <Filter>ソース ファイル\Application\Stage\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Engine\Skydome\Skydome.cpp">
+      <Filter>ソース ファイル\Engine\Skydome</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -398,9 +404,6 @@
     <ClInclude Include="SourceFiles\Engine\Particle\TrackParticle.h">
       <Filter>ソース ファイル\Engine\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\Engine\Skydome\Skydome.h">
-      <Filter>ソース ファイル\Engine\Skydome</Filter>
-    </ClInclude>
     <ClInclude Include="SourceFiles\Engine\DirectX\DirectXCommon.h">
       <Filter>ソース ファイル\Engine\DirectX</Filter>
     </ClInclude>
@@ -436,15 +439,6 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Application\MyGame\MyGame.h">
       <Filter>ソース ファイル\Application\MyGame</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\Application\Stage\Block.h">
-      <Filter>ソース ファイル\Application\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\Application\Stage\Object.h">
-      <Filter>ソース ファイル\Application\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\Application\Stage\Player.h">
-      <Filter>ソース ファイル\Application\Stage</Filter>
     </ClInclude>
     <ClInclude Include="SourceFiles\Application\Stage\Stage.h">
       <Filter>ソース ファイル\Application\Stage</Filter>
@@ -487,6 +481,21 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\2d\BitMapNumber.h">
       <Filter>ソース ファイル\Engine\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\Stage\Block.h">
+      <Filter>ソース ファイル\Application\Stage\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\Stage\Object.h">
+      <Filter>ソース ファイル\Application\Stage\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\Stage\Player.h">
+      <Filter>ソース ファイル\Application\Stage\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Engine\GameObject\GameObject.h">
+      <Filter>ソース ファイル\Engine\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Engine\Skydome\Skydome.h">
+      <Filter>ソース ファイル\Engine\Skydome</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

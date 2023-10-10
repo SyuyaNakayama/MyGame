@@ -21,11 +21,11 @@ void GamePlayScene::Update()
 	debugCamera.Update();
 	stage.Update();
 	UIUpdate();
-	//if (stage.IsFinished() || input->IsTrigger(Key::Space))
-	//{
-	//	sceneManager->ChangeScene(Scene::Result);
-	//	ModelManager::ClearObjects();
-	//}
+	if (stage.IsFinished() /*|| input->IsTrigger(Key::Space)*/)
+	{
+		sceneManager->ChangeScene(Scene::Result);
+		ModelManager::ClearObjects();
+	}
 }
 
 void GamePlayScene::Draw()
@@ -39,28 +39,28 @@ void GamePlayScene::Draw()
 
 void GamePlayScene::UIInitialize()
 {
-	// ƒrƒbƒgƒ}ƒbƒv‚Ìİ’è
+	// ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ã®è¨­å®š
 	BitMapProp bitMapProp =
 	{
 		"ui/num.png",{30,30},{30,30},{1100,100},4
 	};
 
-	// ƒXƒRƒA
+	// ã‚¹ã‚³ã‚¢
 	scoreSprite.Initialize(bitMapProp);
 	uiScore = Sprite::Create("ui/score.png");
 	uiScore->anchorPoint = { 0.5f,0.5f };
 	uiScore->position = { 1160,70 };
 	uiScore->Update();
 
-	// c‚èŠÔ
+	// æ®‹ã‚Šæ™‚é–“
 	bitMapProp.pos.x = 60;
 	bitMapProp.digit = 2;
-	timeIntSprite.Initialize(bitMapProp); // ®”•”
+	timeIntSprite.Initialize(bitMapProp); // æ•´æ•°éƒ¨
 
 	bitMapProp.pos = { 120,115 };
 	bitMapProp.digit = 3;
 	bitMapProp.size /= 2;
-	timeDecSprite.Initialize(bitMapProp); // ¬”•”
+	timeDecSprite.Initialize(bitMapProp); // å°æ•°éƒ¨
 
 	uiClock = Sprite::Create("ui/clock.png");
 	uiClock->anchorPoint = { 0.5f,0.5f };
@@ -74,7 +74,7 @@ void GamePlayScene::UIUpdate()
 
 	float remainTime = stage.GetRemainTime();
 
-	// c‚èŠÔ‚ª10•bˆÈ‰º‚É‚È‚é‚ÆŠÔ‚Ì•¶š‚ªÔ“_–Å‚·‚é
+	// æ®‹ã‚Šæ™‚é–“ãŒ10ç§’ä»¥ä¸‹ã«ãªã‚‹ã¨æ™‚é–“ã®æ–‡å­—ãŒèµ¤ç‚¹æ»…ã™ã‚‹
 	if (remainTime <= 10.0f)
 	{
 		easingColor += (int)(15.0f - remainTime);

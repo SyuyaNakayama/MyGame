@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Input.h"
 #include "SceneManager.h"
+#include "Stage.h"
 #include <imgui.h>
 
 const float Player::PLAYER_MOVE_FORCE = 0.15f;
@@ -41,11 +42,27 @@ void Player::Move_Play()
 void Player::Move_Title()
 {
 	physics->SetForce(PLAYER_MOVE_FORCE);
-	bool mt = moveTimer.Update();
-	isTurn = NumberLoop(isTurn + mt, 2);
-	if (isTurn == 0) { physics->SetForceDir(Vector3::MakeAxis(Axis::Z)); if (mt) moveTimer = 70; }
-	if (isTurn == 1) { physics->SetForce(0); if (mt)moveTimer = 50; }
-	if (isTurn == 2) { physics->SetForceDir(-Vector3::MakeAxis(Axis::Z)); if (mt)moveTimer = 60; }
+
+	if (isTurn == 0)
+	{
+		if (worldTransform->translation.z <= 50) { physics->SetForceDir(Vector3::MakeAxis(Axis::Z)); }
+		else { physics->SetForceDir(-Vector3::MakeAxis(Axis::Z)); isTurn = 1; }
+	}
+	if (isTurn == 1)
+	{
+		if (worldTransform->translation.z <= 0)
+		{
+			if(stage->GetObjectNum()!=0)
+			{
+				physics->SetForceDir(Vector3::MakeAxis(Axis::Z)); isTurn = 0;
+			}
+			else
+			{
+				physics->SetForce(0);
+			}
+		}
+	
+	}
 }
 
 void Player::Update()
@@ -53,7 +70,7 @@ void Player::Update()
 	if (Move) { (this->*Move)(); }
 	else if (SceneManager::GetInstance()->GetNowScene() == Scene::Title)
 	{
-		if (moveTimer.Update()) { moveTimer = 80; Move = &Player::Move_Title; }
+		if (moveTimer.Update()) { Move = &Player::Move_Title; }
 	}
 	physics->Update();
 	camera->Update();

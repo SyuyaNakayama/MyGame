@@ -4,14 +4,17 @@
 #include "JsonLoader.h"
 #include "Timer.h"
 
+class Stage;
+
 class Player : public SphereCollider, public BoxCollider
 {
 private:
 	static const float PLAYER_MOVE_FORCE;
 	Object3d* object;
 	std::unique_ptr<BaseCamera> camera;
-	int isTurn = 0; // false‚Ìz+‚Ì•ûŒü‚ÉˆÚ“®Atrue‚Ì‚Éz-‚Ì•ûŒü‚ÉˆÚ“®
+	int isTurn = 0; // falseã®æ™‚z+ã®æ–¹å‘ã«ç§»å‹•ã€trueã®æ™‚ã«z-ã®æ–¹å‘ã«ç§»å‹•
 	FrameTimer moveTimer = 180;
+	Stage* stage = nullptr;
 
 	void Move_Play();
 	void Move_Title();
@@ -20,5 +23,6 @@ private:
 
 public:
 	void Initialize(const ObjectData& objectData);
+	void SetStage(Stage* stage_) { stage = stage_; }
 	void Update();
 };

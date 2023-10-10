@@ -15,5 +15,6 @@ private:
 public:
 	void Initialize(const std::string& textureName, size_t spriteWidth, int animationIntervel);
 	void Update();
+	Sprite* GetSprite() { return sprite.get(); }
 	void Draw() { sprite->Draw(); }
 };

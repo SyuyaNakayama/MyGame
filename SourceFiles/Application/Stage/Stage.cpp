@@ -26,6 +26,7 @@ void Stage::Initialize()
 		else if (objectData.fileName == "Player")
 		{
 			player.Initialize(objectData);
+			player.SetStage(this);
 		}
 		else if (objectData.fileName == "Object")
 		{

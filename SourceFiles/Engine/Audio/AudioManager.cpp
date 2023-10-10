@@ -6,16 +6,16 @@ std::map<bool, std::list<std::unique_ptr<PointAudio>>> AudioManager::pointAudios
 
 void AudioManager::Initialize()
 {
-	// COM‚ð‰Šú‰»
+	// COMã‚’åˆæœŸåŒ–
 	Result result = CoInitialize(NULL);
 }
 
 void AudioManager::Finalize()
 {
-	CoUninitialize(); // COMI—¹
+	CoUninitialize(); // COMçµ‚äº†
 }
 
-Audio* AudioManager::CreateAudio(const std::string& fileName, bool isLoop)
+Audio* AudioManager::Create(const std::string& fileName, bool isLoop)
 {
 	std::unique_ptr<Audio> newAudio = std::make_unique<Audio>();
 	newAudio->Initialize(fileName);
@@ -24,7 +24,7 @@ Audio* AudioManager::CreateAudio(const std::string& fileName, bool isLoop)
 }
 
 PointAudio* AudioManager::CreatePointAudio(const std::string& fileName, 
-	bool isLoop, Vector3 audioPos, bool useCamera, bool usePan)
+	bool isLoop, const Vector3& audioPos, bool useCamera, bool usePan)
 {
 	std::unique_ptr<PointAudio> newAudio = std::make_unique<PointAudio>();
 	newAudio->Initialize(fileName, audioPos, useCamera, usePan);
@@ -34,9 +34,9 @@ PointAudio* AudioManager::CreatePointAudio(const std::string& fileName,
 
 void AudioManager::Update()
 {
-	// ƒ‹[ƒvÄ¶
+	// ãƒ«ãƒ¼ãƒ—å†ç”Ÿ
 	for (auto& audio : audios[true]) { if (audio->IsFinished()) { audio->SetPlayPosition(0); } }
 	for (auto& audio : pointAudios[true]) { if (audio->IsFinished()) { audio->SetPlayPosition(0); } }
-	// ‰¹—Ê‚ÌXV
+	// éŸ³é‡ã®æ›´æ–°
 	for (auto& audios_ : pointAudios) { for (auto& audio : audios_.second) { audio->Update(); } }
 }
