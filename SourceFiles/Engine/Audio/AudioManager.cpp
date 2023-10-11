@@ -6,13 +6,13 @@ std::map<bool, std::list<std::unique_ptr<PointAudio>>> AudioManager::pointAudios
 
 void AudioManager::Initialize()
 {
-	// COMã‚’åˆæœŸåŒ–
+	// COM‚ð‰Šú‰»
 	Result result = CoInitialize(NULL);
 }
 
 void AudioManager::Finalize()
 {
-	CoUninitialize(); // COMçµ‚äº†
+	CoUninitialize(); // COMI—¹
 }
 
 Audio* AudioManager::Create(const std::string& fileName, bool isLoop)
@@ -34,9 +34,9 @@ PointAudio* AudioManager::CreatePointAudio(const std::string& fileName,
 
 void AudioManager::Update()
 {
-	// ãƒ«ãƒ¼ãƒ—å†ç”Ÿ
+	// ƒ‹[ƒvÄ¶
 	for (auto& audio : audios[true]) { if (audio->IsFinished()) { audio->SetPlayPosition(0); } }
 	for (auto& audio : pointAudios[true]) { if (audio->IsFinished()) { audio->SetPlayPosition(0); } }
-	// éŸ³é‡ã®æ›´æ–°
+	// ‰¹—Ê‚ÌXV
 	for (auto& audios_ : pointAudios) { for (auto& audio : audios_.second) { audio->Update(); } }
 }

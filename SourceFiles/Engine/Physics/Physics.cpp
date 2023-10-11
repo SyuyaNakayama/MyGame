@@ -36,7 +36,7 @@ void Physics::Backlash(Physics* p1, Physics* p2, float e)
 		if (isCollided == 0b11) { return; }
 	}
 	// 衝突の法線ベクトル
-	Vector3 n = Normalize(p1->worldTransform->GetWorldPosition() - p2->worldTransform->GetWorldPosition());
+	Vector3 n = Normalize(p2->worldTransform->GetWorldPosition() - p1->worldTransform->GetWorldPosition());
 	// 2物体の速度
 	Vector3 v0 = p1->vel;
 	Vector3 V0 = p2->vel;

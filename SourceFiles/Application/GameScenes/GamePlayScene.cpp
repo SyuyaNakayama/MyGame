@@ -11,16 +11,30 @@ void GamePlayScene::Initialize()
 	viewProjection.target.z = 10;
 	stage.Initialize();
 	UIInitialize();
+	countDown = StartCountDown::Create();
 	//ModelManager::SetViewProjection(&debugCamera);
+	// ƒJƒEƒ“ƒgƒ_ƒEƒ“‘O‚Éˆê‰ñXV‚·‚é
+	stage.Update();
+	UIUpdate();
 }
 
 void GamePlayScene::Update()
 {
 	//if (input->IsTrigger(Key::_1)) { ModelManager::SetViewProjection(&viewProjection); }
 	//if (input->IsTrigger(Key::_2)) { ModelManager::SetViewProjection(&debugCamera); }
+	// ƒJƒEƒ“ƒgƒ_ƒEƒ“‰‰o
+	if (countDown)
+	{
+		countDown->Update();
+		if (countDown->IsFinish()) { countDown.release(); stage.ResetTime(); }
+		else { return; }
+	}
+
 	debugCamera.Update();
 	stage.Update();
 	UIUpdate();
+
+	// ƒQ[ƒ€I—¹‚ÉƒŠƒUƒ‹ƒg‰æ–Ê‚Ö”ò‚Ô
 	if (stage.IsFinished() /*|| input->IsTrigger(Key::Space)*/)
 	{
 		sceneManager->ChangeScene(Scene::Result);
@@ -35,32 +49,33 @@ void GamePlayScene::Draw()
 	timeDecSprite.Draw();
 	uiClock->Draw();
 	uiScore->Draw();
+	if (countDown) { countDown->Draw(); }
 }
 
 void GamePlayScene::UIInitialize()
 {
-	// ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ã®è¨­å®š
+	// ƒrƒbƒgƒ}ƒbƒv‚Ìİ’è
 	BitMapProp bitMapProp =
 	{
 		"ui/num.png",{30,30},{30,30},{1100,100},4
 	};
 
-	// ã‚¹ã‚³ã‚¢
+	// ƒXƒRƒA
 	scoreSprite.Initialize(bitMapProp);
 	uiScore = Sprite::Create("ui/score.png");
 	uiScore->anchorPoint = { 0.5f,0.5f };
 	uiScore->position = { 1160,70 };
 	uiScore->Update();
 
-	// æ®‹ã‚Šæ™‚é–“
+	// c‚èŠÔ
 	bitMapProp.pos.x = 60;
 	bitMapProp.digit = 2;
-	timeIntSprite.Initialize(bitMapProp); // æ•´æ•°éƒ¨
+	timeIntSprite.Initialize(bitMapProp); // ®”•”
 
 	bitMapProp.pos = { 120,115 };
 	bitMapProp.digit = 3;
 	bitMapProp.size /= 2;
-	timeDecSprite.Initialize(bitMapProp); // å°æ•°éƒ¨
+	timeDecSprite.Initialize(bitMapProp); // ¬”•”
 
 	uiClock = Sprite::Create("ui/clock.png");
 	uiClock->anchorPoint = { 0.5f,0.5f };
@@ -72,9 +87,17 @@ void GamePlayScene::UIUpdate()
 {
 	scoreSprite.Update(stage.GetScore());
 
+	// ƒJƒEƒ“ƒgƒ_ƒEƒ“’†‚Í60.000•bŒÅ’è
+	if (countDown)
+	{
+		timeIntSprite.Update(60);
+		timeDecSprite.Update(000);
+		return;
+	}
+
 	float remainTime = stage.GetRemainTime();
 
-	// æ®‹ã‚Šæ™‚é–“ãŒ10ç§’ä»¥ä¸‹ã«ãªã‚‹ã¨æ™‚é–“ã®æ–‡å­—ãŒèµ¤ç‚¹æ»…ã™ã‚‹
+	// c‚èŠÔ‚ª10•bˆÈ‰º‚É‚È‚é‚ÆŠÔ‚Ì•¶š‚ªÔ“_–Å‚·‚é
 	if (remainTime <= 10.0f)
 	{
 		easingColor += (int)(15.0f - remainTime);
@@ -88,4 +111,31 @@ void GamePlayScene::UIUpdate()
 	float temp = stage.GetRemainTime();
 	float decimal = modf(remainTime, &temp) * 1000;
 	timeDecSprite.Update((int)decimal);
+}
+
+std::unique_ptr<StartCountDown> StartCountDown::Create()
+{
+	std::unique_ptr<StartCountDown> countDown = std::make_unique<StartCountDown>();
+
+	// ƒrƒbƒgƒ}ƒbƒv‚Ìİ’è
+	BitMapProp bitMapProp =
+	{
+		"ui/num.png",{30,30},{180,180},{},1
+	};
+
+	bitMapProp.pos = (WindowsAPI::WIN_SIZE - bitMapProp.size) / 2.0f;
+	countDown->countUI.Initialize(bitMapProp);
+	countDown->count.Start();
+
+	return countDown;
+}
+
+void StartCountDown::Update()
+{
+	countUI.Update((int)ceilf(count.GetRemainTime()));
+}
+
+void StartCountDown::Draw()
+{
+	countUI.Draw();
 }

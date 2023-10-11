@@ -7,7 +7,9 @@
 
 class Stage
 {
-	std::list<std::unique_ptr<GameObject>> gameObjects; // 繝励Ξ繧､繝､繝ｼ縲∝｣√∝ｺ翫√ざ繝ｼ繝ｫ縲�髫懷ｮｳ迚ｩ
+	static float STAGE_TIME;
+
+	std::list<std::unique_ptr<GameObject>> gameObjects; // プレイヤー、壁、床、ゴール、障害物
 	LevelData* levelData = nullptr;
 	static int score;
 	RealTimer stageTime;
@@ -19,6 +21,7 @@ public:
 	bool IsFinished() { return isFinished; }
 	float GetRemainTime() { return stageTime.GetRemainTime(); }
 	static void AddScore(int score_) { score += score_; }
-	static void Reset() { score = 0; }
+	static void ResetScore() { score = 0; }
+	void ResetTime() { stageTime = STAGE_TIME; }
 	static int GetScore() { return score; }
 };

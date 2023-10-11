@@ -1,16 +1,15 @@
 #include "BitMapNumber.h"
-#include <imgui.h>
 
 void BitMapNumber::Initialize(const BitMapProp& bitMapProp)
 {
 	for (size_t i = 0; i < bitMapProp.digit; i++)
 	{
-		
+		// 数字のスプライト
 		sprites.push_back(Sprite::Create(bitMapProp.fileName));
 		sprites[i]->textureSize = bitMapProp.rectSize;
 		sprites[i]->size = bitMapProp.size;
 
-		
+		// 配置
 		Vector2 sprpos = bitMapProp.pos;
 		sprpos.x += bitMapProp.size.x * i;
 		sprites[i]->position = sprpos;
@@ -22,7 +21,7 @@ void BitMapNumber::Update(int number)
 	std::vector<int> numchar(sprites.size());
 	bool isCountStop = log10(number) >= (double)sprites.size();
 
-	
+	// 桁の抽出
 	for (int i = (int)sprites.size() - 1; i >= 0; i--)
 	{
 		if (!isCountStop)

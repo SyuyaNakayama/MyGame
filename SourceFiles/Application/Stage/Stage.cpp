@@ -1,9 +1,9 @@
 #include "Stage.h"
 #include <imgui.h>
 #include "SceneManager.h"
-using namespace std::chrono;
 
 int Stage::score = 0;
+float Stage::STAGE_TIME = 60.0f;
 
 void Stage::Initialize()
 {
@@ -37,7 +37,7 @@ void Stage::Initialize()
 			else { spawnInterval = 180; }
 			objectData.spawnInterval = spawnInterval;
 		}
-		// 繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ逋ｻ骭ｲ
+		// オブジェクトの登録
 		if (gameObject)
 		{
 			gameObject->Initialize(objectData);
@@ -45,13 +45,13 @@ void Stage::Initialize()
 		}
 	}
 
-	stageTime = 60;
+	stageTime = STAGE_TIME;
 }
 
 void Stage::Update()
 {
 	if (stageTime.Update()) { isFinished = true; }
-	// 豸医∴縺滄囿螳ｳ迚ｩ縺ｮ繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ蜑企勁
+	// 消えた障害物のインスタンス削除
 	gameObjects.remove_if([](std::unique_ptr<GameObject>& gameObject)
 		{
 			Object* object = dynamic_cast<Object*>(gameObject.get());

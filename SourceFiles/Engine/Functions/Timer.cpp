@@ -1,6 +1,5 @@
 #include "Timer.h"
 using namespace std::chrono;
-#include <imgui.h>
 
 bool FrameTimer::Update()
 {

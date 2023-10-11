@@ -39,7 +39,7 @@ void Object::OnCollision(SphereCollider* collider)
 	Physics* _physics = collider->GetPhysics();
 	if (!_physics) { return; }
 
-	// å¼¾æ€§è¡çª
+	// ’e«Õ“Ë
 	Physics::Backlash(physics.get(), _physics, 1.0f);
 
 	DiffuseParticle::AddProp addProp;

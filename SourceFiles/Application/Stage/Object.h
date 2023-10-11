@@ -2,7 +2,7 @@
 #include "Collider.h"
 #include "GameObject.h"
 
-// ã‚´ãƒ¼ãƒ«ã«é‹ã¶ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+// ƒS[ƒ‹‚É‰^‚ÔƒIƒuƒWƒFƒNƒg
 class Object : public SphereCollider, public BoxCollider, public GameObject
 {
 	Object3d* object;
@@ -16,7 +16,7 @@ public:
 	void Initialize(const ObjectData& objectData);
 	void Update();
 	void OnCollision(SphereCollider* collider);
-	void Destroy() { object->isDestroy = true; } // ç ´å£Šã™ã‚‹
+	void Destroy() { object->isDestroy = true; } // ”j‰ó‚·‚é
 	bool IsDestroy() { return object->isDestroy; }
 	static int GetInstanceNum() { return instanceNum; }
 	void Goal() { isGoal = true; }

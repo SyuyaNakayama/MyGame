@@ -12,7 +12,7 @@ private:
 	static const float PLAYER_MOVE_FORCE;
 	Object3d* object;
 	std::unique_ptr<BaseCamera> camera;
-	int isTurn = 0; // falseã®æ™‚z+ã®æ–¹å‘ã«ç§»å‹•ã€trueã®æ™‚ã«z-ã®æ–¹å‘ã«ç§»å‹•
+	int isTurn = 0; // false‚Ìz+‚Ì•ûŒü‚ÉˆÚ“®Atrue‚Ì‚Éz-‚Ì•ûŒü‚ÉˆÚ“®
 	FrameTimer moveTimer = 180;
 
 	void Move_Play();

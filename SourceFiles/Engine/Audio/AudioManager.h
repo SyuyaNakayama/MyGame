@@ -15,8 +15,8 @@ public:
 	static void Initialize();
 	static void Finalize();
 	static Audio* Create(const std::string& fileName, bool isLoop = false);
-	/// <param name="useCamera">trueã«ã™ã‚‹ã¨ã‚«ãƒ¡ãƒ©ã®ä½ç½®ãŒãƒã‚¤ã‚¯åº§æ¨™ã«ãªã‚‹</param>
-	/// <param name="usePan">trueã«ã™ã‚‹ã¨éŸ³æºãŒå·¦å³ç§»å‹•ã™ã‚‹</param>
+	/// <param name="useCamera">true‚É‚·‚é‚ÆƒJƒƒ‰‚ÌˆÊ’u‚ªƒ}ƒCƒNÀ•W‚É‚È‚é</param>
+	/// <param name="usePan">true‚É‚·‚é‚Æ‰¹Œ¹‚ª¶‰EˆÚ“®‚·‚é</param>
 	static PointAudio* CreatePointAudio(const std::string& fileName,
 		bool isLoop = false, const Vector3& audioPos = {}, bool useCamera = true, bool usePan = true);
 	static void Update();
