@@ -68,8 +68,8 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\Engine\2d;$(ProjectDir)SourceFiles\Engine\3d\Camera;$(ProjectDir)SourceFiles\Engine\3d\Object;$(ProjectDir)SourceFiles\Engine\Audio;$(ProjectDir)SourceFiles\Engine\DirectX;$(ProjectDir)SourceFiles\Engine\Font;$(ProjectDir)SourceFiles\Engine\Framework;$(ProjectDir)SourceFiles\Engine\Functions;$(SolutionDir)SourceFiles\Engine\GameObject;$(ProjectDir)SourceFiles\Engine\Input;$(ProjectDir)SourceFiles\Engine\Json;$(ProjectDir)SourceFiles\Engine\Light;$(ProjectDir)SourceFiles\Engine\Math;$(ProjectDir)SourceFiles\Engine\Particle;$(ProjectDir)SourceFiles\Engine\Physics;$(ProjectDir)SourceFiles\Engine\Scene;$(ProjectDir)SourceFiles\Engine\WinApp;$(ProjectDir)SourceFiles\Application\Stage;$(ProjectDir)SourceFiles\Application\MyGame;$(ProjectDir)SourceFiles\Application\Camera;$(ProjectDir)SourceFiles\Application\GameScenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <TreatWarningAsError>false</TreatWarningAsError>
+      <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\Engine\2d;$(ProjectDir)SourceFiles\Engine\3d\Camera;$(ProjectDir)SourceFiles\Engine\3d\Object;$(ProjectDir)SourceFiles\Engine\Audio;$(ProjectDir)SourceFiles\Engine\DirectX;$(ProjectDir)SourceFiles\Engine\Font;$(ProjectDir)SourceFiles\Engine\Framework;$(ProjectDir)SourceFiles\Engine\Functions;$(SolutionDir)SourceFiles\Engine\GameObject;$(ProjectDir)SourceFiles\Engine\Input;$(ProjectDir)SourceFiles\Engine\Json;$(ProjectDir)SourceFiles\Engine\Light;$(ProjectDir)SourceFiles\Engine\Math;$(ProjectDir)SourceFiles\Engine\Particle;$(ProjectDir)SourceFiles\Engine\Physics;$(ProjectDir)SourceFiles\Engine\Scene;$(ProjectDir)SourceFiles\Engine\Timer;$(ProjectDir)SourceFiles\Engine\WinApp;$(ProjectDir)SourceFiles\Application\Stage;$(ProjectDir)SourceFiles\Application\MyGame;$(ProjectDir)SourceFiles\Application\Camera;$(ProjectDir)SourceFiles\Application\GameScenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard_C>Default</LanguageStandard_C>
     </ClCompile>
     <Link>
@@ -93,8 +93,8 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\Engine\2d;$(ProjectDir)SourceFiles\Engine\3d\Camera;$(ProjectDir)SourceFiles\Engine\3d\Object;$(ProjectDir)SourceFiles\Engine\Audio;$(ProjectDir)SourceFiles\Engine\DirectX;$(ProjectDir)SourceFiles\Engine\Font;$(ProjectDir)SourceFiles\Engine\Framework;$(ProjectDir)SourceFiles\Engine\Functions;$(SolutionDir)SourceFiles\Engine\GameObject;$(ProjectDir)SourceFiles\Engine\Input;$(ProjectDir)SourceFiles\Engine\Json;$(ProjectDir)SourceFiles\Engine\Light;$(ProjectDir)SourceFiles\Engine\Math;$(ProjectDir)SourceFiles\Engine\Particle;$(ProjectDir)SourceFiles\Engine\Physics;$(ProjectDir)SourceFiles\Engine\Scene;$(ProjectDir)SourceFiles\Engine\WinApp;$(ProjectDir)SourceFiles\Application\Stage;$(ProjectDir)SourceFiles\Application\MyGame;$(ProjectDir)SourceFiles\Application\Camera;$(ProjectDir)SourceFiles\Application\GameScenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <TreatWarningAsError>false</TreatWarningAsError>
+      <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\Engine\2d;$(ProjectDir)SourceFiles\Engine\3d\Camera;$(ProjectDir)SourceFiles\Engine\3d\Object;$(ProjectDir)SourceFiles\Engine\Audio;$(ProjectDir)SourceFiles\Engine\DirectX;$(ProjectDir)SourceFiles\Engine\Font;$(ProjectDir)SourceFiles\Engine\Framework;$(ProjectDir)SourceFiles\Engine\Functions;$(SolutionDir)SourceFiles\Engine\GameObject;$(ProjectDir)SourceFiles\Engine\Input;$(ProjectDir)SourceFiles\Engine\Json;$(ProjectDir)SourceFiles\Engine\Light;$(ProjectDir)SourceFiles\Engine\Math;$(ProjectDir)SourceFiles\Engine\Particle;$(ProjectDir)SourceFiles\Engine\Physics;$(ProjectDir)SourceFiles\Engine\Scene;$(ProjectDir)SourceFiles\Engine\Timer;$(ProjectDir)SourceFiles\Engine\WinApp;$(ProjectDir)SourceFiles\Application\Stage;$(ProjectDir)SourceFiles\Application\MyGame;$(ProjectDir)SourceFiles\Application\Camera;$(ProjectDir)SourceFiles\Application\GameScenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard_C>Default</LanguageStandard_C>
     </ClCompile>
     <Link>
@@ -107,7 +107,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="..\..\TL1\blender\3.5\scripts\addons\level_editor.py" />
     <None Include="Resources\shaders\Functions.hlsli" />
     <None Include="Resources\shaders\Light.hlsli" />
     <None Include="Resources\shaders\Obj.hlsli" />
@@ -173,6 +172,7 @@
     <ClCompile Include="SourceFiles\Engine\3d\Object\Material.cpp" />
     <ClCompile Include="SourceFiles\Application\Camera\PlayerCamera.cpp" />
     <ClCompile Include="SourceFiles\Engine\Audio\AudioManager.cpp" />
+    <ClCompile Include="SourceFiles\Engine\Timer\FPS.cpp" />
     <ClCompile Include="SourceFiles\Engine\Functions\Random.cpp" />
     <ClCompile Include="SourceFiles\Engine\Json\JsonLoader.cpp" />
     <ClCompile Include="SourceFiles\Engine\Math\MathUtility.cpp" />
@@ -202,7 +202,7 @@
     <ClCompile Include="SourceFiles\Engine\WinApp\WindowsAPI.cpp" />
     <ClCompile Include="SourceFiles\Engine\Functions\Color.cpp" />
     <ClCompile Include="SourceFiles\Engine\Particle\ParticleManager.cpp" />
-    <ClCompile Include="SourceFiles\Engine\Functions\Timer.cpp" />
+    <ClCompile Include="SourceFiles\Engine\Timer\Timer.cpp" />
     <ClCompile Include="SourceFiles\Engine\Light\LightGroup.cpp" />
     <ClCompile Include="SourceFiles\Engine\Math\Matrix4.cpp" />
     <ClCompile Include="SourceFiles\Engine\Math\Quaternion.cpp" />
@@ -229,6 +229,7 @@
     <ClInclude Include="SourceFiles\Application\Camera\PlayerCamera.h" />
     <ClInclude Include="SourceFiles\Engine\Audio\AudioManager.h" />
     <ClInclude Include="SourceFiles\Engine\Functions\BaseSpawnPoint.h" />
+    <ClInclude Include="SourceFiles\Engine\Timer\FPS.h" />
     <ClInclude Include="SourceFiles\Engine\Functions\Random.h" />
     <ClInclude Include="SourceFiles\Engine\GameObject\GameObject.h" />
     <ClInclude Include="SourceFiles\Engine\Json\JsonLoader.h" />
@@ -258,7 +259,7 @@
     <ClInclude Include="SourceFiles\Engine\WinApp\WindowsAPI.h" />
     <ClInclude Include="SourceFiles\Engine\Functions\Color.h" />
     <ClInclude Include="SourceFiles\Engine\Particle\ParticleManager.h" />
-    <ClInclude Include="SourceFiles\Engine\Functions\Timer.h" />
+    <ClInclude Include="SourceFiles\Engine\Timer\Timer.h" />
     <ClInclude Include="SourceFiles\Engine\Light\CircleShadow.h" />
     <ClInclude Include="SourceFiles\Engine\Light\DirectionalLight.h" />
     <ClInclude Include="SourceFiles\Engine\Light\LightGroup.h" />

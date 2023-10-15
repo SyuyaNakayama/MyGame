@@ -2,6 +2,7 @@
 #include "BaseScene.h"
 #include "Scene.h"
 
+// シーンファクトリーの抽象クラス
 class AbstractSceneFactory
 {
 public:

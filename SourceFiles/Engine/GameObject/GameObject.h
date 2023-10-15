@@ -1,6 +1,7 @@
 #pragma once
 #include "JsonLoader.h"
 
+// ゲームに表示されているオブジェクトの基底クラス
 class GameObject
 {
 public:

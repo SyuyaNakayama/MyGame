@@ -5,7 +5,7 @@
 #include <map>
 #include "DirectXCommon.h"
 
-// result値がエラーなら自動で警告が出る
+// result値がエラーなら代入時に警告が出る
 struct Result
 {
 private:
@@ -43,6 +43,7 @@ void LoadShader(ID3DBlob** shaderBlob, std::wstring shaderName, LPCSTR target);
 
 enum class RootParamType { CBV, DescriptorTable };
 
+// パイプライン生成の設定
 struct PipelineProp
 {
 private:
@@ -80,6 +81,7 @@ public:
 
 enum class PipelineType { Sprite, PostEffect, Object, Dissolve, Particle };
 
+// パイプライン管理クラス
 class PipelineManager
 {
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;

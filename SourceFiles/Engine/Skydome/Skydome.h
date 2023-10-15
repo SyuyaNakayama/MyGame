@@ -1,6 +1,7 @@
 #pragma once
 #include "Object3d.h"
 
+// 天球オブジェクト
 class Skydome
 {
 private:

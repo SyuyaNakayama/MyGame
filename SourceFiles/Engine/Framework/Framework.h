@@ -2,6 +2,7 @@
 #include "SceneManager.h"
 #include "DirectXCommon.h"
 
+// ゲーム処理の枠組みクラス
 class Framework
 {
 protected:

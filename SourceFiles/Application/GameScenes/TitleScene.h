@@ -3,6 +3,7 @@
 #include "SpriteAnimation.h"
 #include "Stage.h"
 
+// タイトルシーンの処理
 class TitleScene : public BaseScene
 {
 	std::unique_ptr<Sprite> ui;

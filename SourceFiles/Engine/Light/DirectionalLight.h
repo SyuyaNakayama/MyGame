@@ -2,6 +2,7 @@
 #include "Vector.h"
 #include "Color.h"
 
+// •½sŒõŒ¹
 class DirectionalLight
 {
 private:

@@ -3,6 +3,7 @@
 #include "Color.h"
 #include <cmath>
 
+// スポットライト
 class SpotLight
 {
 private:

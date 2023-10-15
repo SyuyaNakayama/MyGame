@@ -2,6 +2,7 @@
 #include <random>
 #include <memory>
 
+// ランダム基底クラス
 class RandomDevice
 {
 protected:
@@ -9,6 +10,7 @@ protected:
 	static std::mt19937 rnddev;
 };
 
+// int型ランダム
 class Random_Int : private RandomDevice
 {
 private:
@@ -19,6 +21,7 @@ public:
 	int operator()() { return (*random)(rnddev); }
 };
 
+// float型ランダム
 class Random_Float : private RandomDevice
 {
 private:

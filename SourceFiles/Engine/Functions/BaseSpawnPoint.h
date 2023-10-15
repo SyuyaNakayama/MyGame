@@ -1,6 +1,7 @@
 #pragma once
 #include "Timer.h"
 
+// スポーンオブジェクト基底クラス
 class BaseSpawnPoint
 {
 protected:

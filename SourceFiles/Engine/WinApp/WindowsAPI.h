@@ -3,6 +3,7 @@
 #include "Vector.h"
 #include <string>
 
+// ウィンドウクラス処理
 class WindowsAPI final
 {
 private:

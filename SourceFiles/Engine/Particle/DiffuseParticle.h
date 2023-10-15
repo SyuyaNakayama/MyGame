@@ -3,7 +3,7 @@
 #include <list>
 #include "Vector.h"
 
-// 拡散するパーティクル(今までのやつ)
+// 拡散するパーティクル
 class DiffuseParticle
 {
 public:

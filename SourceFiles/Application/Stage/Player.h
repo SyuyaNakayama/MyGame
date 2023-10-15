@@ -6,6 +6,7 @@
 
 class Stage;
 
+// プレイヤーのオブジェクト
 class Player : public SphereCollider, public BoxCollider, public GameObject
 {
 private:

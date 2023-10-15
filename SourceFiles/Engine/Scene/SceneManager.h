@@ -3,6 +3,7 @@
 #include "FadeManager.h"
 #include "SceneFactory.h"
 
+// ƒV[ƒ“ŠÇ—
 class SceneManager final
 {
 private:

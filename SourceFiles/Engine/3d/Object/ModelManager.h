@@ -5,6 +5,7 @@
 
 enum class RootParamNum { MatWorld = (int)TexType::Num, Material, Light, Camera };
 
+// 3Dオブジェクトの管理
 class ModelManager
 {
 private:

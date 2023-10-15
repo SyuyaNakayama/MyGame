@@ -2,6 +2,7 @@
 #include "Mesh.h"
 #include "WorldTransform.h"
 
+// オブジェクトクラス
 struct Object3d
 {
 	Material material;

@@ -1,5 +1,5 @@
 #pragma once
-#define DIRECTINPUT_VERSION  0x0800
+#define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
 #include <wrl.h>
 #include <array>
@@ -165,6 +165,7 @@ enum class JoyPad
 	A, B, X, Y, L, R, View, Menu, LStick, Rstick
 };
 
+// “ü—Í
 class Input final
 {
 private:

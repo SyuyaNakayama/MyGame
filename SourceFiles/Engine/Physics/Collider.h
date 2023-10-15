@@ -5,6 +5,7 @@
 #include <array>
 #include <memory>
 
+// コライダーの属性
 enum class CollisionAttribute
 {
 	Player = 0b1,
@@ -15,6 +16,7 @@ enum class CollisionAttribute
 	All = -1
 };
 
+// コライダーのマスク
 enum class CollisionMask
 {
 	None = 0,
@@ -33,6 +35,7 @@ class RayCollider;
 class IncludeCollider;
 class MeshCollider;
 
+// コライダー基底クラス
 class BaseCollider
 {
 protected:
@@ -60,6 +63,7 @@ public:
 	void SetWorldTransform(WorldTransform* worldTransform_) { worldTransform = worldTransform_; }
 };
 
+// ボックスコライダー(AABB方式)
 class BoxCollider : public virtual BaseCollider
 {
 public:
@@ -69,6 +73,7 @@ public:
 	virtual Vector3 GetRadius3D() { return worldTransform->scale; }
 };
 
+// 完全包含のボックスコライダー(AABB方式)
 class IncludeCollider : public virtual BaseCollider
 {
 public:
@@ -88,6 +93,7 @@ public:
 	std::array<bool, 3> GetUseAxis() { return isUseAxis; }
 };
 
+// 球コライダー
 class SphereCollider : public virtual BaseCollider
 {
 public:
@@ -97,6 +103,7 @@ public:
 	virtual float GetRadius() { return worldTransform->scale.x; }
 };
 
+// 平面コライダー
 class PlaneCollider : public virtual BaseCollider
 {
 protected:
@@ -118,6 +125,7 @@ public:
 	virtual float GetDistance() { return distance; }
 };
 
+// 多角形平面コライダー
 class PolygonCollider : public virtual BaseCollider
 {
 protected:
@@ -144,6 +152,7 @@ public:
 	virtual std::vector<Vector3> GetVertices() { return vertices; }
 };
 
+// レイコライダー
 class RayCollider : public virtual BaseCollider
 {
 public:
@@ -155,6 +164,7 @@ public:
 	virtual const Vector3 GetRayDirection() { return baseRayDirection * Matrix4::Rotate(worldTransform->rotation); }
 };
 
+// メッシュコライダー
 //class MeshCollider : public BaseCollider
 //{
 //private:

@@ -1,5 +1,6 @@
 #pragma once
 
+// 1色分の構造体
 struct Color
 {
 private:
@@ -11,6 +12,7 @@ public:
 	operator float() { return val_; }
 };
 
+// カラー値RGB
 struct ColorRGB
 {
 	Color r, g, b;
@@ -18,6 +20,7 @@ struct ColorRGB
 	ColorRGB(float red, float green, float blue) { r = red, g = green, b = blue; }
 };
 
+// カラー値RGBA
 struct ColorRGBA
 {
 	Color r, g, b, a;

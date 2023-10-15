@@ -4,6 +4,7 @@
 #include "Color.h"
 #include "DirectXCommon.h"
 
+// テクスチャ1枚分のデータ
 struct TextureData
 {
 	std::string fileName;
@@ -12,6 +13,7 @@ struct TextureData
 	D3D12_GPU_DESCRIPTOR_HANDLE	gpuHandle{};
 };
 
+// スプライト
 struct Sprite
 {
 	Vector2 position;

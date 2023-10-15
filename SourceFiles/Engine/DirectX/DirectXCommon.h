@@ -3,10 +3,11 @@
 #include <dxgi1_6.h>
 #include <wrl.h>
 #include <vector>
-#include <chrono>
+#include "FPS.h"
 #include "WindowsAPI.h"
 #include "Matrix4.h"
 
+// DirectXŠî”Õ
 class DirectXCommon final
 {
 private:
@@ -24,8 +25,9 @@ private:
 	std::vector<ComPtr<ID3D12Resource>> backBuffers;
 	CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle{};
 	UINT64 fenceVal = 0;
-	std::chrono::steady_clock::time_point reference_;
 	D3D12_VIEWPORT viewport{};
+	const float MAX_FPS = 60.0f;
+	FPS* fixFPS;
 
 	DirectXCommon() = default;
 	~DirectXCommon() = default;
@@ -35,8 +37,6 @@ private:
 	void InitializeRenderTargetView();
 	void InitializeDepthBuffer();
 	void InitializeFence();
-	void InitializeFixFPS();
-	void UpdateFixFPS();
 
 public:
 	static DirectXCommon* GetInstance();

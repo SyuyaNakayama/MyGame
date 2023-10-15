@@ -7,6 +7,7 @@
 #include <wrl.h>
 #include <d3dx12.h>
 
+// パーティクルグループ
 // このインスタンス1つにつき1枚のテクスチャが使える
 class ParticleGroup
 {

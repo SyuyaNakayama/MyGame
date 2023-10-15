@@ -1,6 +1,7 @@
 #pragma once
 #include "Sprite.h"
 
+// 画面のフェード演出
 class FadeManager
 {
 private:

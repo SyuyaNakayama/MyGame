@@ -3,6 +3,7 @@
 #include "Color.h"
 #include <cmath>
 
+// ŠÛ‰e
 class CircleShadow
 {
 private:

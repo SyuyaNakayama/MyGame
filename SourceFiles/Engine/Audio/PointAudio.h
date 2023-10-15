@@ -2,6 +2,7 @@
 #include "Audio.h"
 #include "Vector.h"
 
+// 点音源 マイクとの位置関係で音が変わる
 class PointAudio : public Audio
 {
 private:

@@ -2,6 +2,7 @@
 #include "BaseSpawnPoint.h"
 #include "Object.h"
 
+// オブジェクト生成オブジェクト
 class SpawnObject : public BaseSpawnPoint, public GameObject
 {
 	static std::list<std::unique_ptr<GameObject>>* objects;

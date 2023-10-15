@@ -7,6 +7,7 @@
 #include <d3d12.h>
 #include <memory>
 
+// ƒ‰ƒCƒg
 class LightGroup
 {
 public:

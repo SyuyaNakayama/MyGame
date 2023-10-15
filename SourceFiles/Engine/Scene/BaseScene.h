@@ -3,6 +3,7 @@
 #include "DebugCamera.h"
 class SceneManager;
 
+// シーン基底クラス
 class BaseScene
 {
 protected:

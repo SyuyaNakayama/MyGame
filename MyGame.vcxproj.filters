@@ -96,6 +96,9 @@
     <Filter Include="ソース ファイル\Engine\GameObject">
       <UniqueIdentifier>{3662b9ab-1bc1-48b5-ab85-528e8383608a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engine\Timer">
+      <UniqueIdentifier>{8cd3b574-38f1-4ca3-a850-33bc03214952}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Sprite.hlsli">
@@ -112,9 +115,6 @@
     </None>
     <None Include="Resources\shaders\PostEffectFunctions.hlsli">
       <Filter>シェーダー ファイル\postEffect</Filter>
-    </None>
-    <None Include="..\..\TL1\blender\3.5\scripts\addons\level_editor.py">
-      <Filter>ソース ファイル\Application\Stage</Filter>
     </None>
     <None Include="Resources\shaders\Light.hlsli">
       <Filter>シェーダー ファイル</Filter>
@@ -161,9 +161,6 @@
     </ClCompile>
     <ClCompile Include="SourceFiles\Engine\2d\ImGuiManager.cpp">
       <Filter>ソース ファイル\Engine\2d</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFiles\Engine\Functions\Timer.cpp">
-      <Filter>ソース ファイル\Engine\Functions</Filter>
     </ClCompile>
     <ClCompile Include="SourceFiles\Engine\Input\Input.cpp">
       <Filter>ソース ファイル\Engine\Input</Filter>
@@ -312,6 +309,12 @@
     <ClCompile Include="SourceFiles\Engine\Skydome\Skydome.cpp">
       <Filter>ソース ファイル\Engine\Skydome</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFiles\Engine\Timer\Timer.cpp">
+      <Filter>ソース ファイル\Engine\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Engine\Timer\FPS.cpp">
+      <Filter>ソース ファイル\Engine\Timer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\Engine\Math\Matrix4.h">
@@ -322,9 +325,6 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\2d\ImGuiManager.h">
       <Filter>ソース ファイル\Engine\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\Engine\Functions\Timer.h">
-      <Filter>ソース ファイル\Engine\Functions</Filter>
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\Input\Input.h">
       <Filter>ソース ファイル\Engine\Input</Filter>
@@ -496,6 +496,12 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\Skydome\Skydome.h">
       <Filter>ソース ファイル\Engine\Skydome</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Engine\Timer\Timer.h">
+      <Filter>ソース ファイル\Engine\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Engine\Timer\FPS.h">
+      <Filter>ソース ファイル\Engine\Timer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

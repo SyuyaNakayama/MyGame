@@ -2,6 +2,7 @@
 
 const float PI = 3.141592f;
 
+// 角度
 class Angle
 {
 	float angle;
@@ -19,6 +20,7 @@ public:
 	Angle(int deg) { angle = (float)deg * PI / 180.0f; } // 度数代入
 };
 
+// XYZ軸のenum class
 enum class Axis { X, Y, Z };
 
 // 数をループさせる関数

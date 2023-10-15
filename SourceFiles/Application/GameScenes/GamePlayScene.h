@@ -4,7 +4,9 @@
 #include "AudioManager.h"
 #include "BitMapNumber.h"
 #include "MathUtility.h"
+#include "FPS.h"
 
+// スタート前のカウントダウン演出
 class StartCountDown
 {
 private:
@@ -19,6 +21,7 @@ public:
 	bool IsFinish() { return count.Update(); }
 };
 
+// ゲームプレイシーンの処理
 class GamePlayScene : public BaseScene
 {
 private:
@@ -30,8 +33,12 @@ private:
 	BitMapNumber scoreSprite;
 	BitMapNumber timeIntSprite; // 残り時間整数部
 	BitMapNumber timeDecSprite; // 残り時間小数部
+	BitMapNumber timeIntSprite2; // 残り時間整数部
+	BitMapNumber timeDecSprite2; // 残り時間小数部
 	Angle easingColor = 0; // 時間UI色のイージングに使う
 	std::unique_ptr<StartCountDown> countDown;
+	FPS* fps = FPS::GetInstance();
+	FrameTimer timer = 20 * 60;
 
 	void Initialize();
 	void Update();

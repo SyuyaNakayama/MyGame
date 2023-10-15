@@ -2,6 +2,7 @@
 #include "Matrix4.h"
 #include "ParticleGroup.h"
 
+// パーティクルグループの管理
 class ParticleManager final
 {
 private:

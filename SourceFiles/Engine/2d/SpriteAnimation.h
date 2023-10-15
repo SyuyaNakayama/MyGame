@@ -3,6 +3,7 @@
 #include "Sprite.h"
 #include "Timer.h"
 
+// アニメーション付きスプライト
 class SpriteAnimation
 {
 private:

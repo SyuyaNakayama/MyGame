@@ -3,6 +3,7 @@
 #include "PostEffect.h"
 #include "ParticleManager.h"
 
+// このゲーム固有の処理クラス
 class MyGame : public Framework
 {
 private:

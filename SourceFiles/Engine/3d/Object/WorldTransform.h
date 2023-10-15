@@ -4,6 +4,7 @@
 #include <wrl.h>
 #include <d3d12.h>
 
+// ワールドトランスフォーム
 class WorldTransform
 {
 private:

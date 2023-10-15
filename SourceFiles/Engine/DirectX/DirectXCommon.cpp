@@ -5,7 +5,6 @@
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
 using namespace std;
-using namespace std::chrono;
 
 const Vector2 WIN_SIZE = WindowsAPI::WIN_SIZE;
 
@@ -17,7 +16,8 @@ DirectXCommon* DirectXCommon::GetInstance()
 
 void DirectXCommon::Initialize()
 {
-	InitializeFixFPS();				// FPS固定初期化
+	fixFPS = FPS::GetInstance();
+	fixFPS->Initialize(MAX_FPS);		// FPS固定初期化
 	InitializeDevice();				// デバイスの生成
 	InitializeCommand();			// コマンド関連の初期化
 	InitializeSwapchain();			// スワップチェーンの初期化
@@ -198,35 +198,6 @@ void DirectXCommon::InitializeFence()
 	Result result = device->CreateFence(fenceVal, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
 }
 
-void DirectXCommon::InitializeFixFPS() { reference_ = steady_clock::now(); }
-
-void DirectXCommon::UpdateFixFPS()
-{
-	// 1/60秒ぴったりの時間
-	const microseconds MIN_TIME(uint64_t(1000000.0f / 60.0f));
-	// 1/60秒よりわずかに短い時間
-	const microseconds MIN_CHECK_TIME(uint64_t(1000000.0f / 65.0f));
-
-	// 現在時間を取得する
-	steady_clock::time_point now = steady_clock::now();
-	// 前回記録からの経過時間を取得する
-	microseconds elapsed = duration_cast<microseconds>(now - reference_);
-
-	// 1/60秒(よりわずかに短い時間)経っていない場合
-	if (elapsed < MIN_CHECK_TIME)
-	{
-		// 1/60秒経過するまで微小なスリープを繰り返す
-		while (steady_clock::now() - reference_ < MIN_TIME)
-		{
-			// 1マイクロ秒スリープ
-			this_thread::sleep_for(microseconds(1));
-		}
-	}
-
-	// 現在の時間を記録する
-	reference_ = steady_clock::now();
-}
-
 void DirectXCommon::PreDraw()
 {
 	UINT bbIndex = swapchain->GetCurrentBackBufferIndex();
@@ -282,7 +253,7 @@ void DirectXCommon::PostDraw()
 		}
 	}
 
-	UpdateFixFPS(); // FPS固定
+	fixFPS->Update(); // FPS固定
 
 	// キューをクリア
 	result = commandAllocator->Reset();

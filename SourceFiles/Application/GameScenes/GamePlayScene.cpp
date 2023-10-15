@@ -30,6 +30,9 @@ void GamePlayScene::Update()
 		else { return; }
 	}
 
+	ImGui::Text("FPS = %d", fps->GetFPS());
+
+	timer.Update();
 	debugCamera.Update();
 	stage.Update();
 	UIUpdate();
@@ -47,6 +50,8 @@ void GamePlayScene::Draw()
 	scoreSprite.Draw();
 	timeIntSprite.Draw();
 	timeDecSprite.Draw();
+	timeIntSprite2.Draw();
+	timeDecSprite2.Draw();
 	uiClock->Draw();
 	uiScore->Draw();
 	if (countDown) { countDown->Draw(); }
@@ -76,6 +81,18 @@ void GamePlayScene::UIInitialize()
 	bitMapProp.digit = 3;
 	bitMapProp.size /= 2;
 	timeDecSprite.Initialize(bitMapProp); // ¬”•”
+
+	// Žc‚èŽžŠÔ
+	bitMapProp.size *= 2;
+	bitMapProp.pos.y += 50;
+	bitMapProp.pos.x = 60;
+	bitMapProp.digit = 2;
+	timeIntSprite2.Initialize(bitMapProp); // ®”•”
+
+	bitMapProp.pos = { 120,180 };
+	bitMapProp.digit = 3;
+	bitMapProp.size /= 2;
+	timeDecSprite2.Initialize(bitMapProp); // ¬”•”
 
 	uiClock = Sprite::Create("ui/clock.png");
 	uiClock->anchorPoint = { 0.5f,0.5f };
@@ -111,6 +128,11 @@ void GamePlayScene::UIUpdate()
 	float temp = stage.GetRemainTime();
 	float decimal = modf(remainTime, &temp) * 1000;
 	timeDecSprite.Update((int)decimal);
+
+	float nowtime = (float)timer.GetTime() / 20.0f;
+	float nowtime2 = modf(nowtime, &temp) * 1000;
+	timeIntSprite2.Update((int)nowtime);
+	timeDecSprite2.Update((int)nowtime2);
 }
 
 std::unique_ptr<StartCountDown> StartCountDown::Create()

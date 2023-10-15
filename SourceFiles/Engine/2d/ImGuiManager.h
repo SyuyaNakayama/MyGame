@@ -5,6 +5,7 @@
 #include "Quaternion.h"
 #include "Color.h"
 
+// ImGUI‚ÌŠÇ—
 class ImGuiManager final
 {
 private:

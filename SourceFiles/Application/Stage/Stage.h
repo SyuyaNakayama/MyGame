@@ -5,6 +5,7 @@
 #include "JsonLoader.h"
 #include <chrono>
 
+// ステージに関係するオブジェクト全般のクラス
 class Stage
 {
 	static float STAGE_TIME;

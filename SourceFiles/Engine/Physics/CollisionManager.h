@@ -2,6 +2,7 @@
 #include "Collider.h"
 #include <list>
 
+// コライダー管理
 class CollisionManager final
 {
 private:

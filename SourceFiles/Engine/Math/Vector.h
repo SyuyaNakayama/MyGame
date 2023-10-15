@@ -2,6 +2,7 @@
 #include <vector>
 #include "MathUtility.h"
 
+// 2Dベクトル
 class Vector2
 {
 public:
@@ -27,6 +28,7 @@ public:
 
 class Matrix4;
 
+// 3Dベクトル
 class Vector3
 {
 public:

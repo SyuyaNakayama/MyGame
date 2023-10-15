@@ -10,6 +10,7 @@
 
 class AudioManager;
 
+// オーディオ
 class Audio
 {
 private:

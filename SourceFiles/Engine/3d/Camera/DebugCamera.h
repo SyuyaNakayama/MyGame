@@ -2,6 +2,7 @@
 #include "ViewProjection.h"
 #include "Quaternion.h"
 
+// デバッグカメラ
 class DebugCamera : public ViewProjection
 {
 private:
