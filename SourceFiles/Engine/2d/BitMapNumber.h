@@ -27,8 +27,18 @@ private:
 	std::vector<std::unique_ptr<Sprite>> sprites;
 
 public:
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="bitMapProp">ビットマッププロパティ</param>
 	void Initialize(const BitMapProp& bitMapProp);
+	/// <summary>
+	/// 更新
+	/// </summary>
+	/// <param name="number">描画する数字</param>
 	void Update(int number);
+	// 描画
 	void Draw();
+	// スプライトの色変え
 	void ChangeColor(const ColorRGBA& color);
 };

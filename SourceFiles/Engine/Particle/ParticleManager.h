@@ -26,10 +26,16 @@ private:
 	ParticleManager(const ParticleManager& obj) = delete;
 
 public:
-	static void Initialize(); // 静的初期化
-	static void Update(); // 毎フレーム処理
-	static void Draw(); // 描画
-	static void Clear(); // パーティクルの削除
+	// 静的初期化
+	static void Initialize();
+	// 更新
+	static void Update();
+	// 描画
+	static void Draw();
+	// パーティクルの削除
+	static void Clear();
+	// パーティクルグループ追加
 	static void AddParticleGroup(const std::string& textureName); // パーティクルグループの追加
+	// パーティクルグループ取得
 	static ParticleGroup* GetParticleGroup(size_t index) { return &particleGroups[index]; }
 };

@@ -36,17 +36,24 @@ private:
 	DirectionalParticle directionalParticle;
 	TrackParticle trackParticle;
 
-	void CreateVertexBuffer(); // 頂点バッファ生成
+	// 頂点バッファ生成
+	void CreateVertexBuffer();
+	// 全てのパーティクルの合計数
 	size_t AllParticleNum() { return diffuseParticle.GetParticles().size() + directionalParticle.GetParticles().size() + trackParticle.GetParticles().size(); }
+	// パーティクルが最大値に達してるか
 	bool IsParticleMax() { return AllParticleNum() >= PARTICLE_MAX; }
 
 public:
+	// 初期化
 	void Initialize(const std::string& textureName);
-	void Update(); // 毎フレーム処理
-	void Draw(); // 描画
+	// 更新
+	void Update();
+	// 描画
+	void Draw();
 	// パーティクルの追加
 	void Add(const DiffuseParticle::AddProp& particleProp);
 	void Add(const DirectionalParticle::AddProp& particleProp);
 	void Add(const TrackParticle::AddProp& particleProp);
-	void Clear(); // パーティクルの削除
+	// パーティクルの削除
+	void Clear();
 };

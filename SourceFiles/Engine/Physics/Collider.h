@@ -47,6 +47,7 @@ protected:
 public:
 	virtual ~BaseCollider() = default;
 
+	// 衝突コールバック関数
 	virtual void OnCollision([[maybe_unused]]BoxCollider* boxCollider) {}
 	virtual void OnCollision([[maybe_unused]]SphereCollider* sphereCollider) {}
 	virtual void OnCollision([[maybe_unused]]PlaneCollider* boxCollider) {}
@@ -54,22 +55,26 @@ public:
 	virtual void OnCollision([[maybe_unused]]RayCollider* sphereCollider) {}
 	virtual void OnCollision([[maybe_unused]]IncludeCollider* sphereCollider) {}
 
-	CollisionAttribute GetCollisionAttribute() { return collisionAttribute; }
-	CollisionMask GetCollisionMask() { return collisionMask; }
+	// setter
 	void SetCollisionAttribute(CollisionAttribute collisionAttribute_) { collisionAttribute = collisionAttribute_; }
 	void SetCollisionMask(CollisionMask collisionMask_) { collisionMask = collisionMask_; }
+	void SetWorldTransform(WorldTransform* worldTransform_) { worldTransform = worldTransform_; }
+	// getter
+	CollisionAttribute GetCollisionAttribute() { return collisionAttribute; }
+	CollisionMask GetCollisionMask() { return collisionMask; }
 	virtual Vector3 GetWorldPosition() { return worldTransform->GetWorldPosition(); }
 	Physics* GetPhysics() { return physics.get(); }
-	void SetWorldTransform(WorldTransform* worldTransform_) { worldTransform = worldTransform_; }
 };
 
 // ボックスコライダー(AABB方式)
 class BoxCollider : public virtual BaseCollider
 {
 public:
+	// コンストラクタ
 	BoxCollider();
+	// 仮想デストラクタ
 	virtual ~BoxCollider();
-
+	// 3軸方向の半径を取得
 	virtual Vector3 GetRadius3D() { return worldTransform->scale; }
 };
 
@@ -80,16 +85,21 @@ public:
 	enum class Axis { X, Y, Z };
 
 private:
+	// 完全包含半径
 	static float includeRadius;
 	// 当たり判定を取るペアのtrueが少ないほうが計算に反映される
 	std::array<bool, 3> isUseAxis = { true,true,true };
 
 public:
+	// コンストラクタ
 	IncludeCollider();
+	// 仮想デストラクタ
 	virtual ~IncludeCollider();
-
+	// 完全包含半径の取得
 	static float GetIncludeRadius() { return includeRadius; }
+	// 使う軸の設定
 	void SetUseAxis(Axis axis, bool isUse) { isUseAxis[(size_t)axis] = isUse; }
+	// 使う軸の取得
 	std::array<bool, 3> GetUseAxis() { return isUseAxis; }
 };
 
@@ -97,9 +107,11 @@ public:
 class SphereCollider : public virtual BaseCollider
 {
 public:
+	// コンストラクタ
 	SphereCollider();
+	// 仮想デストラクタ
 	virtual ~SphereCollider();
-
+	// 半径取得
 	virtual float GetRadius() { return worldTransform->scale.x; }
 };
 
@@ -113,13 +125,16 @@ protected:
 	Vector3 inter;
 
 public:
+	// コンストラクタ
 	PlaneCollider();
+	// 仮想デストラクタ
 	virtual ~PlaneCollider();
-
+	// setter
 	void SetInter(const Vector3& inter_) { inter = inter_; }
 	void SetDistance(float distance_) { distance = distance_; }
 	void SetRotation(const Vector3& rotation) { worldTransform->rotation = rotation; }
 	void SetBaseNormal(const Vector3& baseNormal_) { baseNormal = baseNormal_; }
+	// getter
 	virtual Vector3 GetNormal() { return baseNormal * Matrix4::Rotate(worldTransform->rotation); }
 	virtual Vector3* GetInter() { return &inter; }
 	virtual float GetDistance() { return distance; }
@@ -138,17 +153,25 @@ protected:
 	Vector3 normal;
 
 public:
+	// コンストラクタ
 	PolygonCollider();
+	// 仮想デストラクタ
 	virtual ~PolygonCollider();
-
+	// 頂点更新
 	void UpdateVertices();
+	// 距離を計算
 	void ComputeDistance() { distance = Dot(GetNormal(), vertices[0]); }
+	// 法線を計算
 	void ComputeNormal();
+	// 平面に変換する
 	void ToPlaneCollider(PlaneCollider* planeCollider);
+	// 頂点を追加
 	void AddVertices(Vector3 pos) { vertices.push_back(pos); }
+	// setter
 	void SetBaseNormal(Vector3 baseNormal_) { baseNormal = baseNormal_; }
-	virtual Vector3 GetNormal() { return baseNormal * Matrix4::Rotate(worldTransform->rotation); }
 	virtual void SetVertices();
+	// getter
+	virtual Vector3 GetNormal() { return baseNormal * Matrix4::Rotate(worldTransform->rotation); }
 	virtual std::vector<Vector3> GetVertices() { return vertices; }
 };
 
@@ -158,9 +181,11 @@ class RayCollider : public virtual BaseCollider
 public:
 	// 基準レイ
 	Vector3 baseRayDirection = Vector3::MakeAxis(Axis::Z);
+	// コンストラクタ
 	RayCollider();
+	// 仮想デストラクタ
 	virtual ~RayCollider();
-
+	// レイ方向を取得
 	virtual const Vector3 GetRayDirection() { return baseRayDirection * Matrix4::Rotate(worldTransform->rotation); }
 };
 

@@ -32,9 +32,12 @@ private:
 
 	// 頂点法線の平均化
 	void CalculateSmoothedVertexNormals();
+	// バッファ生成
 	void CreateBuffers();
 
 public:
+	// objファイル読み込み
 	void LoadOBJ(const std::string& modelName, bool isSmooth);
+	// 描画
 	void Draw();
 };

@@ -11,7 +11,10 @@ class TitleScene : public BaseScene
 	ViewProjection camera;
 	SpriteAnimation spaceKeyUI;
 
+	// 初期化(オーバーライド)
 	void Initialize();
+	// 更新(オーバーライド)
 	void Update();
+	// 描画(オーバーライド)
 	void Draw();
 };

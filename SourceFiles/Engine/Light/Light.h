@@ -34,7 +34,9 @@ public:
 		unsigned int active;
 	};
 
+	// ライト光線方向を変更
 	void SetLightDir(const Vector3& lightdir_) { lightdir = Normalize(lightdir_); }
+	// ライト光線方向を取得
 	Vector3 GetLightDir() { return lightdir; }
 };
 
@@ -63,6 +65,7 @@ public:
 		float pad5;
 	};
 
+	// setter
 	void SetLightDir(const Vector3& lightdir_) { lightdir = Normalize(lightdir_); }
 	void SetLightPos(const Vector3& lightpos_) { lightpos = lightpos_; }
 	void SetLightAtten(const Vector3& lightAtten_) { lightAtten = lightAtten_; }
@@ -71,6 +74,7 @@ public:
 		lightFactorAngleCos.x = std::cos(lightFactorAngle.x);
 		lightFactorAngleCos.y = std::cos(lightFactorAngle.y);
 	}
+	// getter
 	const Vector3& GetLightDir() { return lightdir; }
 	const Vector3& GetLightPos() { return lightpos; }
 	const Vector3& GetLightAtten() { return lightAtten; }
@@ -95,8 +99,10 @@ public:
 		unsigned int active;
 	};
 
+	// setter
 	void SetLightPos(const Vector3& lightpos_) { lightpos = lightpos_; }
 	void SetLightAtten(const Vector3& lightAtten_) { lightAtten = lightAtten_; }
+	// getter
 	const Vector3& GetLightPos() { return lightpos; }
 	const Vector3& GetLightAtten() { return lightAtten; }
 };

@@ -8,5 +8,6 @@ private:
 	Object3d* object;
 
 public:
+	// ‰Šú‰»
 	void Initialize(float scale);
 };

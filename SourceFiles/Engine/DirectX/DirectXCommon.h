@@ -31,23 +31,34 @@ private:
 
 	DirectXCommon() = default;
 	~DirectXCommon() = default;
+	// デバイスの初期化
 	void InitializeDevice();
+	// コマンドリストの初期化
 	void InitializeCommand();
+	// スワップチェーンの初期化
 	void InitializeSwapchain();
+	// レンダーターゲットビューの初期化
 	void InitializeRenderTargetView();
+	// 深度バッファの初期化
 	void InitializeDepthBuffer();
+	// フェンスの初期化
 	void InitializeFence();
 
 public:
-	static DirectXCommon* GetInstance();
 	DirectXCommon(const DirectXCommon& obj) = delete;
+	// インスタンス取得
+	static DirectXCommon* GetInstance();
+	// 初期化
 	void Initialize();
+	// 描画前処理
 	void PreDraw();
+	// 描画後処理
 	void PostDraw();
-
+	// setter
+	void SetViewport(Vector2 viewportSize = WindowsAPI::WIN_SIZE, Vector2 viewportLeftTop = {});
+	// getter
 	ID3D12Device* GetDevice() const { return device.Get(); }
 	ID3D12GraphicsCommandList* GetCommandList() const { return commandList.Get(); }
 	size_t GetBackBufferCount() const { return backBuffers.size(); }
-	void SetViewport(Vector2 viewportSize = WindowsAPI::WIN_SIZE, Vector2 viewportLeftTop = {});
 	Matrix4 GetViewportMatrix();
 };

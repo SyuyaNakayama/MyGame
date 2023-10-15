@@ -13,7 +13,13 @@ struct Object3d
 private:
 	friend class ModelManager;	
 	Mesh* mesh;
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="mesh">メッシュデータ</param>
 	void Initialize(Mesh* mesh);
+	// 更新
 	void Update();
+	// 描画
 	void Draw();
 };

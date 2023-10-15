@@ -36,40 +36,46 @@ private:
 	bool dirty = false;
 	ConstBufferData* constMap = nullptr;
 
+	// 定数バッファ転送
 	void TransferConstBuffer();
-public:
-	static std::unique_ptr<LightGroup> Create();
+	// 初期化
 	void Initialize();
-	void Update();
-	void Draw(UINT rootParameterIndex);
+	// 標準のライト設定
 	void DefaultLightSetting();
+
+public:
+	/// <summary>
+	/// インスタンス生成
+	/// </summary>
+	/// <returns>インスタンス</returns>
+	static std::unique_ptr<LightGroup> Create();
+	// 更新
+	void Update();
+	// 描画
+	void Draw(UINT rootParameterIndex);
+	// 環境光を変更
 	void SetAmbientColor(const ColorRGB& color) { ambientColor = color; dirty = true; }
-#pragma region 平行光源Setter
+	// 平行光源Setter
 	void SetDirLightActive(size_t index, bool active);
 	void SetDirLightDir(size_t index, const Vector3& lightDir);
 	void SetDirLightColor(size_t index, const ColorRGB& lightcolor);
-#pragma endregion
-#pragma region 点光源Setter
+	// 点光源Setter
 	void SetPointLightActive(size_t index, bool active);
 	void SetPointLightPos(size_t index, const Vector3& lightpos);
 	void SetPointLightColor(size_t index, const ColorRGB& lightcolor);
 	void SetPointLightAtten(size_t index, const Vector3& lightAtten);
-#pragma endregion
-#pragma region スポットライトSetter
+	// スポットライトSetter
 	void SetSpotLightActive(size_t index, bool active);
 	void SetSpotLightDir(size_t index, const Vector3& lightdir);
 	void SetSpotLightPos(size_t index, const Vector3& lightpos);
 	void SetSpotLightColor(size_t index, const ColorRGB& lightcolor);
 	void SetSpotLightAtten(size_t index, const Vector3& lightAtten);
 	void SetSpotLightFactorAngle(size_t index, const Vector2& lightFactorAngle);
-#pragma endregion
-#pragma region 丸影Setter
+	// 丸影Setter
 	void SetCircleShadowActive(size_t index, bool active);
 	void SetCircleShadowCasterPos(size_t index, const Vector3& casterPos);
 	void SetCircleShadowDir(size_t index, const Vector3& lightdir);
 	void SetCircleShadowDistanceCasterLight(size_t index, float distanceCasterLight);
 	void SetCircleShadowAtten(size_t index, const Vector3& lightAtten);
 	void SetCircleShadowFactorAngle(size_t index, const Vector2& lightFactorAngle);
-#pragma endregion
-	bool GetPointLightActive(size_t index) { return pointLights[index].IsActive(); }
 };

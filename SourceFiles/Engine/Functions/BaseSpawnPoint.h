@@ -8,5 +8,6 @@ protected:
 	FrameTimer spawnTimer;
 
 public:
+	// XV
 	virtual void Update() = 0;
 };

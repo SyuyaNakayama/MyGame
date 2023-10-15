@@ -8,8 +8,10 @@ public:
 	float x = 0, y = 0, z = 0, // 虚部
 		w = 0; // 実部
 
+	// コンストラクタ
 	Quaternion(float w_, Vector3 iv) { x = iv.x, y = iv.y, z = iv.z, w = w_; }
 	Quaternion(float w_ = 0, float x_ = 0, float y_ = 0, float z_ = 0) { x = x_, y = y_, z = z_; w = w_; }
+	// 虚部を抽出
 	Vector3 GetImaginary() const { return { x,y,z }; }
 	Quaternion operator-()const { return { -w,x,y,z }; }
 	// 代入演算子オーバーロード
@@ -30,11 +32,14 @@ public:
 	// メンバ変数の値を変えたくない時はこっちを使う
 	// 単位Quaternion
 	static Quaternion Identity() { return Quaternion(1, 0, 0, 0); }
+	// 共役にする
 	static Quaternion Conjugate(const Quaternion& q) { return Quaternion(q.w, -q.GetImaginary()); }
+	// このQuaternionのNormを返す
 	static float Norm(const Quaternion& q) { return q.Norm(); }
+	// 正規化する
 	static Quaternion Normalize(const Quaternion& q);
+	// 逆Quaternionにする
 	static Quaternion Inverse(const Quaternion& q);
-
 	// 任意軸回転のQuaternion生成(axisは正規化されている必要がある)
 	static Quaternion MakeAxisAngle(const Vector3& axis, float angle);
 	// ベクトルをQuaternionで回転させる
@@ -43,6 +48,7 @@ public:
 	static Matrix4 MakeRotateMatrix(const Quaternion& q);
 };
 
+// 内積を求める
 float Dot(const Quaternion& q1, const Quaternion& q2);
 // 2項演算子オーバーロード
 Quaternion operator+(const Quaternion& q1, const Quaternion& q2);

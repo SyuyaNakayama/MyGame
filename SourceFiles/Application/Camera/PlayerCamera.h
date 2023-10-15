@@ -9,6 +9,11 @@ class PlayerCamera : public BaseCamera
 {
 	Vector3 parentPrePos;
 	
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="parent">ワールドトランスフォームの親ポインタ</param>
 	void Initialize(WorldTransform* parent);
+	// 更新
 	void Update();
 };

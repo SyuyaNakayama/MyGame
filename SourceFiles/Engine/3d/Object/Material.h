@@ -10,7 +10,16 @@ struct TextureTransform
 	Vector2 tiling; // タイリング
 };
 
-enum class TexType { Main, Sub, Blend, Specular, Dissolve, Num };
+// テクスチャの役割
+enum class TexType 
+{
+	Main,		// メインテクスチャ
+	Sub,		// サブテクスチャ
+	Blend, 		// ブレンドマップ
+	Specular,	// スペキュラマップ
+	Dissolve,	// ディゾルブマップ
+	Num 		// テクスチャ数
+};
 
 // マテリアル
 struct Material
@@ -20,13 +29,19 @@ struct Material
 	ColorRGB diffuse;
 	ColorRGB specular;
 
-	void Load(Mesh* mesh); // マテリアル読み込み
-	void SetDissolvePow(float dissolve) { constMap->maskPow[2] = dissolve; }
+	// マテリアル読み込み
+	void Load(Mesh* mesh); 
+	// 更新
 	void Update();
+	// 描画
 	void Draw();
-	Sprite* GetSprite(TexType texType) { return sprites[(size_t)texType].get(); }
-	void SetSprite(std::unique_ptr<Sprite> sprite, TexType type) { sprites[(size_t)type] = move(sprite); }
+	// 定数バッファに転送
 	void TransferCBV();
+	// setter
+	void SetDissolvePow(float dissolve) { constMap->maskPow[2] = dissolve; }
+	void SetSprite(std::unique_ptr<Sprite> sprite, TexType type) { sprites[(size_t)type] = move(sprite); }
+	// getter
+	Sprite* GetSprite(TexType texType) { return sprites[(size_t)texType].get(); }
 
 private:
 	// マテリアル
@@ -44,5 +59,6 @@ private:
 	ConstBufferData* constMap = nullptr;
 
 	std::array<std::unique_ptr<Sprite>, (size_t)TexType::Num> sprites; // テクスチャの配列
+	// テクスチャ読み込み
 	void LoadSprite(std::istringstream& line_stream, Mesh* mesh, TexType spriteIndex);
 };

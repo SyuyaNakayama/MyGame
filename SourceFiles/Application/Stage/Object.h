@@ -11,13 +11,25 @@ class Object : public SphereCollider, public BoxCollider, public GameObject
 	static int instanceNum;
 
 public:
+	// コンストラクタ
 	Object() { instanceNum++; }
+	// デストラクタ
 	~Object() { instanceNum--; }
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="objectData">Jsonファイルから読み込んだデータ</param>
 	void Initialize(const ObjectData& objectData);
+	// 更新
 	void Update();
+	// 衝突コールバック関数(SphereCollider版)
 	void OnCollision(SphereCollider* collider);
-	void Destroy() { object->isDestroy = true; } // 破壊する
+	// 破壊する
+	void Destroy() { object->isDestroy = true; }
+	// setter(isDestroy)
 	bool IsDestroy() { return object->isDestroy; }
+	// このクラスのインスタンス数を取得
 	static int GetInstanceNum() { return instanceNum; }
+	// ゴールした
 	void Goal() { isGoal = true; }
 };

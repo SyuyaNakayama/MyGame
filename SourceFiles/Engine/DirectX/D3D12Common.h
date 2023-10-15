@@ -12,6 +12,7 @@ private:
 	HRESULT result = S_OK;
 
 public:
+	// コンストラクタ
 	Result() {}
 	Result(const HRESULT& result) { operator=(result); }
 
@@ -22,6 +23,7 @@ public:
 	}
 };
 
+// バッファ生成
 template<class T> void CreateBuffer(ID3D12Resource** buff, T** map, UINT64 width)
 {
 	D3D12_HEAP_PROPERTIES heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
@@ -38,7 +40,9 @@ template<class T> void CreateBuffer(ID3D12Resource** buff, T** map, UINT64 width
 	(*buff)->Unmap(0, nullptr);
 }
 
+// インプットレイアウトの追加
 D3D12_INPUT_ELEMENT_DESC SetInputLayout(LPCSTR semanticName, DXGI_FORMAT format);
+// シェーダー読み込み
 void LoadShader(ID3DBlob** shaderBlob, std::wstring shaderName, LPCSTR target);
 
 enum class RootParamType { CBV, DescriptorTable };
@@ -90,7 +94,13 @@ class PipelineManager
 	ComPtr<ID3D12PipelineState> pipelineState;
 
 public:
+	/// <summary>
+	/// パイプライン生成
+	/// </summary>
+	/// <param name="pipelineProp">パイプライン生成プロパティ</param>
 	void CreatePipeline(const PipelineProp& pipelineProp);
+	// 初期化
 	static void Initialize();
+	// パイプラインのセット
 	static void SetPipeline(PipelineType pipelineType);
 };

@@ -27,8 +27,11 @@ public:
 	static void DrawObjects();
 	// モデル作成
 	static Object3d* Create(const std::string& modelName, bool smoothing = false);
+	// オブジェクトの解放
 	static void ClearObjects() { objects.clear(); }
-	static LightGroup* GetLightGroup() { return lightGroup.get(); }
+	// setter
 	static void SetViewProjection(ViewProjection* viewProjection_) { viewProjection = viewProjection_; }
+	// getter
+	static LightGroup* GetLightGroup() { return lightGroup.get(); }
 	static ViewProjection* GetViewProjection() { return viewProjection; }
 };

@@ -253,7 +253,7 @@ void DirectXCommon::PostDraw()
 		}
 	}
 
-	fixFPS->Update(); // FPS固定
+	fixFPS->Fix(); // FPS固定
 
 	// キューをクリア
 	result = commandAllocator->Reset();

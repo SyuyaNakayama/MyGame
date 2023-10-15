@@ -9,8 +9,14 @@ class Block : public BoxCollider, public GameObject
 	Vector3 normal;
 
 public:
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="objectData">Jsonファイルから読み込んだデータ</param>
 	void Initialize(const ObjectData& objectData);
-	void Update();
+	// 更新
+	void Update(){}
+	// 衝突コールバック関数(BoxCollider版)
 	void OnCollision(BoxCollider* collider);
 };
 
@@ -21,7 +27,13 @@ class Goal : public BoxCollider, public GameObject
 	Vector3 normal;
 
 public:
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="objectData">Jsonファイルから読み込んだデータ</param>
 	void Initialize(const ObjectData& objectData);
-	void Update();
+	// 更新
+	void Update() {}
+	// 衝突コールバック関数(BoxCollider版)
 	void OnCollision(BoxCollider* collider);
 };

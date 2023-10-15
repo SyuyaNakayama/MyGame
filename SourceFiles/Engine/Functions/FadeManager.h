@@ -13,10 +13,15 @@ private:
 	bool isChange = false;
 
 public:
+	// 初期化
 	void Initialize();
+	// 更新
 	void Update();
+	// 描画
 	void Draw() { sprite->Draw(); }
+	// フェードをオンにする
+	void FadeScene() { isFade = true; }
+	// getter
 	bool IsChange() { return isChange; }
 	bool IsFade() { return isFade; }
-	void FadeScene() { isFade = true; }
 };

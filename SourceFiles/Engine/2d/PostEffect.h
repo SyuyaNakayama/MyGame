@@ -5,6 +5,7 @@
 #include "Color.h"
 #include "Matrix4.h"
 
+// ポストエフェクト
 class PostEffect
 {
 private:
@@ -28,13 +29,21 @@ private:
 	D3D12_VERTEX_BUFFER_VIEW vbView{};
 	Microsoft::WRL::ComPtr<ID3D12Resource> constBuff;
 
+	// バッファ生成
 	void CreateBuffers();
+	// シェーダーリソースビュー生成
 	void CreateSRV();
+	// レンダーターゲットビュー生成
 	void CreateRTV();
+	// デプスステンシルビュー生成
 	void CreateDSV();
 public:
+	// 初期化
 	void Initialize();
+	// 描画
 	void Draw();
+	// シーン描画前処理
 	void PreDrawScene();
+	// シーン描画後処理
 	void PostDrawScene();
 };

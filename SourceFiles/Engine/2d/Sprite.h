@@ -61,17 +61,27 @@ private:
 	Vertex* vertMap = nullptr;
 	Matrix4 matWorld;
 
+	// テクスチャサイズをイメージに合わせる
 	void AdjustTextureSize();
+	// 初期化
 	void Initialize();
 
 public:
+	// 更新
 	void Update();
+	// 描画
 	void Draw();
-	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUHandle() { return tex->gpuHandle; }
-	static std::unique_ptr<Sprite> Create(const std::string& fileName);
+	// 静的初期化
 	static void StaticInitialize();
+	// テクスチャ読み込み
 	static TextureData* LoadTexture(const std::string& FILE_NAME, uint32_t mipLevels = MIP_LEVELS_DEFAULT);
+	// スプライト生成
+	static std::unique_ptr<Sprite> Create(const std::string& fileName);
+	// 描画前処理
 	static void PreDraw();
+	// getter
+	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUHandle() { return tex->gpuHandle; }
 	static ID3D12DescriptorHeap* GetDescriptorHeap() { return srvHeap.Get(); }
+	// デスクリプタヒープのセット
 	static void SetDescriptorHeaps();
 };

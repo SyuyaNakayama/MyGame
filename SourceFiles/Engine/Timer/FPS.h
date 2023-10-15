@@ -15,9 +15,15 @@ private:
 	~FPS() = default;
 
 public:
+	// インスタンス取得
 	static FPS* GetInstance();
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="maxfps">最大FPS値</param>
 	void Initialize(float maxfps);
 	// FPS固定
-	void Update();
+	void Fix();
+	// FPS取得
 	int GetFPS() { return fps; }
 };

@@ -8,8 +8,15 @@ private:
 	SceneFactory() = default;
 
 public:
+	// コンストラクタ
 	SceneFactory(const SceneFactory& obj) = delete;
+	// インスタンス取得
 	static SceneFactory* GetInstance();
 
+	/// <summary>
+	/// シーン作成
+	/// </summary>
+	/// <param name="scene">次に作るシーン</param>
+	/// <returns>作成されたクラスのポインタ</returns>
 	BaseScene* CreateScene(Scene scene) override;
 };

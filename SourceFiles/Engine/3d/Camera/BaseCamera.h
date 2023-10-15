@@ -11,8 +11,16 @@ protected:
 	WorldTransform worldTransform;
 
 public:
+	// 仮想デストラクタ
+	virtual ~BaseCamera() = default;
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="parent">ワールドトランスフォームの親ポインタ</param>
 	virtual void Initialize(WorldTransform* parent);
+	// 更新
 	virtual void Update();
+	// getter
 	ViewProjection* GetViewProjection() { return &viewProjection; }
 	const Vector2& GetAngle() { return angle; }
 };

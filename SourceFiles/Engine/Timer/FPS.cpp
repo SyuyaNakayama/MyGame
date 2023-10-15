@@ -15,7 +15,7 @@ void FPS::Initialize(float maxfps)
 	oneSecond.Start();
 }
 
-void FPS::Update()
+void FPS::Fix()
 {
 	// 1/60•b‚Ò‚Á‚½‚è‚ÌŽžŠÔ
 	const microseconds MIN_TIME(uint64_t(1000000.0f / maxFPS));

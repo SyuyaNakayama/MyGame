@@ -16,8 +16,11 @@ private:
 
 public:
 	static std::unique_ptr<StartCountDown> Create();
+	// 更新
 	void Update();
+	// 描画
 	void Draw();
+	// getter
 	bool IsFinish() { return count.Update(); }
 };
 
@@ -40,10 +43,15 @@ private:
 	FPS* fps = FPS::GetInstance();
 	FrameTimer timer = 20 * 60;
 
+	// 初期化(オーバーライド)
 	void Initialize();
+	// 更新(オーバーライド)
 	void Update();
+	// 描画(オーバーライド)
 	void Draw();
 
+	// UI初期化
 	void UIInitialize();
+	// UI更新
 	void UIUpdate();
 };

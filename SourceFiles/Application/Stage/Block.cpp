@@ -20,10 +20,6 @@ void Block::Initialize(const ObjectData& objectData)
 	collisionMask = CollisionMask::Block;
 }
 
-void Block::Update()
-{
-}
-
 void Block::OnCollision(BoxCollider* collider)
 {
 	Physics* physics_ = collider->GetPhysics();
@@ -54,11 +50,6 @@ void Goal::Initialize(const ObjectData& objectData)
 	if (objectData.collider.type == "PLANE") { normal = objectData.collider.normal; }
 	collisionAttribute = CollisionAttribute::Goal;
 	collisionMask = CollisionMask::Goal;
-}
-
-void Goal::Update()
-{
-
 }
 
 void Goal::OnCollision(BoxCollider* collider)

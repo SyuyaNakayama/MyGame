@@ -28,6 +28,7 @@ public:
 		float pad5;
 	};
 
+	// setter
 	void SetDir(const Vector3& dir_) { dir = Normalize(dir_); }
 	void SetDistanceCasterLight(float distanceCasterLight_) { distanceCasterLight = distanceCasterLight_; }
 	void SetCasterPos(const Vector3& casterPos_) { casterPos = casterPos_; }
@@ -38,6 +39,7 @@ public:
 		factorAngleCos.y = std::cos(factorAngle.y);
 	}
 	void SetActive(bool active_) { active = active_; }
+	// getter
 	const Vector3& GetDir() { return dir; }
 	float GetDistanceCasterLight() { return distanceCasterLight; }
 	const Vector3& GetCasterPos() { return casterPos; }

@@ -17,12 +17,21 @@ class Stage
 	bool isFinished;
 	
 public:
+	// 初期化
 	void Initialize();
+	// 更新
 	void Update();
+	/// <summary>
+	/// スコア加算
+	/// </summary>
+	/// <param name="score_">加算するスコア</param>
+	static void AddScore(int score_) { score += score_; }
+	// getter
 	bool IsFinished() { return isFinished; }
 	float GetRemainTime() { return stageTime.GetRemainTime(); }
-	static void AddScore(int score_) { score += score_; }
-	static void ResetScore() { score = 0; }
-	void ResetTime() { stageTime = STAGE_TIME; }
 	static int GetScore() { return score; }
+	// スコアリセット
+	static void ResetScore() { score = 0; }
+	// タイムリセット
+	void ResetTime() { stageTime = STAGE_TIME; }
 };

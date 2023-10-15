@@ -17,6 +17,7 @@ private:
 	std::unique_ptr<std::uniform_int_distribution<int>> random;
 
 public:
+	// コンストラクタ
 	Random_Int(int min, int max);
 	int operator()() { return (*random)(rnddev); }
 };
@@ -28,6 +29,7 @@ private:
 	std::unique_ptr<std::uniform_real_distribution<float>> random;
 
 public:
+	// コンストラクタ
 	Random_Float(float min, float max);
 	float operator()() { return (*random)(rnddev); }
 };

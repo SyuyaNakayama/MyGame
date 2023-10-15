@@ -39,8 +39,12 @@ private:
 	std::list<Particle> particles;
 
 public:
+	// 更新
 	void Update();
+	// パーティクル削除
 	void Clear() { particles.clear(); }
+	// パーティクル追加
 	void Add(const AddProp& particleProp);
+	// パーティクルリスト取得
 	const std::list<Particle>& GetParticles() const { return particles; }
 };

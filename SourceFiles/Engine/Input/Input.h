@@ -180,7 +180,9 @@ private:
 	ComPtr<IDirectInputDevice8> joystick;
 	DIJOYSTATE joyState{}, joyStatePre{};
 
+	// コントローラー接続を確認した際に呼ばれるコールバック関数
 	static int CALLBACK DeviceFindCallBack(LPCDIDEVICEINSTANCE lpddi, LPVOID pvRef);
+	// ゲームパッドの制御開始
 	void StartGamePadControl();
 
 public:
@@ -206,29 +208,35 @@ public:
 		Vector2 RNormalize(); // Rスティックの数値を正規化したものを返す
 	};
 
+	// インスタンス取得
 	static Input* GetInstance();
 	Input(const Input& obj) = delete;
-
+	// 初期化
 	void Initialize();
+	// 更新
 	void Update();
-
+	// キーが押されてるか
 	bool IsInput(Key KEY) { return key[(int)KEY]; }
+	bool IsInput(Mouse KEY) { return mouseState.rgbButtons[(int)KEY]; }
+	bool IsInput(JoyPad button) { return joyState.rgbButtons[(int)button]; }
+	// キーが押されたか
 	bool IsTrigger(Key KEY) { return !oldkey[(int)KEY] && key[(int)KEY]; }
-	bool IsUp(Key KEY) { return oldkey[(int)KEY] && !key[(int)KEY]; } // 離された瞬間
+	bool IsTrigger(Mouse KEY) { return !mouseStatePre.rgbButtons[(int)KEY] && mouseState.rgbButtons[(int)KEY]; }
+	bool IsTrigger(JoyPad button) { return !joyStatePre.rgbButtons[(int)button] && joyState.rgbButtons[(int)button]; }
+	// キーが離されたか
+	bool IsUp(Key KEY) { return oldkey[(int)KEY] && !key[(int)KEY]; }
 	// いづれかのキーが押されたらtrueを返す
 	bool IsAnyInput() { return std::accumulate(key.begin(), key.end(), false); }
 	bool IsAnyInput(std::vector<Key>& keys);
-	float Move(Key KEY1, Key KEY2, const float spd) { return (IsInput(KEY1) - IsInput(KEY2)) * spd; } // KEY1が押されてたらプラス、KEY2が押されてたらマイナス
+	// KEY1が押されてたらプラス、KEY2が押されてたらマイナス
+	float Move(Key KEY1, Key KEY2, const float spd) { return (IsInput(KEY1) - IsInput(KEY2)) * spd; }
+	// 押されているキーの数
 	size_t KeyInputNum() { return std::accumulate(key.begin(), key.end(), 0U) / 128; }
-
-	bool IsInput(Mouse KEY) { return mouseState.rgbButtons[(int)KEY]; }
-	bool IsTrigger(Mouse KEY) { return !mouseStatePre.rgbButtons[(int)KEY] && mouseState.rgbButtons[(int)KEY]; }
-	MouseMove GetMouseMove() { return MouseMove(mouseState.lX, mouseState.lY, mouseState.lZ); }
-
-	PadState GetPadState();
-	bool IsInput(JoyPad button) { return joyState.rgbButtons[(int)button]; }
-	bool IsTrigger(JoyPad button) { return !joyStatePre.rgbButtons[(int)button] && joyState.rgbButtons[(int)button]; }
-	bool IsConnectGamePad() { return joystick; }
+	// 一定以上レバーを傾けたら移動する
 	Vector2 ConLStick(const float spd);
 	Vector2 ConRStick(const float spd);
+	// getter
+	MouseMove GetMouseMove() { return MouseMove(mouseState.lX, mouseState.lY, mouseState.lZ); }
+	PadState GetPadState();
+	bool IsConnectGamePad() { return joystick; }
 };
