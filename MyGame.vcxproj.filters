@@ -329,25 +329,16 @@
     <ClInclude Include="SourceFiles\Engine\Input\Input.h">
       <Filter>ソース ファイル\Engine\Input</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\Engine\Light\DirectionalLight.h">
-      <Filter>ソース ファイル\Engine\Light</Filter>
-    </ClInclude>
     <ClInclude Include="SourceFiles\Engine\Light\LightGroup.h">
       <Filter>ソース ファイル\Engine\Light</Filter>
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\Functions\Color.h">
       <Filter>ソース ファイル\Engine\Functions</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\Engine\Light\PointLight.h">
-      <Filter>ソース ファイル\Engine\Light</Filter>
-    </ClInclude>
     <ClInclude Include="SourceFiles\Engine\Math\Quaternion.h">
       <Filter>ソース ファイル\Engine\Math</Filter>
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\Light\CircleShadow.h">
-      <Filter>ソース ファイル\Engine\Light</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\Engine\Light\SpotLight.h">
       <Filter>ソース ファイル\Engine\Light</Filter>
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\Audio\Audio.h">
@@ -502,6 +493,9 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\Timer\FPS.h">
       <Filter>ソース ファイル\Engine\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Engine\Light\Light.h">
+      <Filter>ソース ファイル\Engine\Light</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

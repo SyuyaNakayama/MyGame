@@ -229,6 +229,7 @@
     <ClInclude Include="SourceFiles\Application\Camera\PlayerCamera.h" />
     <ClInclude Include="SourceFiles\Engine\Audio\AudioManager.h" />
     <ClInclude Include="SourceFiles\Engine\Functions\BaseSpawnPoint.h" />
+    <ClInclude Include="SourceFiles\Engine\Light\Light.h" />
     <ClInclude Include="SourceFiles\Engine\Timer\FPS.h" />
     <ClInclude Include="SourceFiles\Engine\Functions\Random.h" />
     <ClInclude Include="SourceFiles\Engine\GameObject\GameObject.h" />
@@ -261,10 +262,7 @@
     <ClInclude Include="SourceFiles\Engine\Particle\ParticleManager.h" />
     <ClInclude Include="SourceFiles\Engine\Timer\Timer.h" />
     <ClInclude Include="SourceFiles\Engine\Light\CircleShadow.h" />
-    <ClInclude Include="SourceFiles\Engine\Light\DirectionalLight.h" />
     <ClInclude Include="SourceFiles\Engine\Light\LightGroup.h" />
-    <ClInclude Include="SourceFiles\Engine\Light\PointLight.h" />
-    <ClInclude Include="SourceFiles\Engine\Light\SpotLight.h" />
     <ClInclude Include="SourceFiles\Engine\Math\Matrix4.h" />
     <ClInclude Include="SourceFiles\Engine\Math\Quaternion.h" />
     <ClInclude Include="SourceFiles\Engine\Math\Vector.h" />
