@@ -10,16 +10,15 @@ SceneFactory* SceneFactory::GetInstance()
 	return &instance;
 }
 
-BaseScene* SceneFactory::CreateScene(Scene scene)
+std::unique_ptr<BaseScene> SceneFactory::CreateScene(Scene scene)
 {
-	BaseScene* newScene = nullptr;
+	std::unique_ptr<BaseScene> newScene;
 
 	switch (scene)
 	{
-	case Scene::Title: newScene = new TitleScene; break;
-	case Scene::Play: newScene = new GamePlayScene; break;
-	case Scene::Result: newScene = new ResultScene; break;
-	default: newScene = nullptr;
+	case Scene::Title: newScene = std::make_unique<TitleScene>(); break;
+	case Scene::Play: newScene = std::make_unique<GamePlayScene>(); break;
+	case Scene::Result: newScene = std::make_unique<ResultScene>(); break;
 	}
 
 	assert(newScene);

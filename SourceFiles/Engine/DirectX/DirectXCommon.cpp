@@ -17,7 +17,7 @@ DirectXCommon* DirectXCommon::GetInstance()
 void DirectXCommon::Initialize()
 {
 	fixFPS = FPS::GetInstance();
-	fixFPS->Initialize(MAX_FPS);		// FPS固定初期化
+	fixFPS->Initialize(MAX_FPS);	// FPS固定初期化
 	InitializeDevice();				// デバイスの生成
 	InitializeCommand();			// コマンド関連の初期化
 	InitializeSwapchain();			// スワップチェーンの初期化

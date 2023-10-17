@@ -7,11 +7,11 @@
 class SceneManager final
 {
 private:
-	BaseScene* scene_ = nullptr;
-	Scene nowScene_ = Scene::Null;
-	Scene nextScene_ = Scene::Null;
-	FadeManager fadeManager_;
-	AbstractSceneFactory* sceneFactory_ = SceneFactory::GetInstance();
+	std::unique_ptr<BaseScene> scene;
+	Scene nowScene = Scene::Null;
+	Scene nextScene = Scene::Null;
+	FadeManager fadeManager;
+	AbstractSceneFactory* sceneFactory = SceneFactory::GetInstance();
 
 	SceneManager() = default;
 public:
@@ -25,9 +25,9 @@ public:
 	// 描画
 	void Draw();
 	// 終了
-	void Finalize() { scene_->Finalize(); delete scene_; }
+	void Finalize() { scene->Finalize(); }
 	// シーン切り替え
-	void ChangeScene(Scene nextScene, bool isUseFade = true);
+	void ChangeScene(Scene nextScene_, bool isUseFade = true);
 	// 現在のシーン取得
-	Scene GetNowScene() { return nowScene_; }
+	Scene GetNowScene() { return nowScene; }
 };

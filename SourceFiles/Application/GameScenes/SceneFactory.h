@@ -18,5 +18,5 @@ public:
 	/// </summary>
 	/// <param name="scene">次に作るシーン</param>
 	/// <returns>作成されたクラスのポインタ</returns>
-	BaseScene* CreateScene(Scene scene) override;
+	std::unique_ptr<BaseScene> CreateScene(Scene scene) override;
 };

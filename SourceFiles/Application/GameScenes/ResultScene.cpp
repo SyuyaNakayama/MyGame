@@ -16,7 +16,10 @@ void ResultScene::Initialize()
 
 void ResultScene::Update()
 {
-	if (input->IsTrigger(Key::Space)) { sceneManager->ChangeScene(Scene::Title); }
+	if (input->IsTrigger(Key::Space)) 
+	{
+		sceneManager->ChangeScene(Scene::Title); 
+	}
 }
 
 void ResultScene::Draw()

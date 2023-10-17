@@ -50,6 +50,7 @@ void Stage::Initialize()
 
 void Stage::Update()
 {
+	// ゲームが終わったかの確認
 	if (stageTime.Update()) { isFinished = true; }
 	// 消えた障害物のインスタンス削除
 	gameObjects.remove_if([](std::unique_ptr<GameObject>& gameObject)
@@ -62,5 +63,6 @@ void Stage::Update()
 			return false;
 		});
 
+	// 全ゲームオブジェクトの更新
 	for (auto& gameObject : gameObjects) { gameObject->Update(); }
 }

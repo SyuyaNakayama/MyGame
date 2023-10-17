@@ -30,7 +30,9 @@ void GamePlayScene::Update()
 		else { return; }
 	}
 
+#ifdef _DEBUG
 	ImGui::Text("FPS = %d", fps->GetFPS());
+#endif // _DEBUG
 
 	timer.Update();
 	debugCamera.Update();

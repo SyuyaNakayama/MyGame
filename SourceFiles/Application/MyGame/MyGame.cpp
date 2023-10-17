@@ -8,7 +8,7 @@ void MyGame::Initialize()
 {
 	windowName = L"クアッドホッケー";
 	Framework::Initialize();
-	sceneManager->ChangeScene(Scene::Play, false);
+	sceneManager->ChangeScene(Scene::Title, false);
 	ModelManager::Initialize();
 	ParticleManager::Initialize();
 	ParticleManager::AddParticleGroup("Fire.png");
