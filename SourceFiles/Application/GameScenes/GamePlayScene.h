@@ -10,11 +10,16 @@
 class StartCountDown
 {
 private:
-	const float COUNT_DOWN_TIME = 3.0f;
+	static const int COUNT_DOWN_TIME = 3;
+	static int fps;
 	BitMapNumber countUI;
-	RealTimer count = COUNT_DOWN_TIME;
+	FrameTimer count = 0;
 
 public:
+	/// <summary>
+	/// インスタンス生成
+	/// </summary>
+	/// <returns>インスタンス</returns>
 	static std::unique_ptr<StartCountDown> Create();
 	// 更新
 	void Update();

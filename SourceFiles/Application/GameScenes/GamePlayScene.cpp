@@ -2,6 +2,8 @@
 #include "SceneManager.h"
 #include <imgui.h>
 
+int StartCountDown::fps = 0;
+
 void GamePlayScene::Initialize()
 {
 	debugCamera.Initialize({ 0,0 });
@@ -20,19 +22,19 @@ void GamePlayScene::Initialize()
 
 void GamePlayScene::Update()
 {
-	//if (input->IsTrigger(Key::_1)) { ModelManager::SetViewProjection(&viewProjection); }
-	//if (input->IsTrigger(Key::_2)) { ModelManager::SetViewProjection(&debugCamera); }
+#ifdef _DEBUG
+	if (input->IsTrigger(Key::_1)) { ModelManager::SetViewProjection(&viewProjection); }
+	if (input->IsTrigger(Key::_2)) { ModelManager::SetViewProjection(&debugCamera); }
 	// カウントダウン演出
+	ImGui::Text("FPS = %d", fps->GetFPS());
+#endif // _DEBUG
+
 	if (countDown)
 	{
 		countDown->Update();
 		if (countDown->IsFinish()) { countDown.release(); stage.ResetTime(); }
 		else { return; }
 	}
-
-#ifdef _DEBUG
-	ImGui::Text("FPS = %d", fps->GetFPS());
-#endif // _DEBUG
 
 	timer.Update();
 	debugCamera.Update();
@@ -68,7 +70,8 @@ void GamePlayScene::UIInitialize()
 	};
 
 	// スコア
-	scoreSprite.Initialize(bitMapProp);
+	*scoreSprite.GetBitMapProp() = bitMapProp;
+	scoreSprite.Initialize();
 	uiScore = Sprite::Create("ui/score.png");
 	uiScore->anchorPoint = { 0.5f,0.5f };
 	uiScore->position = { 1160,70 };
@@ -77,24 +80,28 @@ void GamePlayScene::UIInitialize()
 	// 残り時間
 	bitMapProp.pos.x = 60;
 	bitMapProp.digit = 2;
-	timeIntSprite.Initialize(bitMapProp); // 整数部
+	*timeIntSprite.GetBitMapProp() = bitMapProp;
+	timeIntSprite.Initialize(); // 整数部
 
 	bitMapProp.pos = { 120,115 };
 	bitMapProp.digit = 3;
 	bitMapProp.size /= 2;
-	timeDecSprite.Initialize(bitMapProp); // 小数部
+	*timeDecSprite.GetBitMapProp() = bitMapProp;
+	timeDecSprite.Initialize(); // 小数部
 
 	// 残り時間
 	bitMapProp.size *= 2;
 	bitMapProp.pos.y += 50;
 	bitMapProp.pos.x = 60;
 	bitMapProp.digit = 2;
-	timeIntSprite2.Initialize(bitMapProp); // 整数部
+	*timeIntSprite2.GetBitMapProp() = bitMapProp;
+	timeIntSprite2.Initialize(); // 整数部
 
 	bitMapProp.pos = { 120,180 };
 	bitMapProp.digit = 3;
 	bitMapProp.size /= 2;
-	timeDecSprite2.Initialize(bitMapProp); // 小数部
+	*timeDecSprite2.GetBitMapProp() = bitMapProp;
+	timeDecSprite2.Initialize(); // 小数部
 
 	uiClock = Sprite::Create("ui/clock.png");
 	uiClock->anchorPoint = { 0.5f,0.5f };
@@ -121,8 +128,8 @@ void GamePlayScene::UIUpdate()
 	{
 		easingColor += (int)(15.0f - remainTime);
 		float colorGB = (cos(easingColor) + 1) * 0.5f;
-		timeIntSprite.ChangeColor({ 1,colorGB,colorGB,1 });
-		timeDecSprite.ChangeColor({ 1,colorGB,colorGB,1 });
+		timeIntSprite.GetBitMapProp()->color = { 1,colorGB,colorGB,1 };
+		timeDecSprite.GetBitMapProp()->color = { 1,colorGB,colorGB,1 };
 	}
 
 	timeIntSprite.Update((int)remainTime);
@@ -148,15 +155,20 @@ std::unique_ptr<StartCountDown> StartCountDown::Create()
 	};
 
 	bitMapProp.pos = (WindowsAPI::WIN_SIZE - bitMapProp.size) / 2.0f;
-	countDown->countUI.Initialize(bitMapProp);
-	countDown->count.Start();
+	*countDown->countUI.GetBitMapProp() = bitMapProp;
+	countDown->countUI.Initialize();
+	if (fps == 0) { fps = FPS::GetInstance()->GetFPS(); }
+	countDown->count = COUNT_DOWN_TIME * fps;
 
 	return countDown;
 }
 
 void StartCountDown::Update()
 {
-	countUI.Update((int)ceilf(count.GetRemainTime()));
+	int time = count.GetTime() / fps;
+	time = min(3, time + 1);
+	countUI.Update(time);
+	ImGui::Text("count.GetTime() %d", count.GetTime());
 }
 
 void StartCountDown::Draw()

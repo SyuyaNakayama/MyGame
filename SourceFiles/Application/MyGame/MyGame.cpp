@@ -39,7 +39,7 @@ void MyGame::Draw()
 	Sprite::PreDraw();
 	sceneManager->Draw();
 	postEffect->PostDrawScene();
-	
+
 	dxCommon->PreDraw();
 	postEffect->Draw();
 	ImGuiManager::Draw();

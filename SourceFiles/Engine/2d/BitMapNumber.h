@@ -5,7 +5,7 @@
 // ビットマップの読み取り変数の受け渡し構造体
 struct BitMapProp
 {
-	//ビットマップがある画像のファイル名
+	// ビットマップがある画像のファイル名
 	std::string fileName;
 	// 1文字分のサイズ
 	Vector2 rectSize;
@@ -15,6 +15,22 @@ struct BitMapProp
 	Vector2 pos;
 	// 表示桁数
 	int digit = 0;
+	// 色合い
+	ColorRGBA color;
+	// 切り取り領域の左上座標のオフセット
+	Vector2 texLTOffset;
+	// アンカーポイント
+	Vector2 anchorPoint;
+
+	/// <summary>
+	/// BitMapNumber初期化に必要な値のセット
+	/// </summary>
+	/// <param name="fileName">ビットマップがある画像のファイル名</param>
+	/// <param name="rectSize">1文字分のサイズ</param>
+	/// <param name="size">描画サイズ</param>
+	/// <param name="pos">描画位置(ピクセル座標)</param>
+	/// <param name="digit">表示桁数</param>
+	void SetVal(const std::string& fileName, Vector2 rectSize, Vector2 size, Vector2 pos, int digit);
 };
 
 /// <summary>
@@ -25,13 +41,17 @@ class BitMapNumber
 {
 private:
 	std::vector<std::unique_ptr<Sprite>> sprites;
+	BitMapProp bitMapProp;
+
+	/// <summary>
+	/// スプライトの更新(Initialize,Update関数の共通部分)
+	/// </summary>
+	/// <param name="index">spritesのインデックス</param>
+	void SpriteUpdate(size_t index);
 
 public:
-	/// <summary>
-	/// 初期化
-	/// </summary>
-	/// <param name="bitMapProp">ビットマッププロパティ</param>
-	void Initialize(const BitMapProp& bitMapProp);
+	// 初期化
+	void Initialize();
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -39,6 +59,9 @@ public:
 	void Update(int number);
 	// 描画
 	void Draw();
-	// スプライトの色変え
-	void ChangeColor(const ColorRGBA& color);
+	/// <summary>
+	/// bitMapPropを取得
+	/// </summary>
+	/// <returns>bitMapPropのポインタ</returns>
+	BitMapProp* GetBitMapProp() { return &bitMapProp; }
 };
