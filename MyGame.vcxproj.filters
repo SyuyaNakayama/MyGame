@@ -497,5 +497,8 @@
     <ClInclude Include="SourceFiles\Engine\Light\Light.h">
       <Filter>ソース ファイル\Engine\Light</Filter>
     </ClInclude>
+    <ClInclude Include="SourceFiles\Engine\2d\AbstractUIDrawer.h">
+      <Filter>ソース ファイル\Engine\2d</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

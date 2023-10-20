@@ -41,7 +41,7 @@ void FPS::Fix()
 	oneSecondFrames.Update();
 	if (oneSecond.Update())
 	{
-		fps = oneSecondFrames.GetRemainTime();
+		fps = oneSecondFrames.GetTime();
 		oneSecondFrames = INT32_MAX;
 	}
 

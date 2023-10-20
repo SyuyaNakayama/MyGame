@@ -1,6 +1,9 @@
 #pragma once
 #include "Input.h"
 #include "DebugCamera.h"
+#include "AbstractUIDrawer.h"
+#include <memory>
+
 class SceneManager;
 
 // シーン基底クラス
@@ -10,6 +13,7 @@ protected:
 	SceneManager* sceneManager = nullptr;
 	Input* input = Input::GetInstance();
 	DebugCamera debugCamera;
+	std::unique_ptr<AbstractUIDrawer> uiDrawer;
 
 public:
 	// コンストラクタ

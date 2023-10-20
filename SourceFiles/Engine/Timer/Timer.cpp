@@ -1,11 +1,23 @@
 #include "Timer.h"
 using namespace std::chrono;
 
+std::array<int, 2> FrameTimer::ConvertToSecond(int time, int fps) const
+{
+	std::array<float, 2> timef{};
+	// ƒ~ƒŠ•b‚ğæ“¾‚·‚é‚½‚ß‚Ì•Ï”
+	const float KILO = 1000.0f;
+	// c‚èŠÔ‚ğæ“¾
+	float t = (float)time / fps;
+	// ®”•”‚Æ¬”•”‚ğ•ª—£
+	timef[1] = modf(t, &timef[0]);
+	return std::array<int, 2>({ (int)timef[0], (int)(timef[1] * KILO) });
+}
+
 bool FrameTimer::Update()
 {
-	if (--timer <= 0)
+	if (++timer >= timeMem)
 	{
-		timer = timeMem;
+		timer = 0;
 		return true;
 	}
 	return false;
@@ -22,7 +34,7 @@ bool RealTimer::Update()
 	return false;
 }
 
-float RealTimer::GetTime()
+float RealTimer::GetTime() const
 {
 	return (float)duration_cast<milliseconds>(nowTime - startTime).count() / 1000.0f;
 }

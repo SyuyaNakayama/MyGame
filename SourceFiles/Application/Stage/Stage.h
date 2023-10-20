@@ -8,14 +8,15 @@
 // ステージに関係するオブジェクト全般のクラス
 class Stage
 {
-	static float STAGE_TIME;
+	static const int STAGE_TIME = 60;
 
 	std::list<std::unique_ptr<GameObject>> gameObjects; // プレイヤー、壁、床、ゴール、障害物
 	LevelData* levelData = nullptr;
 	static int score;
-	RealTimer stageTime;
+	FrameTimer stageTime;
 	bool isFinished;
-	
+	int fps = 0; // 取得したFPS
+
 public:
 	// 初期化
 	void Initialize();
@@ -28,10 +29,14 @@ public:
 	static void AddScore(int score_) { score += score_; }
 	// getter
 	bool IsFinished() { return isFinished; }
-	float GetRemainTime() { return stageTime.GetRemainTime(); }
+	/// <summary>
+	/// 残り時間を取得
+	/// </summary>
+	/// <returns>[0]に秒、[1]に999以下のミリ秒が入る</returns>
+	std::array<int, 2> GetRemainTime();
 	static int GetScore() { return score; }
 	// スコアリセット
 	static void ResetScore() { score = 0; }
 	// タイムリセット
-	void ResetTime() { stageTime = STAGE_TIME; }
+	void ResetTime() { stageTime = STAGE_TIME * fps; }
 };

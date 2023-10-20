@@ -42,12 +42,13 @@ class BitMapNumber
 private:
 	std::vector<std::unique_ptr<Sprite>> sprites;
 	BitMapProp bitMapProp;
+	Vector2 allSpriteSize; // スプライト全体の大きさ
 
 	/// <summary>
 	/// スプライトの更新(Initialize,Update関数の共通部分)
 	/// </summary>
 	/// <param name="index">spritesのインデックス</param>
-	void SpriteUpdate(size_t index);
+	void UpdateSprite(size_t index);
 
 public:
 	// 初期化
@@ -64,4 +65,6 @@ public:
 	/// </summary>
 	/// <returns>bitMapPropのポインタ</returns>
 	BitMapProp* GetBitMapProp() { return &bitMapProp; }
+	// スプライト全体の大きさを取得
+	Vector2 GetAllSpriteSize() { return allSpriteSize; }
 };

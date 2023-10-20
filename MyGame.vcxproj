@@ -223,6 +223,7 @@
     <ClCompile Include="SourceFiles\Application\Stage\Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SourceFiles\Engine\2d\AbstractUIDrawer.h" />
     <ClInclude Include="SourceFiles\Engine\2d\BitMapNumber.h" />
     <ClInclude Include="SourceFiles\Engine\3d\Object\Object3d.h" />
     <ClInclude Include="SourceFiles\Engine\3d\Object\Material.h" />

@@ -9,7 +9,7 @@ void BitMapProp::SetVal(const std::string& fileName_, Vector2 rectSize_, Vector2
 	digit = digit_;
 }
 
-void BitMapNumber::SpriteUpdate(size_t index)
+void BitMapNumber::UpdateSprite(size_t index)
 {
 	sprites[index]->size = bitMapProp.size;
 
@@ -25,8 +25,9 @@ void BitMapNumber::Initialize()
 	{
 		// 数字のスプライト
 		sprites.push_back(Sprite::Create(bitMapProp.fileName));
+		if (allSpriteSize.x == 0) { allSpriteSize = sprites[i]->textureSize; }
 		sprites[i]->textureSize = bitMapProp.rectSize;
-		SpriteUpdate(i);
+		UpdateSprite(i);
 	}
 }
 
@@ -50,7 +51,7 @@ void BitMapNumber::Update(int number)
 	{
 		sprites[i]->textureLeftTop.x = numchar[i] * sprites[i]->textureSize.x;
 		sprites[i]->textureLeftTop += bitMapProp.texLTOffset;
-		SpriteUpdate(i);
+		UpdateSprite(i);
 		sprites[i]->color = bitMapProp.color;
 		sprites[i]->anchorPoint = bitMapProp.anchorPoint;
 		sprites[i]->Update();

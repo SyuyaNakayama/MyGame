@@ -12,12 +12,14 @@ void GamePlayScene::Initialize()
 	viewProjection.eye.z = -75;
 	viewProjection.target.z = 10;
 	stage.Initialize();
-	UIInitialize();
+	// UI描画クラスのインスタンス生成
+	uiDrawer = std::make_unique<UIDrawer>();
+	InitializeUI();
 	countDown = StartCountDown::Create();
 	//ModelManager::SetViewProjection(&debugCamera);
 	// カウントダウン前に一回更新する
 	stage.Update();
-	UIUpdate();
+	UpdateUI();
 }
 
 void GamePlayScene::Update()
@@ -25,8 +27,6 @@ void GamePlayScene::Update()
 #ifdef _DEBUG
 	if (input->IsTrigger(Key::_1)) { ModelManager::SetViewProjection(&viewProjection); }
 	if (input->IsTrigger(Key::_2)) { ModelManager::SetViewProjection(&debugCamera); }
-	// カウントダウン演出
-	ImGui::Text("FPS = %d", fps->GetFPS());
 #endif // _DEBUG
 
 	if (countDown)
@@ -36,10 +36,9 @@ void GamePlayScene::Update()
 		else { return; }
 	}
 
-	timer.Update();
 	debugCamera.Update();
 	stage.Update();
-	UIUpdate();
+	UpdateUI();
 
 	// ゲーム終了時にリザルト画面へ飛ぶ
 	if (stage.IsFinished() /*|| input->IsTrigger(Key::Space)*/)
@@ -54,14 +53,12 @@ void GamePlayScene::Draw()
 	scoreSprite.Draw();
 	timeIntSprite.Draw();
 	timeDecSprite.Draw();
-	timeIntSprite2.Draw();
-	timeDecSprite2.Draw();
 	uiClock->Draw();
 	uiScore->Draw();
 	if (countDown) { countDown->Draw(); }
 }
 
-void GamePlayScene::UIInitialize()
+void GamePlayScene::InitializeUI()
 {
 	// ビットマップの設定
 	BitMapProp bitMapProp =
@@ -89,27 +86,13 @@ void GamePlayScene::UIInitialize()
 	*timeDecSprite.GetBitMapProp() = bitMapProp;
 	timeDecSprite.Initialize(); // 小数部
 
-	// 残り時間
-	bitMapProp.size *= 2;
-	bitMapProp.pos.y += 50;
-	bitMapProp.pos.x = 60;
-	bitMapProp.digit = 2;
-	*timeIntSprite2.GetBitMapProp() = bitMapProp;
-	timeIntSprite2.Initialize(); // 整数部
-
-	bitMapProp.pos = { 120,180 };
-	bitMapProp.digit = 3;
-	bitMapProp.size /= 2;
-	*timeDecSprite2.GetBitMapProp() = bitMapProp;
-	timeDecSprite2.Initialize(); // 小数部
-
 	uiClock = Sprite::Create("ui/clock.png");
 	uiClock->anchorPoint = { 0.5f,0.5f };
 	uiClock->position = { 112.5f,54 };
 	uiClock->Update();
 }
 
-void GamePlayScene::UIUpdate()
+void GamePlayScene::UpdateUI()
 {
 	scoreSprite.Update(stage.GetScore());
 
@@ -121,27 +104,20 @@ void GamePlayScene::UIUpdate()
 		return;
 	}
 
-	float remainTime = stage.GetRemainTime();
+	// 残り時間を取得
+	std::array<int, 2> remainTime = stage.GetRemainTime();
 
 	// 残り時間が10秒以下になると時間の文字が赤点滅する
-	if (remainTime <= 10.0f)
+	if (remainTime[0] < 10)
 	{
-		easingColor += (int)(15.0f - remainTime);
+		easingColor += (int)15 - remainTime[0];
 		float colorGB = (cos(easingColor) + 1) * 0.5f;
 		timeIntSprite.GetBitMapProp()->color = { 1,colorGB,colorGB,1 };
 		timeDecSprite.GetBitMapProp()->color = { 1,colorGB,colorGB,1 };
 	}
 
-	timeIntSprite.Update((int)remainTime);
-
-	float temp = stage.GetRemainTime();
-	float decimal = modf(remainTime, &temp) * 1000;
-	timeDecSprite.Update((int)decimal);
-
-	float nowtime = (float)timer.GetTime() / 20.0f;
-	float nowtime2 = modf(nowtime, &temp) * 1000;
-	timeIntSprite2.Update((int)nowtime);
-	timeDecSprite2.Update((int)nowtime2);
+	timeIntSprite.Update(remainTime[0]);
+	timeDecSprite.Update(remainTime[1]);
 }
 
 std::unique_ptr<StartCountDown> StartCountDown::Create()
@@ -151,7 +127,7 @@ std::unique_ptr<StartCountDown> StartCountDown::Create()
 	// ビットマップの設定
 	BitMapProp bitMapProp =
 	{
-		"ui/num.png",{30,30},{180,180},{},1
+		"ui/num.png",{30,30},{360,360},{},1
 	};
 
 	bitMapProp.pos = (WindowsAPI::WIN_SIZE - bitMapProp.size) / 2.0f;
@@ -165,13 +141,37 @@ std::unique_ptr<StartCountDown> StartCountDown::Create()
 
 void StartCountDown::Update()
 {
-	int time = count.GetTime() / fps;
+	// カウントダウン描画の更新
+	int time = count.GetRemainTime() / fps;
 	time = min(3, time + 1);
 	countUI.Update(time);
-	ImGui::Text("count.GetTime() %d", count.GetTime());
+	// 数字のスライド演出
+	auto timeSecond = count.GetRemainTime(fps);
+	const int SLIDE_START = 250; // スライド演出が始まるタイミング
+	if (timeSecond[1] <= SLIDE_START)
+	{
+		float offsetRate = 1.0f - (float)timeSecond[1] / SLIDE_START;
+		countUI.GetBitMapProp()->texLTOffset.x = countUI.GetAllSpriteSize().x * offsetRate;
+	}
+	else
+	{
+		countUI.GetBitMapProp()->texLTOffset.x = 0;
+	}
 }
 
 void StartCountDown::Draw()
 {
 	countUI.Draw();
+}
+
+void UIDrawer::Initialize()
+{
+}
+
+void UIDrawer::Update()
+{
+}
+
+void UIDrawer::Draw()
+{
 }

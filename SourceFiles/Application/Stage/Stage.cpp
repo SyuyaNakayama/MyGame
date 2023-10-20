@@ -3,7 +3,6 @@
 #include "SceneManager.h"
 
 int Stage::score = 0;
-float Stage::STAGE_TIME = 60.0f;
 
 void Stage::Initialize()
 {
@@ -45,7 +44,8 @@ void Stage::Initialize()
 		}
 	}
 
-	stageTime = STAGE_TIME;
+	fps = FPS::GetInstance()->GetMaxFPS();
+	ResetTime();
 }
 
 void Stage::Update()
@@ -65,4 +65,16 @@ void Stage::Update()
 
 	// 全ゲームオブジェクトの更新
 	for (auto& gameObject : gameObjects) { gameObject->Update(); }
+}
+
+std::array<int, 2> Stage::GetRemainTime()
+{
+	std::array<float, 2> timef{};
+	// ミリ秒を取得するための変数
+	const float KILO = 1000.0f;
+	// 残り時間を取得
+	float t = (float)stageTime.GetRemainTime() / fps;
+	// 整数部と小数部を分離
+	timef[1] = modf(t, &timef[0]);
+	return std::array<int, 2>({ (int)timef[0], (int)(timef[1] * KILO) });
 }

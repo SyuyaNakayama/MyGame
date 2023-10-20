@@ -26,4 +26,6 @@ public:
 	void Fix();
 	// FPSæ“¾
 	int GetFPS() { return fps; }
+	// Å‘åFPS‚ğæ“¾
+	int GetMaxFPS() { return (int)maxFPS; }
 };
