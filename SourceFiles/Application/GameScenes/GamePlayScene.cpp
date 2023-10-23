@@ -13,13 +13,12 @@ void GamePlayScene::Initialize()
 	viewProjection.target.z = 10;
 	stage.Initialize();
 	// UI描画クラスのインスタンス生成
-	uiDrawer = std::make_unique<UIDrawer>();
-	InitializeUI();
-	countDown = StartCountDown::Create();
+	uiDrawer = std::make_unique<UIDrawer>(&stage);
+	uiDrawer->Initialize();
 	//ModelManager::SetViewProjection(&debugCamera);
 	// カウントダウン前に一回更新する
 	stage.Update();
-	UpdateUI();
+	uiDrawer->Update();
 }
 
 void GamePlayScene::Update()
@@ -28,17 +27,12 @@ void GamePlayScene::Update()
 	if (input->IsTrigger(Key::_1)) { ModelManager::SetViewProjection(&viewProjection); }
 	if (input->IsTrigger(Key::_2)) { ModelManager::SetViewProjection(&debugCamera); }
 #endif // _DEBUG
-
-	if (countDown)
-	{
-		countDown->Update();
-		if (countDown->IsFinish()) { countDown.release(); stage.ResetTime(); }
-		else { return; }
-	}
+	uiDrawer->Update();
+	UIDrawer* uiDrawer_ = dynamic_cast<UIDrawer*>(uiDrawer.get());
+	if (uiDrawer_) { if (uiDrawer_->IsCountDown()) { return; } }
 
 	debugCamera.Update();
 	stage.Update();
-	UpdateUI();
 
 	// ゲーム終了時にリザルト画面へ飛ぶ
 	if (stage.IsFinished() /*|| input->IsTrigger(Key::Space)*/)
@@ -50,74 +44,7 @@ void GamePlayScene::Update()
 
 void GamePlayScene::Draw()
 {
-	scoreSprite.Draw();
-	timeIntSprite.Draw();
-	timeDecSprite.Draw();
-	uiClock->Draw();
-	uiScore->Draw();
-	if (countDown) { countDown->Draw(); }
-}
-
-void GamePlayScene::InitializeUI()
-{
-	// ビットマップの設定
-	BitMapProp bitMapProp =
-	{
-		"ui/num.png",{30,30},{30,30},{1100,100},4
-	};
-
-	// スコア
-	*scoreSprite.GetBitMapProp() = bitMapProp;
-	scoreSprite.Initialize();
-	uiScore = Sprite::Create("ui/score.png");
-	uiScore->anchorPoint = { 0.5f,0.5f };
-	uiScore->position = { 1160,70 };
-	uiScore->Update();
-
-	// 残り時間
-	bitMapProp.pos.x = 60;
-	bitMapProp.digit = 2;
-	*timeIntSprite.GetBitMapProp() = bitMapProp;
-	timeIntSprite.Initialize(); // 整数部
-
-	bitMapProp.pos = { 120,115 };
-	bitMapProp.digit = 3;
-	bitMapProp.size /= 2;
-	*timeDecSprite.GetBitMapProp() = bitMapProp;
-	timeDecSprite.Initialize(); // 小数部
-
-	uiClock = Sprite::Create("ui/clock.png");
-	uiClock->anchorPoint = { 0.5f,0.5f };
-	uiClock->position = { 112.5f,54 };
-	uiClock->Update();
-}
-
-void GamePlayScene::UpdateUI()
-{
-	scoreSprite.Update(stage.GetScore());
-
-	// カウントダウン中は60.000秒固定
-	if (countDown)
-	{
-		timeIntSprite.Update(60);
-		timeDecSprite.Update(000);
-		return;
-	}
-
-	// 残り時間を取得
-	std::array<int, 2> remainTime = stage.GetRemainTime();
-
-	// 残り時間が10秒以下になると時間の文字が赤点滅する
-	if (remainTime[0] < 10)
-	{
-		easingColor += (int)15 - remainTime[0];
-		float colorGB = (cos(easingColor) + 1) * 0.5f;
-		timeIntSprite.GetBitMapProp()->color = { 1,colorGB,colorGB,1 };
-		timeDecSprite.GetBitMapProp()->color = { 1,colorGB,colorGB,1 };
-	}
-
-	timeIntSprite.Update(remainTime[0]);
-	timeDecSprite.Update(remainTime[1]);
+	uiDrawer->Draw();
 }
 
 std::unique_ptr<StartCountDown> StartCountDown::Create()
@@ -134,29 +61,30 @@ std::unique_ptr<StartCountDown> StartCountDown::Create()
 	*countDown->countUI.GetBitMapProp() = bitMapProp;
 	countDown->countUI.Initialize();
 	if (fps == 0) { fps = FPS::GetInstance()->GetFPS(); }
-	countDown->count = COUNT_DOWN_TIME * fps;
+	countDown->countTimer = COUNT_DOWN_TIME * fps;
 
 	return countDown;
 }
 
-void StartCountDown::Update()
+bool StartCountDown::Update()
 {
+	bool isFinish = countTimer.Update();
 	// カウントダウン描画の更新
-	int time = count.GetRemainTime() / fps;
-	time = min(3, time + 1);
+	int time = countTimer.GetRemainTime() / fps;
+	time = min(COUNT_DOWN_TIME, time + 1);
 	countUI.Update(time);
 	// 数字のスライド演出
-	auto timeSecond = count.GetRemainTime(fps);
+	auto timeSecond = countTimer.GetRemainTime(fps);
 	const int SLIDE_START = 250; // スライド演出が始まるタイミング
 	if (timeSecond[1] <= SLIDE_START)
 	{
+		// スプライトのUV座標をずらす
 		float offsetRate = 1.0f - (float)timeSecond[1] / SLIDE_START;
 		countUI.GetBitMapProp()->texLTOffset.x = countUI.GetAllSpriteSize().x * offsetRate;
 	}
-	else
-	{
-		countUI.GetBitMapProp()->texLTOffset.x = 0;
-	}
+	else { countUI.GetBitMapProp()->texLTOffset.x = 0; }
+
+	return isFinish;
 }
 
 void StartCountDown::Draw()
@@ -166,12 +94,130 @@ void StartCountDown::Draw()
 
 void UIDrawer::Initialize()
 {
+	// ビットマップの設定
+	BitMapProp bitMapProp =
+	{
+		"ui/num.png",{30,30},{30,30},{1100,100},4
+	};
+
+	// スコア
+	*scoreSprite.GetBitMapProp() = bitMapProp;
+	scoreSprite.Initialize();
+	uiScore = Sprite::Create("ui/score.png");
+	uiScore->anchorPoint = { 0.5f,0.5f };
+	uiScore->position = { 1160,70 };
+	uiScore->Update();
+
+	// 残り時間
+	// 整数部
+	bitMapProp.pos.x = 60;
+	bitMapProp.digit = 2;
+	*timeIntSprite.GetBitMapProp() = bitMapProp;
+	timeIntSprite.Initialize();
+	// 小数部
+	bitMapProp.pos = { 120,115 };
+	bitMapProp.digit = 3;
+	bitMapProp.size /= 2;
+	*timeDecSprite.GetBitMapProp() = bitMapProp;
+	timeDecSprite.Initialize();
+	// 時計アイコン
+	uiClock = Sprite::Create("ui/clock.png");
+	uiClock->anchorPoint = { 0.5f,0.5f };
+	uiClock->position = { 112.5f,54 };
+	uiClock->Update();
+
+	// カウントダウンUI
+	countDown = StartCountDown::Create();
+	uiGo = Sprite::Create("ui/GO.png");
+	uiGo->anchorPoint = { 0.5f,0.5f };
+	uiGo->position = WindowsAPI::WIN_SIZE / 2.0f;
+	uiGo->isInvisible = true; // 透明
+	uiGoEasing.Initialize(StartCountDown::GetFPS() / 4, Easing::Type::Sqrt);
+	UIGoAnimation = &UIDrawer::UIGoSlide;
 }
 
 void UIDrawer::Update()
 {
+	scoreSprite.Update(stage->GetScore());
+
+	if (countDown)
+	{
+		// カウントダウン中は60.000秒固定
+		timeIntSprite.Update(60);
+		timeDecSprite.Update(0);
+
+		if (countDown->Update())
+		{
+			countDown.release();
+			stage->ResetTime();
+			uiGo->isInvisible = false;
+		}
+		else { return; }
+	}
+
+	if (!uiGo->isInvisible)
+	{
+		(this->*UIGoAnimation)();
+		uiGo->Update();
+	}
+
+	// 残り時間を取得
+	std::array<int, 2> remainTime = stage->GetRemainTime();
+
+	// 残り時間が10秒以下になると時間の文字が赤点滅する
+	if (remainTime[0] < 10)
+	{
+		easingColor += (int)15 - remainTime[0];
+		float colorGB = (cos(easingColor) + 1) * 0.5f;
+		timeIntSprite.GetBitMapProp()->color = { 1,colorGB,colorGB,1 };
+		timeDecSprite.GetBitMapProp()->color = { 1,colorGB,colorGB,1 };
+	}
+
+	timeIntSprite.Update(remainTime[0]);
+	timeDecSprite.Update(remainTime[1]);
+}
+
+void UIDrawer::UIGoSlide()
+{
+	float easingNum = uiGoEasing.Update();
+	uiGo->position.x = WindowsAPI::WIN_SIZE.x / 2.0f + SLIDE_DIS_UI_GO * (1.0f - easingNum);
+	uiGo->color.a = easingNum;
+	if (easingNum == 1.0f)
+	{
+		UIGoAnimation = &UIDrawer::UIGoIdle;
+	}
+}
+
+void UIDrawer::UIGoIdle()
+{
+	const int IDLE_TIME = 20;
+	static FrameTimer idle = IDLE_TIME;
+	if(idle.Update())
+	{
+		uiGoSize = uiGo->size;
+		UIGoAnimation = &UIDrawer::UIGoZoom;
+		uiGoEasing.Restart();
+	}
+}
+
+void UIDrawer::UIGoZoom()
+{
+	float easingNum = uiGoEasing.Update();
+	uiGo->size = uiGoSize * (1.0f + easingNum);
+	uiGo->color.a = (1.0f - easingNum);
+	if (easingNum == 1.0f)
+	{
+		uiGo->isInvisible = false;
+	}
 }
 
 void UIDrawer::Draw()
 {
+	scoreSprite.Draw();
+	timeIntSprite.Draw();
+	timeDecSprite.Draw();
+	uiClock->Draw();
+	uiScore->Draw();
+	if (countDown) { countDown->Draw(); }
+	uiGo->Draw();
 }

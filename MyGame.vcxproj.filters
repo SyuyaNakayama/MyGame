@@ -315,6 +315,9 @@
     <ClCompile Include="SourceFiles\Engine\Timer\FPS.cpp">
       <Filter>ソース ファイル\Engine\Timer</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFiles\Engine\Math\Easing.cpp">
+      <Filter>ソース ファイル\Engine\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\Engine\Math\Matrix4.h">
@@ -499,6 +502,9 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\2d\AbstractUIDrawer.h">
       <Filter>ソース ファイル\Engine\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Engine\Math\Easing.h">
+      <Filter>ソース ファイル\Engine\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

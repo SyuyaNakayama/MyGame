@@ -6,6 +6,8 @@ std::array<int, 2> FrameTimer::ConvertToSecond(int time, int fps) const
 	std::array<float, 2> timef{};
 	// ƒ~ƒŠ•b‚ğæ“¾‚·‚é‚½‚ß‚Ì•Ï”
 	const float KILO = 1000.0f;
+	// ƒ[ƒœZ‚ğ‰ñ”ğ
+	fps = std::max(1, fps);
 	// c‚èŠÔ‚ğæ“¾
 	float t = (float)time / fps;
 	// ®”•”‚Æ¬”•”‚ğ•ª—£
