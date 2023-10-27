@@ -17,6 +17,7 @@ public:
 	static void Initialize();
 	// 終了
 	static void Finalize();
+
 	/// <summary>
 	/// オーディオ生成
 	/// </summary>
@@ -24,6 +25,7 @@ public:
 	/// <param name="isLoop">ループ再生フラグ</param>
 	/// <returns>オーディオインスタンスのポインタ</returns>
 	static Audio* Create(const std::string& fileName, bool isLoop = false);
+
 	/// <summary>
 	/// 点音源生成
 	/// </summary>
@@ -35,6 +37,7 @@ public:
 	/// <returns>点音源インスタンスのポインタ</returns>
 	static PointAudio* CreatePointAudio(const std::string& fileName,
 		bool isLoop = false, const Vector3& audioPos = {}, bool useCamera = true, bool usePan = true);
+
 	// 全オーディオインスタンスの更新
 	static void Update();
 };

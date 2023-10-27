@@ -211,6 +211,7 @@ public:
 	// インスタンス取得
 	static Input* GetInstance();
 	Input(const Input& obj) = delete;
+	Input& operator=(const Input& obj) = delete;
 	// 初期化
 	void Initialize();
 	// 更新

@@ -46,6 +46,8 @@ private:
 
 public:
 	DirectXCommon(const DirectXCommon& obj) = delete;
+	DirectXCommon& operator=(const DirectXCommon& obj) = delete;
+
 	// インスタンス取得
 	static DirectXCommon* GetInstance();
 	// 初期化

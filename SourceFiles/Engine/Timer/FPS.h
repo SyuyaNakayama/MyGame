@@ -15,6 +15,9 @@ private:
 	~FPS() = default;
 
 public:
+	FPS(const FPS& obj) = delete;
+	FPS& operator=(const FPS& obj) = delete;
+
 	// インスタンス取得
 	static FPS* GetInstance();
 	/// <summary>

@@ -14,8 +14,11 @@ private:
 	AbstractSceneFactory* sceneFactory = SceneFactory::GetInstance();
 
 	SceneManager() = default;
+	~SceneManager() = default;
+
 public:
 	SceneManager(const SceneManager& obj) = delete;
+	SceneManager& operator=(const SceneManager& obj) = delete;
 	// インスタンス取得
 	static SceneManager* GetInstance();
 	// 初期化

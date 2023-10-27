@@ -5,11 +5,13 @@
 class SceneFactory : public AbstractSceneFactory
 {
 private:
+	// コンストラクタを
 	SceneFactory() = default;
+	~SceneFactory() = default;
 
 public:
-	// コンストラクタ
 	SceneFactory(const SceneFactory& obj) = delete;
+	SceneFactory& operator=(const SceneFactory& obj) = delete;
 	// インスタンス取得
 	static SceneFactory* GetInstance();
 
