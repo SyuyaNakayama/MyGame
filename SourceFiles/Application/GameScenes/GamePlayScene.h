@@ -33,8 +33,8 @@ public:
 	static int GetFPS() { return fps; }
 };
 
-// UI描画クラス
-class UIDrawer : public AbstractUIDrawer
+// UI描画クラス(ゲームシーン用)
+class UIDrawerGameScene : public AbstractUIDrawer
 {
 private:
 	const float SLIDE_DIS_UI_GO = 500; // "Go!"のUIがスライドする距離
@@ -52,7 +52,7 @@ private:
 	Easing uiGoEasing;
 
 	// "Go!"のアニメーションの関数ポインタ
-	void (UIDrawer::*UIGoAnimation)();
+	void (UIDrawerGameScene::*UIGoAnimation)();
 	// スライド
 	void UIGoSlide();
 	// 待機
@@ -62,7 +62,7 @@ private:
 
 public:
 	// コンストラクタ
-	UIDrawer(Stage* stage_) { stage = stage_; }
+	UIDrawerGameScene(Stage* stage_) { stage = stage_; }
 	// 初期化(オーバーライド)
 	void Initialize();
 	// 更新(オーバーライド)

@@ -13,7 +13,7 @@ void GamePlayScene::Initialize()
 	viewProjection.target.z = 10;
 	stage.Initialize();
 	// UI描画クラスのインスタンス生成
-	uiDrawer = std::make_unique<UIDrawer>(&stage);
+	uiDrawer = std::make_unique<UIDrawerGameScene>(&stage);
 	uiDrawer->Initialize();
 	//ModelManager::SetViewProjection(&debugCamera);
 	// カウントダウン前に一回更新する
@@ -28,7 +28,7 @@ void GamePlayScene::Update()
 	if (input->IsTrigger(Key::_2)) { ModelManager::SetViewProjection(&debugCamera); }
 #endif // _DEBUG
 	uiDrawer->Update();
-	UIDrawer* uiDrawer_ = dynamic_cast<UIDrawer*>(uiDrawer.get());
+	UIDrawerGameScene* uiDrawer_ = dynamic_cast<UIDrawerGameScene*>(uiDrawer.get());
 	if (uiDrawer_) { if (uiDrawer_->IsCountDown()) { return; } }
 
 	debugCamera.Update();
@@ -92,7 +92,7 @@ void StartCountDown::Draw()
 	countUI.Draw();
 }
 
-void UIDrawer::Initialize()
+void UIDrawerGameScene::Initialize()
 {
 	// ビットマップの設定
 	BitMapProp bitMapProp =
@@ -133,10 +133,10 @@ void UIDrawer::Initialize()
 	uiGo->position = WindowsAPI::WIN_SIZE / 2.0f;
 	uiGo->isInvisible = true; // 透明
 	uiGoEasing.Initialize(StartCountDown::GetFPS() / 4, Easing::Type::Sqrt);
-	UIGoAnimation = &UIDrawer::UIGoSlide;
+	UIGoAnimation = &UIDrawerGameScene::UIGoSlide;
 }
 
-void UIDrawer::Update()
+void UIDrawerGameScene::Update()
 {
 	scoreSprite.Update(stage->GetScore());
 
@@ -177,30 +177,30 @@ void UIDrawer::Update()
 	timeDecSprite.Update(remainTime[1]);
 }
 
-void UIDrawer::UIGoSlide()
+void UIDrawerGameScene::UIGoSlide()
 {
 	float easingNum = uiGoEasing.Update();
 	uiGo->position.x = WindowsAPI::WIN_SIZE.x / 2.0f + SLIDE_DIS_UI_GO * (1.0f - easingNum);
 	uiGo->color.a = easingNum;
 	if (easingNum == 1.0f)
 	{
-		UIGoAnimation = &UIDrawer::UIGoIdle;
+		UIGoAnimation = &UIDrawerGameScene::UIGoIdle;
 	}
 }
 
-void UIDrawer::UIGoIdle()
+void UIDrawerGameScene::UIGoIdle()
 {
 	const int IDLE_TIME = 20;
 	static FrameTimer idle = IDLE_TIME;
 	if(idle.Update())
 	{
 		uiGoSize = uiGo->size;
-		UIGoAnimation = &UIDrawer::UIGoZoom;
+		UIGoAnimation = &UIDrawerGameScene::UIGoZoom;
 		uiGoEasing.Restart();
 	}
 }
 
-void UIDrawer::UIGoZoom()
+void UIDrawerGameScene::UIGoZoom()
 {
 	float easingNum = uiGoEasing.Update();
 	uiGo->size = uiGoSize * (1.0f + easingNum);
@@ -211,7 +211,7 @@ void UIDrawer::UIGoZoom()
 	}
 }
 
-void UIDrawer::Draw()
+void UIDrawerGameScene::Draw()
 {
 	scoreSprite.Draw();
 	timeIntSprite.Draw();

@@ -9,12 +9,14 @@ void FadeManager::Initialize()
 
 void FadeManager::Update()
 {
+	const float ALPHA_MAX = 1.0f;
+	
 	if (!isFade) { return; }
 	isChange = false;
 	alpha += fadePerFlame;
-	if (alpha >= 1.0f)
+	if (alpha >= ALPHA_MAX)
 	{
-		alpha = 1.0f;
+		alpha = ALPHA_MAX;
 		fadePerFlame = -fadePerFlame;
 		isChange = true;
 	}

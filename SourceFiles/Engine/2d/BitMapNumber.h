@@ -53,6 +53,7 @@ private:
 public:
 	// ‰Šú‰»
 	void Initialize();
+
 	/// <summary>
 	/// XV
 	/// </summary>

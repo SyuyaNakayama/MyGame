@@ -38,5 +38,7 @@ bool RealTimer::Update()
 
 float RealTimer::GetTime() const
 {
-	return (float)duration_cast<milliseconds>(nowTime - startTime).count() / 1000.0f;
+	// ’PˆÊ‚ğ•b(s)‚É‚·‚é‚½‚ß‚Ì•Ï”
+	const float KILO = 1000.0f;
+	return (float)duration_cast<milliseconds>(nowTime - startTime).count() / KILO;
 }

@@ -23,10 +23,10 @@ void ViewProjection::Update()
 	axis[(int)Axis::X] = Normalize(Cross(up, axis[(int)Axis::Z]));
 	axis[(int)Axis::Y] = Normalize(Cross(axis[(int)Axis::Z], axis[(int)Axis::X]));
 	Vector3 cameraMove;
-	for (size_t i = 0; i < 3; i++) { cameraMove[i] = Dot(eye, axis[i]); }
+	for (size_t i = 0; i < axis.size(); i++) { cameraMove[i] = Dot(eye, axis[i]); }
 	matView = Matrix4::CreateFromVector(axis[(int)Axis::X], axis[(int)Axis::Y], axis[(int)Axis::Z]);
 	matView = Matrix4::Inverse(matView);
-	for (size_t i = 0; i < 3; i++) { matView.m[3][i] = -cameraMove[i]; }
+	for (size_t i = 0; i < axis.size(); i++) { matView.m[3][i] = -cameraMove[i]; }
 
 	constMap->viewproj = GetViewProjectionMatrix();
 	constMap->cameraPos = eye;

@@ -9,16 +9,15 @@ void WorldTransform::Initialize()
 
 void WorldTransform::Update()
 {
+	// 親ポインタの更新
 	if (parent) { parent->Update(); }
+	// 更新済なら関数を抜ける
 	if (isUpdated) { return; }
-	Matrix4 matScale = Matrix4::Scale(scale);
-	Matrix4 matRot = Matrix4::Rotate(rotation);
+	Matrix4 matScale = Matrix4::Scale(scale); // スケール行列
+	Matrix4 matRot = Matrix4::Rotate(rotation); // 回転行列
 	matWorld = matScale * matRot;
-	matWorld.SetVector(translation, 3);
-	if (parent)
-	{
-		matWorld *= parent->matWorld;
-	}
+	matWorld.SetVector(translation, 3); // 平行移動成分を代入
+	if (parent) { matWorld *= parent->matWorld; } // 親のワールド行列を掛ける
 	isUpdated = true;
 	constMap->world = matWorld;
 }

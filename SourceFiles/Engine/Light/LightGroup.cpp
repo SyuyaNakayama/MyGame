@@ -10,52 +10,52 @@ void LightGroup::TransferConstBuffer()
 		// ライトが有効なら設定を転送	
 		if (dirLights[i].IsActive())
 		{
-			constMap->dirLights[i].active = 1;
+			constMap->dirLights[i].active = true;
 			constMap->dirLights[i].lightv = -dirLights[i].GetLightDir();
 			constMap->dirLights[i].lightcolor = dirLights[i].GetLightColor();
 		}
 		// ライトが無効なら転送しない
-		else { constMap->dirLights[i].active = 0; }
+		else { constMap->dirLights[i].active = false; }
 	}
 	// 点光源
 	for (int i = 0; i < POINT_LIGHT_NUM; i++)
 	{
 		if (pointLights[i].IsActive())
 		{
-			constMap->pointLights[i].active = 1;
+			constMap->pointLights[i].active = true;
 			constMap->pointLights[i].lightpos = pointLights[i].GetLightPos();
 			constMap->pointLights[i].lightcolor = pointLights[i].GetLightColor();
 			constMap->pointLights[i].lightAtten = pointLights[i].GetLightAtten();
 		}
-		else { constMap->pointLights[i].active = 0; }
+		else { constMap->pointLights[i].active = false; }
 	}
 	// スポットライト
 	for (int i = 0; i < SPOT_LIGHT_NUM; i++)
 	{
 		if (spotLights[i].IsActive())
 		{
-			constMap->spotLights[i].active = 1;
+			constMap->spotLights[i].active = true;
 			constMap->spotLights[i].lightv = -spotLights[i].GetLightDir();
 			constMap->spotLights[i].lightpos = spotLights[i].GetLightPos();
 			constMap->spotLights[i].lightcolor = spotLights[i].GetLightColor();
 			constMap->spotLights[i].lightatten = spotLights[i].GetLightAtten();
 			constMap->spotLights[i].lightfactoranglecos = spotLights[i].GetLightFactorAngleCos();
 		}
-		else { constMap->spotLights[i].active = 0; }
+		else { constMap->spotLights[i].active = false; }
 	}
 	// 丸影
 	for (int i = 0; i < CIRCLE_SHADOW_NUM; i++)
 	{
 		if (circleShadows[i].IsActive())
 		{
-			constMap->circleShadows[i].active = 1;
+			constMap->circleShadows[i].active = true;
 			constMap->circleShadows[i].dir = -circleShadows[i].GetDir();
 			constMap->circleShadows[i].casterPos = circleShadows[i].GetCasterPos();
 			constMap->circleShadows[i].distanceCasterLight = circleShadows[i].GetDistanceCasterLight();
 			constMap->circleShadows[i].atten = circleShadows[i].GetAtten();
 			constMap->circleShadows[i].factorAngleCos = circleShadows[i].GetFactorAngleCos();
 		}
-		else { constMap->circleShadows[i].active = 0; }
+		else { constMap->circleShadows[i].active = false; }
 	}
 }
 

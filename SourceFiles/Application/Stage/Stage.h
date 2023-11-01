@@ -8,7 +8,7 @@
 // ステージに関係するオブジェクト全般のクラス
 class Stage
 {
-	static const int STAGE_TIME = 60;
+	static const int STAGE_TIME = 1;
 
 	std::list<std::unique_ptr<GameObject>> gameObjects; // プレイヤー、壁、床、ゴール、障害物
 	LevelData* levelData = nullptr;
@@ -36,7 +36,7 @@ public:
 	std::array<int, 2> GetRemainTime();
 	static int GetScore() { return score; }
 	// スコアリセット
-	static void ResetScore() { score = 0; }
+	static void ResetScore() { score = 4649; }
 	// タイムリセット
 	void ResetTime() { stageTime = STAGE_TIME * fps; }
 };

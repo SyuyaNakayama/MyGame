@@ -16,6 +16,9 @@ struct TextureData
 // スプライト
 struct Sprite
 {
+	// デフォルトディレクトリ
+	static std::string DEFAULT_TEXTURE_DIRECTORY_PATH;
+
 	Vector2 position;
 	float rotation = 0;
 	ColorRGBA color;
@@ -49,8 +52,6 @@ private:
 	
 	static const size_t MAX_SRV_COUNT = 2056;
 	static const uint32_t MIP_LEVELS_DEFAULT = UINT32_MAX;
-	// デフォルトディレクトリ
-	static std::string DEFAULT_TEXTURE_DIRECTORY_PATH;
 	static ComPtr<ID3D12DescriptorHeap> srvHeap;
 	static std::list<TextureData*> textures;
 	const static Matrix4 matProj;

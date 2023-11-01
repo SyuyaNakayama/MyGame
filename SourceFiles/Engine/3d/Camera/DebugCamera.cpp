@@ -2,10 +2,12 @@
 #include "Input.h"
 #include "WindowsAPI.h"
 
-void DebugCamera::Initialize(Vector3 targetPos, float distance_)
+void DebugCamera::Initialize(Vector3 targetPos, float distance_, float mouseMoveDec_, float wheelSpdDec_)
 {
 	distance = distance_;
 	target = eye = targetPos;
+	mouseMoveDec = mouseMoveDec_;
+	wheelSpdDec = wheelSpdDec_;
 	eye.z -= distance;
 	ViewProjection::Initialize();
 }
@@ -30,7 +32,7 @@ void DebugCamera::Update()
 	// マウスの中ボタンが押されていたらカメラを平行移動させる
 	if (input->IsInput(Mouse::Middle))
 	{
-		Vector3 move = Vector3(-(float)mouseMove.lX, (float)mouseMove.lY) / 75.0f;
+		Vector3 move = Vector3(-(float)mouseMove.lX, (float)mouseMove.lY) / mouseMoveDec;
 		move = Quaternion::RotateVector(move, rotQ);
 
 		CameraMove(move);
@@ -40,7 +42,7 @@ void DebugCamera::Update()
 	// ホイール入力で距離を変更
 	if (mouseMove.lZ != 0)
 	{
-		distance -= mouseMove.lZ / 50.0f;
+		distance -= mouseMove.lZ / wheelSpdDec;
 		distance = max(distance, 1.0f);
 		dirty = true;
 	}
@@ -56,7 +58,7 @@ void DebugCamera::Update()
 
 	// 注視点から視点へのベクトルと、上方向ベクトル
 	Vector3 vTargetEye = { 0.0f, 0.0f, -distance };
-	Vector3 vUp = { 0.0f, 1.0f };
+	Vector3 vUp = Vector3::MakeAxis(Axis::Y);
 
 	// ベクトルを回転
 	vTargetEye = Quaternion::RotateVector(vTargetEye, rotQ);

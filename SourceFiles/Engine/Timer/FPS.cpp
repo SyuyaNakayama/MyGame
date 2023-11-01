@@ -17,10 +17,13 @@ void FPS::Initialize(float maxfps)
 
 void FPS::Fix()
 {
+	// ƒÊ‚ğ‘Å‚¿Á‚·•Ï”
+	const float MEGA = 1000000.0f;
 	// 1/60•b‚Ò‚Á‚½‚è‚ÌŠÔ
-	const microseconds MIN_TIME(uint64_t(1000000.0f / maxFPS));
+	const microseconds MIN_TIME(uint64_t(MEGA / maxFPS));
 	// 1/60•b‚æ‚è‚í‚¸‚©‚É’Z‚¢ŠÔ
-	const microseconds MIN_CHECK_TIME(uint64_t(1000000.0f / (maxFPS + 5.0f)));
+	const float CHECK_TIME_OFFSET = 5;
+	const microseconds MIN_CHECK_TIME(uint64_t(MEGA / (maxFPS + CHECK_TIME_OFFSET)));
 
 	// Œ»İŠÔ‚ğæ“¾‚·‚é
 	steady_clock::time_point now = steady_clock::now();

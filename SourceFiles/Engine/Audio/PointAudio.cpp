@@ -23,10 +23,12 @@ void PointAudio::Update()
 	Vector3 toMic = micPos - audioPos;
 	float dis = toMic.Length();
 	// 距離が1未満だと、音源の音量より大きくなるので調整
-	if (dis < 1.0f) { dis = 1.0f; }
+	dis = max(dis, 1.0f);
 	// 距離減衰
-	float dic = 20.0f * std::log10f(dis);
-	if (dic <= -10000) { dic = -10000.0f; }
+	float dic = 20.0f * std::log10f(dis); // デシベルの計算式(20 * log10(d)より)
+	// dic最小値
+	const float MIN_VOLUME = -10000.0f;
+	dic = max(dic, MIN_VOLUME);
 	SetVolume(-(long)(dic * 100.0f));
 	// 音源の左右移動(パン)
 	if (!usePan) { return; }

@@ -180,11 +180,8 @@ Matrix4 Matrix4::Inverse(const Matrix4& m)
 			}
 		}
 
-		// 最大の絶対値が0だったら逆行列は求められない
-		if (abs(mat[maxIndex][n]) <= 1.0e-6f)
-		{
-			return result; // 単位行列を返す
-		}
+		// 最大の絶対値が0だったら逆行列は求められないので単位行列を返す
+		if (abs(mat[maxIndex][n]) <= 1.0e-6f) { return result; }
 
 		// 入れ替え
 		if (n != maxIndex)

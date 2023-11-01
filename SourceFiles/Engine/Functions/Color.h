@@ -5,6 +5,7 @@ struct Color
 {
 private:
 	float val_ = 1.0f;
+
 public:
 	float operator=(float val);
 	void operator+=(float val) { operator=(val_ + val); }
