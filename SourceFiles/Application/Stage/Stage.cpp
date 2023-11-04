@@ -3,6 +3,7 @@
 #include "SceneManager.h"
 
 int Stage::score = 0;
+float Stage::GROUND_POS_Y = 5.0f;
 
 void Stage::Initialize()
 {
@@ -30,11 +31,11 @@ void Stage::Initialize()
 		}
 		else if (objectData.fileName == "SpawnPoint")
 		{
+			const std::array<int, 2> SPAWN_INTERVALS = { 180,50 };
+			bool isPlayScene = SceneManager::GetInstance()->GetNowScene() == Scene::Play;
+
 			gameObject = std::make_unique<SpawnObject>();
-			int spawnInterval = 0;
-			if (SceneManager::GetInstance()->GetNowScene() == Scene::Play) { spawnInterval = 50; }
-			else { spawnInterval = 180; }
-			objectData.spawnInterval = spawnInterval;
+			objectData.spawnInterval = SPAWN_INTERVALS[isPlayScene];
 		}
 		// オブジェクトの登録
 		if (gameObject)
@@ -69,12 +70,5 @@ void Stage::Update()
 
 std::array<int, 2> Stage::GetRemainTime()
 {
-	std::array<float, 2> timef{};
-	// ミリ秒を取得するための変数
-	const float KILO = 1000.0f;
-	// 残り時間を取得
-	float t = (float)stageTime.GetRemainTime() / fps;
-	// 整数部と小数部を分離
-	timef[1] = modf(t, &timef[0]);
-	return std::array<int, 2>({ (int)timef[0], (int)(timef[1] * KILO) });
+	return stageTime.GetRemainTime(fps);
 }

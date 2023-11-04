@@ -37,32 +37,27 @@ void Player::Move_Play()
 		physics->SetForceDir(forcedir);
 	}
 	else { physics->SetForce(0); }
-	worldTransform->translation.y = 5;
+	worldTransform->translation.y = Stage::GROUND_POS_Y;
 }
 
 void Player::Move_Title()
 {
 	physics->SetForce(PLAYER_MOVE_FORCE);
+	const float PLAYER_MAX_Z = 50.0f;
 
 	if (isTurn == 0)
 	{
-		if (worldTransform->translation.z <= 50) { physics->SetForceDir(Vector3::MakeAxis(Axis::Z)); }
+		if (worldTransform->translation.z <= PLAYER_MAX_Z) { physics->SetForceDir(Vector3::MakeAxis(Axis::Z)); }
 		else { physics->SetForceDir(-Vector3::MakeAxis(Axis::Z)); isTurn = 1; }
 	}
-	if (isTurn == 1)
+	if (isTurn != 1) { return; }
+	if (worldTransform->translation.z <= 0)
 	{
-		if (worldTransform->translation.z <= 0)
+		if (Object::GetInstanceNum() != 0)
 		{
-			if (Object::GetInstanceNum() != 0)
-			{
-				physics->SetForceDir(Vector3::MakeAxis(Axis::Z)); isTurn = 0;
-			}
-			else
-			{
-				physics->SetForce(0);
-			}
+			physics->SetForceDir(Vector3::MakeAxis(Axis::Z)); isTurn = 0;
 		}
-
+		else { physics->SetForce(0); }
 	}
 }
 

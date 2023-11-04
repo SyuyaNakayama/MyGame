@@ -8,7 +8,7 @@
 // ステージに関係するオブジェクト全般のクラス
 class Stage
 {
-	static const int STAGE_TIME = 1;
+	static const int STAGE_TIME = 60;
 
 	std::list<std::unique_ptr<GameObject>> gameObjects; // プレイヤー、壁、床、ゴール、障害物
 	LevelData* levelData = nullptr;
@@ -18,6 +18,8 @@ class Stage
 	int fps = 0; // 取得したFPS
 
 public:
+	static float GROUND_POS_Y;
+
 	// 初期化
 	void Initialize();
 	// 更新

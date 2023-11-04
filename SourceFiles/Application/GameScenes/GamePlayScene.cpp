@@ -57,7 +57,7 @@ std::unique_ptr<StartCountDown> StartCountDown::Create()
 		"ui/num.png",{30,30},{360,360},{},1
 	};
 
-	bitMapProp.pos = (WindowsAPI::WIN_SIZE - bitMapProp.size) / 2.0f;
+	bitMapProp.pos = Half((WindowsAPI::WIN_SIZE - bitMapProp.size));
 	*countDown->countUI.GetBitMapProp() = bitMapProp;
 	countDown->countUI.Initialize();
 	if (fps == 0) { fps = FPS::GetInstance()->GetFPS(); }
@@ -132,7 +132,8 @@ void UIDrawerGameScene::Initialize()
 	uiGo->anchorPoint = { 0.5f,0.5f };
 	uiGo->position = WindowsAPI::WIN_SIZE / 2.0f;
 	uiGo->isInvisible = true; // “§–¾
-	uiGoEasing.Initialize(StartCountDown::GetFPS() / 4, Easing::Type::Sqrt);
+	const int GO_EASING_DEC = 4;
+	uiGoEasing.Initialize(StartCountDown::GetFPS() / GO_EASING_DEC, Easing::Type::Sqrt);
 	UIGoAnimation = &UIDrawerGameScene::UIGoSlide;
 }
 
@@ -192,7 +193,7 @@ void UIDrawerGameScene::UIGoIdle()
 {
 	const int IDLE_TIME = 20;
 	static FrameTimer idle = IDLE_TIME;
-	if(idle.Update())
+	if (idle.Update())
 	{
 		uiGoSize = uiGo->size;
 		UIGoAnimation = &UIDrawerGameScene::UIGoZoom;

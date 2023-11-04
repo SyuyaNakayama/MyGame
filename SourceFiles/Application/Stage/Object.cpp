@@ -29,7 +29,8 @@ void Object::Update()
 		if (worldTransform->GetWorldPosition().y > 45.0f) { Destroy(); }
 		return;
 	}
-	dissolvePow += 0.05f;
+	const float DISSOLVE_POW_INC = 0.05f;
+	dissolvePow += DISSOLVE_POW_INC;
 	object->material.SetDissolvePow(dissolvePow);
 	if (dissolvePow >= 1.0f) { Destroy(); }
 }

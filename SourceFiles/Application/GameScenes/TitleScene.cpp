@@ -6,12 +6,12 @@
 void TitleScene::Initialize()
 {
 	ui = Sprite::Create("ui/title_JP.png");
-	ui->position = WindowsAPI::WIN_SIZE / 2.0f;
+	ui->position = Half(WindowsAPI::WIN_SIZE);
 	ui->position.y -= 100;
 	ui->anchorPoint = { 0.5f,0.5f };
 	ui->size *= 1.5f;
 	ui->Update();
-	debugCamera.Initialize({ 0,0 });
+	debugCamera.Initialize();
 	stage.Initialize();
 	camera.Initialize();
 	camera.eye.y = 250;
@@ -20,7 +20,7 @@ void TitleScene::Initialize()
 	ModelManager::SetViewProjection(&camera);
 	spaceKeyUI.Initialize("ui/key_SPACE.png", 128, 30);
 	Sprite* spaceKeySprite = spaceKeyUI.GetSprite();
-	spaceKeySprite->position = WindowsAPI::WIN_SIZE / 2.0f;
+	spaceKeySprite->position = Half(WindowsAPI::WIN_SIZE);
 	spaceKeySprite->position.y += 100;
 	spaceKeySprite->size *= 1.5f;
 	spaceKeySprite->anchorPoint = { 0.5f,0.5f };
@@ -30,9 +30,9 @@ void TitleScene::Update()
 {
 	if (input->IsTrigger(Key::Space))
 	{
-		sceneManager->ChangeScene(Scene::Play); 
+		sceneManager->ChangeScene(Scene::Play);
 		ModelManager::ClearObjects();
-		return; 
+		return;
 	}
 	debugCamera.Update();
 	stage.Update();

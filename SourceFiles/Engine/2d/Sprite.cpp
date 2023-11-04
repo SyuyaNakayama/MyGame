@@ -1,6 +1,8 @@
 #include "Sprite.h"
 #include "D3D12Common.h"
 #include <DirectXTex.h>
+#include "ImGuiManager.h"
+#include <imgui.h>
 using namespace std;
 using namespace DirectX;
 using namespace Microsoft::WRL;
@@ -173,6 +175,20 @@ void Sprite::AdjustTextureSize()
 
 void Sprite::Update()
 {
+	//if (ImGui::CollapsingHeader(tex->fileName.c_str()))
+	//{
+	//	ImGui::Checkbox("isInvisible", &isInvisible);
+	//	if (isInvisible) { return; }
+	//	ImGuiManager::InputVector("position", position);
+	//	ImGui::InputFloat("rotation", &rotation);
+	//	ImGuiManager::ColorEdit("color", color);
+	//	ImGuiManager::InputVector("size", size);
+	//	ImGuiManager::InputVector("anchorPoint", anchorPoint);
+	//	ImGuiManager::InputVector("textureLeftTop", textureLeftTop);
+	//	ImGuiManager::InputVector("textureSize", textureSize);
+	//	ImGui::Checkbox("isFlipX", &isFlipX);
+	//	ImGui::Checkbox("isFlipY", &isFlipY);
+	//}
 	if (isInvisible) { return; }
 
 	float left = (0.0f - anchorPoint.x) * size.x;

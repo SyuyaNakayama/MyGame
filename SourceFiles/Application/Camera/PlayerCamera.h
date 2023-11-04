@@ -8,6 +8,7 @@
 class PlayerCamera : public BaseCamera
 {
 	Vector3 parentPrePos;
+	float rotSpdDec = 25;
 	
 	/// <summary>
 	/// ‰Šú‰»
@@ -16,4 +17,6 @@ class PlayerCamera : public BaseCamera
 	void Initialize(WorldTransform* parent);
 	// XV
 	void Update();
+	// ‰ñ“]‚Ì‘¬“x•â³‚Ìİ’è
+	void SetRotSpdDec(float rotSpdDec_) { rotSpdDec = rotSpdDec_; }
 };
