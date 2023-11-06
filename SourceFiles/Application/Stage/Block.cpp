@@ -12,9 +12,11 @@ void Block::Initialize(const ObjectData& objectData)
 	material.diffuse = { 1,1,1 };
 	material.specular = { 0,0,0 };
 	Sprite* objectSprite = material.GetSprite(TexType::Main);
+
 	const float WALL_SPLIT_NUM = 5.0f;
 	objectSprite->textureSize.x *= worldTransform->scale.x / WALL_SPLIT_NUM;
 	objectSprite->textureSize.y *= worldTransform->scale.z / WALL_SPLIT_NUM;
+	
 	if (objectData.collider.type == "PLANE") { normal = objectData.collider.normal; }
 	if (objectData.fileName == "Ground") { collisionAttribute = CollisionAttribute::Ground; }
 	else { collisionAttribute = CollisionAttribute::Block; }
