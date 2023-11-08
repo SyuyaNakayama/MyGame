@@ -76,7 +76,7 @@ public:
 	std::vector<InputLayoutProp> inputLayoutProps;
 	BlendProp blendProp;
 	D3D12_PRIMITIVE_TOPOLOGY_TYPE primitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
-	bool isDepthTest = true; // 深度テストを行う = 3D用 か
+	bool isDepthTest = false; // 深度テストを行う = 3D用 か
 	D3D12_DEPTH_WRITE_MASK depthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
 	RootParameterProp rootParamProp;
 	D3D12_TEXTURE_ADDRESS_MODE textureAddressMode = D3D12_TEXTURE_ADDRESS_MODE_WRAP;

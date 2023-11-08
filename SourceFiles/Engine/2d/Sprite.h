@@ -49,7 +49,7 @@ private:
 	};
 
 	template<class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	
+
 	static const size_t MAX_SRV_COUNT = 2056;
 	static const uint32_t MIP_LEVELS_DEFAULT = UINT32_MAX;
 	static ComPtr<ID3D12DescriptorHeap> srvHeap;
@@ -72,6 +72,10 @@ public:
 	void Update();
 	// 描画
 	void Draw();
+	// 位置を画面中央にする
+	void SetCenterPos() { position = Half(WindowsAPI::WIN_SIZE); }
+	// anchorPoint = { 0.5f,0.5f } にする
+	void SetCenterAnchor() { anchorPoint = { 0.5f,0.5f }; }
 	// 静的初期化
 	static void StaticInitialize();
 	// テクスチャ読み込み

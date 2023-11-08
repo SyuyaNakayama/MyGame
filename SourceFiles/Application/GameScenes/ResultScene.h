@@ -9,8 +9,7 @@ class UIDrawerResultScene : public AbstractUIDrawer
 {
 private:
 	// ランクと点数
-	//static const int GAUGE_MAX_SCORE = 3000;
-	static const int GAUGE_MAX_SCORE = 3500;
+	static const int GAUGE_MAX_SCORE = 3000;
 	const Vector2 GAUGE_SIZE = { 641,40 };
 	const int GAUGE_INC_SPD = 15; // ゲージ上昇速度
 	const int RANK_ANIMATION_TIME = 10;
@@ -31,11 +30,14 @@ private:
 
 	std::unique_ptr<Sprite> rankGauge;
 	std::unique_ptr<Sprite> rankGaugeBG;
+	std::unique_ptr<Sprite> resultRankSprite;
 	std::map<Rank, std::unique_ptr<Sprite>> rankGaugeSplit;
 	std::map<Rank, std::unique_ptr<Sprite>> rankUI;
+	std::unique_ptr<Sprite> blind; // 画面を暗くする
 	Rank preRank;
-	UINT16 isRankAnimation = false;
-	Easing rankSpriteEasing;
+	Easing rankSpriteFade;
+	Easing rankSpriteScale;
+	Vector2 rankSpriteSizeMem;
 
 	// スコア表示関連の初期化
 	void ScoreInitialize();
@@ -48,9 +50,15 @@ private:
 	// ランク表示関連の更新
 	void RankUpdate();
 	// ランクアニメーションの関数ポインタ
-	void (*RankAnimation)() = nullptr;
-	// ランクアニメーションの関数
-	void Disappear(), Appear();
+	void (UIDrawerResultScene::* RankAnimation)(float easingRate) = &UIDrawerResultScene::Judge;
+	// ランクとスコアの判定
+	void Judge(float easingRate);
+	// 消える
+	void Disappear(float easingRate);
+	// 現れる
+	void Appear(float easingRate);
+	// 最終ランク発表
+	void Result(float easingRate);
 	// ランクを取得
 	Rank GetRank(int score);
 

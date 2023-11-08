@@ -3,8 +3,12 @@
 // 1色分の構造体
 struct Color
 {
+public:
+	// カラーの最大値
+	static const float MAX;
+
 private:
-	float val_ = 1.0f;
+	float val_ = Color::MAX;
 
 public:
 	float operator=(float val);
@@ -28,6 +32,6 @@ struct ColorRGBA
 	Color r, g, b, a;
 	// コンストラクタ
 	ColorRGBA() {}
-	ColorRGBA(float red, float green, float blue, float alpha = 1.0f) { r = red, g = green, b = blue, a = alpha; }
-	ColorRGBA(ColorRGB color, float alpha = 1.0f) { r = color.r, g = color.g, b = color.b, a = alpha; }
+	ColorRGBA(float red, float green, float blue, float alpha = Color::MAX) { r = red, g = green, b = blue, a = alpha; }
+	ColorRGBA(ColorRGB color, float alpha = Color::MAX) { r = color.r, g = color.g, b = color.b, a = alpha; }
 };

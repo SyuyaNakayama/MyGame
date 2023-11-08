@@ -318,6 +318,9 @@
     <ClCompile Include="SourceFiles\Engine\Math\Easing.cpp">
       <Filter>ソース ファイル\Engine\Math</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFiles\Engine\2d\TextureConverter.cpp">
+      <Filter>ソース ファイル\Engine\2d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\Engine\Math\Matrix4.h">
@@ -505,6 +508,9 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\Math\Easing.h">
       <Filter>ソース ファイル\Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Engine\2d\TextureConverter.h">
+      <Filter>ソース ファイル\Engine\2d</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

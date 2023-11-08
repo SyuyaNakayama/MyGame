@@ -8,18 +8,28 @@ public:
 	enum class Type
 	{
 		Sqrt,	// √x
+		OutElastic, // https://easings.net/ja#easeOutElastic
+		OutBounce, // https://easings.net/ja#easeOutBounce
 	};
 
+	// イージングの最大値
+	static const float MAX;
+
 private:
-	FrameTimer easeRate = 0; // イージングの割合
+	FrameTimer timer = 0; // タイマー
+	float x = 0; // イージングの割合
 	Type type;
 	bool isFinish;
 
 	// イージングの関数テーブル
-	static float (Easing::*Ease[])();
-	
+	static float (Easing::* Ease[])();
+
 	// √x
-	float Sqrt() { return std::sqrtf((float)easeRate.GetTimeRate()); }
+	float Sqrt() { return std::sqrtf(x); }
+	// https://easings.net/ja#easeOutElastic
+	float OutElastic();
+	// https://easings.net/ja#easeOutBounce
+	float OutBounce();
 
 public:
 	/// <summary>
@@ -35,5 +45,5 @@ public:
 	float Update();
 
 	// リスタート
-	void Restart() { easeRate = easeRate.GetInterval(); isFinish = false; }
+	void Restart() { timer = timer.GetInterval(); isFinish = false; }
 };

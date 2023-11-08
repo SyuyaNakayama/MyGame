@@ -3,6 +3,7 @@
 #include "ModelManager.h"
 #include "Stage.h"
 
+#pragma region ResultScene
 void ResultScene::Initialize()
 {
 	debugCamera.Initialize();
@@ -27,12 +28,13 @@ void ResultScene::Draw()
 {
 	uiDrawer->Draw();
 }
+#pragma endregion
 
 void UIDrawerResultScene::ScoreInitialize()
 {
 	// スコアを取得
 	//score = Stage::GetScore();
-	score = 1800;
+	score = 3000;
 
 	// スコア表示のスプライト
 	BitMapProp* bmProp = printScoreUI.GetBitMapProp();
@@ -48,6 +50,12 @@ void UIDrawerResultScene::ScoreInitialize()
 
 void UIDrawerResultScene::RankInitialize()
 {
+	// ランク発表時に背景を暗くするためのスプライト
+	blind = Sprite::Create("white1x1.png");
+	blind->size = WindowsAPI::WIN_SIZE;
+	blind->color = { 0,0,0,0.5f };
+	blind->isInvisible = true;
+
 	// ランクゲージ
 	rankGauge = Sprite::Create("ui/RankGauge.png");
 	rankGauge->position = Half(WindowsAPI::WIN_SIZE);
@@ -80,13 +88,14 @@ void UIDrawerResultScene::RankInitialize()
 	rankUI[Rank::C] = Sprite::Create("ui/Rank/RankC.png");
 	for (auto& s : rankUI)
 	{
-		s.second->anchorPoint = { 0.5f,0.5f };
+		s.second->SetCenterAnchor();
 		s.second->position = { 1030,Half(WindowsAPI::WIN_SIZE.y) };
 		s.second->color.a = 0.0f;
 	}
-	rankUI[Rank::C]->color.a = 1.0f;
+	rankUI[Rank::C]->color.a = Color::MAX;
 
-	rankSpriteEasing.Initialize(RANK_ANIMATION_TIME, Easing::Type::Sqrt);
+	rankSpriteFade.Initialize(RANK_ANIMATION_TIME, Easing::Type::Sqrt);
+	rankSpriteScale.Initialize(RANK_ANIMATION_TIME, Easing::Type::OutBounce);
 	preRank = GetRank(printScore);
 }
 
@@ -117,55 +126,77 @@ void UIDrawerResultScene::ScoreUpdate()
 	scoreUI->Update();
 }
 
-void UIDrawerResultScene::Disappear()
+void UIDrawerResultScene::Disappear(float easingRate)
 {
+	// アニメーションするランクUIのペア
+	std::map<Rank, Rank> animationPair;
+	animationPair[Rank::B] = Rank::C;
+	animationPair[Rank::A] = Rank::B;
+	animationPair[Rank::S] = Rank::A;
+
+	Rank printRank = GetRank(printScore); // 表示ランク
+	Rank prePrintRank = animationPair[printRank]; // 前の表示ランク
+
+	rankUI[prePrintRank]->color.a = Color::MAX - easingRate; // 透明に
+	// アニメーション終了
+	if (easingRate == Easing::MAX)
+	{
+		RankAnimation = &UIDrawerResultScene::Appear;
+		rankUI[prePrintRank]->isInvisible = true;
+		rankSpriteSizeMem = rankUI[printRank]->size;
+		rankSpriteFade.Restart();
+	}
 }
 
-void UIDrawerResultScene::Appear()
+void UIDrawerResultScene::Judge(float easingRate)
 {
+	// ランクが変わったらランク表示UIのアニメーションをする
+	if (preRank != GetRank(printScore)) { RankAnimation = &UIDrawerResultScene::Disappear; }
+	if (score == printScore) { RankAnimation = &UIDrawerResultScene::Result; }
+	easingRate = 0;
+}
+
+void UIDrawerResultScene::Appear(float easingRate)
+{
+	rankUI[GetRank(printScore)]->color.a = easingRate; // 濃く
+	const float SIZE_RATE = 3.0f;
+	rankUI[GetRank(printScore)]->size = rankSpriteSizeMem * (SIZE_RATE - (SIZE_RATE - 1.0f) * rankSpriteScale.Update());
+	// アニメーション終了
+	if (easingRate == Easing::MAX)
+	{
+		RankAnimation = &UIDrawerResultScene::Judge;
+		rankSpriteFade.Restart();
+		rankSpriteScale.Restart();
+	}
+}
+
+void UIDrawerResultScene::Result(float easingRate)
+{
+	blind->isInvisible = false;
+	resultRankSprite = Sprite::Create(rankUI[GetRank(score)]->tex->fileName);
+	resultRankSprite->anchorPoint = { 0.5f,0.5f };
+	resultRankSprite->SetCenterPos();
+	resultRankSprite->size *= 4.0f;
+	easingRate = 0;
+	if (Input::GetInstance()->IsTrigger(Key::Return))
+	{
+		blind->isInvisible = true;
+		RankAnimation = nullptr;
+	}
 }
 
 void UIDrawerResultScene::RankUpdate()
 {
-	enum class AnimationPhase { None, Disappear, Appear };
-
-	if (preRank != GetRank(printScore)) { isRankAnimation = (UINT16)AnimationPhase::Disappear; }
-
-	if (isRankAnimation)
-	{
-		// アニメーションするランクUIのペア
-		std::map<Rank, Rank> animationPair;
-		animationPair[Rank::B] = Rank::C;
-		animationPair[Rank::A] = Rank::B;
-		animationPair[Rank::S] = Rank::A;
-
-		float easingNum = rankSpriteEasing.Update(); // イージング値
-		Rank printRank = GetRank(printScore); // 表示ランク
-		Rank prePrintRank = animationPair[printRank]; // 前の表示ランク
-		// 透過アニメーション
-		if (isRankAnimation == (UINT16)AnimationPhase::Disappear) { rankUI[prePrintRank]->color.a = 1.0f - easingNum; } // 透明に
-		if (isRankAnimation == (UINT16)AnimationPhase::Appear) { rankUI[printRank]->color.a = easingNum; } // 濃く
-		// アニメーション終了
-		if (easingNum == 1.0f)
-		{
-			if (isRankAnimation == (UINT16)AnimationPhase::Disappear)
-			{
-				isRankAnimation = (UINT16)AnimationPhase::Appear;
-				rankUI[prePrintRank]->isInvisible = true;
-				rankSpriteEasing.Restart();
-			}
-			else if (isRankAnimation == (UINT16)AnimationPhase::Appear)
-			{
-				isRankAnimation = (UINT16)AnimationPhase::None;
-				rankSpriteEasing.Restart();
-			}
-		}
-	}
+	// ランク表示UIのアニメーション
+	if (RankAnimation) { (this->*RankAnimation)(rankSpriteFade.Update()); }
 
 	// 各変数の更新
 	preRank = GetRank(printScore);
 	for (auto& s : rankGaugeSplit) { s.second->Update(); }
 	for (auto& s : rankUI) { s.second->Update(); }
+	if (blind->isInvisible) { return; }
+	blind->Update();
+	resultRankSprite->Update();
 }
 
 void UIDrawerResultScene::Update()
@@ -178,12 +209,15 @@ void UIDrawerResultScene::Update()
 
 void UIDrawerResultScene::Draw()
 {
+	rankGauge->Draw();
+	rankGaugeBG->Draw();
 	for (auto& s : rankGaugeSplit) { s.second->Draw(); }
 	for (auto& s : rankUI) { s.second->Draw(); }
-	rankGaugeBG->Draw();
-	rankGauge->Draw();
 	printScoreUI.Draw();
 	scoreUI->Draw();
+	if (blind->isInvisible) { return; }
+	blind->Draw();
+	resultRankSprite->Draw();
 }
 
 UIDrawerResultScene::Rank UIDrawerResultScene::GetRank(int score_)
