@@ -104,7 +104,7 @@ void UIDrawerGameScene::Initialize()
 	*scoreSprite.GetBitMapProp() = bitMapProp;
 	scoreSprite.Initialize();
 	uiScore = Sprite::Create("ui/score.png");
-	uiScore->anchorPoint = { 0.5f,0.5f };
+	uiScore->SetCenterAnchor();
 	uiScore->position = { 1160,70 };
 	uiScore->Update();
 
@@ -122,15 +122,15 @@ void UIDrawerGameScene::Initialize()
 	timeDecSprite.Initialize();
 	// 時計アイコン
 	uiClock = Sprite::Create("ui/clock.png");
-	uiClock->anchorPoint = { 0.5f,0.5f };
+	uiClock->SetCenterAnchor();
 	uiClock->position = { 112.5f,54 };
 	uiClock->Update();
 
 	// カウントダウンUI
 	countDown = StartCountDown::Create();
 	uiGo = Sprite::Create("ui/GO.png");
-	uiGo->anchorPoint = { 0.5f,0.5f };
-	uiGo->position = WindowsAPI::WIN_SIZE / 2.0f;
+	uiGo->SetCenterAnchor();
+	uiGo->position = Half(WindowsAPI::WIN_SIZE);
 	uiGo->isInvisible = true; // 透明
 	const int GO_EASING_DEC = 4;
 	uiGoEasing.Initialize(StartCountDown::GetFPS() / GO_EASING_DEC, Easing::Type::Sqrt);

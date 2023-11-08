@@ -8,7 +8,7 @@ void TitleScene::Initialize()
 	ui = Sprite::Create("ui/title_JP.png");
 	ui->position = Half(WindowsAPI::WIN_SIZE);
 	ui->position.y -= 100;
-	ui->anchorPoint = { 0.5f,0.5f };
+	ui->SetCenterAnchor();
 	ui->size *= 1.5f;
 	ui->Update();
 	debugCamera.Initialize();
@@ -23,7 +23,7 @@ void TitleScene::Initialize()
 	spaceKeySprite->position = Half(WindowsAPI::WIN_SIZE);
 	spaceKeySprite->position.y += 100;
 	spaceKeySprite->size *= 1.5f;
-	spaceKeySprite->anchorPoint = { 0.5f,0.5f };
+	spaceKeySprite->SetCenterAnchor();
 }
 
 void TitleScene::Update()

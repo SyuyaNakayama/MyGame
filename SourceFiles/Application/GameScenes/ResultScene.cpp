@@ -17,7 +17,7 @@ void ResultScene::Update()
 {
 	if (input->IsTrigger(Key::Space))
 	{
-		sceneManager->ChangeScene(Scene::Result);
+		sceneManager->ChangeScene(Scene::Title);
 		Stage::ResetScore();
 	}
 
@@ -44,7 +44,7 @@ void UIDrawerResultScene::ScoreInitialize()
 	printScoreUI.Initialize();
 
 	scoreUI = Sprite::Create("ui/score.png");
-	scoreUI->anchorPoint = { 0.5f,0.5f };
+	scoreUI->SetCenterAnchor();
 	scoreUI->position.y = 240;
 }
 
@@ -59,7 +59,7 @@ void UIDrawerResultScene::RankInitialize()
 	// ƒ‰ƒ“ƒNƒQ[ƒW
 	rankGauge = Sprite::Create("ui/RankGauge.png");
 	rankGauge->position = Half(WindowsAPI::WIN_SIZE);
-	rankGauge->anchorPoint = { 0.5f,0.5f };
+	rankGauge->SetCenterAnchor();
 	rankGauge->Update();
 
 	// ƒ‰ƒ“ƒNƒQ[ƒW”wŒi
@@ -75,7 +75,7 @@ void UIDrawerResultScene::RankInitialize()
 	rankGaugeSplit[Rank::B] = Sprite::Create("white1x1.png");
 	for (auto& s : rankGaugeSplit)
 	{
-		s.second->anchorPoint = { 0.5f,0.5f };
+		s.second->SetCenterAnchor();
 		s.second->color = { 0,1,0,1 };
 		s.second->size = { 5,GAUGE_SIZE.y };
 		s.second->position = { ScoreToMoniter((int)s.first) + rankGaugeBG->position.x,rankGaugeBG->position.y };
@@ -174,7 +174,7 @@ void UIDrawerResultScene::Result(float easingRate)
 {
 	blind->isInvisible = false;
 	resultRankSprite = Sprite::Create(rankUI[GetRank(score)]->tex->fileName);
-	resultRankSprite->anchorPoint = { 0.5f,0.5f };
+	resultRankSprite->SetCenterAnchor();
 	resultRankSprite->SetCenterPos();
 	resultRankSprite->size *= 4.0f;
 	easingRate = 0;
