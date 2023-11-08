@@ -27,14 +27,11 @@ enum class Rank
 // ランクを取得
 Rank GetRank(int score);
 
-// UI描画クラス(リザルトシーン用)
-class UIDrawerResultScene : public AbstractUIDrawer
+class ScoreGauge
 {
 private:
-	// ランクと点数
-	const Vector2 GAUGE_SIZE = { 641,40 };
+	const Vector2 GAUGE_SIZE = { 641,40 }; // ランクと点数
 	const int GAUGE_INC_SPD = 15; // ゲージ上昇速度
-	const int RANK_ANIMATION_TIME = 10;
 
 	std::unique_ptr<Sprite> scoreUI;
 	int score = 0;
@@ -43,8 +40,30 @@ private:
 
 	std::unique_ptr<Sprite> rankGauge;
 	std::unique_ptr<Sprite> rankGaugeBG;
-	std::unique_ptr<Sprite> resultRankSprite;
 	std::map<Rank, std::unique_ptr<Sprite>> rankGaugeSplit;
+
+public:
+	// 初期化
+	void Initialize();
+	// 更新
+	void Update();
+	// 描画
+	void Draw();
+	// スコアをモニター座標に変換
+	float ScoreToMoniter(int score_) { return min((float)score_ * GAUGE_SIZE.x / (float)Rank::Max, GAUGE_SIZE.x); }
+	// 表示スコアのランクを取得
+	Rank GetPrintRank() { return GetRank(printScore); }
+	bool IsAnimationEnd() { return score == printScore; }
+};
+
+// UI描画クラス(リザルトシーン用)
+class UIDrawerResultScene : public AbstractUIDrawer
+{
+private:
+	const int RANK_ANIMATION_TIME = 10;
+	
+	ScoreGauge scoreGauge;
+	std::unique_ptr<Sprite> resultRankSprite;
 	std::map<Rank, std::unique_ptr<Sprite>> rankUI;
 	std::unique_ptr<Sprite> blind; // 画面を暗くする
 	Rank preRank;
@@ -52,12 +71,6 @@ private:
 	Easing rankSpriteScale;
 	Vector2 rankSpriteSizeMem;
 
-	// スコア表示関連の初期化
-	void ScoreInitialize();
-	// スコア表示関連の更新
-	void ScoreUpdate();
-	// スコアをモニター座標に変換
-	float ScoreToMoniter(int score_) { return min((float)score_ * GAUGE_SIZE.x / (float)Rank::Max, GAUGE_SIZE.x); }
 	// ランク表示関連の初期化
 	void RankInitialize();
 	// ランク表示関連の更新
