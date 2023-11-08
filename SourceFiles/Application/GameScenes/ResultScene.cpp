@@ -30,6 +30,14 @@ void ResultScene::Draw()
 }
 #pragma endregion
 
+Rank GetRank(int score)
+{
+	if (score >= (int)Rank::S) { return Rank::S; }
+	if (score >= (int)Rank::A) { return Rank::A; }
+	if (score >= (int)Rank::B) { return Rank::B; }
+	return Rank::C;
+}
+
 void UIDrawerResultScene::ScoreInitialize()
 {
 	// ƒXƒRƒA‚ğæ“¾
@@ -218,12 +226,4 @@ void UIDrawerResultScene::Draw()
 	if (blind->isInvisible) { return; }
 	blind->Draw();
 	resultRankSprite->Draw();
-}
-
-UIDrawerResultScene::Rank UIDrawerResultScene::GetRank(int score_)
-{
-	if (score_ >= (int)Rank::S) { return Rank::S; }
-	if (score_ >= (int)Rank::A) { return Rank::A; }
-	if (score_ >= (int)Rank::B) { return Rank::B; }
-	return Rank::C;
 }
