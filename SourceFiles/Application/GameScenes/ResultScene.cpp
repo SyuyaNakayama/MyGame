@@ -126,7 +126,7 @@ void UIDrawerResultScene::ScoreUpdate()
 	scoreUI->Update();
 }
 
-void UIDrawerResultScene::Disappear(float easingRate)
+void UIDrawerResultScene::Disappear()
 {
 	// アニメーションするランクUIのペア
 	std::map<Rank, Rank> animationPair;
@@ -137,6 +137,7 @@ void UIDrawerResultScene::Disappear(float easingRate)
 	Rank printRank = GetRank(printScore); // 表示ランク
 	Rank prePrintRank = animationPair[printRank]; // 前の表示ランク
 
+	float easingRate = rankSpriteFade.Update();
 	rankUI[prePrintRank]->color.a = Color::MAX - easingRate; // 透明に
 	// アニメーション終了
 	if (easingRate == Easing::MAX)
@@ -148,16 +149,16 @@ void UIDrawerResultScene::Disappear(float easingRate)
 	}
 }
 
-void UIDrawerResultScene::Judge(float easingRate)
+void UIDrawerResultScene::Judge()
 {
 	// ランクが変わったらランク表示UIのアニメーションをする
 	if (preRank != GetRank(printScore)) { RankAnimation = &UIDrawerResultScene::Disappear; }
 	if (score == printScore) { RankAnimation = &UIDrawerResultScene::Result; }
-	easingRate = 0;
 }
 
-void UIDrawerResultScene::Appear(float easingRate)
+void UIDrawerResultScene::Appear()
 {
+	float easingRate = rankSpriteFade.Update();
 	rankUI[GetRank(printScore)]->color.a = easingRate; // 濃く
 	const float SIZE_RATE = 3.0f;
 	rankUI[GetRank(printScore)]->size = rankSpriteSizeMem * (SIZE_RATE - (SIZE_RATE - 1.0f) * rankSpriteScale.Update());
@@ -170,14 +171,13 @@ void UIDrawerResultScene::Appear(float easingRate)
 	}
 }
 
-void UIDrawerResultScene::Result(float easingRate)
+void UIDrawerResultScene::Result()
 {
 	blind->isInvisible = false;
 	resultRankSprite = Sprite::Create(rankUI[GetRank(score)]->tex->fileName);
 	resultRankSprite->SetCenterAnchor();
 	resultRankSprite->SetCenterPos();
 	resultRankSprite->size *= 4.0f;
-	easingRate = 0;
 	if (Input::GetInstance()->IsTrigger(Key::Return))
 	{
 		blind->isInvisible = true;
@@ -188,7 +188,7 @@ void UIDrawerResultScene::Result(float easingRate)
 void UIDrawerResultScene::RankUpdate()
 {
 	// ランク表示UIのアニメーション
-	if (RankAnimation) { (this->*RankAnimation)(rankSpriteFade.Update()); }
+	if (RankAnimation) { (this->*RankAnimation)(); }
 
 	// 各変数の更新
 	preRank = GetRank(printScore);

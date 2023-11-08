@@ -50,15 +50,15 @@ private:
 	// ランク表示関連の更新
 	void RankUpdate();
 	// ランクアニメーションの関数ポインタ
-	void (UIDrawerResultScene::* RankAnimation)(float easingRate) = &UIDrawerResultScene::Judge;
+	void (UIDrawerResultScene::* RankAnimation)() = &UIDrawerResultScene::Judge;
 	// ランクとスコアの判定
-	void Judge(float easingRate);
+	void Judge();
 	// 消える
-	void Disappear(float easingRate);
+	void Disappear();
 	// 現れる
-	void Appear(float easingRate);
+	void Appear();
 	// 最終ランク発表
-	void Result(float easingRate);
+	void Result();
 	// ランクを取得
 	Rank GetRank(int score);
 
