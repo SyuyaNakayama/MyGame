@@ -99,6 +99,9 @@
     <Filter Include="ソース ファイル\Engine\Timer">
       <UniqueIdentifier>{8cd3b574-38f1-4ca3-a850-33bc03214952}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Application\GameScenes\ResultScene">
+      <UniqueIdentifier>{dc06b15a-80ab-44f4-b99b-fa55e541aea4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Sprite.hlsli">
@@ -279,9 +282,6 @@
     <ClCompile Include="SourceFiles\Application\Stage\SpawnObject.cpp">
       <Filter>ソース ファイル\Application\Stage</Filter>
     </ClCompile>
-    <ClCompile Include="SourceFiles\Application\GameScenes\ResultScene.cpp">
-      <Filter>ソース ファイル\Application\GameScenes</Filter>
-    </ClCompile>
     <ClCompile Include="SourceFiles\Application\GameScenes\TitleScene.cpp">
       <Filter>ソース ファイル\Application\GameScenes</Filter>
     </ClCompile>
@@ -320,6 +320,15 @@
     </ClCompile>
     <ClCompile Include="SourceFiles\Engine\2d\TextureConverter.cpp">
       <Filter>ソース ファイル\Engine\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\GameScenes\RankAnimation.cpp">
+      <Filter>ソース ファイル\Application\GameScenes\ResultScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\GameScenes\ResultScene.cpp">
+      <Filter>ソース ファイル\Application\GameScenes\ResultScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\GameScenes\ScoreGauge.cpp">
+      <Filter>ソース ファイル\Application\GameScenes\ResultScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -461,9 +470,6 @@
     <ClInclude Include="SourceFiles\Application\Stage\SpawnObject.h">
       <Filter>ソース ファイル\Application\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\Application\GameScenes\ResultScene.h">
-      <Filter>ソース ファイル\Application\GameScenes</Filter>
-    </ClInclude>
     <ClInclude Include="SourceFiles\Application\GameScenes\TitleScene.h">
       <Filter>ソース ファイル\Application\GameScenes</Filter>
     </ClInclude>
@@ -511,6 +517,15 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\2d\TextureConverter.h">
       <Filter>ソース ファイル\Engine\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\GameScenes\RankAnimation.h">
+      <Filter>ソース ファイル\Application\GameScenes\ResultScene</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\GameScenes\ResultScene.h">
+      <Filter>ソース ファイル\Application\GameScenes\ResultScene</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\GameScenes\ScoreGauge.h">
+      <Filter>ソース ファイル\Application\GameScenes\ResultScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -167,6 +167,8 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SourceFiles\Application\GameScenes\RankAnimation.cpp" />
+    <ClCompile Include="SourceFiles\Application\GameScenes\ScoreGauge.cpp" />
     <ClCompile Include="SourceFiles\Engine\2d\BitMapNumber.cpp" />
     <ClCompile Include="SourceFiles\Engine\2d\TextureConverter.cpp" />
     <ClCompile Include="SourceFiles\Engine\3d\Object\Object3d.cpp" />
@@ -225,6 +227,8 @@
     <ClCompile Include="SourceFiles\Application\Stage\Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SourceFiles\Application\GameScenes\RankAnimation.h" />
+    <ClInclude Include="SourceFiles\Application\GameScenes\ScoreGauge.h" />
     <ClInclude Include="SourceFiles\Engine\2d\AbstractUIDrawer.h" />
     <ClInclude Include="SourceFiles\Engine\2d\BitMapNumber.h" />
     <ClInclude Include="SourceFiles\Engine\2d\TextureConverter.h" />
