@@ -52,17 +52,16 @@ public:
 	// スコアをモニター座標に変換
 	float ScoreToMoniter(int score_) { return min((float)score_ * GAUGE_SIZE.x / (float)Rank::Max, GAUGE_SIZE.x); }
 	// 表示スコアのランクを取得
-	Rank GetPrintRank() { return GetRank(printScore); }
-	bool IsAnimationEnd() { return score == printScore; }
+	Rank GetPrintRank() const { return GetRank(printScore); }
+	// アニメーションの終わりを取得
+	bool IsAnimationEnd() const { return score == printScore; }
 };
 
-// UI描画クラス(リザルトシーン用)
-class UIDrawerResultScene : public AbstractUIDrawer
+class RankAnimation
 {
 private:
 	const int RANK_ANIMATION_TIME = 10;
-	
-	ScoreGauge scoreGauge;
+
 	std::unique_ptr<Sprite> resultRankSprite;
 	std::map<Rank, std::unique_ptr<Sprite>> rankUI;
 	std::unique_ptr<Sprite> blind; // 画面を暗くする
@@ -70,13 +69,10 @@ private:
 	Easing rankSpriteFade;
 	Easing rankSpriteScale;
 	Vector2 rankSpriteSizeMem;
+	const ScoreGauge* pScoreGauge;
 
-	// ランク表示関連の初期化
-	void RankInitialize();
-	// ランク表示関連の更新
-	void RankUpdate();
 	// ランクアニメーションの関数ポインタ
-	void (UIDrawerResultScene::* RankAnimation)() = &UIDrawerResultScene::Judge;
+	void (RankAnimation::* Animation)() = &RankAnimation::Judge;
 	// ランクとスコアの判定
 	void Judge();
 	// 消える
@@ -85,6 +81,22 @@ private:
 	void Appear();
 	// 最終ランク発表
 	void Result();
+
+public:
+	// 初期化
+	void Initialize(const ScoreGauge* pScoreGauge);
+	// 更新
+	void Update();
+	// 描画
+	void Draw();
+};
+
+// UI描画クラス(リザルトシーン用)
+class UIDrawerResultScene : public AbstractUIDrawer
+{
+private:
+	ScoreGauge scoreGauge; 
+	RankAnimation rankAnimation;
 
 public:
 	// 初期化(オーバーライド)
