@@ -2,6 +2,54 @@
 #include "ScoreGauge.h"
 #include "Easing.h"
 
+// ランクアニメーション基底クラス
+class BaseAnimation
+{
+public:
+	// 初期化
+	virtual void Initialize() = 0;
+	// 更新
+	virtual void Update() = 0;
+	// 描画
+	virtual void Draw() = 0;
+};
+
+// ランクとスコアの判定
+class JudgeAnimation : public BaseAnimation
+{
+	// BaseAnimation を介して継承されました
+	void Initialize() override;
+	void Update() override;
+	void Draw() override;
+};
+
+// 消える
+class DisappearAnimation : public BaseAnimation
+{
+	// BaseAnimation を介して継承されました
+	void Initialize() override;
+	void Update() override;
+	void Draw() override;
+};
+
+// 現れる
+class AppearAnimation : public BaseAnimation
+{
+	// BaseAnimation を介して継承されました
+	void Initialize() override;
+	void Update() override;
+	void Draw() override;
+};
+
+// 最終ランク発表
+class ResultAnimation : public BaseAnimation
+{
+	// BaseAnimation を介して継承されました
+	void Initialize() override;
+	void Update() override;
+	void Draw() override;
+};
+
 class RankAnimation
 {
 private:
@@ -18,13 +66,9 @@ private:
 
 	// ランクアニメーションの関数ポインタ
 	void (RankAnimation::* Animation)() = &RankAnimation::Judge;
-	// ランクとスコアの判定
 	void Judge();
-	// 消える
 	void Disappear();
-	// 現れる
 	void Appear();
-	// 最終ランク発表
 	void Result();
 
 public:

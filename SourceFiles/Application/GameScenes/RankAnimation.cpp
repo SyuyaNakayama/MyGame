@@ -109,3 +109,51 @@ void RankAnimation::Draw()
 	blind->Draw();
 	resultRankSprite->Draw();
 }
+
+void JudgeAnimation::Initialize()
+{
+}
+
+void JudgeAnimation::Update()
+{
+}
+
+void JudgeAnimation::Draw()
+{
+}
+
+void DisappearAnimation::Initialize()
+{
+}
+
+void DisappearAnimation::Update()
+{
+}
+
+void DisappearAnimation::Draw()
+{
+}
+
+void AppearAnimation::Initialize()
+{
+}
+
+void AppearAnimation::Update()
+{
+}
+
+void AppearAnimation::Draw()
+{
+}
+
+void ResultAnimation::Initialize()
+{
+}
+
+void ResultAnimation::Update()
+{
+}
+
+void ResultAnimation::Draw()
+{
+}
