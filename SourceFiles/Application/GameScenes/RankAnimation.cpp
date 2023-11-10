@@ -1,159 +1,195 @@
 #include "RankAnimation.h"
 #include "Input.h"
 
-void RankAnimation::Judge()
+void RankAnimation::ChangePhase()
 {
-	// ランクが変わったらランク表示UIのアニメーションをする
-	if (preRank != pScoreGauge->GetPrintRank()) { Animation = &RankAnimation::Disappear; }
-	// スコア上昇のアニメーションが終わったら最終ランク演出を出す
-	if (pScoreGauge->IsAnimationEnd()) { Animation = &RankAnimation::Result; }
-}
+	if (nextPhase == AnimationPhase::Null) { return; }
+	animation.release();
 
-void RankAnimation::Disappear()
-{
-	// アニメーションするランクUIのペア
-	std::map<Rank, Rank> animationPair;
-	animationPair[Rank::B] = Rank::C;
-	animationPair[Rank::A] = Rank::B;
-	animationPair[Rank::S] = Rank::A;
-
-	Rank printRank = pScoreGauge->GetPrintRank(); // 表示ランク
-	Rank prePrintRank = animationPair[printRank]; // 前の表示ランク
-
-	float easingRate = rankSpriteFade.Update();
-	rankUI[prePrintRank]->color.a = Color::MAX - easingRate; // 透明に
-	// アニメーション終了
-	if (easingRate == Easing::MAX)
+	switch (nextPhase)
 	{
-		Animation = &RankAnimation::Appear;
-		rankUI[prePrintRank]->isInvisible = true;
-		rankSpriteSizeMem = rankUI[printRank]->size;
-		rankSpriteFade.Restart();
+	case AnimationPhase::Judge:
+		animation = std::make_unique<JudgeAnimation>();
+		break;
+	case AnimationPhase::Disappear:
+		animation = std::make_unique<DisappearAnimation>();
+		break;
+	case AnimationPhase::Appear:
+		animation = std::make_unique<AppearAnimation>();
+		break;
+	case AnimationPhase::Result:
+		animation = std::make_unique<ResultAnimation>();
+		break;
+	case AnimationPhase::End:
+		animation = std::make_unique<AnimationEnd>();
+		break;
 	}
-}
-
-void RankAnimation::Appear()
-{
-	float easingRate = rankSpriteFade.Update();
-	rankUI[pScoreGauge->GetPrintRank()]->color.a = easingRate; // 濃く
-	const float SIZE_RATE = 3.0f;
-	rankUI[pScoreGauge->GetPrintRank()]->size = rankSpriteSizeMem * (SIZE_RATE - (SIZE_RATE - 1.0f) * rankSpriteScale.Update());
-	// アニメーション終了
-	if (easingRate == Easing::MAX)
-	{
-		Animation = &RankAnimation::Judge;
-		rankSpriteFade.Restart();
-		rankSpriteScale.Restart();
-	}
-}
-
-void RankAnimation::Result()
-{
-	blind->isInvisible = false;
-	resultRankSprite = Sprite::Create(rankUI[pScoreGauge->GetPrintRank()]->tex->fileName);
-	resultRankSprite->SetCenterAnchor();
-	resultRankSprite->SetCenterPos();
-	resultRankSprite->size *= 4.0f;
-	if (Input::GetInstance()->IsTrigger(Key::Return))
-	{
-		blind->isInvisible = true;
-		Animation = nullptr;
-	}
+	animation->Initialize(this);
+	nextPhase = AnimationPhase::Null;
 }
 
 void RankAnimation::Initialize(const ScoreGauge* pScoreGauge_)
 {
+	animation = std::make_unique<JudgeAnimation>();
 	pScoreGauge = pScoreGauge_;
+	animation->Initialize(this);
+}
+
+void RankAnimation::Update()
+{
+	ChangePhase();
+	// ランク表示UIのアニメーション
+	animation->Update();
+}
+
+void RankAnimation::Draw()
+{
+	animation->Draw();
+}
+
+void BaseAnimation::Initialize(RankAnimation* pRankAnimation_)
+{
+	pRankAnimation = pRankAnimation_;
+	pScoreGauge = pRankAnimation_->GetScoreGauge();
+	CreateRankUI(pScoreGauge->GetRank());
+}
+
+void BaseAnimation::CreateRankUI(Rank rank)
+{
+	switch (rank)
+	{
+	case Rank::Max:
+	case Rank::S:
+		rankUI = Sprite::Create("ui/Rank/RankS.png");
+		break;
+	case Rank::A:
+		rankUI = Sprite::Create("ui/Rank/RankA.png");
+		break;
+	case Rank::B:
+		rankUI = Sprite::Create("ui/Rank/RankB.png");
+		break;
+	case Rank::C:
+		rankUI = Sprite::Create("ui/Rank/RankC.png");
+		break;
+	}
+	rankUI->SetCenterAnchor();
+	rankUI->position = { 1030,Half(WindowsAPI::WIN_SIZE.y) };
+}
+
+void JudgeAnimation::Initialize(RankAnimation* pRankAnimation_)
+{
+	BaseAnimation::Initialize(pRankAnimation_);
+	preRank = pScoreGauge->GetRank();
+	rankUI->Update();
+}
+
+void JudgeAnimation::Update()
+{
+	// ランクが変わったらランク表示UIのアニメーションをする
+	if (preRank != pScoreGauge->GetRank()) { pRankAnimation->ReservePhase(AnimationPhase::Disappear); }
+	// スコア上昇のアニメーションが終わったら最終ランク演出を出す
+	if (pScoreGauge->IsAnimationEnd()) { pRankAnimation->ReservePhase(AnimationPhase::Result); }
+	preRank = pScoreGauge->GetRank();
+}
+
+void JudgeAnimation::Draw()
+{
+	rankUI->Draw();
+}
+
+void DisappearAnimation::Initialize(RankAnimation* pRankAnimation_)
+{
+	BaseAnimation::Initialize(pRankAnimation_);
+	rankUI.release();
+	CreateRankUI(pScoreGauge->GetPreRank());
+	rankSpriteFade.Initialize(RANK_ANIMATION_TIME, Easing::Type::Sqrt);
+	rankSpriteScale.Initialize(RANK_ANIMATION_TIME, Easing::Type::OutBounce);
+}
+
+void DisappearAnimation::Update()
+{
+	float easingRate = rankSpriteFade.Update();
+	rankUI->color.a = Color::MAX - easingRate; // 透明に
+	// アニメーション終了
+	if (easingRate == Easing::MAX)
+	{
+		pRankAnimation->ReservePhase(AnimationPhase::Appear);
+		rankUI->isInvisible = true;
+		rankSpriteFade.Restart();
+	}
+
+	rankUI->Update();
+}
+
+void DisappearAnimation::Draw()
+{
+	rankUI->Draw();
+}
+
+void AppearAnimation::Initialize(RankAnimation* pRankAnimation_)
+{
+	BaseAnimation::Initialize(pRankAnimation_);
+	rankSpriteFade.Initialize(RANK_ANIMATION_TIME, Easing::Type::Sqrt);
+	rankSpriteScale.Initialize(RANK_ANIMATION_TIME, Easing::Type::OutBounce);
+	rankSpriteSizeMem = rankUI->size;
+}
+
+void AppearAnimation::Update()
+{
+	float easingRate = rankSpriteFade.Update();
+	rankUI->color.a = easingRate; // 濃く
+	const float SIZE_RATE = 3.0f;
+	rankUI->size = rankSpriteSizeMem * (SIZE_RATE - (SIZE_RATE - 1.0f) * rankSpriteScale.Update());
+	// アニメーション終了
+	if (easingRate == Easing::MAX)
+	{
+		pRankAnimation->ReservePhase(AnimationPhase::Judge);
+		rankSpriteFade.Restart();
+		rankSpriteScale.Restart();
+	}
+
+	rankUI->Update();
+}
+
+void AppearAnimation::Draw()
+{
+	rankUI->Draw();
+}
+
+void ResultAnimation::Initialize(RankAnimation* pRankAnimation_)
+{
+	BaseAnimation::Initialize(pRankAnimation_);
+	rankUI->Update();
 
 	// ランク発表時に背景を暗くするためのスプライト
 	blind = Sprite::Create("white1x1.png");
 	blind->size = WindowsAPI::WIN_SIZE;
 	blind->color = { 0,0,0,0.5f };
-	blind->isInvisible = true;
-
-	// ランク表示のUI
-	rankUI[Rank::S] = Sprite::Create("ui/Rank/RankS.png");
-	rankUI[Rank::A] = Sprite::Create("ui/Rank/RankA.png");
-	rankUI[Rank::B] = Sprite::Create("ui/Rank/RankB.png");
-	rankUI[Rank::C] = Sprite::Create("ui/Rank/RankC.png");
-	for (auto& s : rankUI)
-	{
-		s.second->SetCenterAnchor();
-		s.second->position = { 1030,Half(WindowsAPI::WIN_SIZE.y) };
-		s.second->color.a = 0.0f;
-	}
-	rankUI[Rank::C]->color.a = Color::MAX;
-
-	rankSpriteFade.Initialize(RANK_ANIMATION_TIME, Easing::Type::Sqrt);
-	rankSpriteScale.Initialize(RANK_ANIMATION_TIME, Easing::Type::OutBounce);
-	preRank = pScoreGauge->GetPrintRank();
-}
-
-void RankAnimation::Update()
-{
-	// ランク表示UIのアニメーション
-	if (Animation) { (this->*Animation)(); }
-
-	// 各変数の更新
-	preRank = pScoreGauge->GetPrintRank();
-	for (auto& s : rankUI) { s.second->Update(); }
-	if (blind->isInvisible) { return; }
-	blind->Update();
-	resultRankSprite->Update();
-}
-
-void RankAnimation::Draw()
-{
-	for (auto& s : rankUI) { s.second->Draw(); }
-	if (blind->isInvisible) { return; }
-	blind->Draw();
-	resultRankSprite->Draw();
-}
-
-void JudgeAnimation::Initialize()
-{
-}
-
-void JudgeAnimation::Update()
-{
-}
-
-void JudgeAnimation::Draw()
-{
-}
-
-void DisappearAnimation::Initialize()
-{
-}
-
-void DisappearAnimation::Update()
-{
-}
-
-void DisappearAnimation::Draw()
-{
-}
-
-void AppearAnimation::Initialize()
-{
-}
-
-void AppearAnimation::Update()
-{
-}
-
-void AppearAnimation::Draw()
-{
-}
-
-void ResultAnimation::Initialize()
-{
 }
 
 void ResultAnimation::Update()
 {
+	resultRankSprite = Sprite::Create(rankUI->tex->fileName);
+	resultRankSprite->SetCenterAnchor();
+	resultRankSprite->SetCenterPos();
+	resultRankSprite->size *= 4.0f;
+	blind->Update();
+	resultRankSprite->Update();
+	if (Input::GetInstance()->IsTrigger(Key::Return))
+	{
+		pRankAnimation->ReservePhase(AnimationPhase::End);
+	}
 }
 
 void ResultAnimation::Draw()
 {
+	rankUI->Draw();
+	blind->Draw();
+	resultRankSprite->Draw();
+}
+
+void AnimationEnd::Initialize(RankAnimation* pRankAnimation_)
+{
+	BaseAnimation::Initialize(pRankAnimation_);
+	rankUI->Update();
 }

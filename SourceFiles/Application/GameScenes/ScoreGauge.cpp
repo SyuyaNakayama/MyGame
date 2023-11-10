@@ -1,10 +1,26 @@
 #include "ScoreGauge.h"
 
-Rank GetRank(int score)
+Rank ScoreGauge::GetRank() const
 {
-	if (score >= (int)Rank::S) { return Rank::S; }
-	if (score >= (int)Rank::A) { return Rank::A; }
-	if (score >= (int)Rank::B) { return Rank::B; }
+	if (printScore >= (int)Rank::S) { return Rank::S; }
+	if (printScore >= (int)Rank::A) { return Rank::A; }
+	if (printScore >= (int)Rank::B) { return Rank::B; }
+	return Rank::C;
+}
+
+Rank ScoreGauge::GetPreRank() const
+{
+	switch (GetRank())
+	{
+	case Rank::Max:
+	case Rank::S:
+		return Rank::A;
+	case Rank::A:
+		return Rank::B;
+	case Rank::B:
+	case Rank::C:
+		return Rank::C;
+	}
 	return Rank::C;
 }
 

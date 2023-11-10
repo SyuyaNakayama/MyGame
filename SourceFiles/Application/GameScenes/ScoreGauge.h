@@ -11,9 +11,7 @@ enum class Rank
 	C = Max * 0 / 10
 };
 
-// ランクを取得
-Rank GetRank(int score);
-
+// スコアゲージ処理
 class ScoreGauge
 {
 private:
@@ -38,8 +36,10 @@ public:
 	void Draw();
 	// スコアをモニター座標に変換
 	float ScoreToMoniter(int score_) { return min((float)score_ * GAUGE_SIZE.x / (float)Rank::Max, GAUGE_SIZE.x); }
-	// 表示スコアのランクを取得
-	Rank GetPrintRank() const { return GetRank(printScore); }
+	// ランクを取得
+	Rank GetRank() const;
+	// 前のランクを取得
+	Rank GetPreRank() const;
 	// アニメーションの終わりを取得
 	bool IsAnimationEnd() const { return score == printScore; }
 };
