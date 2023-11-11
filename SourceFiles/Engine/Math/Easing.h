@@ -46,4 +46,7 @@ public:
 
 	// リスタート
 	void Restart() { timer = timer.GetInterval(); isFinish = false; }
+
+	// 終了したか
+	bool IsFinish() { return isFinish; }
 };

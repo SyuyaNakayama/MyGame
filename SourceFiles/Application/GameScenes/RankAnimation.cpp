@@ -92,38 +92,20 @@ void JudgeAnimation::Update()
 	preRank = pScoreGauge->GetRank();
 }
 
-void JudgeAnimation::Draw()
-{
-	rankUI->Draw();
-}
-
 void DisappearAnimation::Initialize(RankAnimation* pRankAnimation_)
 {
 	BaseAnimation::Initialize(pRankAnimation_);
 	rankUI.release();
 	CreateRankUI(pScoreGauge->GetPreRank());
 	rankSpriteFade.Initialize(RANK_ANIMATION_TIME, Easing::Type::Sqrt);
-	rankSpriteScale.Initialize(RANK_ANIMATION_TIME, Easing::Type::OutBounce);
 }
 
 void DisappearAnimation::Update()
 {
-	float easingRate = rankSpriteFade.Update();
-	rankUI->color.a = Color::MAX - easingRate; // 透明に
+	rankUI->color.a = Color::MAX - rankSpriteFade.Update(); // 透明に
 	// アニメーション終了
-	if (easingRate == Easing::MAX)
-	{
-		pRankAnimation->ReservePhase(AnimationPhase::Appear);
-		rankUI->isInvisible = true;
-		rankSpriteFade.Restart();
-	}
-
+	if (rankSpriteFade.IsFinish()) { pRankAnimation->ReservePhase(AnimationPhase::Appear); }
 	rankUI->Update();
-}
-
-void DisappearAnimation::Draw()
-{
-	rankUI->Draw();
 }
 
 void AppearAnimation::Initialize(RankAnimation* pRankAnimation_)
@@ -136,24 +118,12 @@ void AppearAnimation::Initialize(RankAnimation* pRankAnimation_)
 
 void AppearAnimation::Update()
 {
-	float easingRate = rankSpriteFade.Update();
-	rankUI->color.a = easingRate; // 濃く
+	rankUI->color.a = rankSpriteFade.Update(); // 濃く
 	const float SIZE_RATE = 3.0f;
 	rankUI->size = rankSpriteSizeMem * (SIZE_RATE - (SIZE_RATE - 1.0f) * rankSpriteScale.Update());
 	// アニメーション終了
-	if (easingRate == Easing::MAX)
-	{
-		pRankAnimation->ReservePhase(AnimationPhase::Judge);
-		rankSpriteFade.Restart();
-		rankSpriteScale.Restart();
-	}
-
+	if (rankSpriteFade.IsFinish()) { pRankAnimation->ReservePhase(AnimationPhase::Judge); }
 	rankUI->Update();
-}
-
-void AppearAnimation::Draw()
-{
-	rankUI->Draw();
 }
 
 void ResultAnimation::Initialize(RankAnimation* pRankAnimation_)

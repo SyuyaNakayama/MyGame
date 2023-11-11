@@ -23,7 +23,7 @@ public:
 	// 更新
 	virtual void Update() = 0;
 	// 描画
-	virtual void Draw() = 0;
+	virtual void Draw() { rankUI->Draw(); }
 	// ランクスプライトの生成
 	void CreateRankUI(Rank rank);
 };
@@ -36,19 +36,16 @@ class JudgeAnimation : public BaseAnimation
 	// BaseAnimation を介して継承されました
 	void Initialize(RankAnimation* pRankAnimation) override;
 	void Update() override;
-	void Draw() override;
 };
 
 // 消える
 class DisappearAnimation : public BaseAnimation
 {
 	Easing rankSpriteFade;
-	Easing rankSpriteScale;
 
 	// BaseAnimation を介して継承されました
 	void Initialize(RankAnimation* pRankAnimation) override;
 	void Update() override;
-	void Draw() override;
 };
 
 // 現れる
@@ -61,7 +58,6 @@ class AppearAnimation : public BaseAnimation
 	// BaseAnimation を介して継承されました
 	void Initialize(RankAnimation* pRankAnimation) override;
 	void Update() override;
-	void Draw() override;
 };
 
 // 最終ランク発表
@@ -82,7 +78,6 @@ class AnimationEnd : public BaseAnimation
 	// BaseAnimation を介して継承されました
 	void Initialize(RankAnimation* pRankAnimation) override;
 	void Update() override {};
-	void Draw() override { rankUI->Draw(); };
 };
 
 // ランクUIのアニメーション
