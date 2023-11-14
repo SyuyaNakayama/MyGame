@@ -7,10 +7,8 @@ class SpawnObject : public BaseSpawnPoint, public GameObject
 {
 	static std::list<std::unique_ptr<GameObject>>* objects;
 	ObjectData objectData;
-	Angle spawnPosAngle = 0;
 	Vector3 initialPos;
-	float distance = 100;
-	static const int SPAWN_MAX = 30;
+	static const int SPAWN_MAX = 300;
 
 public:
 	/// <summary>

@@ -19,6 +19,7 @@ void Player::Initialize(const ObjectData& objectData)
 	collisionMask = CollisionMask::Player;
 	physics->SetMu(0.23f);
 	physics->SetVelocity({});
+	physics->SetForce(0);
 	if (SceneManager::GetInstance()->GetNowScene() == Scene::Play) { Move = &Player::Move_Play; }
 }
 

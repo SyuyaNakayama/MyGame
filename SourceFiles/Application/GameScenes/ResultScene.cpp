@@ -23,11 +23,6 @@ void ResultScene::Update()
 	uiDrawer->Update();
 }
 
-void ResultScene::Draw()
-{
-	uiDrawer->Draw();
-}
-
 void UIDrawerResultScene::Initialize()
 {
 	// スコア表示関連の初期化

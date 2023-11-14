@@ -35,16 +35,15 @@ void GamePlayScene::Update()
 	stage.Update();
 
 	// ゲーム終了時にリザルト画面へ飛ぶ
-	if (stage.IsFinished() /*|| input->IsTrigger(Key::Space)*/)
+	if (stage.IsFinished())
 	{
 		sceneManager->ChangeScene(Scene::Result);
-		ModelManager::ClearObjects();
 	}
-}
 
-void GamePlayScene::Draw()
-{
-	uiDrawer->Draw();
+	if (input->IsTrigger(Key::Space))
+	{
+		sceneManager->ChangeScene(Scene::Title);
+	}
 }
 
 std::unique_ptr<StartCountDown> StartCountDown::Create()

@@ -4,7 +4,7 @@
 
 enum class Rank
 {
-	Max = 3000,
+	Max = 500,
 	S = Max * 9 / 10,
 	A = Max * 7 / 10,
 	B = Max * 5 / 10,
@@ -16,7 +16,7 @@ class ScoreGauge
 {
 private:
 	const Vector2 GAUGE_SIZE = { 641,40 }; // ランクと点数
-	const int GAUGE_INC_SPD = 15; // ゲージ上昇速度
+	const int GAUGE_INC_SPD = 3; // ゲージ上昇速度
 
 	std::unique_ptr<Sprite> scoreUI;
 	int score = 0;

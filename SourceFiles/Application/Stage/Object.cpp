@@ -2,6 +2,7 @@
 #include "ModelManager.h"
 #include <imgui.h>
 #include "ParticleManager.h"
+#include "Stage.h"
 
 int Object::instanceNum = 0;
 
@@ -16,19 +17,15 @@ void Object::Initialize(const ObjectData& objectData)
 	collisionMask = CollisionMask::Object;
 	physics = Physics::Create(worldTransform);
 	physics->SetMass(0.5f);
-	physics->SetMu(0.01f);
+	physics->SetMu(0.05f);
 	physics->SetIsFreeFall(true);
 }
 
 void Object::Update()
 {
-	if (!isGoal)
-	{
-		physics->Update();
-		if (worldTransform->GetWorldPosition().y < 0.0f) { Destroy(); }
-		if (worldTransform->GetWorldPosition().y > 45.0f) { Destroy(); }
-		return;
-	}
+	// —Ž‰ºŒã‚ÌYŽ²ŒÅ’è‰»
+	if (!physics->IsFreeFall()) { worldTransform->translation.y = Stage::GROUND_POS_Y; }
+	if (!isGoal) { physics->Update(); return; }
 	const float DISSOLVE_POW_INC = 0.05f;
 	dissolvePow += DISSOLVE_POW_INC;
 	object->material.SetDissolvePow(dissolvePow);

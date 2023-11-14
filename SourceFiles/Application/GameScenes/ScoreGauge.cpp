@@ -1,4 +1,5 @@
 #include "ScoreGauge.h"
+#include "Stage.h"
 
 Rank ScoreGauge::GetRank() const
 {
@@ -27,8 +28,7 @@ Rank ScoreGauge::GetPreRank() const
 void ScoreGauge::Initialize()
 {
 	// ƒXƒRƒA‚ðŽæ“¾
-	//score = Stage::GetScore();
-	score = 3000;
+	score = Stage::GetScore();
 
 	scoreUI = Sprite::Create("ui/score.png");
 	scoreUI->SetCenterAnchor();

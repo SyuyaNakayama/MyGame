@@ -13,8 +13,10 @@ void SpriteAnimation::Initialize(const std::string& textureName, size_t spriteWi
 
 void SpriteAnimation::Update()
 {
-	if (!interval.Update()) { return; }
-	if (++animeNum >= animeNumMax) { animeNum = 0; }
-	sprite->textureLeftTop = { (float)animeNum * width ,0 };
+	if (interval.Update())
+	{
+		if (++animeNum >= animeNumMax) { animeNum = 0; }
+		sprite->textureLeftTop = { (float)animeNum * width ,0 };
+	}
 	sprite->Update();
 }

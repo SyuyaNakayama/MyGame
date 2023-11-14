@@ -85,6 +85,4 @@ private:
 	void Initialize();
 	// 更新(オーバーライド)
 	void Update();
-	// 描画(オーバーライド)
-	void Draw();
 };

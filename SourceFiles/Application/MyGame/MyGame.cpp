@@ -3,12 +3,13 @@
 #include "ImGuiManager.h"
 #include "AudioManager.h"
 #include "CollisionManager.h"
+#include "ParticleManager.h"
 
 void MyGame::Initialize()
 {
 	windowName = L"クアッドホッケー";
 	Framework::Initialize();
-	sceneManager->ChangeScene(Scene::Result, false);
+	sceneManager->ChangeScene(Scene::Title, false, false, false);
 	ModelManager::Initialize();
 	ParticleManager::Initialize();
 	ParticleManager::AddParticleGroup("Fire.png");

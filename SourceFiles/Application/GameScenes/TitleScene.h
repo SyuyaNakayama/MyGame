@@ -6,15 +6,22 @@
 // タイトルシーンの処理
 class TitleScene : public BaseScene
 {
-	std::unique_ptr<Sprite> ui;
 	Stage stage;
 	ViewProjection camera;
-	SpriteAnimation spaceKeyUI;
 
 	// 初期化(オーバーライド)
 	void Initialize();
 	// 更新(オーバーライド)
 	void Update();
-	// 描画(オーバーライド)
-	void Draw();
+};
+
+class UIDrawerTitleScene : public AbstractUIDrawer
+{
+	std::map<std::string, std::unique_ptr<Sprite>> title;
+	SpriteAnimation spaceKey;
+
+	// AbstractUIDrawer を介して継承されました
+	void Initialize() override;
+	void Update() override;
+	void Draw() override;
 };

@@ -38,7 +38,7 @@ public:
 	std::array<int, 2> GetRemainTime();
 	static int GetScore() { return score; }
 	// スコアリセット
-	static void ResetScore() { score = 4649; }
+	static void ResetScore() { score = 0; }
 	// タイムリセット
 	void ResetTime() { stageTime = STAGE_TIME * fps; }
 };

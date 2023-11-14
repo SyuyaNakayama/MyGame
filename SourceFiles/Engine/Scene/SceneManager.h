@@ -12,6 +12,7 @@ private:
 	Scene nextScene = Scene::Null;
 	FadeManager fadeManager;
 	AbstractSceneFactory* sceneFactory = SceneFactory::GetInstance();
+	bool isObjectClear = false, isParticleClear = false;
 
 	SceneManager() = default;
 	~SceneManager() = default;
@@ -30,7 +31,7 @@ public:
 	// 終了
 	void Finalize() { scene->Finalize(); }
 	// シーン切り替え
-	void ChangeScene(Scene nextScene_, bool isUseFade = true);
+	void ChangeScene(Scene nextScene_, bool isObjectClear = true, bool isParticleClear = true, bool isUseFade = true);
 	// 現在のシーン取得
 	Scene GetNowScene() { return nowScene; }
 };

@@ -24,7 +24,7 @@ public:
 	// çXêV
 	virtual void Update() = 0;
 	// ï`âÊ
-	virtual void Draw() = 0;
+	virtual void Draw() { uiDrawer->Draw(); }
 	// èIóπ
-	virtual void Finalize() {};
+	virtual void Finalize() {}
 };

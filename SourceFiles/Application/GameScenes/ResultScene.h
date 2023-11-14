@@ -9,10 +9,7 @@ class ResultScene : public BaseScene
 	void Initialize();
 	// 更新(オーバーライド)
 	void Update();
-	// 描画(オーバーライド)
-	void Draw();
 };
-
 
 // UI描画クラス(リザルトシーン用)
 class UIDrawerResultScene : public AbstractUIDrawer

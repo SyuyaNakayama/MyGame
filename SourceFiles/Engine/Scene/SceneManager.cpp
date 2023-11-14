@@ -1,5 +1,7 @@
 #include "SceneManager.h"
 #include "Sprite.h"
+#include "ModelManager.h"
+#include "ParticleManager.h"
 
 BaseScene::BaseScene() { sceneManager = SceneManager::GetInstance(); }
 
@@ -31,13 +33,23 @@ void SceneManager::Update()
 		scene = sceneFactory->CreateScene(nextScene);
 		nowScene = nextScene;
 		nextScene = Scene::Null;
-		scene->Initialize();
-	}
 
-	if (!fadeManager.IsFade())
-	{
+		if (isObjectClear)
+		{
+			ModelManager::ClearObjects();
+			isObjectClear = false;
+		}
+		if (isParticleClear)
+		{
+			ParticleManager::Clear();
+			isParticleClear = false;
+		}
+
+		scene->Initialize();
 		scene->Update();
 	}
+
+	if (!fadeManager.IsFade()) { scene->Update(); }
 }
 
 void SceneManager::Draw()
@@ -50,8 +62,10 @@ void SceneManager::Draw()
 	}
 }
 
-void SceneManager::ChangeScene(Scene nextScene_, bool isUseFade)
+void SceneManager::ChangeScene(Scene nextScene_, bool isObjectClear_, bool isParticleClear_, bool isUseFade)
 {
 	nextScene = nextScene_;
+	isObjectClear = isObjectClear_;
+	isParticleClear = isParticleClear_;
 	if (isUseFade) { fadeManager.FadeScene(); }
 }
