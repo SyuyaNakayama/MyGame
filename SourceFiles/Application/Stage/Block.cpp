@@ -2,6 +2,26 @@
 #include "Stage.h"
 #include "ParticleManager.h"
 
+std::map<Goal::Score, std::string> Goal::SCORE_TEX_NAME =
+{
+	{ Score::_M10,"Textures/score-10.png" },
+	{ Score::_10, "Textures/score10.png" },
+	{ Score::_20, "Textures/score20.png" },
+	{ Score::_30, "Textures/score30.png" },
+	{ Score::_50, "Textures/score50.png" }
+};
+
+const std::vector<Goal::Score> Goal::SCORE_TABLE =
+{
+	Score::_10, Score::_10, Score::_10, Score::_10,
+	Score::_20, Score::_20, Score::_20, Score::_M10,
+	Score::_30, Score::_30, Score::_30, Score::_50
+};
+
+FrameTimer Goal::scoreChangeTimer = 600;
+bool Goal::isScoreChange = false;
+Random_Int Goal::randScore(0, (int)SCORE_TABLE.size() - 1);
+
 void Block::Initialize(const ObjectData& objectData)
 {
 	object = ModelManager::Create("cube");
@@ -16,7 +36,7 @@ void Block::Initialize(const ObjectData& objectData)
 	const float WALL_SPLIT_NUM = 5.0f;
 	objectSprite->textureSize.x *= worldTransform->scale.x / WALL_SPLIT_NUM;
 	objectSprite->textureSize.y *= worldTransform->scale.z / WALL_SPLIT_NUM;
-	
+
 	if (objectData.collider.type == "PLANE") { normal = objectData.collider.normal; }
 	if (objectData.fileName == "Ground") { collisionAttribute = CollisionAttribute::Ground; }
 	else { collisionAttribute = CollisionAttribute::Block; }
@@ -42,18 +62,76 @@ void Block::OnCollision(BoxCollider* collider)
 	}
 }
 
+void Goal::StaticUpdate()
+{
+	isScoreChange = scoreChangeTimer.Update();
+}
+
 void Goal::Initialize(const ObjectData& objectData)
 {
 	object = ModelManager::Create("cube");
 	object->worldTransform.reset(objectData.worldTransform);
 	worldTransform = object->worldTransform.get();
-	Material& material = object->material;
-	material.SetSprite(Sprite::Create("white1x1.png"), TexType::Main);
-	//material.ambient = { 1,1,1 };
-	material.ambient = { 0.2f,0.2f,0.2f };
+	ChangeScore();
 	if (objectData.collider.type == "PLANE") { normal = objectData.collider.normal; }
 	collisionAttribute = CollisionAttribute::Goal;
 	collisionMask = CollisionMask::Goal;
+}
+
+void Goal::ChangeScore()
+{
+	score = SCORE_TABLE[randScore()];
+	std::unique_ptr<Sprite> newSprite = Sprite::Create(Goal::SCORE_TEX_NAME[score]);
+
+	switch (score)
+	{
+	case Goal::Score::_M10:
+		newSprite->color = ColorRGBA::Blue();
+		break;
+	case Goal::Score::_10:
+		newSprite->color = ColorRGBA::White();
+		break;
+	case Goal::Score::_20:
+		newSprite->color = { 1,1,0.5f,1 };
+		break;
+	case Goal::Score::_30:
+		newSprite->color = ColorRGBA::Yellow();
+		break;
+	case Goal::Score::_50:
+		newSprite->color = ColorRGBA::Red();
+		break;
+	}
+
+	initColor = newSprite->color;
+	Material& material = object->material;
+	if (score == Score::_M10) { material.ambient = { 1,1,1 }; }
+	else { material.ambient = { 0.2f,0.2f,0.2f }; }
+
+	newSprite->size.x *= -1.0f;
+	newSprite->Update();
+	material.SetSprite(std::move(newSprite), TexType::Main);
+}
+
+void Goal::Update()
+{
+	// スコアの変更
+	if (isScoreChange) { ChangeScore(); }
+
+	// ゴールの点滅開始時間
+	const int START_BLINK_TIME = 120;
+	// 点滅回数
+	const int BLINK_NUM = 4;
+
+	int remainTime = scoreChangeTimer.GetRemainTime();
+	if (remainTime <= START_BLINK_TIME)
+	{
+		const int BLINK_INTERVAL = START_BLINK_TIME / BLINK_NUM;
+		int easingColor = NumberLoop(START_BLINK_TIME - remainTime, BLINK_INTERVAL);
+		float colorRate = (cos(2.0f * PI * (float)easingColor / (float)BLINK_INTERVAL) + 1) * 0.5f;
+		object->material.GetSprite(TexType::Main)->color.r = initColor.r * colorRate;
+		object->material.GetSprite(TexType::Main)->color.g = initColor.g * colorRate;
+		object->material.GetSprite(TexType::Main)->color.b = initColor.b * colorRate;
+	}
 }
 
 void Goal::OnCollision(BoxCollider* collider)
@@ -71,8 +149,7 @@ void Goal::OnCollision(BoxCollider* collider)
 		assert(object_);
 		collider->SetCollisionMask(CollisionMask::None);
 		object_->Goal();
-		const int SCORE_INC = 10;
-		Stage::AddScore(SCORE_INC);
+		Stage::AddScore(object_->GetGoalScore((int)score));
 
 		ParticleGroup* pGroup = ParticleManager::GetParticleGroup(0);
 		DiffuseParticle::AddProp addProp;

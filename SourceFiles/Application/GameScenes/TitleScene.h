@@ -13,6 +13,8 @@ class TitleScene : public BaseScene
 	void Initialize();
 	// 更新(オーバーライド)
 	void Update();
+	// 終了
+	void Finalize() { stage.Finalize(); }
 };
 
 class UIDrawerTitleScene : public AbstractUIDrawer

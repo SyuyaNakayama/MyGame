@@ -1,11 +1,11 @@
 #pragma once
-#include "BaseScene.h"
-#include "Stage.h"
 #include "AudioManager.h"
+#include "BaseScene.h"
 #include "BitMapNumber.h"
-#include "MathUtility.h"
-#include "FPS.h"
 #include "Easing.h"
+#include "FPS.h"
+#include "MathUtility.h"
+#include "Stage.h"
 
 // スタート前のカウントダウン演出
 class StartCountDown
@@ -85,4 +85,6 @@ private:
 	void Initialize();
 	// 更新(オーバーライド)
 	void Update();
+	// 終了
+	void Finalize() { stage.Finalize(); }
 };

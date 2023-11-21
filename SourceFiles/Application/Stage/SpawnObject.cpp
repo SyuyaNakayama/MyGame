@@ -22,6 +22,7 @@ void SpawnObject::Update()
 		objectData.worldTransform->translation.x = cos(spawnPosAngle) * distance;
 		objectData.worldTransform->translation.z = sin(spawnPosAngle) * distance;
 	}
+
 	if (!spawnTimer.Update() || objects->size() > SPAWN_MAX) { return; }
 	std::unique_ptr<Object> newObj = std::make_unique<Object>();
 	ObjectData objectDataTemp = objectData;

@@ -1,8 +1,8 @@
 #pragma once
-#include "Player.h"
 #include "Block.h"
-#include "SpawnObject.h"
 #include "JsonLoader.h"
+#include "Player.h"
+#include "SpawnObject.h"
 #include <chrono>
 
 // ステージに関係するオブジェクト全般のクラス
@@ -41,4 +41,6 @@ public:
 	static void ResetScore() { score = 0; }
 	// タイムリセット
 	void ResetTime() { stageTime = STAGE_TIME * fps; }
+	// 終了
+	void Finalize() { gameObjects.clear(); }
 };

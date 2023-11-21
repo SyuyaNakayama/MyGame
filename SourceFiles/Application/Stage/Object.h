@@ -5,10 +5,21 @@
 // ゴールに運ぶオブジェクト
 class Object : public SphereCollider, public BoxCollider, public GameObject
 {
-	Object3d* object;
+public:
+	enum class Type
+	{
+		White = 0,	// 通常
+		Red = 6,	// 点数2倍
+		Green = 7,	// 点数-1倍
+	};
+
+private:
+	static int instanceNum;
+
+	Object3d* object = nullptr;
 	bool isGoal = false;
 	float dissolvePow = 0;
-	static int instanceNum;
+	Type type = Type::White;
 
 public:
 	// コンストラクタ
@@ -32,4 +43,10 @@ public:
 	static int GetInstanceNum() { return instanceNum; }
 	// ゴールした
 	void Goal() { isGoal = true; }
+	/// <summary>
+	/// ゴールに入れた時の点数を取得
+	/// </summary>
+	/// <param name="goalScore">ゴールの点数</param>
+	/// <returns></returns>
+	int GetGoalScore(int goalScore);
 };

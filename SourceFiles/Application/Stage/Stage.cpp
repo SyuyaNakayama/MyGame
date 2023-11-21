@@ -47,6 +47,7 @@ void Stage::Initialize()
 
 	fps = FPS::GetInstance()->GetMaxFPS();
 	ResetTime();
+	Goal::StaticInitialize();
 }
 
 void Stage::Update()
@@ -64,6 +65,8 @@ void Stage::Update()
 			return false;
 		});
 
+	// ゴールの静的更新
+	Goal::StaticUpdate();
 	// 全ゲームオブジェクトの更新
 	for (auto& gameObject : gameObjects) { gameObject->Update(); }
 }

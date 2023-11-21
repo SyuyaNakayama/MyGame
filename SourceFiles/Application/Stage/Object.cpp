@@ -1,8 +1,9 @@
-#include "Object.h"
 #include "ModelManager.h"
-#include <imgui.h>
+#include "Object.h"
 #include "ParticleManager.h"
+#include "Random.h"
 #include "Stage.h"
+#include <imgui.h>
 
 int Object::instanceNum = 0;
 
@@ -10,8 +11,9 @@ void Object::Initialize(const ObjectData& objectData)
 {
 	object = ModelManager::Create("player", true);
 	object->worldTransform.reset(objectData.worldTransform);
-	object->material.ambient = { 0,0,0 };
-	object->material.SetSprite(Sprite::Create("DissolveMap.png"), TexType::Dissolve);
+	Material* material = &object->material;
+	material->ambient = { 0,0,0 };
+	material->SetSprite(Sprite::Create("Textures/DissolveMap.png"), TexType::Dissolve);
 	worldTransform = object->worldTransform.get();
 	collisionAttribute = CollisionAttribute::Object;
 	collisionMask = CollisionMask::Object;
@@ -19,6 +21,24 @@ void Object::Initialize(const ObjectData& objectData)
 	physics->SetMass(0.5f);
 	physics->SetMu(0.05f);
 	physics->SetIsFreeFall(true);
+
+	// É^ÉCÉvÇÃê›íË
+	Random_Int rand(0, (int)Type::Green);
+	int num = rand();
+
+	if (num < (int)Type::Red) { type = Type::White; }
+	else if (num < (int)Type::Green) { type = Type::Red; }
+	else { type = Type::Green; }
+
+	switch (type)
+	{
+	case Type::Red:
+		material->GetSprite(TexType::Main)->color = { 1,0,0,0 };
+		break;
+	case Type::Green:
+		material->GetSprite(TexType::Main)->color = { 0,1,0,0 };
+		break;
+	}
 }
 
 void Object::Update()
@@ -46,4 +66,15 @@ void Object::OnCollision(SphereCollider* collider)
 	addProp.posOffset = worldTransform->translation;
 	ParticleGroup* particleGroup = ParticleManager::GetParticleGroup(1);
 	particleGroup->Add(addProp);
+}
+
+int Object::GetGoalScore(int goalScore)
+{
+	switch (type)
+	{
+	case Type::White:	return goalScore;
+	case Type::Red:		return goalScore * 2;
+	case Type::Green:	return -goalScore;
+	}
+	return goalScore;
 }
