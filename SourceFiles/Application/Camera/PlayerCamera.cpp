@@ -6,7 +6,7 @@
 void PlayerCamera::Initialize(WorldTransform* parent)
 {
 	BaseCamera::Initialize(parent);
-	const float INIT_DISTANCE = 25.0f;
+	const float INIT_DISTANCE = 30.0f;
 	distance = INIT_DISTANCE;
 	parentPrePos = parent->GetWorldPosition();
 }

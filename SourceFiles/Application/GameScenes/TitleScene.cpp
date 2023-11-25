@@ -43,21 +43,30 @@ void UIDrawerTitleScene::Initialize()
 	title["EN"]->position.y -= 80;
 	for (auto& ui : title) { ui.second->Update(); }
 
-	spaceKey.Initialize("ui/key_SPACE.png", 128, 30);
+	spaceKey.Initialize("ui/Key/key_SPACE.png", 128, 30);
 	Sprite* spaceKeySprite = spaceKey.GetSprite();
 	spaceKeySprite->position = Half(WindowsAPI::WIN_SIZE);
 	spaceKeySprite->position.y += 80;
 	spaceKeySprite->size *= 1.5f;
 	spaceKeySprite->anchorPoint.x = 0.5f;
+	spaceKeySprite->color = { 0.7f,0.7f,0.7f,1 };
+
+	selectCursorUI = Sprite::Create("UI/SelectCursor.png");
+	selectCursorUI->SetCenterAnchor();
+	selectCursorUI->SetCenterPos();
 }
 
 void UIDrawerTitleScene::Update()
 {
 	spaceKey.Update();
+	cosAngle += 10;
+	selectCursorUI->size.y = 400 * (cos(cosAngle) + 1) * 0.5f;
+	selectCursorUI->Update();
 }
 
 void UIDrawerTitleScene::Draw()
 {
 	for (auto& ui : title) { ui.second->Draw(); }
 	spaceKey.Draw();
+	//selectCursorUI->Draw();
 }

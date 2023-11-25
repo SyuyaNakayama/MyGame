@@ -330,6 +330,12 @@
     <ClCompile Include="SourceFiles\Application\GameScenes\ScoreGauge.cpp">
       <Filter>ソース ファイル\Application\GameScenes\ResultScene</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFiles\Application\GameScenes\TutorialScene.cpp">
+      <Filter>ソース ファイル\Application\GameScenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\GameScenes\PauseMenu.cpp">
+      <Filter>ソース ファイル\Application\GameScenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\Engine\Math\Matrix4.h">
@@ -526,6 +532,12 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Application\GameScenes\ScoreGauge.h">
       <Filter>ソース ファイル\Application\GameScenes\ResultScene</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\GameScenes\TutorialScene.h">
+      <Filter>ソース ファイル\Application\GameScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\GameScenes\PauseMenu.h">
+      <Filter>ソース ファイル\Application\GameScenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

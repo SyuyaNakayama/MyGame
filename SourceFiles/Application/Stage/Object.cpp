@@ -23,7 +23,7 @@ void Object::Initialize(const ObjectData& objectData)
 	physics->SetIsFreeFall(true);
 
 	// ƒ^ƒCƒv‚Ìİ’è
-	Random_Int rand(0, (int)Type::Green);
+	Random_Int rand(0, (int)Type::MaxNum);
 	int num = rand();
 
 	if (num < (int)Type::Red) { type = Type::White; }

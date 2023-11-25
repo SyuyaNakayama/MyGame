@@ -1,4 +1,4 @@
 #pragma once
 
 // ŠeƒV[ƒ“‚Ìó‘Ô
-enum class Scene { Null, Title, Play, Result };
+enum class Scene { Null, Title, Tutorial, PreStart, Play, Pause, Result };

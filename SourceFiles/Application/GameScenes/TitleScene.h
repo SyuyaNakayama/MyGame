@@ -21,6 +21,8 @@ class UIDrawerTitleScene : public AbstractUIDrawer
 {
 	std::map<std::string, std::unique_ptr<Sprite>> title;
 	SpriteAnimation spaceKey;
+	std::unique_ptr<Sprite> selectCursorUI;
+	Angle cosAngle = 0;
 
 	// AbstractUIDrawer ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
 	void Initialize() override;

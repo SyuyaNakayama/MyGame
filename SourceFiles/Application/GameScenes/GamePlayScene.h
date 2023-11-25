@@ -52,7 +52,7 @@ private:
 	Easing uiGoEasing;
 
 	// "Go!"のアニメーションの関数ポインタ
-	void (UIDrawerGameScene::*UIGoAnimation)();
+	void (UIDrawerGameScene::* UIGoAnimation)() = nullptr;
 	// スライド
 	void UIGoSlide();
 	// 待機

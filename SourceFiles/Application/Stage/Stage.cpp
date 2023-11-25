@@ -31,7 +31,7 @@ void Stage::Initialize()
 		}
 		else if (objectData.fileName == "SpawnPoint")
 		{
-			const std::array<int, 2> SPAWN_INTERVALS = { 180,50 };
+			const std::array<int, 2> SPAWN_INTERVALS = { 180,1 };
 			bool isPlayScene = SceneManager::GetInstance()->GetNowScene() == Scene::Play;
 
 			gameObject = std::make_unique<SpawnObject>();

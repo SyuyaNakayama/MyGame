@@ -50,3 +50,9 @@ public:
 	// 終了したか
 	bool IsFinish() { return isFinish; }
 };
+
+// ループするイージング
+class LoopEasing
+{
+
+};
