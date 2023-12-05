@@ -15,7 +15,8 @@ void SpawnObject::Initialize(const ObjectData& objectData_)
 
 void SpawnObject::Update()
 {
-	if (SceneManager::GetInstance()->GetNowScene() == Scene::Play)
+	if (SceneManager::GetInstance()->GetNowScene() == Scene::Play ||
+		SceneManager::GetInstance()->GetNowScene() == Scene::Tutorial)
 	{
 		Angle spawnPosAngle = Random_Float(0, 2.0f * PI)();
 		float distance = Random_Float(10.0f, 100.0f)();

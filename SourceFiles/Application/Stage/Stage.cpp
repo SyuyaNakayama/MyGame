@@ -8,7 +8,7 @@ float Stage::GROUND_POS_Y = 5.0f;
 void Stage::Initialize()
 {
 	SpawnObject::SetObjectList(&gameObjects);
-	levelData = JsonLoader::LoadJson("stage");
+	levelData = JsonLoader::LoadJson("stage2P");
 
 	std::unique_ptr<GameObject> gameObject;
 	for (auto& objectData : levelData->objects)
@@ -32,7 +32,8 @@ void Stage::Initialize()
 		else if (objectData.fileName == "SpawnPoint")
 		{
 			const std::array<int, 2> SPAWN_INTERVALS = { 180,1 };
-			bool isPlayScene = SceneManager::GetInstance()->GetNowScene() == Scene::Play;
+			bool isPlayScene = SceneManager::GetInstance()->GetNowScene() == Scene::Play ||
+				SceneManager::GetInstance()->GetNowScene() == Scene::Tutorial;
 
 			gameObject = std::make_unique<SpawnObject>();
 			objectData.spawnInterval = SPAWN_INTERVALS[isPlayScene];

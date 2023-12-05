@@ -20,7 +20,11 @@ void Player::Initialize(const ObjectData& objectData)
 	physics->SetMu(0.23f);
 	physics->SetVelocity({});
 	physics->SetForce(0);
-	if (SceneManager::GetInstance()->GetNowScene() == Scene::Play) { Move = &Player::Move_Play; }
+	if (SceneManager::GetInstance()->GetNowScene() == Scene::Play ||
+		SceneManager::GetInstance()->GetNowScene() == Scene::Tutorial)
+	{
+		Move = &Player::Move_Play;
+	}
 }
 
 void Player::Move_Play()

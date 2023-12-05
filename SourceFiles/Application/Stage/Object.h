@@ -10,8 +10,8 @@ public:
 	{
 		White = 0,	// ’Êí
 		Red = 6,	// “_”2”{
-		Green = 8,	// “_”-1”{
-		MaxNum = 9
+		Green = 7,	// “_”-1”{
+		MaxNum = 7
 	};
 
 private:
