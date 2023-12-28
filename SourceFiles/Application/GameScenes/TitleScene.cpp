@@ -19,7 +19,7 @@ void TitleScene::Update()
 {
 	if (input->IsTrigger(Key::Space))
 	{
-		sceneManager->ChangeScene(Scene::Play);
+		sceneManager->ChangeScene(Scene::Tutorial);
 		Stage::ResetScore();
 		return;
 	}

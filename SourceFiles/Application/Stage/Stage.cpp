@@ -8,7 +8,7 @@ float Stage::GROUND_POS_Y = 5.0f;
 void Stage::Initialize()
 {
 	SpawnObject::SetObjectList(&gameObjects);
-	levelData = JsonLoader::LoadJson("stage2P");
+	levelData = JsonLoader::LoadJson("stage");
 
 	std::unique_ptr<GameObject> gameObject;
 	for (auto& objectData : levelData->objects)
