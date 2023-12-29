@@ -54,6 +54,9 @@ void UIDrawerTitleScene::Initialize()
 	selectCursorUI = Sprite::Create("UI/SelectCursor.png");
 	selectCursorUI->SetCenterAnchor();
 	selectCursorUI->SetCenterPos();
+
+	sprite = Sprite::Create("ƒAƒŒƒbƒq_‘Šø.dds");
+	sprite->Update();
 }
 
 void UIDrawerTitleScene::Update()
@@ -68,5 +71,6 @@ void UIDrawerTitleScene::Draw()
 {
 	for (auto& ui : title) { ui.second->Draw(); }
 	spaceKey.Draw();
+	sprite->Draw();
 	//selectCursorUI->Draw();
 }

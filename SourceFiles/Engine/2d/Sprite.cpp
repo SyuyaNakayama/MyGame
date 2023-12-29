@@ -62,14 +62,27 @@ TextureData* Sprite::LoadTexture(const std::string& fileName, uint32_t mipLevels
 	vector<wchar_t> wfilePath(filePathBufferSize);
 	MultiByteToWideChar(CP_ACP, 0, fullPath.c_str(), -1, wfilePath.data(), filePathBufferSize);
 
-	Result result = LoadFromWICFile(wfilePath.data(), WIC_FLAGS_NONE, &metadata, scratchImg);
+	Result result = S_OK;
+	bool isDDSFile = fileName.find(".dds") != string::npos;
 
-	HRESULT result1 = GenerateMipMaps(scratchImg.GetImages(), scratchImg.GetImageCount(),
-		scratchImg.GetMetadata(), TEX_FILTER_DEFAULT, 0, mipChain);
-	if (SUCCEEDED(result1))
+	if (isDDSFile)
 	{
-		scratchImg = move(mipChain);
-		metadata = scratchImg.GetMetadata();
+		result = LoadFromDDSFile(wfilePath.data(), DDS_FLAGS_NONE, &metadata, scratchImg);
+	}
+	else
+	{
+		result = LoadFromWICFile(wfilePath.data(), WIC_FLAGS_NONE, &metadata, scratchImg);
+	}
+
+	if(!isDDSFile)
+	{
+		HRESULT result1 = GenerateMipMaps(scratchImg.GetImages(), scratchImg.GetImageCount(),
+			scratchImg.GetMetadata(), TEX_FILTER_DEFAULT, 0, mipChain);
+		if (SUCCEEDED(result1))
+		{
+			scratchImg = move(mipChain);
+			metadata = scratchImg.GetMetadata();
+		}
 	}
 
 	CD3DX12_RESOURCE_DESC textureResourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(
