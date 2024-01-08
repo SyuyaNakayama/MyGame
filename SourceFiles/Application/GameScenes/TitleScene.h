@@ -23,7 +23,6 @@ class UIDrawerTitleScene : public AbstractUIDrawer
 	SpriteAnimation spaceKey;
 	std::unique_ptr<Sprite> selectCursorUI;
 	Angle cosAngle = 0;
-	std::unique_ptr<Sprite> sprite;
 
 	// AbstractUIDrawer ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
 	void Initialize() override;

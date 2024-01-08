@@ -25,7 +25,7 @@ void UIDrawerTutorialScene::Initialize()
 {
 	frame = Sprite::Create("UI/uiFrame.png");
 	frame->position = { 50,420 };
-	frame->size = { 300,286 };
+	frame->size = { 350,286 };
 	frame->Update();
 
 	keyUI[Key::A] = Sprite::Create("UI/Key/key_A.png");
@@ -37,6 +37,8 @@ void UIDrawerTutorialScene::Initialize()
 	keyUI[Key::Right] = Sprite::Create("UI/Key/key_Right.png");
 	keyUI[Key::Up] = Sprite::Create("UI/Key/key_Up.png");
 	keyUI[Key::Down] = Sprite::Create("UI/Key/key_Down.png");
+	
+	keyUI[Key::Space] = Sprite::Create("UI/Key/key_SPACE.png");
 
 	for (auto& s : keyUI)
 	{
@@ -44,6 +46,9 @@ void UIDrawerTutorialScene::Initialize()
 		s.second->size.x /= 2.0f;
 		s.second->position = frame->position;
 	}
+
+	keyUI[Key::Space]->anchorPoint = { 0.5f,2 };
+	keyUI[Key::Space]->position = { Half(WindowsAPI::WIN_SIZE.x), WindowsAPI::WIN_SIZE.y };
 
 	const float UI_POS_COMPRESS = 10.0f; // 操作UI間の距離を圧縮するための変数
 	const float DISTANCE_BETWEEN_KEY_ARROW = 148.0f; // キー操作UIとアローUI間の距離
@@ -66,6 +71,22 @@ void UIDrawerTutorialScene::Initialize()
 		keyUI[pair.first]->position = keyUI[pair.second]->position;
 		keyUI[pair.first]->position.y += DISTANCE_BETWEEN_KEY_ARROW;
 	}
+
+	operateUI["player"] = Sprite::Create("UI/Move.png");
+	operateUI["player"]->anchorPoint.y = 0.25f;
+	operateUI["player"]->position = { keyUI[Key::D]->position.x, keyUI[Key::W]->position.y };
+	operateUI["player"]->position += { keyUI[Key::D]->size.x, Half(keyUI[Key::D]->size.y) };
+	operateUI["camera"] = Sprite::Create("UI/Camera.png");
+	operateUI["camera"]->anchorPoint.y = 0.25f;
+	operateUI["camera"]->position = { keyUI[Key::Right]->position.x, keyUI[Key::Up]->position.y };
+	operateUI["camera"]->position += { keyUI[Key::D]->size.x, Half(keyUI[Key::D]->size.y) };
+	operateUI["tutorial"] = Sprite::Create("UI/Tutorial.png");
+	operateUI["tutorial"]->anchorPoint = { -0.1f,-1 };
+	operateUI["play"] = Sprite::Create("UI/Play.png");
+	operateUI["play"]->anchorPoint = { 0.5f,2 };
+	operateUI["play"]->position = { Half(WindowsAPI::WIN_SIZE.x), WindowsAPI::WIN_SIZE.y };
+
+	for (auto& s : operateUI) { s.second->Update(); }
 }
 
 void UIDrawerTutorialScene::Update()
@@ -82,4 +103,5 @@ void UIDrawerTutorialScene::Draw()
 {
 	frame->Draw();
 	for (auto& s : keyUI) { s.second->Draw(); }
+	for (auto& s : operateUI) { s.second->Draw(); }
 }
