@@ -2,6 +2,7 @@
 #include "Sprite.h"
 #include "ModelManager.h"
 #include "ParticleManager.h"
+using namespace WristerEngine;
 
 BaseScene::BaseScene() { sceneManager = SceneManager::GetInstance(); }
 
@@ -36,7 +37,7 @@ void SceneManager::Update()
 
 		if (isObjectClear)
 		{
-			ModelManager::ClearObjects();
+			_3D::ModelManager::ClearObjects();
 			isObjectClear = false;
 		}
 		if (isParticleClear)
@@ -57,7 +58,7 @@ void SceneManager::Draw()
 	scene->Draw();
 	if (fadeManager.IsFade())
 	{
-		Sprite::PreDraw();
+		_2D::Sprite::PreDraw();
 		fadeManager.Draw();
 	}
 }

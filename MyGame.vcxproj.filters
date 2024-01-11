@@ -93,9 +93,6 @@
     <Filter Include="ソース ファイル\Application\Stage\GameObjects">
       <UniqueIdentifier>{3a720f82-37bb-4e25-8ba3-40778b61d0e4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Engine\GameObject">
-      <UniqueIdentifier>{3662b9ab-1bc1-48b5-ab85-528e8383608a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Engine\Timer">
       <UniqueIdentifier>{8cd3b574-38f1-4ca3-a850-33bc03214952}</UniqueIdentifier>
     </Filter>
@@ -318,9 +315,6 @@
     <ClCompile Include="SourceFiles\Engine\Math\Easing.cpp">
       <Filter>ソース ファイル\Engine\Math</Filter>
     </ClCompile>
-    <ClCompile Include="SourceFiles\Engine\2d\TextureConverter.cpp">
-      <Filter>ソース ファイル\Engine\2d</Filter>
-    </ClCompile>
     <ClCompile Include="SourceFiles\Application\GameScenes\RankAnimation.cpp">
       <Filter>ソース ファイル\Application\GameScenes\ResultScene</Filter>
     </ClCompile>
@@ -500,9 +494,6 @@
     <ClInclude Include="SourceFiles\Application\Stage\Player.h">
       <Filter>ソース ファイル\Application\Stage\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\Engine\GameObject\GameObject.h">
-      <Filter>ソース ファイル\Engine\GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="SourceFiles\Engine\Skydome\Skydome.h">
       <Filter>ソース ファイル\Engine\Skydome</Filter>
     </ClInclude>
@@ -521,9 +512,6 @@
     <ClInclude Include="SourceFiles\Engine\Math\Easing.h">
       <Filter>ソース ファイル\Engine\Math</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\Engine\2d\TextureConverter.h">
-      <Filter>ソース ファイル\Engine\2d</Filter>
-    </ClInclude>
     <ClInclude Include="SourceFiles\Application\GameScenes\RankAnimation.h">
       <Filter>ソース ファイル\Application\GameScenes\ResultScene</Filter>
     </ClInclude>
@@ -538,6 +526,9 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Application\GameScenes\PauseMenu.h">
       <Filter>ソース ファイル\Application\GameScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Engine\GameObject\GameObject.h">
+      <Filter>ソース ファイル\Engine\3d\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

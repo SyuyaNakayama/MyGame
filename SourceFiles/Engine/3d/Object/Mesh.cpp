@@ -3,6 +3,8 @@
 #include <fstream>
 #include <sstream>
 using namespace std;
+using namespace WristerEngine;
+using namespace _3D;
 
 void LoadVector3Stream(istringstream& stream, Vector3& vec)
 {

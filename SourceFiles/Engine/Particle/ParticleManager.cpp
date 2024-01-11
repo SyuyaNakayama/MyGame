@@ -3,6 +3,7 @@
 #include "D3D12Common.h"
 #include "ModelManager.h"
 using namespace Microsoft::WRL;
+using namespace WristerEngine;
 
 // Ã“Iƒƒ“ƒo•Ï”‚ÌÀ‘Ì
 ComPtr<ID3D12Resource> ParticleManager::constBuff;

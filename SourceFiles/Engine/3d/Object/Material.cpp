@@ -4,6 +4,8 @@
 #include "Mesh.h"
 #include "ModelManager.h"
 using namespace std;
+using namespace WristerEngine;
+using namespace _3D;
 
 void LoadColorRGBStream(istringstream& stream, ColorRGB& color)
 {

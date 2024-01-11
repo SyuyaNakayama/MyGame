@@ -1,6 +1,7 @@
 #include "CollisionManager.h"
 #include <algorithm>
 using namespace std;
+using namespace WristerEngine;
 
 list<BoxCollider*> CollisionManager::boxColliders;
 list<IncludeCollider*> CollisionManager::includeColliders;

@@ -1,4 +1,6 @@
 #include "SpriteAnimation.h"
+using namespace WristerEngine;
+using namespace _2D;
 
 void SpriteAnimation::Initialize(const std::string& textureName, size_t spriteWidth, int animationIntervel)
 {

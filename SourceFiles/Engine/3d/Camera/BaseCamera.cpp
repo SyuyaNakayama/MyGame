@@ -1,5 +1,7 @@
 #include "BaseCamera.h"
 #include "ImGuiManager.h"
+using namespace WristerEngine;
+using namespace _3D;
 
 void BaseCamera::Initialize(WorldTransform* parent)
 {

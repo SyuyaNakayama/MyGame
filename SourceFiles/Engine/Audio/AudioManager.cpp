@@ -1,5 +1,6 @@
 #include "AudioManager.h"
 #include "D3D12Common.h"
+using namespace WristerEngine;
 
 std::map<bool, std::list<std::unique_ptr<Audio>>> AudioManager::audios;
 std::map<bool, std::list<std::unique_ptr<PointAudio>>> AudioManager::pointAudios;

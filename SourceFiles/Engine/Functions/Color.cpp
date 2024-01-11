@@ -1,4 +1,5 @@
 #include "Color.h"
+using namespace WristerEngine;
 
 const float Color::MAX = 1.0f;
 

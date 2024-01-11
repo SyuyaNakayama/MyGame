@@ -1,6 +1,8 @@
 #include "WorldTransform.h"
 #include "D3D12Common.h"
 #include "ModelManager.h"
+using namespace WristerEngine;
+using namespace _3D;
 
 void WorldTransform::Initialize()
 {

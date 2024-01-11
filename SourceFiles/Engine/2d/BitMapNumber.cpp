@@ -1,4 +1,6 @@
 #include "BitMapNumber.h"
+using namespace WristerEngine;
+using namespace _2D;
 
 void BitMapProp::SetVal(const std::string& fileName_, Vector2 rectSize_, Vector2 size_, Vector2 pos_, int digit_)
 {

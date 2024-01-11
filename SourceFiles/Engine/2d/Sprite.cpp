@@ -6,6 +6,8 @@
 using namespace std;
 using namespace DirectX;
 using namespace Microsoft::WRL;
+using namespace WristerEngine;
+using namespace _2D;
 
 // •½s“Š‰es—ñ
 Matrix4 OrthoGraphic()

@@ -1,5 +1,6 @@
 #include "ParticleGroup.h"
 #include "D3D12Common.h"
+using namespace WristerEngine;
 
 void ParticleGroup::CreateVertexBuffer()
 {

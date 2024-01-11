@@ -1,5 +1,7 @@
 #include "Object3d.h"
 #include "ModelManager.h"
+using namespace WristerEngine;
+using namespace _3D;
 
 void Object3d::Initialize(Mesh* mesh_)
 {

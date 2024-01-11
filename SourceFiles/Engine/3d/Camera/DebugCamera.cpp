@@ -1,6 +1,8 @@
 #include "DebugCamera.h"
 #include "Input.h"
 #include "WindowsAPI.h"
+using namespace WristerEngine;
+using namespace _3D;
 
 void DebugCamera::Initialize(Vector3 targetPos, float distance_, float mouseMoveDec_, float wheelSpdDec_)
 {

@@ -3,12 +3,15 @@
 #include "Scene.h"
 #include <memory>
 
-// シーンファクトリーの抽象クラス
-class AbstractSceneFactory
+namespace WristerEngine
 {
-public:
-	// 仮想デストラクタ
-	virtual ~AbstractSceneFactory() = default;
-	// シーン作成
-	virtual std::unique_ptr<BaseScene> CreateScene(Scene scene) = 0;
-};
+	// シーンファクトリーの抽象クラス
+	class AbstractSceneFactory
+	{
+	public:
+		// 仮想デストラクタ
+		virtual ~AbstractSceneFactory() = default;
+		// シーン作成
+		virtual std::unique_ptr<BaseScene> CreateScene(Scene scene) = 0;
+	};
+}

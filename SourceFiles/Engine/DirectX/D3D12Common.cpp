@@ -2,10 +2,11 @@
 #include <d3dcompiler.h>
 #pragma comment(lib, "d3dcompiler.lib")
 using namespace std;
+using namespace WristerEngine;
 
 map<PipelineType, PipelineManager> PipelineManager::pipelines;
 
-D3D12_INPUT_ELEMENT_DESC SetInputLayout(LPCSTR semanticName, DXGI_FORMAT format)
+D3D12_INPUT_ELEMENT_DESC WristerEngine::SetInputLayout(LPCSTR semanticName, DXGI_FORMAT format)
 {
 	D3D12_INPUT_ELEMENT_DESC inputLayout =
 	{
@@ -16,7 +17,7 @@ D3D12_INPUT_ELEMENT_DESC SetInputLayout(LPCSTR semanticName, DXGI_FORMAT format)
 	return inputLayout;
 }
 
-void LoadShader(ID3DBlob** shaderBlob, wstring shaderName, LPCSTR target)
+void WristerEngine::LoadShader(ID3DBlob** shaderBlob, wstring shaderName, LPCSTR target)
 {
 	ID3DBlob* errorBlob = nullptr;
 

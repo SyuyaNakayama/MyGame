@@ -3,6 +3,8 @@
 #include "D3D12Common.h"
 using namespace Microsoft::WRL;
 using namespace std;
+using namespace WristerEngine;
+using namespace _3D;
 
 // Ã“Iƒƒ“ƒo•Ï”‚ÌÀ‘Ì
 unique_ptr<LightGroup> ModelManager::lightGroup;

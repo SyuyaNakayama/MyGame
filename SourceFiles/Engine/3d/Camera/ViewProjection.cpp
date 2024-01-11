@@ -1,6 +1,8 @@
 #include "ViewProjection.h"
 #include "D3D12Common.h"
 #include <array>
+using namespace WristerEngine;
+using namespace _3D;
 
 void ViewProjection::Initialize()
 {

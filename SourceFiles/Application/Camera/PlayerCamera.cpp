@@ -2,6 +2,8 @@
 #include "Input.h"
 #include "SceneManager.h"
 #include <algorithm>
+using namespace WristerEngine::_2D;
+using namespace WristerEngine::_3D;
 
 void PlayerCamera::Initialize(WorldTransform* parent)
 {
@@ -16,15 +18,15 @@ void PlayerCamera::Update()
 	Vector2 cameraMove;
 	const float MOVE_SPD = 1.0f;
 	
-	Input* input = Input::GetInstance();
+	WristerEngine::Input* input = WristerEngine::Input::GetInstance();
 	if (!input->IsConnectGamePad())
 	{
-		cameraMove.x = Input::GetInstance()->Move(Key::Left, Key::Right, MOVE_SPD);
-		cameraMove.y = Input::GetInstance()->Move(Key::Up, Key::Down, MOVE_SPD);
+		cameraMove.x = input->Move(WristerEngine::Key::Left, WristerEngine::Key::Right, MOVE_SPD);
+		cameraMove.y = input->Move(WristerEngine::Key::Up, WristerEngine::Key::Down, MOVE_SPD);
 	}
 	else
 	{
-		cameraMove = Input::GetInstance()->ConRStick(1.0f);
+		cameraMove = input->ConRStick(1.0f);
 	}
 
 	angle += cameraMove / rotSpdDec;
@@ -32,5 +34,5 @@ void PlayerCamera::Update()
 	angle.y = std::clamp(angle.y, 0.0f, +Y_MAX);
 	BaseCamera::Update();
 	parentPrePos = worldTransform.parent->GetWorldPosition();
-	if (input->IsTrigger(Key::_3)) { ModelManager::SetViewProjection(&viewProjection); }
+	if (input->IsTrigger(WristerEngine::Key::_3)) { ModelManager::SetViewProjection(&viewProjection); }
 }

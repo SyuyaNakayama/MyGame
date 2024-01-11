@@ -2,6 +2,7 @@
 #include "ModelManager.h"
 #include "ViewProjection.h"
 #include <cmath>
+using namespace WristerEngine;
 
 void PointAudio::Initialize(const std::string& fileName, Vector3 audioPos_, bool useCamera_, bool usePan_)
 {
@@ -15,7 +16,7 @@ void PointAudio::Update()
 {
 	if (useCamera)
 	{
-		ViewProjection* vp = ModelManager::GetViewProjection();
+		_3D::ViewProjection* vp = _3D::ModelManager::GetViewProjection();
 		micPos = vp->eye;
 		forward = Normalize(vp->target - vp->eye);
 	}

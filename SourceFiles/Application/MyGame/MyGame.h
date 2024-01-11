@@ -3,10 +3,10 @@
 #include "PostEffect.h"
 
 // このゲーム固有の処理クラス
-class MyGame : public Framework
+class MyGame : public WristerEngine::Framework
 {
 private:
-	std::unique_ptr<PostEffect> postEffect;
+	std::unique_ptr<WristerEngine::_2D::PostEffect> postEffect;
 
 public:
 	// 初期化(オーバーライド)

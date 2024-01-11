@@ -76,12 +76,15 @@ void UIDrawerTutorialScene::Initialize()
 	operateUI["player"]->anchorPoint.y = 0.25f;
 	operateUI["player"]->position = { keyUI[Key::D]->position.x, keyUI[Key::W]->position.y };
 	operateUI["player"]->position += { keyUI[Key::D]->size.x, Half(keyUI[Key::D]->size.y) };
+	
 	operateUI["camera"] = Sprite::Create("UI/Camera.png");
 	operateUI["camera"]->anchorPoint.y = 0.25f;
 	operateUI["camera"]->position = { keyUI[Key::Right]->position.x, keyUI[Key::Up]->position.y };
 	operateUI["camera"]->position += { keyUI[Key::D]->size.x, Half(keyUI[Key::D]->size.y) };
+	
 	operateUI["tutorial"] = Sprite::Create("UI/Tutorial.png");
 	operateUI["tutorial"]->anchorPoint = { -0.1f,-1 };
+	
 	operateUI["play"] = Sprite::Create("UI/Play.png");
 	operateUI["play"]->anchorPoint = { 0.5f,2 };
 	operateUI["play"]->position = { Half(WindowsAPI::WIN_SIZE.x), WindowsAPI::WIN_SIZE.y };

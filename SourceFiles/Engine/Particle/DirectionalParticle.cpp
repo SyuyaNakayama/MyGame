@@ -1,5 +1,6 @@
 #include "DirectionalParticle.h"
 #include "Quaternion.h"
+using namespace WristerEngine;
 
 void DirectionalParticle::Particle::Update() { position = BezierCurve(controlPoints, frame.GetRemainTimeRate()); }
 

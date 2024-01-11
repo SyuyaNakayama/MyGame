@@ -1,5 +1,6 @@
 #include "DiffuseParticle.h"
 #include "Random.h"
+using namespace WristerEngine;
 
 void DiffuseParticle::Particle::Update()
 {

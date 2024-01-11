@@ -3,10 +3,10 @@
 #include "Object.h"
 
 // オブジェクト生成オブジェクト
-class SpawnObject : public BaseSpawnPoint, public GameObject
+class SpawnObject : public WristerEngine::BaseSpawnPoint, public GameObject
 {
 	static std::list<std::unique_ptr<GameObject>>* objects;
-	ObjectData objectData;
+	WristerEngine::ObjectData objectData;
 	Vector3 initialPos;
 	static const int SPAWN_MAX = 25;
 
@@ -15,7 +15,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="objectData_">Jsonファイルから読み込んだデータ</param>
-	void Initialize(const ObjectData& objectData_);
+	void Initialize(const WristerEngine::ObjectData& objectData_);
 	// 更新
 	void Update();
 	// setter

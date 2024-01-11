@@ -1,6 +1,8 @@
 #include "PostEffect.h"
 #include "WindowsAPI.h"
 #include "D3D12Common.h"
+using namespace WristerEngine;
+using namespace _2D;
 
 const float PostEffect::CLEAR_COLOR[4] = { 0,0,0,0 };
 

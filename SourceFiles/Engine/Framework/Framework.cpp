@@ -1,12 +1,13 @@
 #include "Framework.h"
 #include "Sprite.h"
 #include "D3D12Common.h"
+using namespace WristerEngine;
 
 void Framework::Initialize()
 {
 	wAPI->Initialize(windowName);
 	dxCommon->Initialize();
-	Sprite::StaticInitialize();
+	_2D::Sprite::StaticInitialize();
 	input->Initialize();
 	sceneManager->Initialize();
 	PipelineManager::Initialize();

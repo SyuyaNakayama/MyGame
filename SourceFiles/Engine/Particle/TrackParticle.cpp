@@ -1,5 +1,6 @@
 #include "TrackParticle.h"
 #include "Random.h"
+using namespace WristerEngine;
 
 void TrackParticle::Particle::Update()
 {

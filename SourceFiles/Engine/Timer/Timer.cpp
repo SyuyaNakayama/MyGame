@@ -1,5 +1,6 @@
 #include "Timer.h"
 using namespace std::chrono;
+using namespace WristerEngine;
 
 std::array<int, 2> FrameTimer::ConvertToSecond(int time, int fps) const
 {

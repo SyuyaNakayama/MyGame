@@ -1,6 +1,7 @@
 #include "Collider.h"
 #include "CollisionManager.h"
 #include <cassert>
+using namespace WristerEngine;
 
 float IncludeCollider::includeRadius = 0.1f;
 

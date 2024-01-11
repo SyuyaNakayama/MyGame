@@ -1,4 +1,5 @@
 #include "Random.h"
+using namespace WristerEngine;
 
 std::random_device RandomDevice::rnd;
 std::mt19937 RandomDevice::rnddev(rnd());

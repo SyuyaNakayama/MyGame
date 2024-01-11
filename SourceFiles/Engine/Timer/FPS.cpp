@@ -1,6 +1,7 @@
 #include "FPS.h"
 #include <thread>
 using namespace std::chrono;
+using namespace WristerEngine;
 
 FPS* FPS::GetInstance()
 {

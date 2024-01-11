@@ -5,6 +5,7 @@
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
 using namespace std;
+using namespace WristerEngine;
 
 const Vector2 WIN_SIZE = WindowsAPI::WIN_SIZE;
 

@@ -2,6 +2,7 @@
 #include <fstream>
 #include <cassert>
 #include "ModelManager.h"
+using namespace WristerEngine;
 
 const std::string JsonLoader::DEFAULT_BASE_DIRECTORY = "Resources/levels/";
 

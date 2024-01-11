@@ -2,13 +2,15 @@
 #include <imgui.h>
 #include "SceneManager.h"
 
+using namespace WristerEngine::_3D;
+
 int Stage::score = 0;
 float Stage::GROUND_POS_Y = 5.0f;
 
 void Stage::Initialize()
 {
 	SpawnObject::SetObjectList(&gameObjects);
-	levelData = JsonLoader::LoadJson("stage");
+	levelData = WristerEngine::JsonLoader::LoadJson("stage");
 
 	std::unique_ptr<GameObject> gameObject;
 	for (auto& objectData : levelData->objects)
@@ -32,8 +34,8 @@ void Stage::Initialize()
 		else if (objectData.fileName == "SpawnPoint")
 		{
 			const std::array<int, 2> SPAWN_INTERVALS = { 180,1 };
-			bool isPlayScene = SceneManager::GetInstance()->GetNowScene() == Scene::Play ||
-				SceneManager::GetInstance()->GetNowScene() == Scene::Tutorial;
+			bool isPlayScene = WristerEngine::SceneManager::GetInstance()->GetNowScene() == Scene::Play ||
+				WristerEngine::SceneManager::GetInstance()->GetNowScene() == Scene::Tutorial;
 
 			gameObject = std::make_unique<SpawnObject>();
 			objectData.spawnInterval = SPAWN_INTERVALS[isPlayScene];
@@ -46,7 +48,7 @@ void Stage::Initialize()
 		}
 	}
 
-	fps = FPS::GetInstance()->GetMaxFPS();
+	fps = WristerEngine::FPS::GetInstance()->GetMaxFPS();
 	ResetTime();
 	Goal::StaticInitialize();
 }

@@ -1,6 +1,7 @@
 #include "Audio.h"
 #include "D3D12Common.h"
 #include <fstream>
+using namespace WristerEngine;
 
 std::string Audio::DEFAULT_TEXTURE_DIRECTORY_PATH = "Resources/Sounds/";
 

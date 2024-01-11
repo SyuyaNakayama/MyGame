@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <imgui.h>
 #include "ImGuiManager.h"
+using namespace WristerEngine;
 
 std::vector<std::array<Physics*, 2>> Physics::collideList;
 float Physics::gravity = 0.5f; // 重力加速度 g
@@ -9,7 +10,7 @@ Vector3 Physics::gravityDir = { 0,-1,0 }; // 下向き重力
 float Physics::k_air = 0.4f;
 
 // 物理クラス生成 (Unityでいう Rigidbody)
-std::unique_ptr<Physics> Physics::Create(WorldTransform* w)
+std::unique_ptr<Physics> Physics::Create(_3D::WorldTransform* w)
 {
 	std::unique_ptr<Physics> instance = std::make_unique<Physics>();
 	instance->worldTransform = w;

@@ -27,167 +27,170 @@ enum class CollisionMask
 	Goal = (int)CollisionAttribute::Player | (int)CollisionAttribute::Object,
 };
 
-class BoxCollider;
-class SphereCollider;
-class PlaneCollider;
-class PolygonCollider;
-class RayCollider;
-class IncludeCollider;
-class MeshCollider;
-
-// コライダー基底クラス
-class BaseCollider
+namespace WristerEngine
 {
-protected:
-	CollisionAttribute collisionAttribute = CollisionAttribute::All;
-	CollisionMask collisionMask = CollisionMask::All;
-	WorldTransform* worldTransform = nullptr;
-	std::unique_ptr<Physics> physics;
+	class BoxCollider;
+	class SphereCollider;
+	class PlaneCollider;
+	class PolygonCollider;
+	class RayCollider;
+	class IncludeCollider;
+	class MeshCollider;
 
-public:
-	virtual ~BaseCollider() = default;
+	// コライダー基底クラス
+	class BaseCollider
+	{
+	protected:
+		CollisionAttribute collisionAttribute = CollisionAttribute::All;
+		CollisionMask collisionMask = CollisionMask::All;
+		_3D::WorldTransform* worldTransform = nullptr;
+		std::unique_ptr<Physics> physics;
 
-	// 衝突コールバック関数
-	virtual void OnCollision([[maybe_unused]]BoxCollider* boxCollider) {}
-	virtual void OnCollision([[maybe_unused]]SphereCollider* sphereCollider) {}
-	virtual void OnCollision([[maybe_unused]]PlaneCollider* boxCollider) {}
-	virtual void OnCollision([[maybe_unused]]PolygonCollider* sphereCollider) {}
-	virtual void OnCollision([[maybe_unused]]RayCollider* sphereCollider) {}
-	virtual void OnCollision([[maybe_unused]]IncludeCollider* sphereCollider) {}
+	public:
+		virtual ~BaseCollider() = default;
 
-	// setter
-	void SetCollisionAttribute(CollisionAttribute collisionAttribute_) { collisionAttribute = collisionAttribute_; }
-	void SetCollisionMask(CollisionMask collisionMask_) { collisionMask = collisionMask_; }
-	void SetWorldTransform(WorldTransform* worldTransform_) { worldTransform = worldTransform_; }
-	// getter
-	CollisionAttribute GetCollisionAttribute() { return collisionAttribute; }
-	CollisionMask GetCollisionMask() { return collisionMask; }
-	virtual Vector3 GetWorldPosition() { return worldTransform->GetWorldPosition(); }
-	Physics* GetPhysics() { return physics.get(); }
-};
+		// 衝突コールバック関数
+		virtual void OnCollision([[maybe_unused]] BoxCollider* boxCollider) {}
+		virtual void OnCollision([[maybe_unused]] SphereCollider* sphereCollider) {}
+		virtual void OnCollision([[maybe_unused]] PlaneCollider* boxCollider) {}
+		virtual void OnCollision([[maybe_unused]] PolygonCollider* sphereCollider) {}
+		virtual void OnCollision([[maybe_unused]] RayCollider* sphereCollider) {}
+		virtual void OnCollision([[maybe_unused]] IncludeCollider* sphereCollider) {}
 
-// ボックスコライダー(AABB方式)
-class BoxCollider : public virtual BaseCollider
-{
-public:
-	// コンストラクタ
-	BoxCollider();
-	// 仮想デストラクタ
-	virtual ~BoxCollider();
-	// 3軸方向の半径を取得
-	virtual Vector3 GetRadius3D() { return worldTransform->scale; }
-};
+		// setter
+		void SetCollisionAttribute(CollisionAttribute collisionAttribute_) { collisionAttribute = collisionAttribute_; }
+		void SetCollisionMask(CollisionMask collisionMask_) { collisionMask = collisionMask_; }
+		void SetWorldTransform(_3D::WorldTransform* worldTransform_) { worldTransform = worldTransform_; }
+		// getter
+		CollisionAttribute GetCollisionAttribute() { return collisionAttribute; }
+		CollisionMask GetCollisionMask() { return collisionMask; }
+		virtual Vector3 GetWorldPosition() { return worldTransform->GetWorldPosition(); }
+		Physics* GetPhysics() { return physics.get(); }
+	};
 
-// 完全包含のボックスコライダー(AABB方式)
-class IncludeCollider : public virtual BaseCollider
-{
-public:
-	enum class Axis { X, Y, Z };
+	// ボックスコライダー(AABB方式)
+	class BoxCollider : public virtual BaseCollider
+	{
+	public:
+		// コンストラクタ
+		BoxCollider();
+		// 仮想デストラクタ
+		virtual ~BoxCollider();
+		// 3軸方向の半径を取得
+		virtual Vector3 GetRadius3D() { return worldTransform->scale; }
+	};
 
-private:
-	// 完全包含半径
-	static float includeRadius;
-	// 当たり判定を取るペアのtrueが少ないほうが計算に反映される
-	std::array<bool, 3> isUseAxis = { true,true,true };
+	// 完全包含のボックスコライダー(AABB方式)
+	class IncludeCollider : public virtual BaseCollider
+	{
+	public:
+		enum class Axis { X, Y, Z };
 
-public:
-	// コンストラクタ
-	IncludeCollider();
-	// 仮想デストラクタ
-	virtual ~IncludeCollider();
-	// 完全包含半径の取得
-	static float GetIncludeRadius() { return includeRadius; }
-	// 使う軸の設定
-	void SetUseAxis(Axis axis, bool isUse) { isUseAxis[(size_t)axis] = isUse; }
-	// 使う軸の取得
-	std::array<bool, 3> GetUseAxis() { return isUseAxis; }
-};
+	private:
+		// 完全包含半径
+		static float includeRadius;
+		// 当たり判定を取るペアのtrueが少ないほうが計算に反映される
+		std::array<bool, 3> isUseAxis = { true,true,true };
 
-// 球コライダー
-class SphereCollider : public virtual BaseCollider
-{
-public:
-	// コンストラクタ
-	SphereCollider();
-	// 仮想デストラクタ
-	virtual ~SphereCollider();
-	// 半径取得
-	virtual float GetRadius() { return worldTransform->scale.x; }
-};
+	public:
+		// コンストラクタ
+		IncludeCollider();
+		// 仮想デストラクタ
+		virtual ~IncludeCollider();
+		// 完全包含半径の取得
+		static float GetIncludeRadius() { return includeRadius; }
+		// 使う軸の設定
+		void SetUseAxis(Axis axis, bool isUse) { isUseAxis[(size_t)axis] = isUse; }
+		// 使う軸の取得
+		std::array<bool, 3> GetUseAxis() { return isUseAxis; }
+	};
 
-// 平面コライダー
-class PlaneCollider : public virtual BaseCollider
-{
-protected:
-	// 基準法線
-	Vector3 baseNormal = Vector3::MakeAxis(Axis::Z);
-	float distance = 0;
-	Vector3 inter;
+	// 球コライダー
+	class SphereCollider : public virtual BaseCollider
+	{
+	public:
+		// コンストラクタ
+		SphereCollider();
+		// 仮想デストラクタ
+		virtual ~SphereCollider();
+		// 半径取得
+		virtual float GetRadius() { return worldTransform->scale.x; }
+	};
 
-public:
-	// コンストラクタ
-	PlaneCollider();
-	// 仮想デストラクタ
-	virtual ~PlaneCollider();
-	// setter
-	void SetInter(const Vector3& inter_) { inter = inter_; }
-	void SetDistance(float distance_) { distance = distance_; }
-	void SetRotation(const Vector3& rotation) { worldTransform->rotation = rotation; }
-	void SetBaseNormal(const Vector3& baseNormal_) { baseNormal = baseNormal_; }
-	// getter
-	virtual Vector3 GetNormal() { return baseNormal * Matrix4::Rotate(worldTransform->rotation); }
-	virtual Vector3* GetInter() { return &inter; }
-	virtual float GetDistance() { return distance; }
-};
+	// 平面コライダー
+	class PlaneCollider : public virtual BaseCollider
+	{
+	protected:
+		// 基準法線
+		Vector3 baseNormal = Vector3::MakeAxis(Axis::Z);
+		float distance = 0;
+		Vector3 inter;
 
-// 多角形平面コライダー
-class PolygonCollider : public virtual BaseCollider
-{
-protected:
-	// 基準法線
-	Vector3 baseNormal = Vector3::MakeAxis(Axis::Y);
-	// 頂点は時計回り
-	std::vector<Vector3> vertices;
-	float distance = 0;
-	// メッシュコライダーで使う
-	Vector3 normal;
+	public:
+		// コンストラクタ
+		PlaneCollider();
+		// 仮想デストラクタ
+		virtual ~PlaneCollider();
+		// setter
+		void SetInter(const Vector3& inter_) { inter = inter_; }
+		void SetDistance(float distance_) { distance = distance_; }
+		void SetRotation(const Vector3& rotation) { worldTransform->rotation = rotation; }
+		void SetBaseNormal(const Vector3& baseNormal_) { baseNormal = baseNormal_; }
+		// getter
+		virtual Vector3 GetNormal() { return baseNormal * Matrix4::Rotate(worldTransform->rotation); }
+		virtual Vector3* GetInter() { return &inter; }
+		virtual float GetDistance() { return distance; }
+	};
 
-public:
-	// コンストラクタ
-	PolygonCollider();
-	// 仮想デストラクタ
-	virtual ~PolygonCollider();
-	// 頂点更新
-	void UpdateVertices();
-	// 距離を計算
-	void ComputeDistance() { distance = Dot(GetNormal(), vertices[0]); }
-	// 法線を計算
-	void ComputeNormal();
-	// 平面に変換する
-	void ToPlaneCollider(PlaneCollider* planeCollider);
-	// 頂点を追加
-	void AddVertices(Vector3 pos) { vertices.push_back(pos); }
-	// setter
-	void SetBaseNormal(Vector3 baseNormal_) { baseNormal = baseNormal_; }
-	virtual void SetVertices();
-	// getter
-	virtual Vector3 GetNormal() { return baseNormal * Matrix4::Rotate(worldTransform->rotation); }
-	virtual std::vector<Vector3> GetVertices() { return vertices; }
-};
+	// 多角形平面コライダー
+	class PolygonCollider : public virtual BaseCollider
+	{
+	protected:
+		// 基準法線
+		Vector3 baseNormal = Vector3::MakeAxis(Axis::Y);
+		// 頂点は時計回り
+		std::vector<Vector3> vertices;
+		float distance = 0;
+		// メッシュコライダーで使う
+		Vector3 normal;
 
-// レイコライダー
-class RayCollider : public virtual BaseCollider
-{
-public:
-	// 基準レイ
-	Vector3 baseRayDirection = Vector3::MakeAxis(Axis::Z);
-	// コンストラクタ
-	RayCollider();
-	// 仮想デストラクタ
-	virtual ~RayCollider();
-	// レイ方向を取得
-	virtual const Vector3 GetRayDirection() { return baseRayDirection * Matrix4::Rotate(worldTransform->rotation); }
-};
+	public:
+		// コンストラクタ
+		PolygonCollider();
+		// 仮想デストラクタ
+		virtual ~PolygonCollider();
+		// 頂点更新
+		void UpdateVertices();
+		// 距離を計算
+		void ComputeDistance() { distance = Dot(GetNormal(), vertices[0]); }
+		// 法線を計算
+		void ComputeNormal();
+		// 平面に変換する
+		void ToPlaneCollider(PlaneCollider* planeCollider);
+		// 頂点を追加
+		void AddVertices(Vector3 pos) { vertices.push_back(pos); }
+		// setter
+		void SetBaseNormal(Vector3 baseNormal_) { baseNormal = baseNormal_; }
+		virtual void SetVertices();
+		// getter
+		virtual Vector3 GetNormal() { return baseNormal * Matrix4::Rotate(worldTransform->rotation); }
+		virtual std::vector<Vector3> GetVertices() { return vertices; }
+	};
+
+	// レイコライダー
+	class RayCollider : public virtual BaseCollider
+	{
+	public:
+		// 基準レイ
+		Vector3 baseRayDirection = Vector3::MakeAxis(Axis::Z);
+		// コンストラクタ
+		RayCollider();
+		// 仮想デストラクタ
+		virtual ~RayCollider();
+		// レイ方向を取得
+		virtual const Vector3 GetRayDirection() { return baseRayDirection * Matrix4::Rotate(worldTransform->rotation); }
+	};
+}
 
 // メッシュコライダー
 //class MeshCollider : public BaseCollider

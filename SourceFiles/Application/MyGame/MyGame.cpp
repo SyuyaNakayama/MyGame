@@ -4,6 +4,8 @@
 #include "ModelManager.h"
 #include "MyGame.h"
 #include "ParticleManager.h"
+using namespace WristerEngine::_2D;
+using namespace WristerEngine::_3D;
 
 void MyGame::Initialize()
 {
@@ -11,11 +13,11 @@ void MyGame::Initialize()
 	Framework::Initialize();
 	sceneManager->ChangeScene(Scene::Tutorial, false, false, false);
 	ModelManager::Initialize();
-	ParticleManager::Initialize();
-	ParticleManager::AddParticleGroup("Fire.png");
-	ParticleManager::AddParticleGroup("CollisionParticle.png");
+	WristerEngine::ParticleManager::Initialize();
+	WristerEngine::ParticleManager::AddParticleGroup("Fire.png");
+	WristerEngine::ParticleManager::AddParticleGroup("CollisionParticle.png");
 	ImGuiManager::Initialize();
-	AudioManager::Initialize();
+	WristerEngine::AudioManager::Initialize();
 	postEffect = std::make_unique<PostEffect>();
 	postEffect->Initialize();
 }
@@ -25,10 +27,10 @@ void MyGame::Update()
 	ImGuiManager::Begin();
 	Framework::Update();
 	ModelManager::Update();
-	CollisionManager::CheckAllCollisions();
-	Physics::ResetCollideList();
-	ParticleManager::Update();
-	AudioManager::Update();
+	WristerEngine::CollisionManager::CheckAllCollisions();
+	WristerEngine::Physics::ResetCollideList();
+	WristerEngine::ParticleManager::Update();
+	WristerEngine::AudioManager::Update();
 	ImGuiManager::End();
 }
 
@@ -36,7 +38,7 @@ void MyGame::Draw()
 {
 	postEffect->PreDrawScene();
 	ModelManager::DrawObjects();
-	ParticleManager::Draw();
+	WristerEngine::ParticleManager::Draw();
 	Sprite::PreDraw();
 	sceneManager->Draw();
 	postEffect->PostDrawScene();
@@ -50,6 +52,6 @@ void MyGame::Draw()
 void MyGame::Finalize()
 {
 	ImGuiManager::Finalize();
-	AudioManager::Finalize();
+	WristerEngine::AudioManager::Finalize();
 	Framework::Finalize();
 }
