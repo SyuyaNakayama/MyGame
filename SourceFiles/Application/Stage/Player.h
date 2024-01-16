@@ -7,14 +7,14 @@
 class Stage;
 
 // プレイヤーのオブジェクト
-class Player : public SphereCollider, public BoxCollider, public GameObject
+class Player : public WristerEngine::SphereCollider, public WristerEngine::BoxCollider, public WristerEngine::_3D::GameObject
 {
 private:
 	static const float PLAYER_MOVE_FORCE;
-	Object3d* object;
-	std::unique_ptr<BaseCamera> camera;
+	WristerEngine::_3D::Object3d* object;
+	std::unique_ptr<WristerEngine::_3D::BaseCamera> camera;
 	int isTurn = 0; // falseの時z+の方向に移動、trueの時にz-の方向に移動
-	FrameTimer moveTimer = 180;
+	WristerEngine::FrameTimer moveTimer = 180;
 
 	// プレイシーンでの動き
 	void Move_Play();
@@ -30,7 +30,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="objectData">Jsonファイルから読み込んだデータ</param>
-	void Initialize(const ObjectData& objectData);
+	void Initialize(const WristerEngine::ObjectData& objectData);
 	// 更新
 	void Update();
 };

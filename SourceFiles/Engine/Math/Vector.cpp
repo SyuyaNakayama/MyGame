@@ -231,8 +231,8 @@ Vector3 Normalize(const Vector3& v) { return Vector3(v).Normalize(); }
 Vector2 To2DVector(const Vector3& vec)
 {
 	Vector3 v = vec;
-	v *= ModelManager::GetViewProjection()->GetViewProjectionMatrix();
-	v *= DirectXCommon::GetInstance()->GetViewportMatrix();
+	v *= WristerEngine::_3D::ModelManager::GetViewProjection()->GetViewProjectionMatrix();
+	v *= WristerEngine::DirectXCommon::GetInstance()->GetViewportMatrix();
 	return v;
 }
 Vector3 Lerp(const Vector3& start, const Vector3& end, const float t) { return start * (1.0f - t) + end * t; }

@@ -3,6 +3,6 @@
 
 void WristerEngine::Skydome::Initialize(float scale)
 {
-	object = ModelManager::Create("skydome", true);
+	object = _3D::ModelManager::Create("skydome", true);
 	object->worldTransform->scale *= scale;
 }

@@ -2,6 +2,9 @@
 #include "Stage.h"
 #include "ParticleManager.h"
 
+using namespace WristerEngine::_3D;
+using namespace WristerEngine::_2D;
+
 std::map<Goal::Score, std::string> Goal::SCORE_TEX_NAME =
 {
 	{ Score::_M10,"Textures/score-10.png" },
@@ -18,11 +21,11 @@ const std::vector<Goal::Score> Goal::SCORE_TABLE =
 	Score::_30, Score::_30, Score::_30, Score::_50
 };
 
-FrameTimer Goal::scoreChangeTimer = 600;
+WristerEngine::FrameTimer Goal::scoreChangeTimer = 600;
 bool Goal::isScoreChange = false;
-Random_Int Goal::randScore(0, (int)SCORE_TABLE.size() - 1);
+WristerEngine::Random_Int Goal::randScore(0, (int)SCORE_TABLE.size() - 1);
 
-void Block::Initialize(const ObjectData& objectData)
+void Block::Initialize(const WristerEngine::ObjectData& objectData)
 {
 	object = ModelManager::Create("cube");
 	object->worldTransform.reset(objectData.worldTransform);
@@ -45,7 +48,7 @@ void Block::Initialize(const ObjectData& objectData)
 
 void Block::OnCollision(BoxCollider* collider)
 {
-	Physics* physics_ = collider->GetPhysics();
+	WristerEngine::Physics* physics_ = collider->GetPhysics();
 	if (!physics_) { return; }
 	const float ZERO = 0.001f;
 	if (normal.Length() <= ZERO) { return; }
@@ -67,7 +70,7 @@ void Goal::StaticUpdate()
 	isScoreChange = scoreChangeTimer.Update();
 }
 
-void Goal::Initialize(const ObjectData& objectData)
+void Goal::Initialize(const WristerEngine::ObjectData& objectData)
 {
 	object = ModelManager::Create("cube");
 	object->worldTransform.reset(objectData.worldTransform);
@@ -81,24 +84,24 @@ void Goal::Initialize(const ObjectData& objectData)
 void Goal::ChangeScore()
 {
 	score = SCORE_TABLE[randScore()];
-	std::unique_ptr<Sprite> newSprite = Sprite::Create(Goal::SCORE_TEX_NAME[score]);
+	std::unique_ptr<WristerEngine::_2D::Sprite> newSprite = Sprite::Create(Goal::SCORE_TEX_NAME[score]);
 
 	switch (score)
 	{
 	case Goal::Score::_M10:
-		newSprite->color = ColorRGBA::Blue();
+		newSprite->color = WristerEngine::ColorRGBA::Blue();
 		break;
 	case Goal::Score::_10:
-		newSprite->color = ColorRGBA::White();
+		newSprite->color = WristerEngine::ColorRGBA::White();
 		break;
 	case Goal::Score::_20:
 		newSprite->color = { 1,1,0.5f,1 };
 		break;
 	case Goal::Score::_30:
-		newSprite->color = ColorRGBA::Yellow();
+		newSprite->color = WristerEngine::ColorRGBA::Yellow();
 		break;
 	case Goal::Score::_50:
-		newSprite->color = ColorRGBA::Red();
+		newSprite->color = WristerEngine::ColorRGBA::Red();
 		break;
 	}
 
@@ -136,7 +139,7 @@ void Goal::Update()
 
 void Goal::OnCollision(BoxCollider* collider)
 {
-	Physics* physics_ = collider->GetPhysics();
+	WristerEngine::Physics* physics_ = collider->GetPhysics();
 	if (!physics_) { return; }
 	if (normal.Length() <= 0.001f) { return; }
 	if (collider->GetCollisionAttribute() == CollisionAttribute::Player)
@@ -151,8 +154,8 @@ void Goal::OnCollision(BoxCollider* collider)
 		object_->Goal();
 		Stage::AddScore(object_->GetGoalScore((int)score));
 
-		ParticleGroup* pGroup = ParticleManager::GetParticleGroup(0);
-		DiffuseParticle::AddProp addProp;
+		WristerEngine::ParticleGroup* pGroup = WristerEngine::ParticleManager::GetParticleGroup(0);
+		WristerEngine::DiffuseParticle::AddProp addProp;
 		addProp.addNum = 30;
 		addProp.start_scale = 10;
 		addProp.posOffset = collider->GetWorldPosition();

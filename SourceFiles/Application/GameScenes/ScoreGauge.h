@@ -18,14 +18,14 @@ private:
 	const Vector2 GAUGE_SIZE = { 641,40 }; // ランクと点数
 	const int GAUGE_INC_SPD = 3; // ゲージ上昇速度
 
-	std::unique_ptr<Sprite> scoreUI;
+	std::unique_ptr<WristerEngine::_2D::Sprite> scoreUI;
 	int score = 0;
 	int printScore = 0; // 今表示されてるゲージ量
-	BitMapNumber printScoreUI; // 今表示されてるゲージ量のUI
+	WristerEngine::_2D::BitMapNumber printScoreUI; // 今表示されてるゲージ量のUI
 
-	std::unique_ptr<Sprite> rankGauge;
-	std::unique_ptr<Sprite> rankGaugeBG;
-	std::map<Rank, std::unique_ptr<Sprite>> rankGaugeSplit;
+	std::unique_ptr<WristerEngine::_2D::Sprite> rankGauge;
+	std::unique_ptr<WristerEngine::_2D::Sprite> rankGaugeBG;
+	std::map<Rank, std::unique_ptr<WristerEngine::_2D::Sprite>> rankGaugeSplit;
 
 public:
 	// 初期化

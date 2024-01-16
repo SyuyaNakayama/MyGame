@@ -3,6 +3,8 @@
 #include "ModelManager.h"
 #include "Stage.h"
 
+using namespace WristerEngine::_3D;
+
 void ResultScene::Initialize()
 {
 	debugCamera.Initialize();
@@ -14,7 +16,7 @@ void ResultScene::Initialize()
 
 void ResultScene::Update()
 {
-	if (input->IsTrigger(Key::Space))
+	if (input->IsTrigger(WristerEngine::Key::Space))
 	{
 		sceneManager->ChangeScene(Scene::Title);
 		Stage::ResetScore();

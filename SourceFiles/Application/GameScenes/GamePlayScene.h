@@ -13,8 +13,8 @@ class StartCountDown
 private:
 	static const int COUNT_DOWN_TIME = 3;
 	static int fps;
-	BitMapNumber countUI;
-	FrameTimer countTimer = 0;
+	WristerEngine::_2D::BitMapNumber countUI;
+	WristerEngine::FrameTimer countTimer = 0;
 
 public:
 	/// <summary>
@@ -34,22 +34,22 @@ public:
 };
 
 // UI描画クラス(ゲームシーン用)
-class UIDrawerGameScene : public AbstractUIDrawer
+class UIDrawerGameScene : public WristerEngine::_2D::AbstractUIDrawer
 {
 private:
 	const float SLIDE_DIS_UI_GO = 500; // "Go!"のUIがスライドする距離
 
 	Stage* stage;
-	std::unique_ptr<Sprite> uiScore;
-	std::unique_ptr<Sprite> uiClock;
-	BitMapNumber scoreSprite;
-	BitMapNumber timeIntSprite; // 残り時間整数部
-	BitMapNumber timeDecSprite; // 残り時間小数部
+	std::unique_ptr<WristerEngine::_2D::Sprite> uiScore;
+	std::unique_ptr<WristerEngine::_2D::Sprite> uiClock;
+	WristerEngine::_2D::BitMapNumber scoreSprite;
+	WristerEngine::_2D::BitMapNumber timeIntSprite; // 残り時間整数部
+	WristerEngine::_2D::BitMapNumber timeDecSprite; // 残り時間小数部
 	Angle easingColor = 0; // 時間UI色のイージングに使う
 	std::unique_ptr<StartCountDown> countDown;
-	std::unique_ptr<Sprite> uiGo;
+	std::unique_ptr<WristerEngine::_2D::Sprite> uiGo;
 	Vector2 uiGoSize;
-	Easing uiGoEasing;
+	WristerEngine::Easing uiGoEasing;
 
 	// "Go!"のアニメーションの関数ポインタ
 	void (UIDrawerGameScene::* UIGoAnimation)() = nullptr;
@@ -74,12 +74,12 @@ public:
 };
 
 // ゲームプレイシーンの処理
-class GamePlayScene : public BaseScene
+class GamePlayScene : public WristerEngine::BaseScene
 {
 private:
 	Stage stage;
-	ViewProjection viewProjection;
-	Audio* audio = nullptr;
+	WristerEngine::_3D::ViewProjection viewProjection;
+	WristerEngine::Audio* audio = nullptr;
 
 	// 初期化(オーバーライド)
 	void Initialize();

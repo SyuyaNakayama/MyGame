@@ -31,7 +31,7 @@ namespace WristerEngine
 		// 頂点バッファビュー
 		D3D12_VERTEX_BUFFER_VIEW vbView;
 		// テクスチャインデックス
-		TextureData* texture = nullptr;
+		_2D::TextureData* texture = nullptr;
 		// 拡散するパーティクル
 		DiffuseParticle diffuseParticle;
 		// 始点から終点へ向かうパーティクル

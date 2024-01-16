@@ -85,7 +85,7 @@ namespace WristerEngine
 			// テクスチャ読み込み
 			static TextureData* LoadTexture(const std::string& FILE_NAME, uint32_t mipLevels = MIP_LEVELS_DEFAULT);
 			// スプライト生成
-			static std::unique_ptr<Sprite> Create(const std::string& fileName);
+			static std::unique_ptr<WristerEngine::_2D::Sprite> Create(const std::string& fileName);
 			// 描画前処理
 			static void PreDraw();
 			// getter

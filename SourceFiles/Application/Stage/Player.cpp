@@ -4,9 +4,11 @@
 #include "Stage.h"
 #include <imgui.h>
 
+using namespace WristerEngine::_3D;
+
 const float Player::PLAYER_MOVE_FORCE = 0.15f;
 
-void Player::Initialize(const ObjectData& objectData)
+void Player::Initialize(const WristerEngine::ObjectData& objectData)
 {
 	object = ModelManager::Create("player", true);
 	object->worldTransform.reset(objectData.worldTransform);
@@ -14,14 +16,14 @@ void Player::Initialize(const ObjectData& objectData)
 	camera = std::make_unique<PlayerCamera>();
 	ModelManager::SetViewProjection(camera->GetViewProjection());
 	camera->Initialize(object->worldTransform.get());
-	physics = Physics::Create(worldTransform);
+	physics = WristerEngine::Physics::Create(worldTransform);
 	collisionAttribute = CollisionAttribute::Player;
 	collisionMask = CollisionMask::Player;
 	physics->SetMu(0.23f);
 	physics->SetVelocity({});
 	physics->SetForce(0);
-	if (SceneManager::GetInstance()->GetNowScene() == Scene::Play ||
-		SceneManager::GetInstance()->GetNowScene() == Scene::Tutorial)
+	if (WristerEngine::SceneManager::GetInstance()->GetNowScene() == Scene::Play ||
+		WristerEngine::SceneManager::GetInstance()->GetNowScene() == Scene::Tutorial)
 	{
 		Move = &Player::Move_Play;
 	}
@@ -29,15 +31,15 @@ void Player::Initialize(const ObjectData& objectData)
 
 void Player::Move_Play()
 {
-	Input* input = Input::GetInstance();
+	WristerEngine::Input* input = WristerEngine::Input::GetInstance();
 
-	std::vector<Key> keys = { Key::D,Key::A,Key::W,Key::S };
+	std::vector<WristerEngine::Key> keys = { WristerEngine::Key::D,WristerEngine::Key::A,WristerEngine::Key::W,WristerEngine::Key::S };
 	if (input->IsAnyInput(keys))
 	{
 		physics->SetForce(PLAYER_MOVE_FORCE);
 		Vector3 forcedir;
-		forcedir.x = (float)(input->IsInput(Key::D) - input->IsInput(Key::A));
-		forcedir.z = (float)(input->IsInput(Key::W) - input->IsInput(Key::S));
+		forcedir.x = (float)(input->IsInput(WristerEngine::Key::D) - input->IsInput(WristerEngine::Key::A));
+		forcedir.z = (float)(input->IsInput(WristerEngine::Key::W) - input->IsInput(WristerEngine::Key::S));
 		forcedir *= Matrix4::RotateY(camera->GetAngle().x);
 		physics->SetForceDir(forcedir);
 	}
@@ -69,7 +71,7 @@ void Player::Move_Title()
 void Player::Update()
 {
 	if (Move) { (this->*Move)(); }
-	else if (SceneManager::GetInstance()->GetNowScene() == Scene::Title)
+	else if (WristerEngine::SceneManager::GetInstance()->GetNowScene() == Scene::Title)
 	{
 		if (moveTimer.Update()) { Move = &Player::Move_Title; }
 	}

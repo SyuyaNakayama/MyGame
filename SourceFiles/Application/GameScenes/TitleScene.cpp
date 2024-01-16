@@ -3,6 +3,9 @@
 #include "ModelManager.h"
 #include "ImGuiManager.h"
 
+using namespace WristerEngine::_2D;
+using namespace WristerEngine::_3D;
+
 void TitleScene::Initialize()
 {
 	debugCamera.Initialize();
@@ -17,7 +20,7 @@ void TitleScene::Initialize()
 
 void TitleScene::Update()
 {
-	if (input->IsTrigger(Key::Space))
+	if (input->IsTrigger(WristerEngine::Key::Space))
 	{
 		sceneManager->ChangeScene(Scene::Tutorial);
 		Stage::ResetScore();
@@ -35,7 +38,7 @@ void UIDrawerTitleScene::Initialize()
 
 	for (auto& ui : title)
 	{
-		ui.second->position = Half(WindowsAPI::WIN_SIZE);
+		ui.second->position = Half(WristerEngine::WindowsAPI::WIN_SIZE);
 		ui.second->anchorPoint = { 0.5f,1.0f };
 		ui.second->size *= 1.5f;
 	}
@@ -45,7 +48,7 @@ void UIDrawerTitleScene::Initialize()
 
 	spaceKey.Initialize("ui/Key/key_SPACE.png", 128, 30);
 	Sprite* spaceKeySprite = spaceKey.GetSprite();
-	spaceKeySprite->position = Half(WindowsAPI::WIN_SIZE);
+	spaceKeySprite->position = Half(WristerEngine::WindowsAPI::WIN_SIZE);
 	spaceKeySprite->position.y += 80;
 	spaceKeySprite->size *= 1.5f;
 	spaceKeySprite->anchorPoint.x = 0.5f;

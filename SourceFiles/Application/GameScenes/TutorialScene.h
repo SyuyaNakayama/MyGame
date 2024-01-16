@@ -2,7 +2,7 @@
 #include "BaseScene.h"
 #include "Stage.h"
 
-class TutorialScene : public BaseScene
+class TutorialScene : public WristerEngine::BaseScene
 {
 	Stage stage;
 
@@ -13,11 +13,11 @@ class TutorialScene : public BaseScene
 	void Finalize() { stage.Finalize(); }
 };
 
-class UIDrawerTutorialScene : public AbstractUIDrawer
+class UIDrawerTutorialScene : public WristerEngine::_2D::AbstractUIDrawer
 {
-	std::unique_ptr<Sprite> frame;
-	std::map<Key, std::unique_ptr<Sprite>> keyUI;
-	std::map<std::string, std::unique_ptr<Sprite>> operateUI;
+	std::unique_ptr<WristerEngine::_2D::Sprite> frame;
+	std::map<WristerEngine::Key, std::unique_ptr<WristerEngine::_2D::Sprite>> keyUI;
+	std::map<std::string, std::unique_ptr<WristerEngine::_2D::Sprite>> operateUI;
 
 	// AbstractUIDrawer ÇâÓÇµÇƒåpè≥Ç≥ÇÍÇ‹ÇµÇΩ
 	void Initialize() override;

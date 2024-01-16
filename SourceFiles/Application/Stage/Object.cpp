@@ -5,9 +5,12 @@
 #include "Stage.h"
 #include <imgui.h>
 
+using namespace WristerEngine::_2D;
+using namespace WristerEngine::_3D;
+
 int Object::instanceNum = 0;
 
-void Object::Initialize(const ObjectData& objectData)
+void Object::Initialize(const WristerEngine::ObjectData& objectData)
 {
 	object = ModelManager::Create("player", true);
 	object->worldTransform.reset(objectData.worldTransform);
@@ -17,13 +20,13 @@ void Object::Initialize(const ObjectData& objectData)
 	worldTransform = object->worldTransform.get();
 	collisionAttribute = CollisionAttribute::Object;
 	collisionMask = CollisionMask::Object;
-	physics = Physics::Create(worldTransform);
+	physics = WristerEngine::Physics::Create(worldTransform);
 	physics->SetMass(0.5f);
 	physics->SetMu(0.05f);
 	physics->SetIsFreeFall(true);
 
 	// ƒ^ƒCƒv‚Ìİ’è
-	Random_Int rand(0, (int)Type::MaxNum);
+	WristerEngine::Random_Int rand(0, (int)Type::MaxNum);
 	int num = rand();
 
 	if (num < (int)Type::Red) { type = Type::White; }
@@ -54,17 +57,17 @@ void Object::Update()
 
 void Object::OnCollision(SphereCollider* collider)
 {
-	Physics* _physics = collider->GetPhysics();
+	WristerEngine::Physics* _physics = collider->GetPhysics();
 	if (!_physics) { return; }
 
 	// ’e«Õ“Ë
-	Physics::Backlash(physics.get(), _physics, 1.0f);
+	WristerEngine::Physics::Backlash(physics.get(), _physics, 1.0f);
 
-	DiffuseParticle::AddProp addProp;
+	WristerEngine::DiffuseParticle::AddProp addProp;
 	addProp.addNum = 10;
 	addProp.start_scale = 5;
 	addProp.posOffset = worldTransform->translation;
-	ParticleGroup* particleGroup = ParticleManager::GetParticleGroup(1);
+	WristerEngine::ParticleGroup* particleGroup = WristerEngine::ParticleManager::GetParticleGroup(1);
 	particleGroup->Add(addProp);
 }
 

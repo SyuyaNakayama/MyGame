@@ -170,9 +170,9 @@ void Sprite::Initialize()
 	size = textureSize;
 }
 
-std::unique_ptr<Sprite> Sprite::Create(const std::string& FILE_NAME)
+std::unique_ptr<WristerEngine::_2D::Sprite> Sprite::Create(const std::string& FILE_NAME)
 {
-	std::unique_ptr<Sprite> sprite = std::make_unique<Sprite>();
+	std::unique_ptr<WristerEngine::_2D::Sprite> sprite = std::make_unique<Sprite>();
 	sprite->tex = LoadTexture(FILE_NAME);
 	sprite->Initialize();
 	return sprite;

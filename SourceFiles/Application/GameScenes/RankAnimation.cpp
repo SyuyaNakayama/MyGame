@@ -1,6 +1,8 @@
 #include "RankAnimation.h"
 #include "Input.h"
 
+using namespace WristerEngine::_2D;
+
 void RankAnimation::ChangePhase()
 {
 	if (nextPhase == AnimationPhase::Null) { return; }
@@ -73,7 +75,7 @@ void BaseAnimation::CreateRankUI(Rank rank)
 		break;
 	}
 	rankUI->SetCenterAnchor();
-	rankUI->position = { 1030,Half(WindowsAPI::WIN_SIZE.y) };
+	rankUI->position = { 1030,Half(WristerEngine::WindowsAPI::WIN_SIZE.y) };
 }
 
 void JudgeAnimation::Initialize(RankAnimation* pRankAnimation_)
@@ -97,12 +99,12 @@ void DisappearAnimation::Initialize(RankAnimation* pRankAnimation_)
 	BaseAnimation::Initialize(pRankAnimation_);
 	rankUI.release();
 	CreateRankUI(pScoreGauge->GetPreRank());
-	rankSpriteFade.Initialize(RANK_ANIMATION_TIME, Easing::Type::Sqrt);
+	rankSpriteFade.Initialize(RANK_ANIMATION_TIME, WristerEngine::Easing::Type::Sqrt);
 }
 
 void DisappearAnimation::Update()
 {
-	rankUI->color.a = Color::MAX - rankSpriteFade.Update(); // 透明に
+	rankUI->color.a = WristerEngine::Color::MAX - rankSpriteFade.Update(); // 透明に
 	// アニメーション終了
 	if (rankSpriteFade.IsFinish()) { pRankAnimation->ReservePhase(AnimationPhase::Appear); }
 	rankUI->Update();
@@ -111,8 +113,8 @@ void DisappearAnimation::Update()
 void AppearAnimation::Initialize(RankAnimation* pRankAnimation_)
 {
 	BaseAnimation::Initialize(pRankAnimation_);
-	rankSpriteFade.Initialize(RANK_ANIMATION_TIME, Easing::Type::Sqrt);
-	rankSpriteScale.Initialize(RANK_ANIMATION_TIME, Easing::Type::OutBounce);
+	rankSpriteFade.Initialize(RANK_ANIMATION_TIME, WristerEngine::Easing::Type::Sqrt);
+	rankSpriteScale.Initialize(RANK_ANIMATION_TIME, WristerEngine::Easing::Type::OutBounce);
 	rankSpriteSizeMem = rankUI->size;
 }
 
@@ -133,7 +135,7 @@ void ResultAnimation::Initialize(RankAnimation* pRankAnimation_)
 
 	// ランク発表時に背景を暗くするためのスプライト
 	blind = Sprite::Create("white1x1.png");
-	blind->size = WindowsAPI::WIN_SIZE;
+	blind->size = WristerEngine::WindowsAPI::WIN_SIZE;
 	blind->color = { 0,0,0,0.5f };
 }
 
@@ -145,7 +147,7 @@ void ResultAnimation::Update()
 	resultRankSprite->size *= 4.0f;
 	blind->Update();
 	resultRankSprite->Update();
-	if (Input::GetInstance()->IsTrigger(Key::Return))
+	if (WristerEngine::Input::GetInstance()->IsTrigger(WristerEngine::Key::Return))
 	{
 		pRankAnimation->ReservePhase(AnimationPhase::End);
 	}

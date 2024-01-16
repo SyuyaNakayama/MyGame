@@ -3,7 +3,7 @@
 #include "GameObject.h"
 
 // ゴールに運ぶオブジェクト
-class Object : public SphereCollider, public BoxCollider, public GameObject
+class Object : public WristerEngine::SphereCollider, public WristerEngine::BoxCollider, public WristerEngine::_3D::GameObject
 {
 public:
 	enum class Type
@@ -17,7 +17,7 @@ public:
 private:
 	static int instanceNum;
 
-	Object3d* object = nullptr;
+	WristerEngine::_3D::Object3d* object = nullptr;
 	bool isGoal = false;
 	float dissolvePow = 0;
 	Type type = Type::White;
@@ -31,7 +31,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="objectData">Jsonファイルから読み込んだデータ</param>
-	void Initialize(const ObjectData& objectData);
+	void Initialize(const WristerEngine::ObjectData& objectData);
 	// 更新
 	void Update();
 	// 衝突コールバック関数(SphereCollider版)

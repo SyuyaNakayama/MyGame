@@ -4,9 +4,9 @@
 #include "Random.h"
 
 // 床と壁のオブジェクト
-class Block : public BoxCollider, public GameObject
+class Block : public WristerEngine::BoxCollider, public WristerEngine::_3D::GameObject
 {
-	Object3d* object;
+	WristerEngine::_3D::Object3d* object;
 	Vector3 normal;
 
 public:
@@ -14,7 +14,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="objectData">Jsonファイルから読み込んだデータ</param>
-	void Initialize(const ObjectData& objectData);
+	void Initialize(const WristerEngine::ObjectData& objectData);
 	// 更新
 	void Update() {}
 	// 衝突コールバック関数(BoxCollider版)
@@ -22,7 +22,7 @@ public:
 };
 
 // ゴールのオブジェクト
-class Goal : public BoxCollider, public GameObject
+class Goal : public WristerEngine::BoxCollider, public WristerEngine::_3D::GameObject
 {
 	enum class Score
 	{
@@ -35,14 +35,14 @@ class Goal : public BoxCollider, public GameObject
 
 	static std::map<Score, std::string> SCORE_TEX_NAME;
 	static const std::vector<Score> SCORE_TABLE;
-	static FrameTimer scoreChangeTimer;
+	static WristerEngine::FrameTimer scoreChangeTimer;
 	static bool isScoreChange;
-	static Random_Int randScore;
+	static WristerEngine::Random_Int randScore;
 
-	Object3d* object;
+	WristerEngine::_3D::Object3d* object;
 	Vector3 normal;
 	Score score;
-	ColorRGBA initColor;
+	WristerEngine::ColorRGBA initColor;
 
 	void ChangeScore();
 
@@ -56,7 +56,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="objectData">Jsonファイルから読み込んだデータ</param>
-	void Initialize(const ObjectData& objectData);
+	void Initialize(const WristerEngine::ObjectData& objectData);
 	// 更新
 	void Update();
 	// 衝突コールバック関数(BoxCollider版)

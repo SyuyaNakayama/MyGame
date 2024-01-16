@@ -1,6 +1,8 @@
 #include "TutorialScene.h"
 #include "SceneManager.h"
 
+using namespace WristerEngine::_2D;
+
 void TutorialScene::Initialize()
 {
 	stage.Initialize();
@@ -10,7 +12,7 @@ void TutorialScene::Initialize()
 
 void TutorialScene::Update()
 {
-	if (input->IsTrigger(Key::Space))
+	if (input->IsTrigger(WristerEngine::Key::Space))
 	{
 		sceneManager->ChangeScene(Scene::Play);
 		Stage::ResetScore();
@@ -27,6 +29,8 @@ void UIDrawerTutorialScene::Initialize()
 	frame->position = { 50,420 };
 	frame->size = { 350,286 };
 	frame->Update();
+
+	using Key = WristerEngine::Key;
 
 	keyUI[Key::A] = Sprite::Create("UI/Key/key_A.png");
 	keyUI[Key::D] = Sprite::Create("UI/Key/key_D.png");
@@ -48,7 +52,7 @@ void UIDrawerTutorialScene::Initialize()
 	}
 
 	keyUI[Key::Space]->anchorPoint = { 0.5f,2 };
-	keyUI[Key::Space]->position = { Half(WindowsAPI::WIN_SIZE.x), WindowsAPI::WIN_SIZE.y };
+	keyUI[Key::Space]->position = { Half(WristerEngine::WindowsAPI::WIN_SIZE.x), WristerEngine::WindowsAPI::WIN_SIZE.y };
 
 	const float UI_POS_COMPRESS = 10.0f; // 操作UI間の距離を圧縮するための変数
 	const float DISTANCE_BETWEEN_KEY_ARROW = 148.0f; // キー操作UIとアローUI間の距離
@@ -87,7 +91,7 @@ void UIDrawerTutorialScene::Initialize()
 	
 	operateUI["play"] = Sprite::Create("UI/Play.png");
 	operateUI["play"]->anchorPoint = { 0.5f,2 };
-	operateUI["play"]->position = { Half(WindowsAPI::WIN_SIZE.x), WindowsAPI::WIN_SIZE.y };
+	operateUI["play"]->position = { Half(WristerEngine::WindowsAPI::WIN_SIZE.x), WristerEngine::WindowsAPI::WIN_SIZE.y };
 
 	for (auto& s : operateUI) { s.second->Update(); }
 }
@@ -97,7 +101,7 @@ void UIDrawerTutorialScene::Update()
 	for (auto& s : keyUI)
 	{
 		// キーを押したらレクト位置を変える
-		s.second->textureLeftTop.x = Input::GetInstance()->IsInput(s.first) * s.second->size.x;
+		s.second->textureLeftTop.x = WristerEngine::Input::GetInstance()->IsInput(s.first) * s.second->size.x;
 		s.second->Update();
 	}
 }

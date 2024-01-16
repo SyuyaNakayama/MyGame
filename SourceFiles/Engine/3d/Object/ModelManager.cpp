@@ -56,7 +56,7 @@ void ModelManager::DrawObjects()
 	// カメラ
 	cmdList->SetGraphicsRootConstantBufferView((UINT)RootParamNum::Camera, viewProjection->constBuffer->GetGPUVirtualAddress());
 	// デスクリプタヒープセット
-	Sprite::SetDescriptorHeaps();
+	_2D::Sprite::SetDescriptorHeaps();
 	for (auto& object : objects) { object->Draw(); }
 }
 

@@ -2,6 +2,9 @@
 #include "SceneManager.h"
 #include <imgui.h>
 
+using namespace WristerEngine::_2D;
+using namespace WristerEngine::_3D;
+
 int StartCountDown::fps = 0;
 
 void GamePlayScene::Initialize()
@@ -24,8 +27,8 @@ void GamePlayScene::Initialize()
 void GamePlayScene::Update()
 {
 #ifdef _DEBUG
-	if (input->IsTrigger(Key::_1)) { ModelManager::SetViewProjection(&viewProjection); }
-	if (input->IsTrigger(Key::_2)) { ModelManager::SetViewProjection(&debugCamera); }
+	if (input->IsTrigger(WristerEngine::Key::_1)) { ModelManager::SetViewProjection(&viewProjection); }
+	if (input->IsTrigger(WristerEngine::Key::_2)) { ModelManager::SetViewProjection(&debugCamera); }
 #endif // _DEBUG
 	uiDrawer->Update();
 	UIDrawerGameScene* uiDrawer_ = dynamic_cast<UIDrawerGameScene*>(uiDrawer.get());
@@ -40,7 +43,7 @@ void GamePlayScene::Update()
 		sceneManager->ChangeScene(Scene::Result);
 	}
 
-	if (input->IsTrigger(Key::Space))
+	if (input->IsTrigger(WristerEngine::Key::Space))
 	{
 		sceneManager->ChangeScene(Scene::Title);
 	}
@@ -56,10 +59,10 @@ std::unique_ptr<StartCountDown> StartCountDown::Create()
 		"ui/num.png",{30,30},{360,360},{},1
 	};
 
-	bitMapProp.pos = Half((WindowsAPI::WIN_SIZE - bitMapProp.size));
+	bitMapProp.pos = Half(WristerEngine::WindowsAPI::WIN_SIZE - bitMapProp.size);
 	*countDown->countUI.GetBitMapProp() = bitMapProp;
 	countDown->countUI.Initialize();
-	if (fps == 0) { fps = FPS::GetInstance()->GetFPS(); }
+	if (fps == 0) { fps = WristerEngine::FPS::GetInstance()->GetFPS(); }
 	countDown->countTimer = COUNT_DOWN_TIME * fps;
 
 	return countDown;
@@ -129,10 +132,10 @@ void UIDrawerGameScene::Initialize()
 	countDown = StartCountDown::Create();
 	uiGo = Sprite::Create("ui/GO.png");
 	uiGo->SetCenterAnchor();
-	uiGo->position = Half(WindowsAPI::WIN_SIZE);
+	uiGo->position = Half(WristerEngine::WindowsAPI::WIN_SIZE);
 	uiGo->isInvisible = true; // “§–¾
 	const int GO_EASING_DEC = 4;
-	uiGoEasing.Initialize(StartCountDown::GetFPS() / GO_EASING_DEC, Easing::Type::Sqrt);
+	uiGoEasing.Initialize(StartCountDown::GetFPS() / GO_EASING_DEC, WristerEngine::Easing::Type::Sqrt);
 	UIGoAnimation = &UIDrawerGameScene::UIGoSlide;
 }
 
@@ -180,7 +183,7 @@ void UIDrawerGameScene::Update()
 void UIDrawerGameScene::UIGoSlide()
 {
 	float easingNum = uiGoEasing.Update();
-	uiGo->position.x = WindowsAPI::WIN_SIZE.x / 2.0f + SLIDE_DIS_UI_GO * (1.0f - easingNum);
+	uiGo->position.x = WristerEngine::WindowsAPI::WIN_SIZE.x / 2.0f + SLIDE_DIS_UI_GO * (1.0f - easingNum);
 	uiGo->color.a = easingNum;
 	if (easingNum == 1.0f)
 	{
@@ -191,7 +194,7 @@ void UIDrawerGameScene::UIGoSlide()
 void UIDrawerGameScene::UIGoIdle()
 {
 	const int IDLE_TIME = 20;
-	static FrameTimer idle = IDLE_TIME;
+	static WristerEngine::FrameTimer idle = IDLE_TIME;
 	if (idle.Update())
 	{
 		uiGoSize = uiGo->size;

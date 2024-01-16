@@ -44,7 +44,7 @@ namespace WristerEngine
 		class BitMapNumber
 		{
 		private:
-			std::vector<std::unique_ptr<Sprite>> sprites;
+			std::vector<std::unique_ptr<WristerEngine::_2D::Sprite>> sprites;
 			BitMapProp bitMapProp;
 			Vector2 allSpriteSize; // スプライト全体の大きさ
 

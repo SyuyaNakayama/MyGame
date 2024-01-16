@@ -12,9 +12,9 @@ SceneFactory* SceneFactory::GetInstance()
 	return &instance;
 }
 
-std::unique_ptr<BaseScene> SceneFactory::CreateScene(Scene scene)
+std::unique_ptr<WristerEngine::BaseScene> SceneFactory::CreateScene(Scene scene)
 {
-	std::unique_ptr<BaseScene> newScene;
+	std::unique_ptr<WristerEngine::BaseScene> newScene;
 
 	switch (scene)
 	{

@@ -1,6 +1,8 @@
 #include "ScoreGauge.h"
 #include "Stage.h"
 
+using namespace WristerEngine::_2D;
+
 Rank ScoreGauge::GetRank() const
 {
 	if (printScore >= (int)Rank::S) { return Rank::S; }
@@ -36,13 +38,13 @@ void ScoreGauge::Initialize()
 
 	// ƒ‰ƒ“ƒNƒQ[ƒW
 	rankGauge = Sprite::Create("ui/RankGauge.png");
-	rankGauge->position = Half(WindowsAPI::WIN_SIZE);
+	rankGauge->position = Half(WristerEngine::WindowsAPI::WIN_SIZE);
 	rankGauge->SetCenterAnchor();
 	rankGauge->Update();
 
 	// ƒ‰ƒ“ƒNƒQ[ƒW”wŒi
 	rankGaugeBG = Sprite::Create("white1x1.png");
-	rankGaugeBG->position = Half(WindowsAPI::WIN_SIZE);
+	rankGaugeBG->position = Half(WristerEngine::WindowsAPI::WIN_SIZE);
 	rankGaugeBG->position.x -= 320;
 	rankGaugeBG->anchorPoint = { 0.0f,0.5f };
 	rankGaugeBG->size = GAUGE_SIZE;

@@ -1,6 +1,8 @@
 #include "Easing.h"
 #include "MathUtility.h"
 
+using namespace WristerEngine;
+
 const float Easing::MAX = 1.0f;
 
 float(Easing::* Easing::Ease[])() =

@@ -4,10 +4,10 @@
 #include "Stage.h"
 
 // タイトルシーンの処理
-class TitleScene : public BaseScene
+class TitleScene : public WristerEngine::BaseScene
 {
 	Stage stage;
-	ViewProjection camera;
+	WristerEngine::_3D::ViewProjection camera;
 
 	// 初期化(オーバーライド)
 	void Initialize();
@@ -17,11 +17,11 @@ class TitleScene : public BaseScene
 	void Finalize() { stage.Finalize(); }
 };
 
-class UIDrawerTitleScene : public AbstractUIDrawer
+class UIDrawerTitleScene : public WristerEngine::_2D::AbstractUIDrawer
 {
-	std::map<std::string, std::unique_ptr<Sprite>> title;
-	SpriteAnimation spaceKey;
-	std::unique_ptr<Sprite> selectCursorUI;
+	std::map<std::string, std::unique_ptr<WristerEngine::_2D::Sprite>> title;
+	WristerEngine::_2D::SpriteAnimation spaceKey;
+	std::unique_ptr<WristerEngine::_2D::Sprite> selectCursorUI;
 	Angle cosAngle = 0;
 
 	// AbstractUIDrawer を介して継承されました

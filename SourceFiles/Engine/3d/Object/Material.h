@@ -43,9 +43,9 @@ namespace WristerEngine
 			void TransferCBV();
 			// setter
 			void SetDissolvePow(float dissolve) { constMap->maskPow[2] = dissolve; }
-			void SetSprite(std::unique_ptr<Sprite> sprite, TexType type) { sprites[(size_t)type] = move(sprite); }
+			void SetSprite(std::unique_ptr<_2D::Sprite> sprite, TexType type) { sprites[(size_t)type] = move(sprite); }
 			// getter
-			Sprite* GetSprite(TexType texType) { return sprites[(size_t)texType].get(); }
+			_2D::Sprite* GetSprite(TexType texType) { return sprites[(size_t)texType].get(); }
 
 		private:
 			// マテリアル
@@ -62,7 +62,7 @@ namespace WristerEngine
 			Microsoft::WRL::ComPtr<ID3D12Resource> constBuffer;	// 定数バッファ
 			ConstBufferData* constMap = nullptr;
 
-			std::array<std::unique_ptr<Sprite>, (size_t)TexType::Num> sprites; // テクスチャの配列
+			std::array<std::unique_ptr<_2D::Sprite>, (size_t)TexType::Num> sprites; // テクスチャの配列
 			// テクスチャ読み込み
 			void LoadSprite(std::istringstream& line_stream, Mesh* mesh, TexType spriteIndex);
 		};

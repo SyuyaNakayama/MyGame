@@ -1,7 +1,7 @@
 #pragma once
 #include "BaseScene.h"
 
-class PauseMenu : public BaseScene
+class PauseMenu : public WristerEngine::BaseScene
 {
 	// BaseScene ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
 	void Initialize() override;

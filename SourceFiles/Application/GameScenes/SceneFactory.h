@@ -2,7 +2,7 @@
 #include "AbstractSceneFactory.h"
 
 // 各シーンの生成クラス
-class SceneFactory : public AbstractSceneFactory
+class SceneFactory : public WristerEngine::AbstractSceneFactory
 {
 private:
 	// コンストラクタを
@@ -20,5 +20,5 @@ public:
 	/// </summary>
 	/// <param name="scene">次に作るシーン</param>
 	/// <returns>作成されたクラスのポインタ</returns>
-	std::unique_ptr<BaseScene> CreateScene(Scene scene) override;
+	std::unique_ptr<WristerEngine::BaseScene> CreateScene(Scene scene) override;
 };

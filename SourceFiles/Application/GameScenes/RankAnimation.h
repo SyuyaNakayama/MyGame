@@ -13,7 +13,7 @@ protected:
 	const int RANK_ANIMATION_TIME = 10;
 	const ScoreGauge* pScoreGauge = nullptr;
 	RankAnimation* pRankAnimation = nullptr;
-	std::unique_ptr<Sprite> rankUI;
+	std::unique_ptr<WristerEngine::_2D::Sprite> rankUI;
 
 public:
 	// 仮想デストラクタ
@@ -41,7 +41,7 @@ class JudgeAnimation : public BaseAnimation
 // 消える
 class DisappearAnimation : public BaseAnimation
 {
-	Easing rankSpriteFade;
+	WristerEngine::Easing rankSpriteFade;
 
 	// BaseAnimation を介して継承されました
 	void Initialize(RankAnimation* pRankAnimation) override;
@@ -52,8 +52,8 @@ class DisappearAnimation : public BaseAnimation
 class AppearAnimation : public BaseAnimation
 {
 	Vector2 rankSpriteSizeMem;
-	Easing rankSpriteFade;
-	Easing rankSpriteScale;
+	WristerEngine::Easing rankSpriteFade;
+	WristerEngine::Easing rankSpriteScale;
 
 	// BaseAnimation を介して継承されました
 	void Initialize(RankAnimation* pRankAnimation) override;
@@ -63,8 +63,8 @@ class AppearAnimation : public BaseAnimation
 // 最終ランク発表
 class ResultAnimation : public BaseAnimation
 {
-	std::unique_ptr<Sprite> blind; // 画面を暗くする
-	std::unique_ptr<Sprite> resultRankSprite;
+	std::unique_ptr<WristerEngine::_2D::Sprite> blind; // 画面を暗くする
+	std::unique_ptr<WristerEngine::_2D::Sprite> resultRankSprite;
 
 	// BaseAnimation を介して継承されました
 	void Initialize(RankAnimation* pRankAnimation) override;

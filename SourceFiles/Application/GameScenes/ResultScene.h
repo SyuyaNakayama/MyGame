@@ -3,7 +3,7 @@
 #include "RankAnimation.h"
 
 // 結果発表シーンの処理
-class ResultScene : public BaseScene
+class ResultScene : public WristerEngine::BaseScene
 {
 	// 初期化(オーバーライド)
 	void Initialize();
@@ -12,7 +12,7 @@ class ResultScene : public BaseScene
 };
 
 // UI描画クラス(リザルトシーン用)
-class UIDrawerResultScene : public AbstractUIDrawer
+class UIDrawerResultScene : public WristerEngine::_2D::AbstractUIDrawer
 {
 private:
 	ScoreGauge scoreGauge; 

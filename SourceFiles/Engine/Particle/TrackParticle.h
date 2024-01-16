@@ -20,14 +20,14 @@ namespace WristerEngine
 			float scale = 1.0f; // スケール
 			float s_scale = 1.0f; // 初期値
 			float e_scale = 0.0f;	// 最終値
-			WorldTransform* parent = nullptr;
+			_3D::WorldTransform* parent = nullptr;
 
 			void Update();
 		};
 
 		struct AddProp
 		{
-			WorldTransform* parent = nullptr;
+			_3D::WorldTransform* parent = nullptr;
 			Vector3 posOffset;
 			Vector3 velOffset;
 			Vector3 accOffset;
