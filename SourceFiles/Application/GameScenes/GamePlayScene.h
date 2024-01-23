@@ -50,6 +50,9 @@ private:
 	std::unique_ptr<WristerEngine::_2D::Sprite> uiGo;
 	Vector2 uiGoSize;
 	WristerEngine::Easing uiGoEasing;
+	std::map<std::string, std::unique_ptr<WristerEngine::_2D::Sprite>> operateUI;
+	std::map<WristerEngine::Key, std::unique_ptr<WristerEngine::_2D::Sprite>> keyUI;
+	std::unique_ptr<WristerEngine::_2D::Sprite> frame;
 
 	// "Go!"のアニメーションの関数ポインタ
 	void (UIDrawerGameScene::* UIGoAnimation)() = nullptr;

@@ -9,18 +9,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="シェーダー ファイル\object">
-      <UniqueIdentifier>{d2d4ee60-179d-48b7-a930-83415ab52e69}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="シェーダー ファイル\sprite">
-      <UniqueIdentifier>{334c1d61-d821-4703-b572-92fc31f59c7f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="シェーダー ファイル\particle">
-      <UniqueIdentifier>{d357c7e1-51a3-4a2b-8e5b-79a4065fedc3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="シェーダー ファイル\postEffect">
-      <UniqueIdentifier>{aace76a6-7633-45eb-827c-23d28f0560d6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Application">
       <UniqueIdentifier>{050743c3-7f71-47af-8875-4dbca6131b21}</UniqueIdentifier>
     </Filter>
@@ -99,22 +87,37 @@
     <Filter Include="ソース ファイル\Application\GameScenes\ResultScene">
       <UniqueIdentifier>{dc06b15a-80ab-44f4-b99b-fa55e541aea4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="シェーダー ファイル\Object">
+      <UniqueIdentifier>{d2d4ee60-179d-48b7-a930-83415ab52e69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダー ファイル\Particle">
+      <UniqueIdentifier>{d357c7e1-51a3-4a2b-8e5b-79a4065fedc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダー ファイル\PostEffect">
+      <UniqueIdentifier>{aace76a6-7633-45eb-827c-23d28f0560d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダー ファイル\Sprite">
+      <UniqueIdentifier>{334c1d61-d821-4703-b572-92fc31f59c7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Application\UIDrawer">
+      <UniqueIdentifier>{8cc62927-b3fb-4854-9791-0b44f0593b20}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Sprite.hlsli">
-      <Filter>シェーダー ファイル\sprite</Filter>
+      <Filter>シェーダー ファイル\Sprite</Filter>
     </None>
     <None Include="Resources\shaders\Obj.hlsli">
-      <Filter>シェーダー ファイル\object</Filter>
+      <Filter>シェーダー ファイル\Object</Filter>
     </None>
     <None Include="Resources\shaders\PostEffect.hlsli">
-      <Filter>シェーダー ファイル\postEffect</Filter>
+      <Filter>シェーダー ファイル\PostEffect</Filter>
     </None>
     <None Include="Resources\shaders\Particle.hlsli">
-      <Filter>シェーダー ファイル\particle</Filter>
+      <Filter>シェーダー ファイル\Particle</Filter>
     </None>
     <None Include="Resources\shaders\PostEffectFunctions.hlsli">
-      <Filter>シェーダー ファイル\postEffect</Filter>
+      <Filter>シェーダー ファイル\PostEffect</Filter>
     </None>
     <None Include="Resources\shaders\Light.hlsli">
       <Filter>シェーダー ファイル</Filter>
@@ -125,31 +128,31 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\SpritePS.hlsl">
-      <Filter>シェーダー ファイル\sprite</Filter>
+      <Filter>シェーダー ファイル\Sprite</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\SpriteVS.hlsl">
-      <Filter>シェーダー ファイル\sprite</Filter>
+      <Filter>シェーダー ファイル\Sprite</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\ObjPS.hlsl">
-      <Filter>シェーダー ファイル\object</Filter>
+      <Filter>シェーダー ファイル\Object</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\ObjVS.hlsl">
-      <Filter>シェーダー ファイル\object</Filter>
+      <Filter>シェーダー ファイル\Object</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\PostEffectPS.hlsl">
-      <Filter>シェーダー ファイル\postEffect</Filter>
+      <Filter>シェーダー ファイル\PostEffect</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\PostEffectVS.hlsl">
-      <Filter>シェーダー ファイル\postEffect</Filter>
+      <Filter>シェーダー ファイル\PostEffect</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\ParticleGS.hlsl">
-      <Filter>シェーダー ファイル\particle</Filter>
+      <Filter>シェーダー ファイル\Particle</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\ParticlePS.hlsl">
-      <Filter>シェーダー ファイル\particle</Filter>
+      <Filter>シェーダー ファイル\Particle</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\ParticleVS.hlsl">
-      <Filter>シェーダー ファイル\particle</Filter>
+      <Filter>シェーダー ファイル\Particle</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -329,6 +332,9 @@
     </ClCompile>
     <ClCompile Include="SourceFiles\Application\GameScenes\PauseMenu.cpp">
       <Filter>ソース ファイル\Application\GameScenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\OperateDrawer\OperateDrawer.cpp">
+      <Filter>ソース ファイル\Application\UIDrawer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -529,6 +535,9 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\GameObject\GameObject.h">
       <Filter>ソース ファイル\Engine\3d\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\OperateDrawer\OperateDrawer.h">
+      <Filter>ソース ファイル\Application\UIDrawer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
