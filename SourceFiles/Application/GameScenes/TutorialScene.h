@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseScene.h"
 #include "Stage.h"
+#include "OperateDrawer.h"
 
 class TutorialScene : public WristerEngine::BaseScene
 {
@@ -13,11 +14,8 @@ class TutorialScene : public WristerEngine::BaseScene
 	void Finalize() { stage.Finalize(); }
 };
 
-class UIDrawerTutorialScene : public WristerEngine::_2D::AbstractUIDrawer
+class UIDrawerTutorialScene : public OperateDrawer
 {
-	std::unique_ptr<WristerEngine::_2D::Sprite> frame;
-	std::map<WristerEngine::Key, std::unique_ptr<WristerEngine::_2D::Sprite>> keyUI;
-	std::map<std::string, std::unique_ptr<WristerEngine::_2D::Sprite>> operateUI;
 
 	// AbstractUIDrawer ÇâÓÇµÇƒåpè≥Ç≥ÇÍÇ‹ÇµÇΩ
 	void Initialize() override;

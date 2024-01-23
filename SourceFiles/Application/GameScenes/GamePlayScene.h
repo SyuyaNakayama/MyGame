@@ -6,6 +6,7 @@
 #include "FPS.h"
 #include "MathUtility.h"
 #include "Stage.h"
+#include "OperateDrawer.h"
 
 // スタート前のカウントダウン演出
 class StartCountDown
@@ -34,7 +35,7 @@ public:
 };
 
 // UI描画クラス(ゲームシーン用)
-class UIDrawerGameScene : public WristerEngine::_2D::AbstractUIDrawer
+class UIDrawerGameScene : public OperateDrawer
 {
 private:
 	const float SLIDE_DIS_UI_GO = 500; // "Go!"のUIがスライドする距離
@@ -50,9 +51,6 @@ private:
 	std::unique_ptr<WristerEngine::_2D::Sprite> uiGo;
 	Vector2 uiGoSize;
 	WristerEngine::Easing uiGoEasing;
-	std::map<std::string, std::unique_ptr<WristerEngine::_2D::Sprite>> operateUI;
-	std::map<WristerEngine::Key, std::unique_ptr<WristerEngine::_2D::Sprite>> keyUI;
-	std::unique_ptr<WristerEngine::_2D::Sprite> frame;
 
 	// "Go!"のアニメーションの関数ポインタ
 	void (UIDrawerGameScene::* UIGoAnimation)() = nullptr;
