@@ -79,7 +79,7 @@ bool StartCountDown::Update()
 	countUI.Update(time);
 	// 数字のスライド演出
 	auto timeSecond = countTimer.GetRemainTime(fps);
-	const int SLIDE_START = 250; // スライド演出が始まるタイミング
+	const int SLIDE_START = 250; // スライド演出が始まるタイミングs
 	if (timeSecond[1] <= SLIDE_START)
 	{
 		// スプライトのUV座標をずらす
