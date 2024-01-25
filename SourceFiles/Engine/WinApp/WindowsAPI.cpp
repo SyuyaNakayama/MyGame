@@ -4,8 +4,6 @@
 
 using namespace WristerEngine;
 
-const Vector2 WindowsAPI::WIN_SIZE = { 1280,720 };
-
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 // ウィンドウプロシージャ

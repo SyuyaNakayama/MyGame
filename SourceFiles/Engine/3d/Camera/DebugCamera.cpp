@@ -18,7 +18,7 @@ void DebugCamera::Update()
 {
 	bool dirty = false;
 	Vector2 angle;
-	Vector2 scale = { 1.0f / WindowsAPI::WIN_SIZE.x, 1.0f / WindowsAPI::WIN_SIZE.y };
+	Vector2 scale = { 1.0f / WIN_SIZE.x, 1.0f / WIN_SIZE.y };
 	Input* input = Input::GetInstance();
 
 	// ƒ}ƒEƒX‚Ì“ü—Í‚ðŽæ“¾

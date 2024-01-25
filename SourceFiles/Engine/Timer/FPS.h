@@ -3,12 +3,13 @@
 
 namespace WristerEngine
 {
+	const int MAX_FPS = 60;
+
 	// FPSŠÖ˜Aˆ—
-	class FPS
+	class FPS final
 	{
 	private:
 		std::chrono::steady_clock::time_point reference;
-		float maxFPS = 60;
 		int fps = 0;
 		RealTimer oneSecond = 1.0f;
 		FrameTimer oneSecondFrames = INT32_MAX;
@@ -26,12 +27,10 @@ namespace WristerEngine
 		/// ‰Šú‰»
 		/// </summary>
 		/// <param name="maxfps">Å‘åFPS’l</param>
-		void Initialize(float maxfps);
+		void Initialize();
 		// FPSŒÅ’è
 		void Fix();
 		// FPSæ“¾
-		int GetFPS() { return fps; }
-		// Å‘åFPS‚ğæ“¾
-		int GetMaxFPS() { return (int)maxFPS; }
+		int GetFPS() const { return fps; }
 	};
 }

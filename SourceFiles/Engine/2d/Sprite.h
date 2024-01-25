@@ -77,7 +77,7 @@ namespace WristerEngine
 			// •`‰æ
 			void Draw();
 			// ˆÊ’u‚ğ‰æ–Ê’†‰›‚É‚·‚é
-			void SetCenterPos() { position = Half(WindowsAPI::WIN_SIZE); }
+			void SetCenterPos() { position = Half(WIN_SIZE); }
 			// anchorPoint = { 0.5f,0.5f } ‚É‚·‚é
 			void SetCenterAnchor() { anchorPoint = { 0.5f,0.5f }; }
 			// Ã“I‰Šú‰»

@@ -38,7 +38,7 @@ void UIDrawerTitleScene::Initialize()
 
 	for (auto& ui : title)
 	{
-		ui.second->position = Half(WristerEngine::WindowsAPI::WIN_SIZE);
+		ui.second->position = Half(WristerEngine::WIN_SIZE);
 		ui.second->anchorPoint = { 0.5f,1.0f };
 		ui.second->size *= 1.5f;
 	}
@@ -48,7 +48,7 @@ void UIDrawerTitleScene::Initialize()
 
 	spaceKey.Initialize("ui/Key/key_SPACE.png", 128, 30);
 	Sprite* spaceKeySprite = spaceKey.GetSprite();
-	spaceKeySprite->position = Half(WristerEngine::WindowsAPI::WIN_SIZE);
+	spaceKeySprite->position = Half(WristerEngine::WIN_SIZE);
 	spaceKeySprite->position.y += 80;
 	spaceKeySprite->size *= 1.5f;
 	spaceKeySprite->anchorPoint.x = 0.5f;

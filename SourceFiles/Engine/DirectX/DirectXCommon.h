@@ -28,7 +28,6 @@ namespace WristerEngine
 		CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle{};
 		UINT64 fenceVal = 0;
 		D3D12_VIEWPORT viewport{};
-		const float MAX_FPS = 60.0f;
 		FPS* fixFPS = nullptr;
 
 		DirectXCommon() = default;
@@ -59,7 +58,7 @@ namespace WristerEngine
 		// ï`âÊå„èàóù
 		void PostDraw();
 		// setter
-		void SetViewport(Vector2 viewportSize = WindowsAPI::WIN_SIZE, Vector2 viewportLeftTop = {});
+		void SetViewport(Vector2 viewportSize = WIN_SIZE, Vector2 viewportLeftTop = {});
 		// getter
 		ID3D12Device* GetDevice() const { return device.Get(); }
 		ID3D12GraphicsCommandList* GetCommandList() const { return commandList.Get(); }

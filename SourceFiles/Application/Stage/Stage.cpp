@@ -48,7 +48,7 @@ void Stage::Initialize()
 		}
 	}
 
-	fps = WristerEngine::FPS::GetInstance()->GetMaxFPS();
+	fps = WristerEngine::MAX_FPS;
 	ResetTime();
 	Goal::StaticInitialize();
 }

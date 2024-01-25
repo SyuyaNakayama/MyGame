@@ -5,6 +5,9 @@
 
 namespace WristerEngine
 {
+	// ウィンドウサイズ
+	const Vector2 WIN_SIZE = { 1280,720 };
+	
 	// ウィンドウクラス処理
 	class WindowsAPI final
 	{
@@ -19,8 +22,6 @@ namespace WristerEngine
 	public:
 		WindowsAPI(const WindowsAPI& obj) = delete;
 
-		// ウィンドウサイズ
-		static const Vector2 WIN_SIZE;
 		// インスタンス取得
 		static WindowsAPI* GetInstance();
 		// 初期化

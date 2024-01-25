@@ -5,7 +5,7 @@ using namespace WristerEngine;
 void FadeManager::Initialize()
 {
 	sprite = _2D::Sprite::Create("white1x1.png");
-	sprite->size = WindowsAPI::GetInstance()->WIN_SIZE;
+	sprite->size = WIN_SIZE;
 	sprite->color = ColorRGBA::Black();
 }
 

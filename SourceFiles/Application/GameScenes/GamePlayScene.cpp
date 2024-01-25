@@ -15,7 +15,7 @@ void GamePlayScene::Initialize()
 	viewProjection.eye.y = 350;
 	viewProjection.eye.z = -75;
 	stage.Initialize();
-	ModelManager::SetViewProjection(&viewProjection);
+	//ModelManager::SetViewProjection(&viewProjection);
 
 	// UI描画クラスのインスタンス生成
 	uiDrawer = std::make_unique<UIDrawerGameScene>(&stage);
@@ -61,10 +61,10 @@ std::unique_ptr<StartCountDown> StartCountDown::Create()
 		"ui/num.png",{30,30},{360,360},{},1
 	};
 
-	bitMapProp.pos = Half(WristerEngine::WindowsAPI::WIN_SIZE - bitMapProp.size);
+	bitMapProp.pos = Half(WristerEngine::WIN_SIZE - bitMapProp.size);
 	*countDown->countUI.GetBitMapProp() = bitMapProp;
 	countDown->countUI.Initialize();
-	if (fps == 0) { fps = WristerEngine::FPS::GetInstance()->GetMaxFPS(); }
+	if (fps == 0) { fps = WristerEngine::MAX_FPS; }
 	countDown->countTimer = COUNT_DOWN_TIME * fps;
 
 	return countDown;
@@ -134,7 +134,7 @@ void UIDrawerGameScene::Initialize()
 	countDown = StartCountDown::Create();
 	uiGo = Sprite::Create("ui/GO.png");
 	uiGo->SetCenterAnchor();
-	uiGo->position = Half(WristerEngine::WindowsAPI::WIN_SIZE);
+	uiGo->position = Half(WristerEngine::WIN_SIZE);
 	uiGo->isInvisible = true; // 透明
 	const int GO_EASING_DEC = 4;
 	uiGoEasing.Initialize(StartCountDown::GetFPS() / GO_EASING_DEC, WristerEngine::Easing::Type::Sqrt);
@@ -189,7 +189,7 @@ void UIDrawerGameScene::Update()
 void UIDrawerGameScene::UIGoSlide()
 {
 	float easingNum = uiGoEasing.Update();
-	uiGo->position.x = WristerEngine::WindowsAPI::WIN_SIZE.x / 2.0f + SLIDE_DIS_UI_GO * (1.0f - easingNum);
+	uiGo->position.x = WristerEngine::WIN_SIZE.x / 2.0f + SLIDE_DIS_UI_GO * (1.0f - easingNum);
 	uiGo->color.a = easingNum;
 	if (easingNum == 1.0f)
 	{

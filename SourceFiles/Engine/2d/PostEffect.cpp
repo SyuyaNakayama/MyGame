@@ -40,7 +40,6 @@ void PostEffect::CreateBuffers()
 	constMap->color = { 1,1,1,1 };
 
 	Result result;
-	const Vector2 WIN_SIZE = WindowsAPI::WIN_SIZE;
 	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
 
 	CD3DX12_RESOURCE_DESC texresDesc = CD3DX12_RESOURCE_DESC::Tex2D(
@@ -98,7 +97,6 @@ void PostEffect::CreateRTV()
 
 void PostEffect::CreateDSV()
 {
-	const Vector2 WIN_SIZE = WindowsAPI::WIN_SIZE;
 	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
 
 	CD3DX12_RESOURCE_DESC depthResourceDesc =
@@ -170,8 +168,8 @@ void PostEffect::PreDrawScene()
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = descHeapDSV->GetCPUDescriptorHandleForHeapStart();
 	cmdList->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
 
-	D3D12_VIEWPORT viewport = CD3DX12_VIEWPORT(0.0f, 0.0f, WindowsAPI::WIN_SIZE.x, WindowsAPI::WIN_SIZE.y);
-	D3D12_RECT rect = CD3DX12_RECT(0, 0, (LONG)WindowsAPI::WIN_SIZE.x, (LONG)WindowsAPI::WIN_SIZE.y);
+	D3D12_VIEWPORT viewport = CD3DX12_VIEWPORT(0.0f, 0.0f, WIN_SIZE.x, WIN_SIZE.y);
+	D3D12_RECT rect = CD3DX12_RECT(0, 0, (LONG)WIN_SIZE.x, (LONG)WIN_SIZE.y);
 	// ビューポート設定コマンドを、コマンドリストに積む
 	cmdList->RSSetViewports(1, &viewport);
 	cmdList->RSSetScissorRects(1, &rect); // シザー矩形設定コマンドを、コマンドリストに積む

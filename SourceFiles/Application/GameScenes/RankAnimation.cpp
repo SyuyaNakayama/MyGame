@@ -75,7 +75,7 @@ void BaseAnimation::CreateRankUI(Rank rank)
 		break;
 	}
 	rankUI->SetCenterAnchor();
-	rankUI->position = { 1030,Half(WristerEngine::WindowsAPI::WIN_SIZE.y) };
+	rankUI->position = { 1030,Half(WristerEngine::WIN_SIZE.y) };
 }
 
 void JudgeAnimation::Initialize(RankAnimation* pRankAnimation_)
@@ -135,7 +135,7 @@ void ResultAnimation::Initialize(RankAnimation* pRankAnimation_)
 
 	// ランク発表時に背景を暗くするためのスプライト
 	blind = Sprite::Create("white1x1.png");
-	blind->size = WristerEngine::WindowsAPI::WIN_SIZE;
+	blind->size = WristerEngine::WIN_SIZE;
 	blind->color = { 0,0,0,0.5f };
 }
 

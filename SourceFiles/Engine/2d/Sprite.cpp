@@ -10,12 +10,12 @@ using namespace WristerEngine;
 using namespace _2D;
 
 // 平行投影行列
-Matrix4 OrthoGraphic()
+static Matrix4 OrthoGraphic()
 {
 	Matrix4 matProj;
 	// 平行投影行列の生成
-	matProj.m[0][0] = 2.0f / WindowsAPI::WIN_SIZE.x;
-	matProj.m[1][1] = -2.0f / WindowsAPI::WIN_SIZE.y;
+	matProj.m[0][0] = 2.0f / WIN_SIZE.x;
+	matProj.m[1][1] = -2.0f / WIN_SIZE.y;
 	matProj.m[3][0] = -1.0f;
 	matProj.m[3][1] = 1.0f;
 	return matProj;

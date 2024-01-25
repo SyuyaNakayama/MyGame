@@ -9,10 +9,9 @@ FPS* FPS::GetInstance()
 	return &instance;
 }
 
-void FPS::Initialize(float maxfps)
+void FPS::Initialize()
 {
 	reference = steady_clock::now();
-	maxFPS = maxfps;
 	oneSecond.Start();
 }
 
@@ -21,10 +20,10 @@ void FPS::Fix()
 	// ƒÊ‚ğ‘Å‚¿Á‚·•Ï”
 	const float MEGA = 1000000.0f;
 	// 1/60•b‚Ò‚Á‚½‚è‚ÌŠÔ
-	const microseconds MIN_TIME(uint64_t(MEGA / maxFPS));
+	const microseconds MIN_TIME(uint64_t(MEGA / MAX_FPS));
 	// 1/60•b‚æ‚è‚í‚¸‚©‚É’Z‚¢ŠÔ
 	const float CHECK_TIME_OFFSET = 5;
-	const microseconds MIN_CHECK_TIME(uint64_t(MEGA / (maxFPS + CHECK_TIME_OFFSET)));
+	const microseconds MIN_CHECK_TIME(uint64_t(MEGA / (MAX_FPS + CHECK_TIME_OFFSET)));
 
 	// Œ»İŠÔ‚ğæ“¾‚·‚é
 	steady_clock::time_point now = steady_clock::now();

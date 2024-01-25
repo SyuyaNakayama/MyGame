@@ -7,8 +7,6 @@
 using namespace std;
 using namespace WristerEngine;
 
-const Vector2 WIN_SIZE = WindowsAPI::WIN_SIZE;
-
 DirectXCommon* DirectXCommon::GetInstance()
 {
 	static DirectXCommon* dxCommon = new DirectXCommon;
@@ -18,7 +16,7 @@ DirectXCommon* DirectXCommon::GetInstance()
 void DirectXCommon::Initialize()
 {
 	fixFPS = FPS::GetInstance();
-	fixFPS->Initialize(MAX_FPS);	// FPS固定初期化
+	fixFPS->Initialize();	// FPS固定初期化
 	InitializeDevice();				// デバイスの生成
 	InitializeCommand();			// コマンド関連の初期化
 	InitializeSwapchain();			// スワップチェーンの初期化
@@ -168,8 +166,8 @@ void DirectXCommon::InitializeDepthBuffer()
 	CD3DX12_RESOURCE_DESC depthResourceDesc =
 		CD3DX12_RESOURCE_DESC::Tex2D(
 			DXGI_FORMAT_D32_FLOAT,
-			(UINT64)WindowsAPI::WIN_SIZE.x,
-			(UINT)WindowsAPI::WIN_SIZE.y,
+			(UINT64)WIN_SIZE.x,
+			(UINT)WIN_SIZE.y,
 			1, 0, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
 
 	D3D12_HEAP_PROPERTIES heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);

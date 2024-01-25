@@ -33,11 +33,11 @@ void UIDrawerTutorialScene::Initialize()
 	
 	operateUI["play"] = Sprite::Create("UI/Play.png");
 	operateUI["play"]->anchorPoint = { 0.5f,2 };
-	operateUI["play"]->position = { Half(WristerEngine::WindowsAPI::WIN_SIZE.x), WristerEngine::WindowsAPI::WIN_SIZE.y };
+	operateUI["play"]->position = { Half(WristerEngine::WIN_SIZE.x), WristerEngine::WIN_SIZE.y };
 
 	OperateDrawer::Initialize();
 	keyUI[Key::Space]->anchorPoint = { 0.5f,2 };
-	keyUI[Key::Space]->position = { Half(WristerEngine::WindowsAPI::WIN_SIZE.x), WristerEngine::WindowsAPI::WIN_SIZE.y };
+	keyUI[Key::Space]->position = { Half(WristerEngine::WIN_SIZE.x), WristerEngine::WIN_SIZE.y };
 }
 
 void UIDrawerTutorialScene::Update()
