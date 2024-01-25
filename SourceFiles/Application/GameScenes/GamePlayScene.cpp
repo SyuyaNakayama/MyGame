@@ -82,7 +82,7 @@ bool StartCountDown::Update()
 	const int SLIDE_START = 250; // スライド演出が始まるタイミング
 	if (timeSecond[1] <= SLIDE_START)
 	{
-		// スプライトのUV座標をずらすs
+		// スプライトのUV座標をずらす
 		float offsetRate = 1.0f - (float)timeSecond[1] / SLIDE_START;
 		countUI.GetBitMapProp()->texLTOffset.x = countUI.GetAllSpriteSize().x * offsetRate;
 	}
