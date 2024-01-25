@@ -16,7 +16,7 @@ void GamePlayScene::Initialize()
 	viewProjection.eye.z = -75;
 	stage.Initialize();
 	//ModelManager::SetViewProjection(&viewProjection);
-
+	
 	// UI描画クラスのインスタンス生成
 	uiDrawer = std::make_unique<UIDrawerGameScene>(&stage);
 	uiDrawer->Initialize();
