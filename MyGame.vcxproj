@@ -96,6 +96,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\Engine\2d;$(ProjectDir)SourceFiles\Engine\3d\Camera;$(ProjectDir)SourceFiles\Engine\3d\Object;$(ProjectDir)SourceFiles\Engine\Audio;$(ProjectDir)SourceFiles\Engine\DirectX;$(ProjectDir)SourceFiles\Engine\Font;$(ProjectDir)SourceFiles\Engine\Framework;$(ProjectDir)SourceFiles\Engine\Functions;$(SolutionDir)SourceFiles\Engine\GameObject;$(ProjectDir)SourceFiles\Engine\Input;$(ProjectDir)SourceFiles\Engine\Json;$(ProjectDir)SourceFiles\Engine\Light;$(ProjectDir)SourceFiles\Engine\Math;$(ProjectDir)SourceFiles\Engine\Particle;$(ProjectDir)SourceFiles\Engine\Physics;$(ProjectDir)SourceFiles\Engine\Scene;$(ProjectDir)SourceFiles\Engine\Timer;$(ProjectDir)SourceFiles\Engine\WinApp;$(ProjectDir)SourceFiles\Application\Stage;$(ProjectDir)SourceFiles\Application\MyGame;$(ProjectDir)SourceFiles\Application\Camera;$(ProjectDir)SourceFiles\Application\GameScenes;$(ProjectDir)SourceFiles\Application\OperateDrawer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard_C>Default</LanguageStandard_C>
+      <Optimization>MinSpace</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
