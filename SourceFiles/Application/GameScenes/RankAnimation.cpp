@@ -113,6 +113,7 @@ void DisappearAnimation::Update()
 void AppearAnimation::Initialize(RankAnimation* pRankAnimation_)
 {
 	BaseAnimation::Initialize(pRankAnimation_);
+	// イージングの初期化
 	rankSpriteFade.Initialize(RANK_ANIMATION_TIME, WristerEngine::Easing::Type::Sqrt);
 	rankSpriteScale.Initialize(RANK_ANIMATION_TIME, WristerEngine::Easing::Type::OutBounce);
 	rankSpriteSizeMem = rankUI->size;
@@ -131,37 +132,72 @@ void AppearAnimation::Update()
 void ResultAnimation::Initialize(RankAnimation* pRankAnimation_)
 {
 	BaseAnimation::Initialize(pRankAnimation_);
-	rankUI->Update();
+
+	rankUI->SetCenterPos();
+	rankSpriteSizeMem = rankUI->size * 6.0f;
+	rankSpriteScale.Initialize(RANK_ANIMATION_TIME * 6, WristerEngine::Easing::Type::OutBounce);
+
+	enterUI.Initialize("UI/Key/key_Enter.png", 96, 30);
+	enterUI.GetSprite()->SetCenterAnchor();
+	enterUI.GetSprite()->position = { Half(WristerEngine::WIN_SIZE.x),640 };
 
 	// ランク発表時に背景を暗くするためのスプライト
 	blind = Sprite::Create("white1x1.png");
 	blind->size = WristerEngine::WIN_SIZE;
 	blind->color = { 0,0,0,0.5f };
+	blind->Update();
 }
 
 void ResultAnimation::Update()
 {
-	resultRankSprite = Sprite::Create(rankUI->tex->fileName);
-	resultRankSprite->SetCenterAnchor();
-	resultRankSprite->SetCenterPos();
-	resultRankSprite->size *= 4.0f;
-	blind->Update();
-	resultRankSprite->Update();
+	if (!isPushedEnter)
+	{
+		rankUI->size = rankSpriteSizeMem * rankSpriteScale.Update();
+		enterUI.Update();
+	}
+	else
+	{
+		rankUI->size = rankSpriteSizeMem * (1.0f - rankSpriteScale.Update());
+		if(rankSpriteScale.IsFinish()){ pRankAnimation->ReservePhase(AnimationPhase::End); }
+	}
+
+	rankUI->Update();
 	if (WristerEngine::Input::GetInstance()->IsTrigger(WristerEngine::Key::Return))
 	{
-		pRankAnimation->ReservePhase(AnimationPhase::End);
+		isPushedEnter = true;
+		enterUI.GetSprite()->isInvisible = true;
+		rankSpriteScale.Restart();
 	}
 }
 
 void ResultAnimation::Draw()
 {
-	rankUI->Draw();
 	blind->Draw();
-	resultRankSprite->Draw();
+	rankUI->Draw();
+	enterUI.Draw();
 }
 
 void AnimationEnd::Initialize(RankAnimation* pRankAnimation_)
 {
 	BaseAnimation::Initialize(pRankAnimation_);
+	
+	spaceKey.Initialize("ui/Key/key_SPACE.png", 128, 30);
+	Sprite* spaceKeySprite = spaceKey.GetSprite();
+	spaceKeySprite->position = Half(WristerEngine::WIN_SIZE);
+	spaceKeySprite->position.y += 80;
+	spaceKeySprite->size *= 1.5f;
+	spaceKeySprite->anchorPoint.x = 0.5f;
+	spaceKeySprite->color = { 0.7f,0.7f,0.7f,1 };
+
 	rankUI->Update();
+}
+
+void AnimationEnd::Update()
+{
+	spaceKey.Update();
+}
+
+void AnimationEnd::Draw()
+{
+	spaceKey.Draw();
 }

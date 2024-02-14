@@ -21,7 +21,7 @@ namespace WristerEngine
 		Microsoft::WRL::ComPtr<IMediaPosition> mediaPosition;
 		Microsoft::WRL::ComPtr<IBasicAudio> basicAudio;
 		// デフォルトディレクトリ
-		static std::string DEFAULT_TEXTURE_DIRECTORY_PATH;
+		static std::string DEFAULT_DIRECTORY_PATH;
 
 		// 再生が終わったか
 		bool IsFinished();

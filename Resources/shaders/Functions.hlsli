@@ -1,7 +1,7 @@
-//float4 ToonShading(float4 color)
-//{
-//    return smoothstep(0.38f, 0.42f, color);
-//}
+float4 ToonShading(float4 color)
+{
+    return smoothstep(0.38f, 0.42f, color);
+}
 
 //float RimLight(float3 eyedir, float3 normal, float3 lightcolor)
 //{

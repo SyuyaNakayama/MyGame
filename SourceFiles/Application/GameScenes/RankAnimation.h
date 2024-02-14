@@ -1,6 +1,7 @@
 #pragma once
 #include "ScoreGauge.h"
 #include "Easing.h"
+#include "SpriteAnimation.h"
 
 enum class AnimationPhase { Null, Judge, Disappear, Appear, Result, End };
 // 前方定義
@@ -63,8 +64,11 @@ class AppearAnimation : public BaseAnimation
 // 最終ランク発表
 class ResultAnimation : public BaseAnimation
 {
+	bool isPushedEnter = false; // エンターキーが押されたか
+	Vector2 rankSpriteSizeMem;
+	WristerEngine::Easing rankSpriteScale;
+	WristerEngine::_2D::SpriteAnimation enterUI;
 	std::unique_ptr<WristerEngine::_2D::Sprite> blind; // 画面を暗くする
-	std::unique_ptr<WristerEngine::_2D::Sprite> resultRankSprite;
 
 	// BaseAnimation を介して継承されました
 	void Initialize(RankAnimation* pRankAnimation) override;
@@ -75,9 +79,11 @@ class ResultAnimation : public BaseAnimation
 // アニメーション終了
 class AnimationEnd : public BaseAnimation
 {
+	WristerEngine::_2D::SpriteAnimation spaceKey;
 	// BaseAnimation を介して継承されました
 	void Initialize(RankAnimation* pRankAnimation) override;
-	void Update() override {};
+	void Update() override;
+	void Draw() override;
 };
 
 // ランクUIのアニメーション

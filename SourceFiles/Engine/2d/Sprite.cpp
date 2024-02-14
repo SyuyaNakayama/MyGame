@@ -58,26 +58,20 @@ TextureData* Sprite::LoadTexture(const std::string& fileName, uint32_t mipLevels
 
 	string fullPath = DEFAULT_TEXTURE_DIRECTORY_PATH + fileName;
 
-	// ワイド文字列に変換した際の文字列バッファサイズを計算
-	int filePathBufferSize = MultiByteToWideChar(CP_ACP, 0, fullPath.c_str(), -1, nullptr, 0);
 	// ワイド文字列に変換
-	vector<wchar_t> wfilePath(filePathBufferSize);
-	MultiByteToWideChar(CP_ACP, 0, fullPath.c_str(), -1, wfilePath.data(), filePathBufferSize);
+	std::wstring wfilePath = ConvertMultiByteStringToWideString(fullPath);
 
 	Result result = S_OK;
 	bool isDDSFile = fileName.find(".dds") != string::npos;
 
 	if (isDDSFile)
 	{
-		result = LoadFromDDSFile(wfilePath.data(), DDS_FLAGS_NONE, &metadata, scratchImg);
+		result = LoadFromDDSFile(wfilePath.c_str(), DDS_FLAGS_NONE, &metadata, scratchImg);
 	}
 	else
 	{
-		result = LoadFromWICFile(wfilePath.data(), WIC_FLAGS_NONE, &metadata, scratchImg);
-	}
-
-	if(!isDDSFile)
-	{
+		result = LoadFromWICFile(wfilePath.c_str(), WIC_FLAGS_NONE, &metadata, scratchImg);
+		
 		HRESULT result1 = GenerateMipMaps(scratchImg.GetImages(), scratchImg.GetImageCount(),
 			scratchImg.GetMetadata(), TEX_FILTER_DEFAULT, 0, mipChain);
 		if (SUCCEEDED(result1))

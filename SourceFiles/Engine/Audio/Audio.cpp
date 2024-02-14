@@ -3,7 +3,7 @@
 #include <fstream>
 using namespace WristerEngine;
 
-std::string Audio::DEFAULT_TEXTURE_DIRECTORY_PATH = "Resources/Sounds/";
+std::string Audio::DEFAULT_DIRECTORY_PATH = "Resources/Sounds/";
 
 void Audio::Initialize(const std::string& fileName)
 {
@@ -13,19 +13,17 @@ void Audio::Initialize(const std::string& fileName)
 		NULL, CLSCTX_INPROC,
 		IID_IGraphBuilder,
 		(LPVOID*)&graphBuilder);
-	
+
 	// MediaControlインターフェース取得
 	result = graphBuilder->QueryInterface(IID_IMediaControl, (LPVOID*)&mediaControl);
 	result = graphBuilder->QueryInterface(IID_IMediaPosition, (LPVOID*)&mediaPosition);
 	result = graphBuilder->QueryInterface(IID_IBasicAudio, (LPVOID*)&basicAudio);
 
-	std::string fullPath = DEFAULT_TEXTURE_DIRECTORY_PATH + fileName;
+	std::string fullPath = DEFAULT_DIRECTORY_PATH + fileName;
 
-	// ワイド文字列に変換した際の文字列バッファサイズを計算
-	int filePathBufferSize = MultiByteToWideChar(CP_ACP, 0, fullPath.c_str(), -1, nullptr, 0);
 	// ワイド文字列に変換
-	std::vector<wchar_t> wfilePath(filePathBufferSize);
-	MultiByteToWideChar(CP_ACP, 0, fullPath.c_str(), -1, wfilePath.data(), filePathBufferSize);
+	std::wstring wfilePath = ConvertMultiByteStringToWideString(fullPath);
+
 	// Graphを生成
 	result = mediaControl->RenderFile((BSTR)wfilePath.data());
 }

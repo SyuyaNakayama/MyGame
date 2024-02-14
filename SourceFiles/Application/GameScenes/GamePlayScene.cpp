@@ -1,5 +1,6 @@
 #include "GamePlayScene.h"
 #include "SceneManager.h"
+#include "AudioManager.h"
 #include <imgui.h>
 
 using namespace WristerEngine::_2D;
@@ -24,6 +25,9 @@ void GamePlayScene::Initialize()
 	// カウントダウン前に一回更新する
 	stage.Update();
 	uiDrawer->Update();
+
+	audio = WristerEngine::AudioManager::Create("07.ズタボログラウンド ／ 日向震工 feat. 初音ミク.mp3");
+	audio->Play();
 }
 
 void GamePlayScene::Update()

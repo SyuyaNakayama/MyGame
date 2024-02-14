@@ -2,7 +2,6 @@
 #include "SceneManager.h"
 #include "ModelManager.h"
 #include "Stage.h"
-
 using namespace WristerEngine::_3D;
 
 void ResultScene::Initialize()

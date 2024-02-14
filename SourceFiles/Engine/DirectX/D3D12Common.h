@@ -47,6 +47,13 @@ namespace WristerEngine
 	// シェーダー読み込み
 	void LoadShader(ID3DBlob** shaderBlob, std::wstring shaderName, LPCSTR target);
 
+	/// <summary>
+	/// マルチバイト文字列をワイド文字列に変換
+	/// </summary>
+	/// <param name="mString">マルチバイト文字列</param>
+	/// <returns>ワイド文字列</returns>
+	std::wstring ConvertMultiByteStringToWideString(const std::string& mString);
+
 	enum class RootParamType { CBV, DescriptorTable };
 
 	// パイプライン生成の設定
