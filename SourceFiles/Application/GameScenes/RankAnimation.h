@@ -64,11 +64,14 @@ class AppearAnimation : public BaseAnimation
 // 最終ランク発表
 class ResultAnimation : public BaseAnimation
 {
-	bool isPushedEnter = false; // エンターキーが押されたか
 	Vector2 rankSpriteSizeMem;
 	WristerEngine::Easing rankSpriteScale;
 	WristerEngine::_2D::SpriteAnimation enterUI;
 	std::unique_ptr<WristerEngine::_2D::Sprite> blind; // 画面を暗くする
+
+	void (ResultAnimation::* Phase)() = nullptr;
+	void PrePushEnter();
+	void PostPushEnter();
 
 	// BaseAnimation を介して継承されました
 	void Initialize(RankAnimation* pRankAnimation) override;

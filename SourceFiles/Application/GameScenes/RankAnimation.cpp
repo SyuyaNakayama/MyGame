@@ -146,28 +146,33 @@ void ResultAnimation::Initialize(RankAnimation* pRankAnimation_)
 	blind->size = WristerEngine::WIN_SIZE;
 	blind->color = { 0,0,0,0.5f };
 	blind->Update();
+
+	Phase = &ResultAnimation::PrePushEnter;
 }
 
 void ResultAnimation::Update()
 {
-	if (!isPushedEnter)
-	{
-		rankUI->size = rankSpriteSizeMem * rankSpriteScale.Update();
-		enterUI.Update();
-	}
-	else
-	{
-		rankUI->size = rankSpriteSizeMem * (1.0f - rankSpriteScale.Update());
-		if(rankSpriteScale.IsFinish()){ pRankAnimation->ReservePhase(AnimationPhase::End); }
-	}
-
+	(this->*Phase)();
 	rankUI->Update();
+}
+
+void ResultAnimation::PrePushEnter()
+{
+	rankUI->size = rankSpriteSizeMem * rankSpriteScale.Update();
+	enterUI.Update();
+
 	if (WristerEngine::Input::GetInstance()->IsTrigger(WristerEngine::Key::Return))
 	{
-		isPushedEnter = true;
 		enterUI.GetSprite()->isInvisible = true;
 		rankSpriteScale.Restart();
+		Phase = &ResultAnimation::PostPushEnter;
 	}
+}
+
+void ResultAnimation::PostPushEnter()
+{
+	rankUI->size = rankSpriteSizeMem * (1.0f - rankSpriteScale.Update());
+	if (rankSpriteScale.IsFinish()) { pRankAnimation->ReservePhase(AnimationPhase::End); }
 }
 
 void ResultAnimation::Draw()
@@ -180,7 +185,7 @@ void ResultAnimation::Draw()
 void AnimationEnd::Initialize(RankAnimation* pRankAnimation_)
 {
 	BaseAnimation::Initialize(pRankAnimation_);
-	
+
 	spaceKey.Initialize("ui/Key/key_SPACE.png", 128, 30);
 	Sprite* spaceKeySprite = spaceKey.GetSprite();
 	spaceKeySprite->position = Half(WristerEngine::WIN_SIZE);
@@ -192,12 +197,6 @@ void AnimationEnd::Initialize(RankAnimation* pRankAnimation_)
 	rankUI->Update();
 }
 
-void AnimationEnd::Update()
-{
-	spaceKey.Update();
-}
+void AnimationEnd::Update() { spaceKey.Update(); }
 
-void AnimationEnd::Draw()
-{
-	spaceKey.Draw();
-}
+void AnimationEnd::Draw() { spaceKey.Draw(); }
