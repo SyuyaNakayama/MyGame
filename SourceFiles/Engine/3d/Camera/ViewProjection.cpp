@@ -4,9 +4,10 @@
 using namespace WristerEngine;
 using namespace _3D;
 
-void ViewProjection::Initialize()
+void ViewProjection::Initialize(bool isUseShake, const CameraShake::Prop& shakeProp)
 {
 	CreateBuffer(constBuffer.GetAddressOf(), &constMap, (sizeof(ConstBufferData) + 0xff) & ~0xff);
+	if (isUseShake) { cameraShake = CameraShake::Create(shakeProp); }
 }
 
 void ViewProjection::Update()
@@ -19,13 +20,23 @@ void ViewProjection::Update()
 	matProjection.m[2][3] = 1.0f;
 	matProjection.m[3][2] = -nearZ * farZ / (farZ - nearZ);
 
+	// シェイクを計算
+	Vector3 sTarget = target;
+	Vector3 sEye = eye;
+	if (cameraShake) 
+	{
+		Vector3 shakeVal = cameraShake->Update();
+		sTarget += shakeVal;
+		sEye += shakeVal;
+	}
+
 	// ビュー行列を求める
 	std::array<Vector3, 3> axis;
-	axis[(int)Axis::Z] = Normalize(target - eye);
+	axis[(int)Axis::Z] = Normalize(sTarget - sEye);
 	axis[(int)Axis::X] = Normalize(Cross(up, axis[(int)Axis::Z]));
 	axis[(int)Axis::Y] = Normalize(Cross(axis[(int)Axis::Z], axis[(int)Axis::X]));
 	Vector3 cameraMove;
-	for (size_t i = 0; i < axis.size(); i++) { cameraMove[i] = Dot(eye, axis[i]); }
+	for (size_t i = 0; i < axis.size(); i++) { cameraMove[i] = Dot(sEye, axis[i]); }
 	matView = Matrix4::CreateFromVector(axis[(int)Axis::X], axis[(int)Axis::Y], axis[(int)Axis::Z]);
 	matView = Matrix4::Inverse(matView);
 	for (size_t i = 0; i < axis.size(); i++) { matView.m[3][i] = -cameraMove[i]; }

@@ -1,6 +1,7 @@
 #pragma once
 #include "Matrix4.h"
 #include "WindowsAPI.h"
+#include "CameraShake.h"
 #include <wrl.h>
 #include <d3d12.h>
 
@@ -29,9 +30,15 @@ namespace WristerEngine
 			// アスペクト比(基本はWIN_SIZEに準拠)
 			float aspectRatio = WIN_SIZE.x / WIN_SIZE.y;
 			float nearZ = 0.1f, farZ = 1000.0f; // 映る範囲
-
-			// 初期化
-			void Initialize();
+			// シェイク機能
+			std::unique_ptr<CameraShake> cameraShake;
+			
+			/// <summary>
+			/// 初期化
+			/// </summary>
+			/// <param name="isUseShake">シェイク機能を使うか</param>
+			/// <param name="shakeProp">シェイク情報</param>
+			void Initialize(bool isUseShake = false, const CameraShake::Prop& shakeProp = {});
 			// 更新
 			void Update();
 			// カメラ移動

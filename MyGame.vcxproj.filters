@@ -336,6 +336,9 @@
     <ClCompile Include="SourceFiles\Application\OperateDrawer\OperateDrawer.cpp">
       <Filter>ソース ファイル\Application\UIDrawer</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFiles\Engine\3d\Camera\CameraShake.cpp">
+      <Filter>ソース ファイル\Engine\3d\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\Engine\Math\Matrix4.h">
@@ -538,6 +541,9 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Application\OperateDrawer\OperateDrawer.h">
       <Filter>ソース ファイル\Application\UIDrawer</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Engine\3d\Camera\CameraShake.h">
+      <Filter>ソース ファイル\Engine\3d\Camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

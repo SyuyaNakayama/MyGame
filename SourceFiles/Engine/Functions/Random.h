@@ -32,7 +32,7 @@ namespace WristerEngine
 
 	public:
 		// コンストラクタ
-		Random_Float(float min, float max);
+		Random_Float(float min = 0, float max = 0);
 		float operator()() { return (*random)(rnddev); }
 	};
 }
