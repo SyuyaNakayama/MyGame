@@ -24,6 +24,8 @@ namespace WristerEngine
 			virtual void Initialize(WorldTransform* parent);
 			// 更新
 			virtual void Update();
+			// シェイク開始
+			void StartShake() { viewProjection.shake->Start(); }
 			// getter
 			ViewProjection* GetViewProjection() { return &viewProjection; }
 			const Vector2& GetAngle() { return angle; }

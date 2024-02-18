@@ -14,7 +14,7 @@ namespace WristerEngine
 		static const int DIR_LIGHT_NUM = 3;
 		static const int POINT_LIGHT_NUM = 3;
 		static const int SPOT_LIGHT_NUM = 3;
-		static const int CIRCLE_SHADOW_NUM = 1;
+		static const int CIRCLE_SHADOW_NUM = 3;
 
 	private:
 		template<class T> using ComPtr = Microsoft::WRL::ComPtr<T>;

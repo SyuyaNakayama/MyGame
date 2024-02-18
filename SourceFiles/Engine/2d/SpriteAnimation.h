@@ -12,7 +12,7 @@ namespace WristerEngine
 		{
 		private:
 			std::unique_ptr<WristerEngine::_2D::Sprite> sprite;
-			size_t width;
+			size_t width = 0;
 			FrameTimer interval;
 			size_t animeNum = 0;
 			size_t animeNumMax = 0;

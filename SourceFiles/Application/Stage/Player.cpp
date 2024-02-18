@@ -78,3 +78,15 @@ void Player::Update()
 	physics->Update();
 	camera->Update();
 }
+
+void Player::OnCollision(SphereCollider* collider)
+{
+	// 相手がObjectかの判定をする
+	Object* obj = dynamic_cast<Object*>(collider);
+	if (!obj) { return; }
+
+	float spd = physics->GetVelocity().Length();
+	camera->GetViewProjection()->shake->SetShakeRange({ spd,spd,spd });
+	// Objectと当たったならシェイク
+	camera->StartShake();
+}

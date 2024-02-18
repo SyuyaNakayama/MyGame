@@ -36,7 +36,7 @@ struct CircleShadow
 static const uint DIRLIGHT_NUM = 3;
 static const uint POINTLIGHT_NUM = 3;
 static const uint SPOTLIGHT_NUM = 3;
-static const uint CIRCLESHADOW_NUM = 1;
+static const uint CIRCLESHADOW_NUM = 3;
 
 struct Material
 {
@@ -86,7 +86,7 @@ float3 ComputeDiffuseSpecular(float3 lightv, LightData lightData, Material mater
 float3 LightGroup::ComputeDirLight(LightData lightData, Material material)
 {
     float3 sumColor;
-    for (int i = 0; i < DIRLIGHT_NUM; i++)
+    for (uint i = 0; i < DIRLIGHT_NUM; i++)
     {
         DirLight dirLight = dirLights[i];
         if (!dirLight.active)
@@ -103,7 +103,7 @@ float3 LightGroup::ComputePointLight(LightData lightData, Material material)
 {
     float3 sumColor;
     // “_ŒõŒ¹
-    for (int i = 0; i < POINTLIGHT_NUM; i++)
+    for (uint i = 0; i < POINTLIGHT_NUM; i++)
     {
         PointLight pointLight = pointLights[i];
         if (!pointLight.active)
@@ -127,7 +127,7 @@ float3 LightGroup::ComputePointLight(LightData lightData, Material material)
 float3 LightGroup::ComputeSpotLight(LightData lightData, Material material)
 {
     float3 sumColor;
-    for (int i = 0; i < SPOTLIGHT_NUM; i++)
+    for (uint i = 0; i < SPOTLIGHT_NUM; i++)
     {
         SpotLight spotLight = spotLights[i];
         if (!spotLight.active)
@@ -156,7 +156,7 @@ float3 LightGroup::ComputeSpotLight(LightData lightData, Material material)
 float3 LightGroup::ComputeCircleShadow(float3 worldpos, Material material)
 {
     float3 sumColor = float3(0, 0, 0);
-    for (int i = 0; i < CIRCLESHADOW_NUM; i++)
+    for (uint i = 0; i < CIRCLESHADOW_NUM; i++)
     {
         CircleShadow circleShadow = circleShadows[i];
         if (!circleShadow.active)

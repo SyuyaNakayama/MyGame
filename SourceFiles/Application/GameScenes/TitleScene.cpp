@@ -10,7 +10,7 @@ void TitleScene::Initialize()
 {
 	debugCamera.Initialize();
 	stage.Initialize();
-	camera.Initialize(true, { {0,500,0},300,WristerEngine::Easing::Type::OutBounce });
+	camera.Initialize();
 	camera.eye = { -50,250,0 };
 	camera.target.x = 0;
 	ModelManager::SetViewProjection(&camera);
@@ -26,8 +26,6 @@ void TitleScene::Update()
 		Stage::ResetScore();
 		return;
 	}
-
-	if (input->IsTrigger(WristerEngine::Key::Return)) { camera.cameraShake->Start(); }
 
 	debugCamera.Update();
 	stage.Update();

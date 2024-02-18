@@ -8,6 +8,8 @@ using namespace WristerEngine::_3D;
 void PlayerCamera::Initialize(WorldTransform* parent)
 {
 	BaseCamera::Initialize(parent);
+	CameraShake::Prop shakeProp = { {0,0,0},10,WristerEngine::Easing::Type::Sqrt };
+	viewProjection.Initialize(&shakeProp);
 	const float INIT_DISTANCE = 30.0f;
 	distance = INIT_DISTANCE;
 	parentPrePos = parent->GetWorldPosition();

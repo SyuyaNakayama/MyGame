@@ -4,10 +4,10 @@
 using namespace WristerEngine;
 using namespace _3D;
 
-void ViewProjection::Initialize(bool isUseShake, const CameraShake::Prop& shakeProp)
+void ViewProjection::Initialize(const CameraShake::Prop* shakeProp)
 {
 	CreateBuffer(constBuffer.GetAddressOf(), &constMap, (sizeof(ConstBufferData) + 0xff) & ~0xff);
-	if (isUseShake) { cameraShake = CameraShake::Create(shakeProp); }
+	if (shakeProp) { shake = CameraShake::Create(*shakeProp); }
 }
 
 void ViewProjection::Update()
@@ -23,9 +23,9 @@ void ViewProjection::Update()
 	// シェイクを計算
 	Vector3 sTarget = target;
 	Vector3 sEye = eye;
-	if (cameraShake) 
+	if (shake) 
 	{
-		Vector3 shakeVal = cameraShake->Update();
+		Vector3 shakeVal = shake->Update();
 		sTarget += shakeVal;
 		sEye += shakeVal;
 	}
@@ -42,7 +42,7 @@ void ViewProjection::Update()
 	for (size_t i = 0; i < axis.size(); i++) { matView.m[3][i] = -cameraMove[i]; }
 
 	constMap->viewproj = GetViewProjectionMatrix();
-	constMap->cameraPos = eye;
+	constMap->cameraPos = sEye;
 }
 
 void ViewProjection::CameraMove(const Vector3& move)

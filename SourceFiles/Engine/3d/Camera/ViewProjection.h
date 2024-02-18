@@ -31,14 +31,13 @@ namespace WristerEngine
 			float aspectRatio = WIN_SIZE.x / WIN_SIZE.y;
 			float nearZ = 0.1f, farZ = 1000.0f; // 映る範囲
 			// シェイク機能
-			std::unique_ptr<CameraShake> cameraShake;
+			std::unique_ptr<CameraShake> shake;
 			
 			/// <summary>
 			/// 初期化
 			/// </summary>
-			/// <param name="isUseShake">シェイク機能を使うか</param>
 			/// <param name="shakeProp">シェイク情報</param>
-			void Initialize(bool isUseShake = false, const CameraShake::Prop& shakeProp = {});
+			void Initialize(const CameraShake::Prop* shakeProp = nullptr);
 			// 更新
 			void Update();
 			// カメラ移動

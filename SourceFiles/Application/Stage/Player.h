@@ -33,4 +33,7 @@ public:
 	void Initialize(const WristerEngine::ObjectData& objectData);
 	// 更新
 	void Update();
+
+	// 衝突コールバック関数
+	void OnCollision(SphereCollider* collider) override;
 };

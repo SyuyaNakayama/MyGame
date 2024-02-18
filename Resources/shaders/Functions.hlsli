@@ -28,7 +28,8 @@ float PerlinNoise(float density, float2 uv)
 {
     float2 uvFloor = floor(uv * density);
     float2 uvFrac = frac(uv * density);
-    float v[2][2], c[2][2];
+    float2 v[2][2];
+    float c[2][2];
 
     for (int i = 0; i < 2; i++)
     {
