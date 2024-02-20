@@ -26,8 +26,8 @@ void GamePlayScene::Initialize()
 	stage.Update();
 	uiDrawer->Update();
 
-	audio = WristerEngine::AudioManager::Create("07.ズタボログラウンド ／ 日向震工 feat. 初音ミク.mp3");
-	audio->Play();
+	//audio = WristerEngine::AudioManager::Create("07.ズタボログラウンド ／ 日向震工 feat. 初音ミク.mp3");
+	//audio->Play();
 }
 
 void GamePlayScene::Update()
