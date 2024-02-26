@@ -6,6 +6,7 @@
 #include "FPS.h"
 #include "WindowsAPI.h"
 #include "Matrix4.h"
+#include <d2d1.h>						// Direct2D
 
 namespace WristerEngine
 {
@@ -64,5 +65,6 @@ namespace WristerEngine
 		ID3D12GraphicsCommandList* GetCommandList() const { return commandList.Get(); }
 		size_t GetBackBufferCount() const { return backBuffers.size(); }
 		Matrix4 GetViewportMatrix();
+		IDXGISwapChain4* GetSwapChain()const { return swapchain.Get(); }
 	};
 }

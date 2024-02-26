@@ -17,7 +17,7 @@ void GamePlayScene::Initialize()
 	viewProjection.eye.z = -75;
 	stage.Initialize();
 	//ModelManager::SetViewProjection(&viewProjection);
-	
+
 	// UI描画クラスのインスタンス生成
 	uiDrawer = std::make_unique<UIDrawerGameScene>(&stage);
 	uiDrawer->Initialize();
@@ -145,6 +145,26 @@ void UIDrawerGameScene::Initialize()
 	UIGoAnimation = &UIDrawerGameScene::UIGoSlide;
 
 	OperateDrawer::Initialize();
+
+	// DirectWriteCustomFontクラスの生成
+	Write = new DirectWriteCustomFont(&data);
+
+	// 初期化
+	Write->Init(WristerEngine::DirectXCommon::GetInstance()->GetSwapChain());
+
+	// フォントデータを改変
+	data.fontSize = 60;
+	data.fontWeight = DWRITE_FONT_WEIGHT_ULTRA_BLACK;
+	data.Color = D2D1::ColorF(D2D1::ColorF::Red);
+	data.font = Write->GetFontName(3);
+	data.shadowColor = D2D1::ColorF(D2D1::ColorF::White);
+	data.shadowOffset = D2D1::Point2F(5.0f, -5.0f);
+
+	// フォントをセット
+	Write->SetFont(data);
+
+	// DirectWrite用コンポーネントを作成
+	Write = new DirectWriteCustomFont(&data);
 }
 
 void UIDrawerGameScene::Update()
@@ -234,4 +254,5 @@ void UIDrawerGameScene::Draw()
 	OperateDrawer::Draw();
 	if (countDown) { countDown->Draw(); }
 	uiGo->Draw();
+	Write->DrawString("ここはテスト画面です", Vector2(90, 90), D2D1_DRAW_TEXT_OPTIONS_NONE);
 }

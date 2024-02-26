@@ -7,6 +7,7 @@
 #include "MathUtility.h"
 #include "Stage.h"
 #include "OperateDrawer.h"
+#include "DirectWriteCustomFont.h"
 
 // スタート前のカウントダウン演出
 class StartCountDown
@@ -51,6 +52,11 @@ private:
 	std::unique_ptr<WristerEngine::_2D::Sprite> uiGo;
 	Vector2 uiGoSize;
 	WristerEngine::Easing uiGoEasing;
+	// フォントデータ
+	FontData data;
+
+	// DirectWrite描画クラス
+	DirectWriteCustomFont* Write;
 
 	// "Go!"のアニメーションの関数ポインタ
 	void (UIDrawerGameScene::* UIGoAnimation)() = nullptr;

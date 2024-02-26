@@ -173,6 +173,7 @@
     <ClCompile Include="SourceFiles\Application\GameScenes\ScoreGauge.cpp" />
     <ClCompile Include="SourceFiles\Application\GameScenes\TutorialScene.cpp" />
     <ClCompile Include="SourceFiles\Application\OperateDrawer\OperateDrawer.cpp" />
+    <ClCompile Include="SourceFiles\Engine\DirectX\DirectWriteCustomFont.cpp" />
     <ClCompile Include="SourceFiles\Engine\2d\BitMapNumber.cpp" />
     <ClCompile Include="SourceFiles\Engine\3d\Camera\CameraShake.cpp" />
     <ClCompile Include="SourceFiles\Engine\3d\Object\Object3d.cpp" />
@@ -236,6 +237,7 @@
     <ClInclude Include="SourceFiles\Application\GameScenes\ScoreGauge.h" />
     <ClInclude Include="SourceFiles\Application\GameScenes\TutorialScene.h" />
     <ClInclude Include="SourceFiles\Application\OperateDrawer\OperateDrawer.h" />
+    <ClInclude Include="SourceFiles\Engine\DirectX\DirectWriteCustomFont.h" />
     <ClInclude Include="SourceFiles\Engine\2d\AbstractUIDrawer.h" />
     <ClInclude Include="SourceFiles\Engine\2d\BitMapNumber.h" />
     <ClInclude Include="SourceFiles\Engine\3d\Camera\CameraShake.h" />

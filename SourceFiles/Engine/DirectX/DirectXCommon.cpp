@@ -201,7 +201,7 @@ void DirectXCommon::PreDraw()
 {
 	UINT bbIndex = swapchain->GetCurrentBackBufferIndex();
 
-	D3D12_RESOURCE_BARRIER resourceBarrier =CD3DX12_RESOURCE_BARRIER::Transition(
+	D3D12_RESOURCE_BARRIER resourceBarrier = CD3DX12_RESOURCE_BARRIER::Transition(
 		backBuffers[bbIndex].Get(), D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);
 
 	commandList->ResourceBarrier(1, &resourceBarrier);
@@ -227,7 +227,7 @@ void DirectXCommon::PostDraw()
 
 	D3D12_RESOURCE_BARRIER resourceBarrier = CD3DX12_RESOURCE_BARRIER::Transition(
 		backBuffers[bbIndex].Get(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT);
-	
+
 	commandList->ResourceBarrier(1, &resourceBarrier);
 
 	// –½—ß‚ÌƒNƒ[ƒY
