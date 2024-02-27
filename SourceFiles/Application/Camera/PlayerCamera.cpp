@@ -33,7 +33,7 @@ void PlayerCamera::Update()
 
 	angle += cameraMove / rotSpdDec;
 	const Angle Y_MAX = 72;
-	angle.y = std::clamp(angle.y, 0.0f, +Y_MAX);
+	angle.y = std::clamp(angle.y, (float)Angle(5), +Y_MAX);
 	BaseCamera::Update();
 	parentPrePos = worldTransform.parent->GetWorldPosition();
 	if (input->IsTrigger(WristerEngine::Key::_3)) { ModelManager::SetViewProjection(&viewProjection); }

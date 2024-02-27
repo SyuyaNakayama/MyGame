@@ -35,17 +35,26 @@ void UIDrawerTutorialScene::Initialize()
 	operateUI["play"]->anchorPoint = { 0.5f,2 };
 	operateUI["play"]->position = { Half(WristerEngine::WIN_SIZE.x), WristerEngine::WIN_SIZE.y };
 
-	OperateDrawer::Initialize();
+	PlayMode::Initialize();
 	keyUI[Key::Space]->anchorPoint = { 0.5f,2 };
 	keyUI[Key::Space]->position = { Half(WristerEngine::WIN_SIZE.x), WristerEngine::WIN_SIZE.y };
+
+	eventManager->Initialize();
 }
 
 void UIDrawerTutorialScene::Update()
 {
-	OperateDrawer::Update();
+	PlayMode::Update();
+	if (WristerEngine::Input::GetInstance()->IsTrigger(WristerEngine::Key::Return))
+	{
+		eventManager->NextPhase();
+	}
+
+	eventManager->Update();
 }
 
 void UIDrawerTutorialScene::Draw()
 {
-	OperateDrawer::Draw();
+	PlayMode::Draw();
+	eventManager->Draw();
 }

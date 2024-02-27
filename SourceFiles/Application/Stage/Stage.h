@@ -9,7 +9,7 @@
 class Stage
 {
 	static const int STAGE_TIME = 60;
-	
+
 	std::list<std::unique_ptr<WristerEngine::_3D::GameObject>> gameObjects; // プレイヤー、壁、床、ゴール、障害物
 	WristerEngine::LevelData* levelData = nullptr;
 	static int score;
@@ -25,10 +25,10 @@ public:
 	// 更新
 	void Update();
 	/// <summary>
-	/// スコア加算
+	/// スコア加算(0未満にはならない)
 	/// </summary>
 	/// <param name="score_">加算するスコア</param>
-	static void AddScore(int score_) { score += score_; }
+	static void AddScore(int score_) { score = max(score + score_, 0); }
 	// getter
 	bool IsFinished() { return isFinished; }
 	/// <summary>

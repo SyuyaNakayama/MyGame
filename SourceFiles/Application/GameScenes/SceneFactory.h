@@ -5,7 +5,7 @@
 class SceneFactory : public WristerEngine::AbstractSceneFactory
 {
 private:
-	// コンストラクタを
+	// コンストラクタをプライベートにする
 	SceneFactory() = default;
 	~SceneFactory() = default;
 

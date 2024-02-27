@@ -23,7 +23,7 @@ void ViewProjection::Update()
 	// ƒVƒFƒCƒN‚ðŒvŽZ
 	Vector3 sTarget = target;
 	Vector3 sEye = eye;
-	if (shake) 
+	if (shake)
 	{
 		Vector3 shakeVal = shake->Update();
 		sTarget += shakeVal;
@@ -41,7 +41,11 @@ void ViewProjection::Update()
 	matView = Matrix4::Inverse(matView);
 	for (size_t i = 0; i < axis.size(); i++) { matView.m[3][i] = -cameraMove[i]; }
 
-	constMap->viewproj = GetViewProjectionMatrix();
+	// 2s—ñ‚ðŠ|‚¯‚é
+	matViewProjection = matView * matProjection;
+
+	// GPU“]‘—
+	constMap->viewproj = matViewProjection;
 	constMap->cameraPos = sEye;
 }
 
