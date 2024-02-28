@@ -249,7 +249,7 @@
     <ClInclude Include="SourceFiles\Engine\3d\Object\Material.h" />
     <ClInclude Include="SourceFiles\Application\Camera\PlayerCamera.h" />
     <ClInclude Include="SourceFiles\Engine\Audio\AudioManager.h" />
-    <ClInclude Include="SourceFiles\Engine\Functions\BaseSpawnPoint.h" />
+    <ClInclude Include="SourceFiles\Engine\Functions\AbstractSpawnPoint.h" />
     <ClInclude Include="SourceFiles\Engine\Light\Light.h" />
     <ClInclude Include="SourceFiles\Engine\Math\Easing.h" />
     <ClInclude Include="SourceFiles\Engine\Timer\FPS.h" />

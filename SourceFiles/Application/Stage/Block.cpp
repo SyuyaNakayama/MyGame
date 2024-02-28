@@ -1,6 +1,7 @@
 #include "Block.h"
 #include "Stage.h"
 #include "ParticleManager.h"
+#include "SceneManager.h"
 
 using namespace WristerEngine::_3D;
 using namespace WristerEngine::_2D;
@@ -119,6 +120,7 @@ void Goal::Update()
 {
 	// スコアの変更
 	if (isScoreChange) { ChangeScore(); }
+	if (WristerEngine::SceneManager::GetInstance()->GetNowScene() == Scene::Tutorial) { return; }
 
 	// ゴールの点滅開始時間
 	const int START_BLINK_TIME = 120;

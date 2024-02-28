@@ -1,13 +1,14 @@
 #pragma once
 #include "Sprite.h"
+#include <map>
 
 // チュートリアルの説明
 class TutorialEvent
 {
 private:
 	static const float TEX_SIZE_Y;
-	// チュートリアルのテキスト画像
-	std::unique_ptr<WristerEngine::_2D::Sprite> text;
+	// チュートリアルの説明UI
+	std::map<std::string, std::unique_ptr<WristerEngine::_2D::Sprite>> sprites;
 	// チュートリアルの説明番号
 	UINT32 phase = 0;
 

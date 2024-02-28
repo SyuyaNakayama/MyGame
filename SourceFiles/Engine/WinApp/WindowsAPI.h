@@ -7,6 +7,8 @@ namespace WristerEngine
 {
 	// ウィンドウサイズ
 	const Vector2 WIN_SIZE = { 1280,720 };
+	// ウィンドウサイズの半分(UI描画などに使う)
+	const Vector2 HALF_WIN_SIZE = WIN_SIZE / 2.0f;
 	
 	// ウィンドウクラス処理
 	class WindowsAPI final

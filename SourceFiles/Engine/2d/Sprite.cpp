@@ -1,8 +1,6 @@
 #include "Sprite.h"
 #include "D3D12Common.h"
 #include <DirectXTex.h>
-#include "ImGuiManager.h"
-#include <imgui.h>
 using namespace std;
 using namespace DirectX;
 using namespace Microsoft::WRL;
@@ -44,6 +42,12 @@ void Sprite::SetDescriptorHeaps()
 	cmdList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
 }
 
+void WristerEngine::_2D::Sprite::SetRect(const Vector2& textureSize_, const Vector2& textureLeftTop_)
+{
+	size = textureSize = textureSize_;
+	textureLeftTop = textureLeftTop_;
+}
+
 TextureData* Sprite::LoadTexture(const std::string& fileName, uint32_t mipLevels)
 {
 	// テクスチャの重複読み込みを検出
@@ -71,7 +75,7 @@ TextureData* Sprite::LoadTexture(const std::string& fileName, uint32_t mipLevels
 	else
 	{
 		result = LoadFromWICFile(wfilePath.c_str(), WIC_FLAGS_NONE, &metadata, scratchImg);
-		
+
 		HRESULT result1 = GenerateMipMaps(scratchImg.GetImages(), scratchImg.GetImageCount(),
 			scratchImg.GetMetadata(), TEX_FILTER_DEFAULT, 0, mipChain);
 		if (SUCCEEDED(result1))
@@ -128,6 +132,19 @@ TextureData* Sprite::LoadTexture(const std::string& fileName, uint32_t mipLevels
 	return texture;
 }
 
+std::unique_ptr<WristerEngine::_2D::Sprite> WristerEngine::_2D::Sprite::Create(
+	const std::string& fileName, const Vector2& pos, const Vector2& anchorPoint,
+	const Vector2& textureSize, const Vector2& textureLeftTop)
+{
+	std::unique_ptr<WristerEngine::_2D::Sprite> sprite = std::make_unique<Sprite>();
+	sprite->tex = LoadTexture(fileName);
+	sprite->Initialize();
+	sprite->position = pos;
+	sprite->anchorPoint = anchorPoint;
+	if (textureSize.Length() != 0) { sprite->SetRect(textureSize, textureLeftTop); }
+	return sprite;
+}
+
 void Sprite::PreDraw()
 {
 	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
@@ -164,14 +181,6 @@ void Sprite::Initialize()
 	size = textureSize;
 }
 
-std::unique_ptr<WristerEngine::_2D::Sprite> Sprite::Create(const std::string& FILE_NAME)
-{
-	std::unique_ptr<WristerEngine::_2D::Sprite> sprite = std::make_unique<Sprite>();
-	sprite->tex = LoadTexture(FILE_NAME);
-	sprite->Initialize();
-	return sprite;
-}
-
 void Sprite::AdjustTextureSize()
 {
 	assert(tex->buffer);
@@ -184,20 +193,6 @@ void Sprite::AdjustTextureSize()
 
 void Sprite::Update()
 {
-	//if (ImGui::CollapsingHeader(tex->fileName.c_str()))
-	//{
-	//	ImGui::Checkbox("isInvisible", &isInvisible);
-	//	if (isInvisible) { return; }
-	//	ImGuiManager::InputVector("position", position);
-	//	ImGui::InputFloat("rotation", &rotation);
-	//	ImGuiManager::ColorEdit("color", color);
-	//	ImGuiManager::InputVector("size", size);
-	//	ImGuiManager::InputVector("anchorPoint", anchorPoint);
-	//	ImGuiManager::InputVector("textureLeftTop", textureLeftTop);
-	//	ImGuiManager::InputVector("textureSize", textureSize);
-	//	ImGui::Checkbox("isFlipX", &isFlipX);
-	//	ImGui::Checkbox("isFlipY", &isFlipY);
-	//}
 	if (isInvisible) { return; }
 
 	float left = (0.0f - anchorPoint.x) * size.x;

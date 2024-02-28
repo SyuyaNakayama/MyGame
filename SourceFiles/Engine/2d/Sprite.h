@@ -85,14 +85,22 @@ namespace WristerEngine
 			// テクスチャ読み込み
 			static TextureData* LoadTexture(const std::string& FILE_NAME, uint32_t mipLevels = MIP_LEVELS_DEFAULT);
 			// スプライト生成
-			static std::unique_ptr<WristerEngine::_2D::Sprite> Create(const std::string& fileName);
+			static std::unique_ptr<WristerEngine::_2D::Sprite> Create(const std::string& fileName,
+				const Vector2& pos = {}, const Vector2& anchorPoint = {},
+				const Vector2& textureSize = {}, const Vector2& textureLeftTop = {});
 			// 描画前処理
 			static void PreDraw();
 			// getter
-			D3D12_GPU_DESCRIPTOR_HANDLE GetGPUHandle() { return tex->gpuHandle; }
+			D3D12_GPU_DESCRIPTOR_HANDLE GetGPUHandle() const { return tex->gpuHandle; }
 			static ID3D12DescriptorHeap* GetDescriptorHeap() { return srvHeap.Get(); }
 			// デスクリプタヒープのセット
 			static void SetDescriptorHeaps();
+			/// <summary>
+			/// 切り取り領域を指定(描画サイズも変える)
+			/// </summary>
+			/// <param name="textureSize">切り取り領域のサイズ</param>
+			/// <param name="textureLeftTop">切り取り領域の左上座標</param>
+			void SetRect(const Vector2& textureSize, const Vector2& textureLeftTop = {});
 		};
 	}
 }

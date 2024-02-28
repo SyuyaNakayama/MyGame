@@ -47,7 +47,7 @@ void UIDrawerTutorialScene::Update()
 	PlayMode::Update();
 	if (WristerEngine::Input::GetInstance()->IsTrigger(WristerEngine::Key::Return))
 	{
-		eventManager->NextPhase();
+		//eventManager->NextPhase();
 	}
 
 	eventManager->Update();
