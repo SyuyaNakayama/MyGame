@@ -29,9 +29,6 @@ class SpawnObject : public BaseSpawnObject
 {
 	static const int SPAWN_MAX = 25;
 
-private:
-
-
 public:
 	// XV
 	void Update();

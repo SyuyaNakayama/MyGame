@@ -5,7 +5,7 @@
 using namespace WristerEngine::_2D;
 using namespace WristerEngine::_3D;
 
-void PlayerCamera::Initialize(WorldTransform* parent)
+void PlayerCamera::Initialize(Transform* parent)
 {
 	BaseCamera::Initialize(parent);
 	CameraShake::Prop shakeProp = { {0,0,0},10,WristerEngine::Easing::Type::Sqrt };

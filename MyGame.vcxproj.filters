@@ -204,13 +204,13 @@
     <ClCompile Include="SourceFiles\Engine\3d\Object\ModelManager.cpp">
       <Filter>ソース ファイル\Engine\3d\Object</Filter>
     </ClCompile>
-    <ClCompile Include="SourceFiles\Engine\3d\Object\WorldTransform.cpp">
+    <ClCompile Include="SourceFiles\Engine\3d\Object\Transform.cpp">
       <Filter>ソース ファイル\Engine\3d\Object</Filter>
     </ClCompile>
     <ClCompile Include="SourceFiles\Engine\3d\Camera\DebugCamera.cpp">
       <Filter>ソース ファイル\Engine\3d\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="SourceFiles\Engine\3d\Camera\ViewProjection.cpp">
+    <ClCompile Include="SourceFiles\Engine\3d\Camera\Camera.cpp">
       <Filter>ソース ファイル\Engine\3d\Camera</Filter>
     </ClCompile>
     <ClCompile Include="SourceFiles\Engine\2d\PostEffect.cpp">
@@ -401,13 +401,13 @@
     <ClInclude Include="SourceFiles\Engine\3d\Object\ModelManager.h">
       <Filter>ソース ファイル\Engine\3d\Object</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\Engine\3d\Object\WorldTransform.h">
+    <ClInclude Include="SourceFiles\Engine\3d\Object\Transform.h">
       <Filter>ソース ファイル\Engine\3d\Object</Filter>
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\3d\Camera\DebugCamera.h">
       <Filter>ソース ファイル\Engine\3d\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\Engine\3d\Camera\ViewProjection.h">
+    <ClInclude Include="SourceFiles\Engine\3d\Camera\Camera.h">
       <Filter>ソース ファイル\Engine\3d\Camera</Filter>
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\2d\PostEffect.h">

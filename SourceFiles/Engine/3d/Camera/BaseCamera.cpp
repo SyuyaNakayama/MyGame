@@ -3,7 +3,7 @@
 using namespace WristerEngine;
 using namespace _3D;
 
-void BaseCamera::Initialize(WorldTransform* parent)
+void BaseCamera::Initialize(Transform* parent)
 {
 	worldTransform.Initialize();
 	worldTransform.translation = { 0,10.0f,-10.0f };

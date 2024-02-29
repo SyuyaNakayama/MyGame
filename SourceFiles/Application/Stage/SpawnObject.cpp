@@ -1,10 +1,8 @@
 #include "SpawnObject.h"
-#include "Quaternion.h"
-#include "Input.h"
 #include "SceneManager.h"
 #include "Random.h"
 
-std::list<std::unique_ptr<WristerEngine::_3D::GameObject>>* SpawnObject::objects;
+std::list<std::unique_ptr<WristerEngine::_3D::GameObject>>* BaseSpawnObject::objects;
 
 void BaseSpawnObject::Initialize(const WristerEngine::ObjectData& objectData_)
 {
@@ -19,7 +17,7 @@ void BaseSpawnObject::Update()
 	// オブジェクトの生成
 	std::unique_ptr<Object> newObj = std::make_unique<Object>();
 	WristerEngine::ObjectData objectDataTemp = objectData;
-	objectDataTemp.worldTransform = new WristerEngine::_3D::WorldTransform;
+	objectDataTemp.worldTransform = new WristerEngine::_3D::Transform;
 	*objectDataTemp.worldTransform = *objectData.worldTransform;
 	objectDataTemp.worldTransform->Initialize();
 	newObj->Initialize(objectDataTemp);

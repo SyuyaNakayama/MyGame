@@ -1,6 +1,7 @@
 #pragma once
 #include "Collider.h"
 #include "GameObject.h"
+#include "TutorialEventManager.h"
 
 // ゴールに運ぶオブジェクト
 class Object : public WristerEngine::SphereCollider, public WristerEngine::BoxCollider, public WristerEngine::_3D::GameObject
@@ -21,6 +22,7 @@ private:
 	bool isGoal = false;
 	float dissolvePow = 0;
 	Type type = Type::White;
+	TutorialEventManager* eventManager = nullptr;
 
 public:
 	// コンストラクタ

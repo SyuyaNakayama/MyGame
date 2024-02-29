@@ -73,7 +73,7 @@ class GamePlayScene : public WristerEngine::BaseScene
 {
 private:
 	Stage stage;
-	WristerEngine::_3D::ViewProjection viewProjection;
+	WristerEngine::_3D::Camera viewProjection;
 	WristerEngine::Audio* audio = nullptr;
 
 	// 初期化(オーバーライド)

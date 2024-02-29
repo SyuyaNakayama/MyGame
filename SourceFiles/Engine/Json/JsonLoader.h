@@ -20,7 +20,7 @@ namespace WristerEngine
 	{
 		std::string fileName;
 		ColliderData collider;
-		_3D::WorldTransform* worldTransform;
+		_3D::Transform* worldTransform;
 		int spawnInterval; // スポーン頻度(SpawnObjectクラス専用変数)
 	};
 
@@ -29,7 +29,7 @@ namespace WristerEngine
 	{
 		std::list<ObjectData> objects;
 
-		void LoadJsonRecursive(nlohmann::json& object, _3D::WorldTransform* parent = nullptr);
+		void LoadJsonRecursive(nlohmann::json& object, _3D::Transform* parent = nullptr);
 	};
 
 	// Jsonファイル読み込みクラス

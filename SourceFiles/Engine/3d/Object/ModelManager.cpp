@@ -10,14 +10,14 @@ using namespace _3D;
 unique_ptr<LightGroup> ModelManager::lightGroup;
 unordered_map<string, array<unique_ptr<Mesh>, 2>> ModelManager::meshes;
 list<unique_ptr<Object3d>> ModelManager::objects;
-ViewProjection* ModelManager::viewProjection = nullptr;
+Camera* ModelManager::viewProjection = nullptr;
 
 void ModelManager::Initialize()
 {
 	// ライトグループ生成
 	lightGroup = LightGroup::Create();
 	// カメラ生成
-	viewProjection = new ViewProjection;
+	viewProjection = new Camera;
 	viewProjection->Initialize();
 }
 

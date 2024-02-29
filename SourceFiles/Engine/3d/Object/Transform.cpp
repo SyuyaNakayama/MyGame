@@ -1,15 +1,15 @@
-#include "WorldTransform.h"
+#include "Transform.h"
 #include "D3D12Common.h"
 #include "ModelManager.h"
 using namespace WristerEngine;
 using namespace _3D;
 
-void WorldTransform::Initialize()
+void Transform::Initialize()
 {
 	CreateBuffer(constBuffer.GetAddressOf(), &constMap, (sizeof(ConstBufferData) + 0xff) & ~0xff);
 }
 
-void WorldTransform::Update()
+void Transform::Update()
 {
 	// 親ポインタの更新
 	if (parent) { parent->Update(); }
@@ -24,7 +24,7 @@ void WorldTransform::Update()
 	constMap->world = matWorld;
 }
 
-void WorldTransform::Draw()
+void Transform::Draw()
 {
 	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
 	cmdList->SetGraphicsRootConstantBufferView(
@@ -32,7 +32,7 @@ void WorldTransform::Draw()
 	isUpdated = false;
 }
 
-Vector3 WorldTransform::GetScale()
+Vector3 Transform::GetScale()
 {
 	Vector3 scale_;
 	// グローバル行列からスケール値を抽出

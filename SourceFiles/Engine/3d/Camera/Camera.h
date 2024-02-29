@@ -10,7 +10,7 @@ namespace WristerEngine
 	namespace _3D
 	{
 		// ƒJƒƒ‰
-		class ViewProjection
+		class Camera
 		{
 		private:
 			Matrix4 matView, matProjection, matViewProjection;

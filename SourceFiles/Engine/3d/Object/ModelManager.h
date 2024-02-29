@@ -1,5 +1,5 @@
 #pragma once
-#include "ViewProjection.h"
+#include "Camera.h"
 #include "LightGroup.h"
 #include "Object3d.h"
 
@@ -20,7 +20,7 @@ namespace WristerEngine
 			// 生成したオブジェクト
 			static std::list<std::unique_ptr<Object3d>> objects;
 			// ビュープロジェクションのポインタ
-			static ViewProjection* viewProjection;
+			static Camera* viewProjection;
 
 		public:
 			// 初期化
@@ -34,10 +34,10 @@ namespace WristerEngine
 			// オブジェクトの解放
 			static void ClearObjects() { objects.clear(); }
 			// setter
-			static void SetViewProjection(ViewProjection* viewProjection_) { viewProjection = viewProjection_; }
+			static void SetViewProjection(Camera* viewProjection_) { viewProjection = viewProjection_; }
 			// getter
 			static LightGroup* GetLightGroup() { return lightGroup.get(); }
-			static ViewProjection* GetViewProjection() { return viewProjection; }
+			static Camera* GetViewProjection() { return viewProjection; }
 		};
 	}
 }

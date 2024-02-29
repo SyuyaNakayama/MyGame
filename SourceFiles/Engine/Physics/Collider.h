@@ -1,5 +1,5 @@
 #pragma once
-#include "WorldTransform.h"
+#include "Transform.h"
 #include "Physics.h"
 #include <vector>
 #include <array>
@@ -43,7 +43,7 @@ namespace WristerEngine
 	protected:
 		CollisionAttribute collisionAttribute = CollisionAttribute::All;
 		CollisionMask collisionMask = CollisionMask::All;
-		_3D::WorldTransform* worldTransform = nullptr;
+		_3D::Transform* worldTransform = nullptr;
 		std::unique_ptr<Physics> physics;
 
 	public:
@@ -60,7 +60,7 @@ namespace WristerEngine
 		// setter
 		void SetCollisionAttribute(CollisionAttribute collisionAttribute_) { collisionAttribute = collisionAttribute_; }
 		void SetCollisionMask(CollisionMask collisionMask_) { collisionMask = collisionMask_; }
-		void SetWorldTransform(_3D::WorldTransform* worldTransform_) { worldTransform = worldTransform_; }
+		void SetWorldTransform(_3D::Transform* worldTransform_) { worldTransform = worldTransform_; }
 		// getter
 		CollisionAttribute GetCollisionAttribute() { return collisionAttribute; }
 		CollisionMask GetCollisionMask() { return collisionMask; }

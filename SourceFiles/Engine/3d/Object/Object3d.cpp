@@ -7,7 +7,7 @@ void Object3d::Initialize(Mesh* mesh_)
 {
 	mesh = mesh_;
 	material.Load(mesh_);
-	worldTransform = std::make_unique<WorldTransform>();
+	worldTransform = std::make_unique<Transform>();
 	worldTransform->Initialize();
 }
 

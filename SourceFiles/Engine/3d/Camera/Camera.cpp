@@ -1,16 +1,16 @@
-#include "ViewProjection.h"
+#include "Camera.h"
 #include "D3D12Common.h"
 #include <array>
 using namespace WristerEngine;
 using namespace _3D;
 
-void ViewProjection::Initialize(const CameraShake::Prop* shakeProp)
+void Camera::Initialize(const CameraShake::Prop* shakeProp)
 {
 	CreateBuffer(constBuffer.GetAddressOf(), &constMap, (sizeof(ConstBufferData) + 0xff) & ~0xff);
 	if (shakeProp) { shake = CameraShake::Create(*shakeProp); }
 }
 
-void ViewProjection::Update()
+void Camera::Update()
 {
 	// プロジェクション行列を求める
 	matProjection = Matrix4::Zero();
@@ -49,7 +49,7 @@ void ViewProjection::Update()
 	constMap->cameraPos = sEye;
 }
 
-void ViewProjection::CameraMove(const Vector3& move)
+void Camera::CameraMove(const Vector3& move)
 {
 	eye += move;
 	target += move;
