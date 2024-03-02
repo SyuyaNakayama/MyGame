@@ -35,6 +35,6 @@ namespace WristerEngine
 		// シーン切り替え
 		void ChangeScene(Scene nextScene_, bool isObjectClear = true, bool isParticleClear = true, bool isUseFade = true);
 		// 現在のシーン取得
-		Scene GetNowScene() { return nowScene; }
+		Scene GetNowScene() const { return nowScene; }
 	};
 }

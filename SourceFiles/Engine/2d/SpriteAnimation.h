@@ -11,7 +11,7 @@ namespace WristerEngine
 		class SpriteAnimation
 		{
 		private:
-			std::unique_ptr<WristerEngine::_2D::Sprite> sprite;
+			std::unique_ptr<Sprite> sprite;
 			size_t width = 0;
 			FrameTimer interval;
 			size_t animeNum = 0;

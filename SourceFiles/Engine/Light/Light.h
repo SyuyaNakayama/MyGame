@@ -9,23 +9,23 @@ namespace WristerEngine
 	class BaseLight
 	{
 	private:
-		ColorRGB lightcolor; // ライト色
+		ColorRGB color; // ライト色
 		bool active = false; // 有効フラグ
 
 	public:
 		// setter
-		void SetLightColor(const ColorRGB& lightcolor_) { lightcolor = lightcolor_; }
+		void SetColor(const ColorRGB& color_) { color = color_; }
 		void SetActive(bool active_) { active = active_; }
 		// getter
-		ColorRGB GetLightColor() { return lightcolor; }
-		bool IsActive() { return active; }
+		const ColorRGB& GetColor()  { return color; }
+		bool IsActive() const { return active; }
 	};
 
 	// 平行光源
 	class DirectionalLight : public BaseLight
 	{
 	private:
-		Vector3 lightdir = { 1,0,0 }; // ライト光線方向
+		Vector3 dir = { 1,0,0 }; // ライト光線方向
 
 	public:
 		struct ConstBufferData
@@ -37,19 +37,19 @@ namespace WristerEngine
 		};
 
 		// ライト光線方向を変更
-		void SetLightDir(const Vector3& lightdir_) { lightdir = Normalize(lightdir_); }
+		void SetDir(const Vector3& lightdir_) { dir = Normalize(lightdir_); }
 		// ライト光線方向を取得
-		Vector3 GetLightDir() { return lightdir; }
+		const Vector3& GetDir()  { return dir; }
 	};
 
 	// スポットライト
 	class SpotLight : public BaseLight
 	{
 	private:
-		Vector3 lightdir;
-		Vector3 lightpos;
-		Vector3 lightAtten = { 1,1,1 };
-		Vector2 lightFactorAngleCos = { 0.5f,0.2f };
+		Vector3 dir;
+		Vector3 pos;
+		Vector3 atten = { 1,1,1 };
+		Vector2 factorAngleCos = { 0.5f,0.2f };
 
 	public:
 		struct ConstBufferData
@@ -68,27 +68,27 @@ namespace WristerEngine
 		};
 
 		// setter
-		void SetLightDir(const Vector3& lightdir_) { lightdir = Normalize(lightdir_); }
-		void SetLightPos(const Vector3& lightpos_) { lightpos = lightpos_; }
-		void SetLightAtten(const Vector3& lightAtten_) { lightAtten = lightAtten_; }
-		void SetLightFactorAngle(const Vector2& lightFactorAngle)
+		void SetDir(const Vector3& dir_) { dir = Normalize(dir_); }
+		void SetPos(const Vector3& pos_) { pos = pos_; }
+		void SetAtten(const Vector3& atten_) { atten = atten_; }
+		void SetFactorAngle(const Vector2& factorAngle)
 		{
-			lightFactorAngleCos.x = std::cos(lightFactorAngle.x);
-			lightFactorAngleCos.y = std::cos(lightFactorAngle.y);
+			factorAngleCos.x = std::cos(factorAngle.x);
+			factorAngleCos.y = std::cos(factorAngle.y);
 		}
 		// getter
-		const Vector3& GetLightDir() { return lightdir; }
-		const Vector3& GetLightPos() { return lightpos; }
-		const Vector3& GetLightAtten() { return lightAtten; }
-		const Vector2& GetLightFactorAngleCos() { return lightFactorAngleCos; }
+		const Vector3& GetDir() { return dir; }
+		const Vector3& GetPos() { return pos; }
+		const Vector3& GetAtten() { return atten; }
+		const Vector2& GetFactorAngleCos() { return factorAngleCos; }
 	};
 
 	// 点光源
 	class PointLight : public BaseLight
 	{
 	private:
-		Vector3 lightpos;
-		Vector3 lightAtten = { 1,1,1 }; // ライト距離減衰係数
+		Vector3 pos;
+		Vector3 atten = { 1,1,1 }; // ライト距離減衰係数
 
 	public:
 		struct ConstBufferData
@@ -102,10 +102,10 @@ namespace WristerEngine
 		};
 
 		// setter
-		void SetLightPos(const Vector3& lightpos_) { lightpos = lightpos_; }
-		void SetLightAtten(const Vector3& lightAtten_) { lightAtten = lightAtten_; }
+		void SetPos(const Vector3& pos_) { pos = pos_; }
+		void SetAtten(const Vector3& atten_) { atten = atten_; }
 		// getter
-		const Vector3& GetLightPos() { return lightpos; }
-		const Vector3& GetLightAtten() { return lightAtten; }
+		const Vector3& GetPos() { return pos; }
+		const Vector3& GetAtten() { return atten; }
 	};
 }

@@ -31,11 +31,10 @@ namespace WristerEngine
 
 		ComPtr<ID3D12Resource> constBuff;
 		ColorRGB ambientColor;
-		DirectionalLight dirLights[DIR_LIGHT_NUM];
-		PointLight pointLights[POINT_LIGHT_NUM];
-		SpotLight spotLights[SPOT_LIGHT_NUM];
-		CircleShadow circleShadows[CIRCLE_SHADOW_NUM];
-		bool dirty = false;
+		std::array<DirectionalLight, DIR_LIGHT_NUM> dirLights;
+		std::array<PointLight, POINT_LIGHT_NUM> pointLights;
+		std::array<SpotLight, SPOT_LIGHT_NUM> spotLights;
+		std::array<CircleShadow, CIRCLE_SHADOW_NUM> circleShadows;
 		ConstBufferData* constMap = nullptr;
 
 		// 定数バッファ転送
@@ -52,33 +51,18 @@ namespace WristerEngine
 		/// <returns>インスタンス</returns>
 		static std::unique_ptr<LightGroup> Create();
 		// 更新
-		void Update();
+		void Update(){ TransferConstBuffer(); }
 		// 描画
 		void Draw(UINT rootParameterIndex);
 		// 環境光を変更
-		void SetAmbientColor(const ColorRGB& color) { ambientColor = color; dirty = true; }
-		// 平行光源Setter
-		void SetDirLightActive(size_t index, bool active);
-		void SetDirLightDir(size_t index, const Vector3& lightDir);
-		void SetDirLightColor(size_t index, const ColorRGB& lightcolor);
-		// 点光源Setter
-		void SetPointLightActive(size_t index, bool active);
-		void SetPointLightPos(size_t index, const Vector3& lightpos);
-		void SetPointLightColor(size_t index, const ColorRGB& lightcolor);
-		void SetPointLightAtten(size_t index, const Vector3& lightAtten);
-		// スポットライトSetter
-		void SetSpotLightActive(size_t index, bool active);
-		void SetSpotLightDir(size_t index, const Vector3& lightdir);
-		void SetSpotLightPos(size_t index, const Vector3& lightpos);
-		void SetSpotLightColor(size_t index, const ColorRGB& lightcolor);
-		void SetSpotLightAtten(size_t index, const Vector3& lightAtten);
-		void SetSpotLightFactorAngle(size_t index, const Vector2& lightFactorAngle);
-		// 丸影Setter
-		void SetCircleShadowActive(size_t index, bool active);
-		void SetCircleShadowCasterPos(size_t index, const Vector3& casterPos);
-		void SetCircleShadowDir(size_t index, const Vector3& lightdir);
-		void SetCircleShadowDistanceCasterLight(size_t index, float distanceCasterLight);
-		void SetCircleShadowAtten(size_t index, const Vector3& lightAtten);
-		void SetCircleShadowFactorAngle(size_t index, const Vector2& lightFactorAngle);
+		void SetAmbientColor(const ColorRGB& color) { ambientColor = color; }
+		// 平行光源を取得
+		DirectionalLight* GetDirectionalLight(uint32_t index);
+		// 点光源を取得
+		PointLight* GetPointLight(uint32_t index);
+		// スポットライトを取得
+		SpotLight* GetSpotLight(uint32_t index);
+		// 丸影を取得
+		CircleShadow* GetCircleShadow(uint32_t index);
 	};
 }

@@ -19,7 +19,7 @@ void PlayerCamera::Update()
 {
 	Vector2 cameraMove;
 	const float MOVE_SPD = 1.0f;
-	
+
 	WristerEngine::Input* input = WristerEngine::Input::GetInstance();
 	if (!input->IsConnectGamePad())
 	{

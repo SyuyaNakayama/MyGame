@@ -16,7 +16,7 @@ namespace WristerEngine
 		Input* input = Input::GetInstance();
 		_3D::DebugCamera debugCamera;
 		std::unique_ptr<_2D::AbstractUIDrawer> uiDrawer;
-
+		
 	public:
 		// コンストラクタ
 		BaseScene();
