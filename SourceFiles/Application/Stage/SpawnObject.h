@@ -9,6 +9,7 @@ protected:
 	static std::list<std::unique_ptr<WristerEngine::_3D::GameObject>>* objects;
 	WristerEngine::ObjectData objectData;
 	Vector3 initialPos;
+	std::unique_ptr<const int> SPAWN_MAX = nullptr;
 
 public:
 	/// <summary>
@@ -27,7 +28,6 @@ public:
 // オブジェクト生成オブジェクト
 class SpawnObject : public BaseSpawnObject
 {
-	static const int SPAWN_MAX = 25;
 
 public:
 	// 更新

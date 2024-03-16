@@ -21,7 +21,8 @@ namespace WristerEngine
 		std::string fileName;
 		ColliderData collider;
 		_3D::Transform* worldTransform;
-		int spawnInterval; // スポーン頻度(SpawnObjectクラス専用変数)
+		int spawnInterval = 0; // スポーン頻度(SpawnObjectクラス専用変数)
+		int spawnMax = 0; // スポーン最大数(SpawnObjectクラス専用変数)
 	};
 
 	// レベルデータ

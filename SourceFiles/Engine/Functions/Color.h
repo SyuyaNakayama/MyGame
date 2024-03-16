@@ -13,7 +13,11 @@ namespace WristerEngine
 		float val_ = Color::MAX;
 
 	public:
+		Color() = default;
+		Color(float color) { val_ = color; }
+		// 演算子オーバーロード
 		float operator=(float val);
+		Color operator*=(float rate) { val_ *= rate; return val_; }
 		void operator+=(float val) { operator=(val_ + val); }
 		void operator-=(float val) { operator=(val_ - val); }
 		operator float() { return val_; }
@@ -24,8 +28,11 @@ namespace WristerEngine
 	{
 		Color r, g, b;
 		// コンストラクタ
-		ColorRGB() {}
-		ColorRGB(float red, float green, float blue) { r = red, g = green, b = blue; }
+		ColorRGB() = default;
+		ColorRGB(Color red, Color green, Color blue) { r = red, g = green, b = blue; }
+
+		// 演算子オーバーロード
+		ColorRGB& operator*=(float rate);
 
 		// 色取得
 		static ColorRGB Red() { return { 1,0,0 }; }
@@ -44,8 +51,11 @@ namespace WristerEngine
 		Color r, g, b, a;
 		// コンストラクタ
 		ColorRGBA() {}
-		ColorRGBA(float red, float green, float blue, float alpha = Color::MAX) { r = red, g = green, b = blue, a = alpha; }
+		ColorRGBA(Color red, Color green, Color blue, Color alpha = Color::MAX) { r = red, g = green, b = blue, a = alpha; }
 		ColorRGBA(ColorRGB color, float alpha = Color::MAX) { r = color.r, g = color.g, b = color.b, a = alpha; }
+
+		// 演算子オーバーロード
+		ColorRGBA& operator*=(float rate);
 
 		// 色取得
 		static ColorRGBA Red() { return { 1,0,0,1 }; }
@@ -57,4 +67,9 @@ namespace WristerEngine
 		static ColorRGBA Magenta() { return { 1,0,1,1 }; }
 		static ColorRGBA Cyan() { return { 0,1,1,1 }; }
 	};
+
+	// 2項演算子オーバーロード
+	const Color operator*(Color color, float rate);
+	const ColorRGB operator*(ColorRGB color, float rate);
+	const ColorRGBA operator*(ColorRGBA color, float rate);
 }

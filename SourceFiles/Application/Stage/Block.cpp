@@ -118,9 +118,9 @@ void Goal::ChangeScore()
 
 void Goal::Update()
 {
+	if (WristerEngine::SceneManager::GetInstance()->GetNowScene() == Scene::Tutorial) { return; }
 	// スコアの変更
 	if (isScoreChange) { ChangeScore(); }
-	if (WristerEngine::SceneManager::GetInstance()->GetNowScene() == Scene::Tutorial) { return; }
 
 	// ゴールの点滅開始時間
 	const int START_BLINK_TIME = 120;
@@ -133,9 +133,7 @@ void Goal::Update()
 		const int BLINK_INTERVAL = START_BLINK_TIME / BLINK_NUM;
 		int easingColor = NumberLoop(START_BLINK_TIME - remainTime, BLINK_INTERVAL);
 		float colorRate = (cos(2.0f * PI * (float)easingColor / (float)BLINK_INTERVAL) + 1) * 0.5f;
-		object->material.GetSprite(TexType::Main)->color.r = initColor.r * colorRate;
-		object->material.GetSprite(TexType::Main)->color.g = initColor.g * colorRate;
-		object->material.GetSprite(TexType::Main)->color.b = initColor.b * colorRate;
+		object->material.GetSprite(TexType::Main)->color = initColor * colorRate;
 	}
 }
 

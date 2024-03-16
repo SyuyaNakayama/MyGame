@@ -41,7 +41,7 @@ public:
 	// 破壊する
 	void Destroy() { object->isDestroy = true; }
 	// setter(isDestroy)
-	bool IsDestroy() { return object->isDestroy; }
+	bool IsDestroy() const { return object->isDestroy; }
 	// このクラスのインスタンス数を取得
 	static int GetInstanceNum() { return instanceNum; }
 	// ゴールした

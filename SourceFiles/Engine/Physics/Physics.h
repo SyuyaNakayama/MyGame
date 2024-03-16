@@ -48,11 +48,11 @@ namespace WristerEngine
 		void SetMu(float mu_) { mu = mu_; }
 		void SetIsFreeFall(bool isFreeFall_) { isFreeFall = isFreeFall_; }
 		// getter
-		Vector3 GetVelocity() { return vel; }
-		float GetForce() { return accel * mass; }
-		float GetMass() { return mass; }
+		const Vector3& GetVelocity() const { return vel; }
+		float GetForce() const { return accel * mass; }
+		float GetMass() const { return mass; }
 		_3D::Transform* GetWorldTransform() { return worldTransform; }
-		bool IsFreeFall() { return isFreeFall; }
-		float GetMomentum() { return mass * vel.Length(); } // ‰^“®—Ê‚ðŽæ“¾
+		bool IsFreeFall() const { return isFreeFall; }
+		float GetMomentum() const { return mass * vel.Length(); } // ‰^“®—Ê‚ðŽæ“¾
 	};
 }

@@ -44,6 +44,12 @@ void Player::Move_Play()
 		physics->SetForceDir(forcedir);
 	}
 	else { physics->SetForce(0); }
+
+	if (input->IsTrigger(WristerEngine::Key::R))
+	{
+		worldTransform->translation = {}; 
+	}
+
 	worldTransform->translation.y = Stage::GROUND_POS_Y;
 }
 

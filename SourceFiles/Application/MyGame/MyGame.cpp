@@ -11,7 +11,13 @@ void MyGame::Initialize()
 {
 	windowName = L"クアッドホッケー";
 	Framework::Initialize();
+#ifdef _DEBUG
 	sceneManager->ChangeScene(Scene::Tutorial, false, false, false);
+#endif // _DEBUG
+#ifdef NDEBUG
+	sceneManager->ChangeScene(Scene::Title, false, false, false);
+#endif // NDEBUG
+
 	ModelManager::Initialize();
 	WristerEngine::ParticleManager::Initialize();
 	WristerEngine::ParticleManager::AddParticleGroup("Fire.png");

@@ -10,10 +10,12 @@ void BaseSpawnObject::Initialize(const WristerEngine::ObjectData& objectData_)
 	objectData = objectData_;
 	spawnTimer = objectData_.spawnInterval;
 	initialPos = objectData_.worldTransform->translation;
+	SPAWN_MAX = std::make_unique<const int>(objectData_.spawnMax);
 }
 
 void BaseSpawnObject::Update()
 {
+	if (!spawnTimer.Update() || Object::GetInstanceNum() >= *SPAWN_MAX) { return; }
 	// オブジェクトの生成
 	std::unique_ptr<Object> newObj = std::make_unique<Object>();
 	WristerEngine::ObjectData objectDataTemp = objectData;
@@ -36,12 +38,10 @@ void SpawnObject::Update()
 		objectData.worldTransform->translation.z = sin(spawnPosAngle) * distance;
 	}
 
-	if (!spawnTimer.Update() || objects->size() > SPAWN_MAX) { return; }
 	BaseSpawnObject::Update();
 }
 
 void TutorialSpawnObject::Update()
 {
-	if (!spawnTimer.Update() || objects->size() > SPAWN_MAX) { return; }
 	BaseSpawnObject::Update();
 }
