@@ -6,23 +6,14 @@
 // ゴールに運ぶオブジェクト
 class Object : public WristerEngine::SphereCollider, public WristerEngine::BoxCollider, public WristerEngine::_3D::GameObject
 {
-public:
-	enum class Type
-	{
-		White = 0,	// 通常
-		Red = 6,	// 点数2倍
-		Green = 7,	// 点数-1倍
-		MaxNum = 7
-	};
-
 private:
 	static int instanceNum;
 
 	WristerEngine::_3D::Object3d* object = nullptr;
 	bool isGoal = false;
 	float dissolvePow = 0;
-	Type type = Type::White;
 	TutorialEventManager* eventManager = nullptr;
+	ObjectType type;
 
 public:
 	// コンストラクタ

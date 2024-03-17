@@ -1,6 +1,5 @@
 #include "SpawnObject.h"
 #include "SceneManager.h"
-#include "Random.h"
 
 std::list<std::unique_ptr<WristerEngine::_3D::GameObject>>* BaseSpawnObject::objects;
 
@@ -22,8 +21,15 @@ void BaseSpawnObject::Update()
 	objectDataTemp.worldTransform = new WristerEngine::_3D::Transform;
 	*objectDataTemp.worldTransform = *objectData.worldTransform;
 	objectDataTemp.worldTransform->Initialize();
+	objectDataTemp.objectType = GetType();
 	newObj->Initialize(objectDataTemp);
 	objects->push_back(std::move(newObj));
+}
+
+void SpawnObject::Initialize(const WristerEngine::ObjectData& objectData_)
+{
+	BaseSpawnObject::Initialize(objectData_);
+	roulette.Initialize({ 6,1,1 });
 }
 
 void SpawnObject::Update()
@@ -41,7 +47,30 @@ void SpawnObject::Update()
 	BaseSpawnObject::Update();
 }
 
+ObjectType SpawnObject::GetType()
+{
+	size_t rNum = roulette();
+
+	switch (rNum)
+	{
+	case 0:	return ObjectType::White;
+	case 1:	return ObjectType::Red;
+	case 2:	return ObjectType::Green;
+	}
+	return ObjectType::White;
+}
+
+void TutorialSpawnObject::Initialize(const WristerEngine::ObjectData& objectData_)
+{
+	BaseSpawnObject::Initialize(objectData_);
+}
+
 void TutorialSpawnObject::Update()
 {
 	BaseSpawnObject::Update();
+}
+
+ObjectType TutorialSpawnObject::GetType()
+{
+	return ObjectType::White;
 }
