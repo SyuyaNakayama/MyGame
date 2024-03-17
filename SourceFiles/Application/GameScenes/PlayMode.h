@@ -11,7 +11,7 @@ private:
 	WristerEngine::_2D::BitMapNumber scoreSprite;
 
 protected:
-	Stage* stage;
+	Stage* stage = nullptr;
 
 	// 初期化(オーバーライド)
 	void Initialize();

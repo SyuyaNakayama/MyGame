@@ -13,7 +13,7 @@ private:
 	bool isGoal = false;
 	float dissolvePow = 0;
 	TutorialEventManager* eventManager = nullptr;
-	ObjectType type;
+	ObjectType type = ObjectType::White;
 
 public:
 	// コンストラクタ

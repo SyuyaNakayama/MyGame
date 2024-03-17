@@ -32,7 +32,7 @@ void Transform::Draw()
 	isUpdated = false;
 }
 
-Vector3 Transform::GetScale()
+Vector3 Transform::GetScale() const
 {
 	Vector3 scale_;
 	// グローバル行列からスケール値を抽出

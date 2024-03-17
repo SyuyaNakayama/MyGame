@@ -30,12 +30,12 @@ public:
 	/// <param name="score_">加算するスコア</param>
 	static void AddScore(int score_) { score = max(score + score_, 0); }
 	// getter
-	bool IsFinished() { return isFinished; }
+	bool IsFinished() const { return isFinished; }
 	/// <summary>
 	/// 残り時間を取得
 	/// </summary>
 	/// <returns>[0]に秒、[1]に999以下のミリ秒が入る</returns>
-	std::array<int, 2> GetRemainTime();
+	std::array<int, 2> GetRemainTime() const;
 	static int GetScore() { return score; }
 	// スコアリセット
 	static void ResetScore() { score = 0; }

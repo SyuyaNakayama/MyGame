@@ -1,6 +1,4 @@
 #include "Player.h"
-#include "Input.h"
-#include "SceneManager.h"
 #include "Stage.h"
 #include <imgui.h>
 
@@ -22,8 +20,7 @@ void Player::Initialize(const WristerEngine::ObjectData& objectData)
 	physics->SetMu(0.23f);
 	physics->SetVelocity({});
 	physics->SetForce(0);
-	if (WristerEngine::SceneManager::GetInstance()->GetNowScene() == Scene::Play ||
-		WristerEngine::SceneManager::GetInstance()->GetNowScene() == Scene::Tutorial)
+	if (GetNowScene() == Scene::Play || GetNowScene() == Scene::Tutorial)
 	{
 		Move = &Player::Move_Play;
 	}
@@ -31,23 +28,22 @@ void Player::Initialize(const WristerEngine::ObjectData& objectData)
 
 void Player::Move_Play()
 {
-	WristerEngine::Input* input = WristerEngine::Input::GetInstance();
-
-	std::vector<WristerEngine::Key> keys = { WristerEngine::Key::D,WristerEngine::Key::A,WristerEngine::Key::W,WristerEngine::Key::S };
+	using Key = WristerEngine::Key;
+	std::vector<Key> keys = { Key::D,Key::A,Key::W,Key::S };
 	if (input->IsAnyInput(keys))
 	{
 		physics->SetForce(PLAYER_MOVE_FORCE);
 		Vector3 forcedir;
-		forcedir.x = (float)(input->IsInput(WristerEngine::Key::D) - input->IsInput(WristerEngine::Key::A));
-		forcedir.z = (float)(input->IsInput(WristerEngine::Key::W) - input->IsInput(WristerEngine::Key::S));
+		forcedir.x = (float)(input->IsInput(Key::D) - input->IsInput(Key::A));
+		forcedir.z = (float)(input->IsInput(Key::W) - input->IsInput(Key::S));
 		forcedir *= Matrix4::RotateY(camera->GetAngle().x);
 		physics->SetForceDir(forcedir);
 	}
 	else { physics->SetForce(0); }
 
-	if (input->IsTrigger(WristerEngine::Key::R))
+	if (input->IsTrigger(Key::R))
 	{
-		worldTransform->translation = {}; 
+		worldTransform->translation = {};
 	}
 
 	worldTransform->translation.y = Stage::GROUND_POS_Y;
@@ -77,7 +73,7 @@ void Player::Move_Title()
 void Player::Update()
 {
 	if (Move) { (this->*Move)(); }
-	else if (WristerEngine::SceneManager::GetInstance()->GetNowScene() == Scene::Title)
+	else if (GetNowScene() == Scene::Title)
 	{
 		if (moveTimer.Update()) { Move = &Player::Move_Title; }
 	}

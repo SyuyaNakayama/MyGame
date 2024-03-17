@@ -44,7 +44,7 @@ void Stage::Initialize()
 			if (nowScene == Scene::Tutorial) 
 			{
 				gameObject = std::make_unique<TutorialSpawnObject>(); 
-				objectData.spawnMax = 2;
+				objectData.spawnMax = 1;
 			}
 			else { gameObject = std::make_unique<SpawnObject>(); }
 			objectData.spawnInterval = spawnIntervals[nowScene];
@@ -83,7 +83,7 @@ void Stage::Update()
 	for (auto& gameObject : gameObjects) { gameObject->Update(); }
 }
 
-std::array<int, 2> Stage::GetRemainTime()
+std::array<int, 2> Stage::GetRemainTime() const
 {
 	return stageTime.GetRemainTime(fps);
 }

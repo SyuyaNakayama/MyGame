@@ -3,7 +3,6 @@
 #include "ParticleManager.h"
 #include "Random.h"
 #include "Stage.h"
-#include "SceneManager.h"
 
 using namespace WristerEngine::_2D;
 using namespace WristerEngine::_3D;

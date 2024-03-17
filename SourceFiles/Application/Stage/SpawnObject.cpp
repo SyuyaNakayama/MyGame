@@ -34,7 +34,7 @@ void SpawnObject::Initialize(const WristerEngine::ObjectData& objectData_)
 
 void SpawnObject::Update()
 {
-	Scene nowScene = WristerEngine::SceneManager::GetInstance()->GetNowScene();
+	Scene nowScene = GetNowScene();
 	if (nowScene == Scene::Play)
 	{
 		// ¶¬ˆÊ’u‚ğ—”‚Å•ÏX

@@ -38,6 +38,7 @@ class Goal : public WristerEngine::BoxCollider, public WristerEngine::_3D::GameO
 	static WristerEngine::FrameTimer scoreChangeTimer;
 	static bool isScoreChange;
 	static WristerEngine::Random_Int randScore;
+	static WristerEngine::Roulette roulette;
 
 	WristerEngine::_3D::Object3d* object;
 	Vector3 normal;
