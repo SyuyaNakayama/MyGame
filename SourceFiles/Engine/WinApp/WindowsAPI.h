@@ -33,9 +33,6 @@ namespace WristerEngine
 		// 終了
 		void Finalize();
 
-		// フォントを設定(現在は使わない)
-		//HDC SetFont(const std::wstring& fontName);
-
 		// getter
 		HWND GetHwnd() const { return hwnd; }
 		HINSTANCE GetHInstance() const { return w.hInstance; }

@@ -45,28 +45,6 @@ bool WindowsAPI::ProcessMessage()
 	return msg.message == WM_QUIT;
 }
 
-//HDC WindowsAPI::SetFont(const std::wstring& fontName)
-//{
-//	// フォントハンドルの生成
-//	int fontSize = 64;
-//	int fontWeight = 1000;
-//	LOGFONT lf =
-//	{
-//		fontSize, 0, 0, 0, fontWeight, 0, 0, 0,
-//		SHIFTJIS_CHARSET, OUT_TT_ONLY_PRECIS, CLIP_DEFAULT_PRECIS,
-//		PROOF_QUALITY, DEFAULT_PITCH | FF_MODERN,
-//		L"ＭＳ Ｐ明朝"
-//		//(WCHAR)fontName.data()
-//	};
-//	HFONT hFont = CreateFontIndirectW(&lf);
-//
-//	// 現在のウィンドウに適用
-//	// デバイスにフォントを持たせないとGetGlyphOutline関数はエラーとなる
-//	HDC hdc = GetDC(NULL);
-//	HFONT oldFont = (HFONT)SelectObject(hdc, hFont);
-//	return hdc;
-//}
-
 void WindowsAPI::Initialize(const std::wstring& windowName)
 {
 	w.cbSize = sizeof(WNDCLASSEX);
