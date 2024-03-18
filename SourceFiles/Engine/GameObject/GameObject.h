@@ -1,13 +1,18 @@
 #pragma once
 #include "JsonLoader.h"
+#include "Input.h"
+#include "SceneManager.h"
 
 namespace WristerEngine
 {
 	namespace _3D
 	{
-		// ゲームに表示されているオブジェクトの基底クラス
+		// ゲームに表示されている3Dオブジェクトの基底クラス
 		class GameObject
 		{
+		protected:
+			Input* input = Input::GetInstance();
+
 		public:
 			// 仮想デストラクタ
 			virtual ~GameObject() = default;
@@ -18,6 +23,8 @@ namespace WristerEngine
 			virtual void Initialize(const ObjectData& objectData) = 0;
 			// 更新(純粋仮想関数)
 			virtual void Update() = 0;
+			// 現在のシーンを取得
+			Scene GetNowScene() const { return SceneManager::GetInstance()->GetNowScene(); }
 		};
 	}
 }

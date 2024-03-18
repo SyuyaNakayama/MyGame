@@ -4,7 +4,7 @@
 
 using namespace WristerEngine::_3D;
 
-int Stage::score = 500;
+int Stage::score = 0;
 float Stage::GROUND_POS_Y = 5.0f;
 
 void Stage::Initialize()
@@ -33,12 +33,21 @@ void Stage::Initialize()
 		}
 		else if (objectData.fileName == "SpawnPoint")
 		{
-			const std::array<int, 2> SPAWN_INTERVALS = { 180,1 };
-			bool isPlayScene = WristerEngine::SceneManager::GetInstance()->GetNowScene() == Scene::Play ||
-				WristerEngine::SceneManager::GetInstance()->GetNowScene() == Scene::Tutorial;
+			std::map<Scene, int> spawnIntervals = {
+				{Scene::Title,180},
+				{Scene::Tutorial,1},
+				{Scene::Play,1}
+			};
+			Scene nowScene = WristerEngine::SceneManager::GetInstance()->GetNowScene();
+			objectData.spawnMax = 10;
 
-			gameObject = std::make_unique<SpawnObject>();
-			objectData.spawnInterval = SPAWN_INTERVALS[isPlayScene];
+			if (nowScene == Scene::Tutorial) 
+			{
+				gameObject = std::make_unique<TutorialSpawnObject>(); 
+				objectData.spawnMax = 1;
+			}
+			else { gameObject = std::make_unique<SpawnObject>(); }
+			objectData.spawnInterval = spawnIntervals[nowScene];
 		}
 		// オブジェクトの登録
 		if (gameObject)
@@ -58,7 +67,7 @@ void Stage::Update()
 	// ゲームが終わったかの確認
 	if (stageTime.Update()) { isFinished = true; }
 	// 消えた障害物のインスタンス削除
-	gameObjects.remove_if([](std::unique_ptr<GameObject>& gameObject)
+	gameObjects.remove_if([](const std::unique_ptr<GameObject>& gameObject)
 		{
 			Object* object = dynamic_cast<Object*>(gameObject.get());
 			if (object)
@@ -74,7 +83,7 @@ void Stage::Update()
 	for (auto& gameObject : gameObjects) { gameObject->Update(); }
 }
 
-std::array<int, 2> Stage::GetRemainTime()
+std::array<int, 2> Stage::GetRemainTime() const
 {
 	return stageTime.GetRemainTime(fps);
 }

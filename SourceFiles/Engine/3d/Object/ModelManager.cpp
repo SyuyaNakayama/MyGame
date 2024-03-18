@@ -10,15 +10,15 @@ using namespace _3D;
 unique_ptr<LightGroup> ModelManager::lightGroup;
 unordered_map<string, array<unique_ptr<Mesh>, 2>> ModelManager::meshes;
 list<unique_ptr<Object3d>> ModelManager::objects;
-ViewProjection* ModelManager::viewProjection = nullptr;
+Camera* ModelManager::camera = nullptr;
 
 void ModelManager::Initialize()
 {
 	// ライトグループ生成
 	lightGroup = LightGroup::Create();
 	// カメラ生成
-	viewProjection = new ViewProjection;
-	viewProjection->Initialize();
+	camera = new Camera;
+	camera->Initialize();
 }
 
 Object3d* ModelManager::Create(const string& modelName, bool smoothing)
@@ -54,7 +54,7 @@ void ModelManager::DrawObjects()
 	// ライトの描画
 	lightGroup->Draw((UINT)RootParamNum::Light);
 	// カメラ
-	cmdList->SetGraphicsRootConstantBufferView((UINT)RootParamNum::Camera, viewProjection->constBuffer->GetGPUVirtualAddress());
+	cmdList->SetGraphicsRootConstantBufferView((UINT)RootParamNum::Camera, camera->constBuffer->GetGPUVirtualAddress());
 	// デスクリプタヒープセット
 	_2D::Sprite::SetDescriptorHeaps();
 	for (auto& object : objects) { object->Draw(); }
@@ -63,7 +63,7 @@ void ModelManager::DrawObjects()
 void ModelManager::Update()
 {
 	lightGroup->Update();
-	viewProjection->Update();
+	camera->Update();
 	objects.remove_if([](std::unique_ptr<Object3d>& object) { return object->isDestroy; });
 	for (auto& object : objects) { object->Update(); }
 }

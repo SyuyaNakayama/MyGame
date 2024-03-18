@@ -102,6 +102,24 @@
     <Filter Include="ソース ファイル\Application\UIDrawer">
       <UniqueIdentifier>{8cc62927-b3fb-4854-9791-0b44f0593b20}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Application\GameScenes\PlayMode">
+      <UniqueIdentifier>{e7ccf470-68e2-43ee-87dd-da0ed0b1fe02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Application\GameScenes\PlayMode\GamePlayScene">
+      <UniqueIdentifier>{bf2f0cdd-1c82-453c-963f-1c8c8982565e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Application\GameScenes\SceneFactory">
+      <UniqueIdentifier>{f7d6e941-193b-4711-b2a8-abfca6267257}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Application\GameScenes\TitleScene">
+      <UniqueIdentifier>{353f00a1-ca26-416d-99cd-6b72d3b23d00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Application\GameScenes\PlayMode\TutorialScene">
+      <UniqueIdentifier>{8eeb2fbe-123e-4a97-a46e-255e5ddbd1cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Application\Stage\SpawnObject">
+      <UniqueIdentifier>{598d76cd-2b94-44b4-8ef7-1a85278aa3e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Sprite.hlsli">
@@ -186,13 +204,13 @@
     <ClCompile Include="SourceFiles\Engine\3d\Object\ModelManager.cpp">
       <Filter>ソース ファイル\Engine\3d\Object</Filter>
     </ClCompile>
-    <ClCompile Include="SourceFiles\Engine\3d\Object\WorldTransform.cpp">
+    <ClCompile Include="SourceFiles\Engine\3d\Object\Transform.cpp">
       <Filter>ソース ファイル\Engine\3d\Object</Filter>
     </ClCompile>
     <ClCompile Include="SourceFiles\Engine\3d\Camera\DebugCamera.cpp">
       <Filter>ソース ファイル\Engine\3d\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="SourceFiles\Engine\3d\Camera\ViewProjection.cpp">
+    <ClCompile Include="SourceFiles\Engine\3d\Camera\Camera.cpp">
       <Filter>ソース ファイル\Engine\3d\Camera</Filter>
     </ClCompile>
     <ClCompile Include="SourceFiles\Engine\2d\PostEffect.cpp">
@@ -252,12 +270,6 @@
     <ClCompile Include="SourceFiles\Engine\WinApp\WindowsAPI.cpp">
       <Filter>ソース ファイル\Engine\WinApp</Filter>
     </ClCompile>
-    <ClCompile Include="SourceFiles\Application\GameScenes\GamePlayScene.cpp">
-      <Filter>ソース ファイル\Application\GameScenes</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFiles\Application\GameScenes\SceneFactory.cpp">
-      <Filter>ソース ファイル\Application\GameScenes</Filter>
-    </ClCompile>
     <ClCompile Include="SourceFiles\Application\MyGame\MyGame.cpp">
       <Filter>ソース ファイル\Application\MyGame</Filter>
     </ClCompile>
@@ -278,12 +290,6 @@
     </ClCompile>
     <ClCompile Include="SourceFiles\Engine\Physics\CollisionManager.cpp">
       <Filter>ソース ファイル\Engine\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFiles\Application\Stage\SpawnObject.cpp">
-      <Filter>ソース ファイル\Application\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFiles\Application\GameScenes\TitleScene.cpp">
-      <Filter>ソース ファイル\Application\GameScenes</Filter>
     </ClCompile>
     <ClCompile Include="SourceFiles\Engine\2d\Sprite.cpp">
       <Filter>ソース ファイル\Engine\2d</Filter>
@@ -318,26 +324,47 @@
     <ClCompile Include="SourceFiles\Engine\Math\Easing.cpp">
       <Filter>ソース ファイル\Engine\Math</Filter>
     </ClCompile>
-    <ClCompile Include="SourceFiles\Application\GameScenes\RankAnimation.cpp">
-      <Filter>ソース ファイル\Application\GameScenes\ResultScene</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFiles\Application\GameScenes\ResultScene.cpp">
-      <Filter>ソース ファイル\Application\GameScenes\ResultScene</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFiles\Application\GameScenes\ScoreGauge.cpp">
-      <Filter>ソース ファイル\Application\GameScenes\ResultScene</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFiles\Application\GameScenes\TutorialScene.cpp">
-      <Filter>ソース ファイル\Application\GameScenes</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFiles\Application\GameScenes\PauseMenu.cpp">
-      <Filter>ソース ファイル\Application\GameScenes</Filter>
-    </ClCompile>
     <ClCompile Include="SourceFiles\Application\OperateDrawer\OperateDrawer.cpp">
       <Filter>ソース ファイル\Application\UIDrawer</Filter>
     </ClCompile>
     <ClCompile Include="SourceFiles\Engine\3d\Camera\CameraShake.cpp">
       <Filter>ソース ファイル\Engine\3d\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\GameScenes\ResultScene\RankAnimation.cpp">
+      <Filter>ソース ファイル\Application\GameScenes\ResultScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\GameScenes\ResultScene\ResultScene.cpp">
+      <Filter>ソース ファイル\Application\GameScenes\ResultScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\GameScenes\ResultScene\ScoreGauge.cpp">
+      <Filter>ソース ファイル\Application\GameScenes\ResultScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\GameScenes\GamePlayScene.cpp">
+      <Filter>ソース ファイル\Application\GameScenes\PlayMode\GamePlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\GameScenes\PauseMenu.cpp">
+      <Filter>ソース ファイル\Application\GameScenes\PlayMode\GamePlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\GameScenes\PlayMode.cpp">
+      <Filter>ソース ファイル\Application\GameScenes\PlayMode</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\GameScenes\SceneFactory.cpp">
+      <Filter>ソース ファイル\Application\GameScenes\SceneFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\GameScenes\TitleScene.cpp">
+      <Filter>ソース ファイル\Application\GameScenes\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\GameScenes\TutorialScene\TutorialEvent.cpp">
+      <Filter>ソース ファイル\Application\GameScenes\PlayMode\TutorialScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\GameScenes\TutorialScene\TutorialEventManager.cpp">
+      <Filter>ソース ファイル\Application\GameScenes\PlayMode\TutorialScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\GameScenes\TutorialScene\TutorialScene.cpp">
+      <Filter>ソース ファイル\Application\GameScenes\PlayMode\TutorialScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\Stage\SpawnObject.cpp">
+      <Filter>ソース ファイル\Application\Stage\SpawnObject</Filter>
     </ClCompile>
     <ClCompile Include="SourceFiles\Engine\DirectX\DirectWriteCustomFont.cpp">
       <Filter>ソース ファイル\Engine</Filter>
@@ -377,13 +404,13 @@
     <ClInclude Include="SourceFiles\Engine\3d\Object\ModelManager.h">
       <Filter>ソース ファイル\Engine\3d\Object</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\Engine\3d\Object\WorldTransform.h">
+    <ClInclude Include="SourceFiles\Engine\3d\Object\Transform.h">
       <Filter>ソース ファイル\Engine\3d\Object</Filter>
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\3d\Camera\DebugCamera.h">
       <Filter>ソース ファイル\Engine\3d\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\Engine\3d\Camera\ViewProjection.h">
+    <ClInclude Include="SourceFiles\Engine\3d\Camera\Camera.h">
       <Filter>ソース ファイル\Engine\3d\Camera</Filter>
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\2d\PostEffect.h">
@@ -446,13 +473,7 @@
     <ClInclude Include="SourceFiles\Engine\WinApp\WindowsAPI.h">
       <Filter>ソース ファイル\Engine\WinApp</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\Application\GameScenes\GamePlayScene.h">
-      <Filter>ソース ファイル\Application\GameScenes</Filter>
-    </ClInclude>
     <ClInclude Include="SourceFiles\Application\GameScenes\Scene.h">
-      <Filter>ソース ファイル\Application\GameScenes</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\Application\GameScenes\SceneFactory.h">
       <Filter>ソース ファイル\Application\GameScenes</Filter>
     </ClInclude>
     <ClInclude Include="SourceFiles\Application\MyGame\MyGame.h">
@@ -475,15 +496,6 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\Physics\CollisionManager.h">
       <Filter>ソース ファイル\Engine\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\Engine\Functions\BaseSpawnPoint.h">
-      <Filter>ソース ファイル\Engine\Functions</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\Application\Stage\SpawnObject.h">
-      <Filter>ソース ファイル\Application\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\Application\GameScenes\TitleScene.h">
-      <Filter>ソース ファイル\Application\GameScenes</Filter>
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\2d\Sprite.h">
       <Filter>ソース ファイル\Engine\2d</Filter>
@@ -524,21 +536,6 @@
     <ClInclude Include="SourceFiles\Engine\Math\Easing.h">
       <Filter>ソース ファイル\Engine\Math</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\Application\GameScenes\RankAnimation.h">
-      <Filter>ソース ファイル\Application\GameScenes\ResultScene</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\Application\GameScenes\ResultScene.h">
-      <Filter>ソース ファイル\Application\GameScenes\ResultScene</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\Application\GameScenes\ScoreGauge.h">
-      <Filter>ソース ファイル\Application\GameScenes\ResultScene</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\Application\GameScenes\TutorialScene.h">
-      <Filter>ソース ファイル\Application\GameScenes</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\Application\GameScenes\PauseMenu.h">
-      <Filter>ソース ファイル\Application\GameScenes</Filter>
-    </ClInclude>
     <ClInclude Include="SourceFiles\Engine\GameObject\GameObject.h">
       <Filter>ソース ファイル\Engine\3d\Object</Filter>
     </ClInclude>
@@ -547,6 +544,45 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\3d\Camera\CameraShake.h">
       <Filter>ソース ファイル\Engine\3d\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\GameScenes\ResultScene\RankAnimation.h">
+      <Filter>ソース ファイル\Application\GameScenes\ResultScene</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\GameScenes\ResultScene\ResultScene.h">
+      <Filter>ソース ファイル\Application\GameScenes\ResultScene</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\GameScenes\ResultScene\ScoreGauge.h">
+      <Filter>ソース ファイル\Application\GameScenes\ResultScene</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\GameScenes\GamePlayScene.h">
+      <Filter>ソース ファイル\Application\GameScenes\PlayMode\GamePlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\GameScenes\PauseMenu.h">
+      <Filter>ソース ファイル\Application\GameScenes\PlayMode\GamePlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\GameScenes\PlayMode.h">
+      <Filter>ソース ファイル\Application\GameScenes\PlayMode</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\GameScenes\SceneFactory.h">
+      <Filter>ソース ファイル\Application\GameScenes\SceneFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\GameScenes\TitleScene.h">
+      <Filter>ソース ファイル\Application\GameScenes\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Engine\Functions\AbstractSpawnPoint.h">
+      <Filter>ソース ファイル\Engine\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\GameScenes\TutorialScene\TutorialEvent.h">
+      <Filter>ソース ファイル\Application\GameScenes\PlayMode\TutorialScene</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\GameScenes\TutorialScene\TutorialEventManager.h">
+      <Filter>ソース ファイル\Application\GameScenes\PlayMode\TutorialScene</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\GameScenes\TutorialScene\TutorialScene.h">
+      <Filter>ソース ファイル\Application\GameScenes\PlayMode\TutorialScene</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\Stage\SpawnObject.h">
+      <Filter>ソース ファイル\Application\Stage\SpawnObject</Filter>
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\DirectX\DirectWriteCustomFont.h">
       <Filter>ソース ファイル\Engine</Filter>

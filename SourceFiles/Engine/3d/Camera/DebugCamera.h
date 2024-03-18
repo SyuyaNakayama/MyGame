@@ -1,5 +1,5 @@
 #pragma once
-#include "ViewProjection.h"
+#include "Camera.h"
 #include "Quaternion.h"
 
 namespace WristerEngine
@@ -7,7 +7,7 @@ namespace WristerEngine
 	namespace _3D
 	{
 		// デバッグカメラ
-		class DebugCamera : public ViewProjection
+		class DebugCamera : public Camera
 		{
 		private:
 			float distance = 50;

@@ -1,6 +1,6 @@
 #pragma once
 #include "Mesh.h"
-#include "WorldTransform.h"
+#include "Transform.h"
 
 namespace WristerEngine
 {
@@ -10,7 +10,7 @@ namespace WristerEngine
 		struct Object3d
 		{
 			Material material;
-			std::unique_ptr<WorldTransform> worldTransform;
+			std::unique_ptr<Transform> worldTransform;
 			bool isDestroy = false;
 			bool isInvisible = false;
 

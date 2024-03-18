@@ -10,7 +10,7 @@ Vector3 Physics::gravityDir = { 0,-1,0 }; // ‰ºŒü‚«d—Í
 float Physics::k_air = 0.4f;
 
 // •¨—ƒNƒ‰ƒX¶¬ (Unity‚Å‚¢‚¤ Rigidbody)
-std::unique_ptr<Physics> Physics::Create(_3D::WorldTransform* w)
+std::unique_ptr<Physics> Physics::Create(_3D::Transform* w)
 {
 	std::unique_ptr<Physics> instance = std::make_unique<Physics>();
 	instance->worldTransform = w;

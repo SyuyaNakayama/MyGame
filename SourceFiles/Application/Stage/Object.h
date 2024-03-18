@@ -1,26 +1,19 @@
 #pragma once
 #include "Collider.h"
 #include "GameObject.h"
+#include "TutorialEventManager.h"
 
 // ゴールに運ぶオブジェクト
 class Object : public WristerEngine::SphereCollider, public WristerEngine::BoxCollider, public WristerEngine::_3D::GameObject
 {
-public:
-	enum class Type
-	{
-		White = 0,	// 通常
-		Red = 6,	// 点数2倍
-		Green = 7,	// 点数-1倍
-		MaxNum = 7
-	};
-
 private:
 	static int instanceNum;
 
 	WristerEngine::_3D::Object3d* object = nullptr;
 	bool isGoal = false;
 	float dissolvePow = 0;
-	Type type = Type::White;
+	TutorialEventManager* eventManager = nullptr;
+	ObjectType type = ObjectType::White;
 
 public:
 	// コンストラクタ
@@ -39,7 +32,7 @@ public:
 	// 破壊する
 	void Destroy() { object->isDestroy = true; }
 	// setter(isDestroy)
-	bool IsDestroy() { return object->isDestroy; }
+	bool IsDestroy() const { return object->isDestroy; }
 	// このクラスのインスタンス数を取得
 	static int GetInstanceNum() { return instanceNum; }
 	// ゴールした

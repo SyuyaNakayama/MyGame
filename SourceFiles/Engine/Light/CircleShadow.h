@@ -42,11 +42,11 @@ namespace WristerEngine
 		}
 		void SetActive(bool active_) { active = active_; }
 		// getter
-		const Vector3& GetDir() { return dir; }
-		float GetDistanceCasterLight() { return distanceCasterLight; }
-		const Vector3& GetCasterPos() { return casterPos; }
-		const Vector3& GetAtten() { return atten; }
-		const Vector2& GetFactorAngleCos() { return factorAngleCos; }
-		bool IsActive() { return active; }
+		const Vector3& GetDir() const { return dir; }
+		float GetDistanceCasterLight() const { return distanceCasterLight; }
+		const Vector3& GetCasterPos() const { return casterPos; }
+		const Vector3& GetAtten() const { return atten; }
+		const Vector2& GetFactorAngleCos() const { return factorAngleCos; }
+		bool IsActive() const { return active; }
 	};
 }

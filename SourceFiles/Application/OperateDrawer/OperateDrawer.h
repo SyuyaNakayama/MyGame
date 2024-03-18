@@ -12,7 +12,6 @@ protected:
 	std::map<WristerEngine::Key, std::unique_ptr<WristerEngine::_2D::Sprite>> keyUI;
 	std::unique_ptr<WristerEngine::_2D::Sprite> frame;
 
-public:
 	// AbstractUIDrawer ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
 	void Initialize() override;
 	void Update() override;

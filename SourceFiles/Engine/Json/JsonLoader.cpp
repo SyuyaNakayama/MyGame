@@ -7,7 +7,7 @@ using namespace WristerEngine::_3D;
 
 const std::string JsonLoader::DEFAULT_BASE_DIRECTORY = "Resources/levels/";
 
-void LevelData::LoadJsonRecursive(nlohmann::json& object, WorldTransform* parent)
+void LevelData::LoadJsonRecursive(nlohmann::json& object, Transform* parent)
 {
 	// Ží•Ê‚ðŽæ“¾
 	std::string type = object["type"].get<std::string>();
@@ -28,9 +28,9 @@ void LevelData::LoadJsonRecursive(nlohmann::json& object, WorldTransform* parent
 
 		// ‰Šú‰»
 		if (objectData.fileName.empty()) { objectData.fileName = "cube"; }
-		objectData.worldTransform = new WorldTransform;
+		objectData.worldTransform = new Transform;
 		objectData.worldTransform->Initialize();
-		WorldTransform* worldTransform = objectData.worldTransform;
+		Transform* worldTransform = objectData.worldTransform;
 
 		// eŽqŠÖŒW‚ðì‚é
 		worldTransform->parent = parent;

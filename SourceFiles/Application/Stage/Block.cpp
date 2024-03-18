@@ -1,6 +1,7 @@
 #include "Block.h"
 #include "Stage.h"
 #include "ParticleManager.h"
+#include "SceneManager.h"
 
 using namespace WristerEngine::_3D;
 using namespace WristerEngine::_2D;
@@ -24,6 +25,7 @@ const std::vector<Goal::Score> Goal::SCORE_TABLE =
 WristerEngine::FrameTimer Goal::scoreChangeTimer = 600;
 bool Goal::isScoreChange = false;
 WristerEngine::Random_Int Goal::randScore(0, (int)SCORE_TABLE.size() - 1);
+WristerEngine::Roulette Goal::roulette;
 
 void Block::Initialize(const WristerEngine::ObjectData& objectData)
 {
@@ -83,7 +85,9 @@ void Goal::Initialize(const WristerEngine::ObjectData& objectData)
 
 void Goal::ChangeScore()
 {
-	score = SCORE_TABLE[randScore()];
+	Scene nowScene = GetNowScene();
+	if (nowScene == Scene::Play) { score = SCORE_TABLE[randScore()]; }
+	else if (nowScene == Scene::Tutorial) { score = Score::_10; }
 	std::unique_ptr<WristerEngine::_2D::Sprite> newSprite = Sprite::Create(Goal::SCORE_TEX_NAME[score]);
 
 	switch (score)
@@ -117,6 +121,7 @@ void Goal::ChangeScore()
 
 void Goal::Update()
 {
+	if (GetNowScene() == Scene::Tutorial) { return; }
 	// スコアの変更
 	if (isScoreChange) { ChangeScore(); }
 
@@ -131,9 +136,7 @@ void Goal::Update()
 		const int BLINK_INTERVAL = START_BLINK_TIME / BLINK_NUM;
 		int easingColor = NumberLoop(START_BLINK_TIME - remainTime, BLINK_INTERVAL);
 		float colorRate = (cos(2.0f * PI * (float)easingColor / (float)BLINK_INTERVAL) + 1) * 0.5f;
-		object->material.GetSprite(TexType::Main)->color.r = initColor.r * colorRate;
-		object->material.GetSprite(TexType::Main)->color.g = initColor.g * colorRate;
-		object->material.GetSprite(TexType::Main)->color.b = initColor.b * colorRate;
+		object->material.GetSprite(TexType::Main)->color = initColor * colorRate;
 	}
 }
 
@@ -161,5 +164,10 @@ void Goal::OnCollision(BoxCollider* collider)
 		addProp.posOffset = collider->GetWorldPosition();
 		addProp.accOffset.y = 0.01f;
 		pGroup->Add(addProp);
+
+		if (GetNowScene() == Scene::Tutorial)
+		{
+			TutorialEventManager::GetInstance()->NextPhase();
+		}
 	}
 }

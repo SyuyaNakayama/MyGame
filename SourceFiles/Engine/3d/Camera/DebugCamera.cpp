@@ -11,7 +11,7 @@ void DebugCamera::Initialize(Vector3 targetPos, float distance_, float mouseMove
 	mouseMoveDec = mouseMoveDec_;
 	wheelSpdDec = wheelSpdDec_;
 	eye.z -= distance;
-	ViewProjection::Initialize();
+	Camera::Initialize();
 }
 
 void DebugCamera::Update()

@@ -14,7 +14,7 @@ class PlayerCamera : public WristerEngine::_3D::BaseCamera
 	/// 初期化
 	/// </summary>
 	/// <param name="parent">ワールドトランスフォームの親ポインタ</param>
-	void Initialize(WristerEngine::_3D::WorldTransform* parent);
+	void Initialize(WristerEngine::_3D::Transform* parent);
 	// 更新
 	void Update();
 	// 回転の速度補正の設定

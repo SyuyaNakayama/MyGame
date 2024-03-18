@@ -1,5 +1,5 @@
 #pragma once
-#include "WorldTransform.h"
+#include "Transform.h"
 #include <memory>
 #include <array>
 
@@ -13,7 +13,7 @@ namespace WristerEngine
 		static float gravity; // 重力加速度
 		static Vector3 gravityDir; // 重力の向き
 		static float k_air; // 空気抵抗の比例定数
-		_3D::WorldTransform* worldTransform = nullptr;
+		_3D::Transform* worldTransform = nullptr;
 		Vector3 vel; // 速度
 		float accel = 0; // 加速度
 		float force = 0; // 力の大きさ
@@ -29,7 +29,7 @@ namespace WristerEngine
 		/// </summary>
 		/// <param name="w">ワールドトランスフォーム</param>
 		/// <returns>インスタンス</returns>
-		static std::unique_ptr<Physics> Create(_3D::WorldTransform* w);
+		static std::unique_ptr<Physics> Create(_3D::Transform* w);
 		// 動く物体と動かない物体の反発後の速度を計算
 		void Backlash(const Vector3& wallNormal, float e);
 		// 動く2物体の反発後の速度を計算
@@ -48,11 +48,11 @@ namespace WristerEngine
 		void SetMu(float mu_) { mu = mu_; }
 		void SetIsFreeFall(bool isFreeFall_) { isFreeFall = isFreeFall_; }
 		// getter
-		Vector3 GetVelocity() { return vel; }
-		float GetForce() { return accel * mass; }
-		float GetMass() { return mass; }
-		_3D::WorldTransform* GetWorldTransform() { return worldTransform; }
-		bool IsFreeFall() { return isFreeFall; }
-		float GetMomentum() { return mass * vel.Length(); } // 運動量を取得
+		const Vector3& GetVelocity() const { return vel; }
+		float GetForce() const { return accel * mass; }
+		float GetMass() const { return mass; }
+		_3D::Transform* GetWorldTransform() { return worldTransform; }
+		bool IsFreeFall() const { return isFreeFall; }
+		float GetMomentum() const { return mass * vel.Length(); } // 運動量を取得
 	};
 }

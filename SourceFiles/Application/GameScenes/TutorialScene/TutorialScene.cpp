@@ -1,5 +1,8 @@
 #include "TutorialScene.h"
 #include "SceneManager.h"
+#include <DirectXTex.h>
+#include "D3D12Common.h"
+#include "Physics.h"
 
 using namespace WristerEngine::_2D;
 
@@ -30,22 +33,31 @@ void UIDrawerTutorialScene::Initialize()
 
 	operateUI["tutorial"] = Sprite::Create("UI/Tutorial.png");
 	operateUI["tutorial"]->anchorPoint = { -0.1f,-1 };
-	
+
 	operateUI["play"] = Sprite::Create("UI/Play.png");
 	operateUI["play"]->anchorPoint = { 0.5f,2 };
 	operateUI["play"]->position = { Half(WristerEngine::WIN_SIZE.x), WristerEngine::WIN_SIZE.y };
 
-	OperateDrawer::Initialize();
+	PlayMode::Initialize();
 	keyUI[Key::Space]->anchorPoint = { 0.5f,2 };
 	keyUI[Key::Space]->position = { Half(WristerEngine::WIN_SIZE.x), WristerEngine::WIN_SIZE.y };
+
+	eventManager->Initialize();
 }
 
 void UIDrawerTutorialScene::Update()
 {
-	OperateDrawer::Update();
+	PlayMode::Update();
+	if (WristerEngine::Input::GetInstance()->IsTrigger(WristerEngine::Key::Return))
+	{
+		//eventManager->NextPhase();
+	}
+
+	eventManager->Update();
 }
 
 void UIDrawerTutorialScene::Draw()
 {
-	OperateDrawer::Draw();
+	PlayMode::Draw();
+	eventManager->Draw();
 }

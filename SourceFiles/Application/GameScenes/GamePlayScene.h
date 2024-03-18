@@ -1,13 +1,12 @@
 #pragma once
 #include "AudioManager.h"
 #include "BaseScene.h"
-#include "BitMapNumber.h"
 #include "Easing.h"
-#include "FPS.h"
 #include "MathUtility.h"
 #include "Stage.h"
 #include "OperateDrawer.h"
 #include "DirectWriteCustomFont.h"
+#include "PlayMode.h"
 
 // スタート前のカウントダウン演出
 class StartCountDown
@@ -36,15 +35,12 @@ public:
 };
 
 // UI描画クラス(ゲームシーン用)
-class UIDrawerGameScene : public OperateDrawer
+class UIDrawerGameScene : public PlayMode
 {
 private:
 	const float SLIDE_DIS_UI_GO = 500; // "Go!"のUIがスライドする距離
 
-	Stage* stage;
-	std::unique_ptr<WristerEngine::_2D::Sprite> uiScore;
 	std::unique_ptr<WristerEngine::_2D::Sprite> uiClock;
-	WristerEngine::_2D::BitMapNumber scoreSprite;
 	WristerEngine::_2D::BitMapNumber timeIntSprite; // 残り時間整数部
 	WristerEngine::_2D::BitMapNumber timeDecSprite; // 残り時間小数部
 	Angle easingColor = 0; // 時間UI色のイージングに使う
@@ -71,11 +67,11 @@ public:
 	// コンストラクタ
 	UIDrawerGameScene(Stage* stage_) { stage = stage_; }
 	// 初期化(オーバーライド)
-	void Initialize();
+	void Initialize() override;
 	// 更新(オーバーライド)
-	void Update();
+	void Update() override;
 	// 描画(オーバーライド)
-	void Draw();
+	void Draw() override;
 	// カウントダウン中か
 	bool IsCountDown() { return countDown.get() != nullptr; }
 };
@@ -85,7 +81,7 @@ class GamePlayScene : public WristerEngine::BaseScene
 {
 private:
 	Stage stage;
-	WristerEngine::_3D::ViewProjection viewProjection;
+	WristerEngine::_3D::Camera viewProjection;
 	WristerEngine::Audio* audio = nullptr;
 
 	// 初期化(オーバーライド)

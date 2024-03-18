@@ -9,7 +9,7 @@ namespace WristerEngine
 	namespace _3D
 	{
 		// ワールドトランスフォーム
-		class WorldTransform
+		class Transform
 		{
 		private:
 			// 定数バッファ用データ構造体
@@ -23,7 +23,7 @@ namespace WristerEngine
 			ConstBufferData* constMap = nullptr;
 			Microsoft::WRL::ComPtr<ID3D12Resource> constBuffer;
 			Vector3 scale = { 1,1,1 }, rotation, translation;
-			WorldTransform* parent = nullptr;
+			Transform* parent = nullptr;
 			bool isUpdated = false;
 
 			// 初期化
@@ -33,8 +33,8 @@ namespace WristerEngine
 			// 描画
 			void Draw();
 			// getter
-			Vector3 GetWorldPosition() { return { matWorld.m[3][0],matWorld.m[3][1],matWorld.m[3][2] }; }
-			Vector3 GetScale();
+			Vector3 GetWorldPosition() const { return { matWorld.m[3][0],matWorld.m[3][1],matWorld.m[3][2] }; }
+			Vector3 GetScale() const;
 		};
 	}
 }

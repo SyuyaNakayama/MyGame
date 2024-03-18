@@ -1,24 +1,58 @@
 #pragma once
-#include "BaseSpawnPoint.h"
+#include "AbstractSpawnPoint.h"
 #include "Object.h"
+#include "Random.h"
 
-// オブジェクト生成オブジェクト
-class SpawnObject : public WristerEngine::BaseSpawnPoint, public WristerEngine::_3D::GameObject
+// このゲームでのスポーンオブジェクト基底クラス
+class BaseSpawnObject : public WristerEngine::AbstractSpawnPoint, public WristerEngine::_3D::GameObject
 {
-	
+protected:
 	static std::list<std::unique_ptr<WristerEngine::_3D::GameObject>>* objects;
 	WristerEngine::ObjectData objectData;
 	Vector3 initialPos;
-	static const int SPAWN_MAX = 25;
+	std::unique_ptr<const int> SPAWN_MAX = nullptr;
 
 public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	/// <param name="objectData_">Jsonファイルから読み込んだデータ</param>
-	void Initialize(const WristerEngine::ObjectData& objectData_);
+	/// <param name="objectData">Jsonファイルから読み込んだデータ</param>
+	virtual void Initialize(const WristerEngine::ObjectData& objectData);
+
+	// 更新
+	virtual void Update();
+
+	// Typeを設定
+	virtual ObjectType GetType() = 0;
+
+	// ObjectListをセット
+	static void SetObjectList(std::list<std::unique_ptr<WristerEngine::_3D::GameObject>>* list) { objects = list; }
+};
+
+// オブジェクト生成オブジェクト
+class SpawnObject : public BaseSpawnObject
+{
+	WristerEngine::Roulette roulette;
+
+public:
+	void Initialize(const WristerEngine::ObjectData& objectData_) override;
+
 	// 更新
 	void Update();
-	// setter
-	static void SetObjectList(std::list<std::unique_ptr<WristerEngine::_3D::GameObject>>* list) { objects = list; }
+
+	// BaseSpawnObject を介して継承されました
+	ObjectType GetType() override;
+};
+
+// チュートリアルのスポーンオブジェクト
+class TutorialSpawnObject : public BaseSpawnObject
+{
+public:
+	void Initialize(const WristerEngine::ObjectData& objectData_) override;
+
+	// 更新
+	void Update();
+
+	// BaseSpawnObject を介して継承されました
+	ObjectType GetType() override;
 };

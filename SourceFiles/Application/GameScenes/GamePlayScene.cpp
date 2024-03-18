@@ -102,19 +102,13 @@ void StartCountDown::Draw()
 
 void UIDrawerGameScene::Initialize()
 {
+	PlayMode::Initialize();
+
 	// ビットマップの設定
 	BitMapProp bitMapProp =
 	{
 		"ui/num.png",{30,30},{30,30},{1100,100},4
 	};
-
-	// スコア
-	*scoreSprite.GetBitMapProp() = bitMapProp;
-	scoreSprite.Initialize();
-	uiScore = Sprite::Create("ui/score.png");
-	uiScore->SetCenterAnchor();
-	uiScore->position = { 1160,70 };
-	uiScore->Update();
 
 	// 残り時間
 	// 整数部
@@ -169,9 +163,7 @@ void UIDrawerGameScene::Initialize()
 
 void UIDrawerGameScene::Update()
 {
-	OperateDrawer::Update();
-
-	scoreSprite.Update(stage->GetScore());
+	PlayMode::Update();
 
 	if (countDown)
 	{
@@ -246,12 +238,10 @@ void UIDrawerGameScene::UIGoZoom()
 
 void UIDrawerGameScene::Draw()
 {
-	scoreSprite.Draw();
 	timeIntSprite.Draw();
 	timeDecSprite.Draw();
 	uiClock->Draw();
-	uiScore->Draw();
-	OperateDrawer::Draw();
+	PlayMode::Draw();
 	if (countDown) { countDown->Draw(); }
 	uiGo->Draw();
 	Write->DrawString("ここはテスト画面です", Vector2(90, 90), D2D1_DRAW_TEXT_OPTIONS_NONE);

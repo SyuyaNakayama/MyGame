@@ -8,8 +8,7 @@
 class TitleScene : public WristerEngine::BaseScene
 {
 	Stage stage;
-	WristerEngine::_3D::ViewProjection camera;
-	std::unique_ptr<WristerEngine::_3D::CameraShake> cs;
+	WristerEngine::_3D::Camera camera;
 
 	// 初期化(オーバーライド)
 	void Initialize();

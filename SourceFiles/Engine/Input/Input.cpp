@@ -167,13 +167,13 @@ void Input::Update()
 	joystick->GetDeviceState(sizeof(joyState), &joyState);
 }
 
-bool Input::IsAnyInput(std::vector<Key>& keys)
+bool Input::IsAnyInput(std::vector<Key>& keys) const
 {
 	for (auto& key_ : keys) { if (IsInput(key_)) { return true; } }
 	return false;
 }
 
-Input::PadState Input::GetPadState()
+Input::PadState Input::GetPadState() const
 {
 	float angle = joyState.rgdwPOV[0] * PI / 18000.0f;
 	Vector2 dirKey;
@@ -181,7 +181,7 @@ Input::PadState Input::GetPadState()
 	return PadState(joyState.lX, joyState.lY, joyState.lRx, joyState.lRy, joyState.lZ, dirKey);
 }
 
-Vector2 Input::PadState::LNormalize()
+Vector2 Input::PadState::LNormalize() const
 {
 	auto padState = Input::GetInstance()->GetPadState();
 	Vector2 padStickVec = { (float)padState.lX, (float)padState.lY };
@@ -189,7 +189,7 @@ Vector2 Input::PadState::LNormalize()
 	return padStickVec;
 }
 
-Vector2 Input::PadState::RNormalize()
+Vector2 Input::PadState::RNormalize() const
 {
 	auto padState = Input::GetInstance()->GetPadState();
 	Vector2 padStickVec = { (float)padState.rX, (float)padState.rY };
@@ -197,7 +197,7 @@ Vector2 Input::PadState::RNormalize()
 	return padStickVec;
 }
 
-Vector2 Input::ConLStick(const float spd)
+Vector2 Input::ConLStick(const float spd) const
 {
 	float unresponsiveRange = 200;
 	Vector2 vec;
@@ -211,7 +211,7 @@ Vector2 Input::ConLStick(const float spd)
 	return Normalize(vec) * spd;
 }
 
-Vector2 Input::ConRStick(const float spd)
+Vector2 Input::ConRStick(const float spd) const
 {
 	float unresponsiveRange = 200;
 	Vector2 vec;

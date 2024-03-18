@@ -71,7 +71,7 @@ namespace WristerEngine
 			/// <returns>bitMapPropのポインタ</returns>
 			BitMapProp* GetBitMapProp() { return &bitMapProp; }
 			// スプライト全体の大きさを取得
-			Vector2 GetAllSpriteSize() { return allSpriteSize; }
+			Vector2 GetAllSpriteSize() const { return allSpriteSize; }
 		};
 	}
 }

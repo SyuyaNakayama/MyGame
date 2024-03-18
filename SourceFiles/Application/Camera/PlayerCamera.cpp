@@ -5,7 +5,7 @@
 using namespace WristerEngine::_2D;
 using namespace WristerEngine::_3D;
 
-void PlayerCamera::Initialize(WorldTransform* parent)
+void PlayerCamera::Initialize(Transform* parent)
 {
 	BaseCamera::Initialize(parent);
 	CameraShake::Prop shakeProp = { {0,0,0},10,WristerEngine::Easing::Type::Sqrt };
@@ -19,7 +19,7 @@ void PlayerCamera::Update()
 {
 	Vector2 cameraMove;
 	const float MOVE_SPD = 1.0f;
-	
+
 	WristerEngine::Input* input = WristerEngine::Input::GetInstance();
 	if (!input->IsConnectGamePad())
 	{
@@ -33,7 +33,7 @@ void PlayerCamera::Update()
 
 	angle += cameraMove / rotSpdDec;
 	const Angle Y_MAX = 72;
-	angle.y = std::clamp(angle.y, 0.0f, +Y_MAX);
+	angle.y = std::clamp(angle.y, (float)Angle(5), +Y_MAX);
 	BaseCamera::Update();
 	parentPrePos = worldTransform.parent->GetWorldPosition();
 	if (input->IsTrigger(WristerEngine::Key::_3)) { ModelManager::SetViewProjection(&viewProjection); }

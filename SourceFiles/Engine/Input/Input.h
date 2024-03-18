@@ -206,8 +206,8 @@ namespace WristerEngine
 			long lt_rt;
 			Vector2 dirKey;
 
-			Vector2 LNormalize(); // Lスティックの数値を正規化したものを返す
-			Vector2 RNormalize(); // Rスティックの数値を正規化したものを返す
+			Vector2 LNormalize() const; // Lスティックの数値を正規化したものを返す
+			Vector2 RNormalize() const; // Rスティックの数値を正規化したものを返す
 		};
 
 		// インスタンス取得
@@ -219,28 +219,28 @@ namespace WristerEngine
 		// 更新
 		void Update();
 		// キーが押されてるか
-		bool IsInput(Key KEY) { return key[(int)KEY]; }
-		bool IsInput(Mouse KEY) { return mouseState.rgbButtons[(int)KEY]; }
-		bool IsInput(JoyPad button) { return joyState.rgbButtons[(int)button]; }
+		bool IsInput(Key KEY) const { return key[(int)KEY]; }
+		bool IsInput(Mouse KEY) const { return mouseState.rgbButtons[(int)KEY]; }
+		bool IsInput(JoyPad button) const { return joyState.rgbButtons[(int)button]; }
 		// キーが押されたか
-		bool IsTrigger(Key KEY) { return !oldkey[(int)KEY] && key[(int)KEY]; }
-		bool IsTrigger(Mouse KEY) { return !mouseStatePre.rgbButtons[(int)KEY] && mouseState.rgbButtons[(int)KEY]; }
-		bool IsTrigger(JoyPad button) { return !joyStatePre.rgbButtons[(int)button] && joyState.rgbButtons[(int)button]; }
+		bool IsTrigger(Key KEY) const { return !oldkey[(int)KEY] && key[(int)KEY]; }
+		bool IsTrigger(Mouse KEY) const { return !mouseStatePre.rgbButtons[(int)KEY] && mouseState.rgbButtons[(int)KEY]; }
+		bool IsTrigger(JoyPad button) const { return !joyStatePre.rgbButtons[(int)button] && joyState.rgbButtons[(int)button]; }
 		// キーが離されたか
-		bool IsUp(Key KEY) { return oldkey[(int)KEY] && !key[(int)KEY]; }
+		bool IsUp(Key KEY) const { return oldkey[(int)KEY] && !key[(int)KEY]; }
 		// いづれかのキーが押されたらtrueを返す
-		bool IsAnyInput() { return std::accumulate(key.begin(), key.end(), false); }
-		bool IsAnyInput(std::vector<Key>& keys);
+		bool IsAnyInput() const { return std::accumulate(key.begin(), key.end(), false); }
+		bool IsAnyInput(std::vector<Key>& keys) const;
 		// KEY1が押されてたらプラス、KEY2が押されてたらマイナス
-		float Move(Key KEY1, Key KEY2, const float spd) { return (IsInput(KEY1) - IsInput(KEY2)) * spd; }
+		float Move(Key KEY1, Key KEY2, const float spd) const { return (IsInput(KEY1) - IsInput(KEY2)) * spd; }
 		// 押されているキーの数
-		size_t KeyInputNum() { return std::accumulate(key.begin(), key.end(), 0U) / 128; }
+		size_t KeyInputNum() const { return std::accumulate(key.begin(), key.end(), 0U) / 128; }
 		// 一定以上レバーを傾けたら移動する
-		Vector2 ConLStick(const float spd);
-		Vector2 ConRStick(const float spd);
+		Vector2 ConLStick(const float spd) const;
+		Vector2 ConRStick(const float spd) const;
 		// getter
-		MouseMove GetMouseMove() { return MouseMove(mouseState.lX, mouseState.lY, mouseState.lZ); }
-		PadState GetPadState();
-		bool IsConnectGamePad() { return joystick; }
+		MouseMove GetMouseMove() const { return MouseMove(mouseState.lX, mouseState.lY, mouseState.lZ); }
+		PadState GetPadState() const;
+		bool IsConnectGamePad() const { return joystick; }
 	};
 }

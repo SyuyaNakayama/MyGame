@@ -3,7 +3,6 @@
 #include "ParticleManager.h"
 #include "Random.h"
 #include "Stage.h"
-#include <imgui.h>
 
 using namespace WristerEngine::_2D;
 using namespace WristerEngine::_3D;
@@ -24,21 +23,14 @@ void Object::Initialize(const WristerEngine::ObjectData& objectData)
 	physics->SetMass(0.5f);
 	physics->SetMu(0.05f);
 	physics->SetIsFreeFall(true);
-
-	// É^ÉCÉvÇÃê›íË
-	WristerEngine::Random_Int rand(0, (int)Type::MaxNum);
-	int num = rand();
-
-	if (num < (int)Type::Red) { type = Type::White; }
-	else if (num < (int)Type::Green) { type = Type::Red; }
-	else { type = Type::Green; }
+	type = objectData.objectType;
 
 	switch (type)
 	{
-	case Type::Red:
+	case ObjectType::Red:
 		material->GetSprite(TexType::Main)->color = { 1,0,0,0 };
 		break;
-	case Type::Green:
+	case ObjectType::Green:
 		material->GetSprite(TexType::Main)->color = { 0,1,0,0 };
 		break;
 	}
@@ -75,9 +67,9 @@ int Object::GetGoalScore(int goalScore)
 {
 	switch (type)
 	{
-	case Type::White:	return goalScore;
-	case Type::Red:		return goalScore * 2;
-	case Type::Green:	return -goalScore;
+	case ObjectType::White:	return goalScore;
+	case ObjectType::Red:	return goalScore * 2;
+	case ObjectType::Green:	return -goalScore;
 	}
 	return goalScore;
 }

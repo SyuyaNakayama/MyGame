@@ -35,4 +35,22 @@ namespace WristerEngine
 		Random_Float(float min = 0, float max = 0);
 		float operator()() { return (*random)(rnddev); }
 	};
+
+	// 確率指定ランダムルーレット
+	class Roulette
+	{
+	private:
+		std::unique_ptr<Random_Int> random;
+		std::vector<uint32_t> rateTable;
+
+	public:
+		/// <summary>
+		/// 初期化
+		/// </summary>
+		/// <param name="rateTable">確率リスト</param>
+		void Initialize(const std::vector<uint32_t>& rateTable);
+
+		// 事象の出力
+		size_t operator()();
+	};
 }
