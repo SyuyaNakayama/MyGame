@@ -79,7 +79,44 @@ float4 GaussianBlur(VSOutput i)
     return col;
 }
 
-float Bloom(VSOutput i)
+// 直線のガウシアンブラー
+float4 GaussianBlurLinear(VSOutput i)
+{
+    float totalWeight = 0;
+    float4 color = float4(0, 0, 0, 0);
+    float pickRange = 0.06; // ガウス関数式でいうσ
+
+    // 直線なのでfor文は一つ
+    for (float j = -pickRange; j <= pickRange; j += 0.005)
+    {
+        float x = cos(angle) * j; // 角度から座標を指定
+        float y = sin(angle) * j;
+        float2 pickUV = i.uv + float2(x, y); // 色取得する座標
+        // 自作のガウス関数で計算
+        float weight = Gaussian(i.uv, pickUV, pickRange);
+		// 取得する色にweightを掛ける
+        color += tex.Sample(smp, pickUV) * weight;
+		// 掛けるweightの合計値を控えておく
+        totalWeight += weight;
+    }
+    color /= totalWeight; // 足し合わせた色をweightの合計値で割る
+    return color;
+}
+
+float4 CreateDotFilter(VSOutput i)
+{
+    float2 texSize = float2(0, 0);
+    float level = 0;
+    tex.GetDimensions(0, texSize.x, texSize.y, level);
+    float2 st = i.uv / texSize.x * 20;
+    st = frac(st * texSize.xy);
+    float l = distance(st, float2(0.5, 0.5));
+    float4 col = float4(1, 1, 1, 1) * 1 - step(0.3, l);
+    col.a = 1.0;
+    return col;
+}
+
+float4 Bloom(VSOutput i)
 {
     float4 highLumi = GetHighLumi(i); // 高輝度抽出
     float4 blur = GaussianBlur(i); // ぼかし

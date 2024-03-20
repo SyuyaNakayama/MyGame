@@ -172,6 +172,9 @@
     <FxCompile Include="Resources\shaders\ParticleVS.hlsl">
       <Filter>シェーダー ファイル\Particle</Filter>
     </FxCompile>
+    <FxCompile Include="Resources\Shaders\MultiTexturePS.hlsl">
+      <Filter>シェーダー ファイル\PostEffect</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceFiles\Engine\Math\Matrix4.cpp">
@@ -365,6 +368,9 @@
     </ClCompile>
     <ClCompile Include="SourceFiles\Application\Stage\SpawnObject.cpp">
       <Filter>ソース ファイル\Application\Stage\SpawnObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Engine\2d\MultiTexture.cpp">
+      <Filter>ソース ファイル\Engine\2d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -580,6 +586,9 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Application\Stage\SpawnObject.h">
       <Filter>ソース ファイル\Application\Stage\SpawnObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Engine\2d\MultiTexture.h">
+      <Filter>ソース ファイル\Engine\2d</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,55 +1,54 @@
 #pragma once
 #include <array>
-#include <wrl.h>
-#include <d3d12.h>
 #include "Color.h"
-#include "Matrix4.h"
+#include "Vector.h"
+#include "DirectXCommon.h"
 
-namespace WristerEngine
+namespace WristerEngine::_2D
 {
-	namespace _2D
+	class PostEffect
 	{
-		// ポストエフェクト
-		class PostEffect
+	private:
+		struct Vertex { Vector2 pos, uv; };
+
+		struct ConstBufferData
 		{
-		private:
-			struct Vertex { Vector2 pos, uv; };
-
-			struct ConstBufferData
-			{
-				Matrix4 mat;
-				ColorRGBA color;
-			};
-
-			template<class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-			static const float CLEAR_COLOR[4];
-
-			ComPtr<ID3D12Resource> texBuff;
-			ComPtr<ID3D12Resource> depthBuff;
-			ComPtr<ID3D12DescriptorHeap> descHeapSRV;
-			ComPtr<ID3D12DescriptorHeap> descHeapRTV;
-			ComPtr<ID3D12DescriptorHeap> descHeapDSV;
-			std::array<Vertex, 4> vertices;
-			D3D12_VERTEX_BUFFER_VIEW vbView{};
-			Microsoft::WRL::ComPtr<ID3D12Resource> constBuff;
-
-			// バッファ生成
-			void CreateBuffers();
-			// シェーダーリソースビュー生成
-			void CreateSRV();
-			// レンダーターゲットビュー生成
-			void CreateRTV();
-			// デプスステンシルビュー生成
-			void CreateDSV();
-		public:
-			// 初期化
-			void Initialize();
-			// 描画
-			void Draw();
-			// シーン描画前処理
-			void PreDrawScene();
-			// シーン描画後処理
-			void PostDrawScene();
+			UINT32 effectType = 0;
+			float angle = 0;
 		};
-	}
+
+		template<class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+		static const float CLEAR_COLOR[4];
+
+		static ID3D12Device* device;
+		ComPtr<ID3D12Resource> texBuff;
+		ComPtr<ID3D12Resource> depthBuff;
+		static ComPtr<ID3D12DescriptorHeap> descHeapSRV;
+		static int staticSRVIndex;
+		int srvIndex;
+		ComPtr<ID3D12DescriptorHeap> descHeapRTV;
+		ComPtr<ID3D12DescriptorHeap> descHeapDSV;
+		std::array<Vertex, 4> vertices;
+		D3D12_VERTEX_BUFFER_VIEW vbView{};
+		Microsoft::WRL::ComPtr<ID3D12Resource> constBuff;
+		ConstBufferData* constMap = nullptr;
+		static ComPtr<ID3D12RootSignature> rootSignature;
+		static ComPtr<ID3D12PipelineState> pipelineState;
+
+		void CreateBuffers();
+		void CreateSRV();
+		void CreateRTV();
+		void CreateDSV();
+
+	public:
+		static void StaticInitialize();
+		void Initialize();
+		void SetEffectType(UINT32 effectType) { constMap->effectType = effectType; }
+		void SetAngle(float angle) { constMap->angle = angle; }
+		static ID3D12DescriptorHeap* GetSRV() { return descHeapSRV.Get(); }
+		D3D12_GPU_DESCRIPTOR_HANDLE GetGPUHandle();
+		void Draw();
+		void PreDrawScene();
+		void PostDrawScene();
+	};
 }

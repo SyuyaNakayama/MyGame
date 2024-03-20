@@ -1,10 +1,15 @@
 #include "PostEffect.h"
-#include "WindowsAPI.h"
 #include "D3D12Common.h"
-using namespace WristerEngine;
-using namespace _2D;
 
-const float PostEffect::CLEAR_COLOR[4] = { 0,0,0,0 };
+using namespace WristerEngine;
+using namespace WristerEngine::_2D;
+
+const float PostEffect::CLEAR_COLOR[4] = { 0.25f,0.5f,0.1f,1.0f };
+Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> PostEffect::descHeapSRV;
+Microsoft::WRL::ComPtr<ID3D12RootSignature> PostEffect::rootSignature;
+Microsoft::WRL::ComPtr<ID3D12PipelineState> PostEffect::pipelineState;
+ID3D12Device* PostEffect::device;
+int PostEffect::staticSRVIndex = 0;
 
 #pragma region 生成関数
 void PostEffect::CreateBuffers()
@@ -32,28 +37,24 @@ void PostEffect::CreateBuffers()
 	vbView.StrideInBytes = sizeof(Vertex);
 
 	// 定数バッファ
-	ConstBufferData* constMap = nullptr;
 	CreateBuffer(constBuff.GetAddressOf(),
 		&constMap, (sizeof(ConstBufferData) + 0xff) & ~0xff);
 
-	constMap->mat = Matrix4::Identity();
-	constMap->color = { 1,1,1,1 };
-
 	Result result;
-	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
 
 	CD3DX12_RESOURCE_DESC texresDesc = CD3DX12_RESOURCE_DESC::Tex2D(
 		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, (UINT64)WIN_SIZE.x, (UINT)WIN_SIZE.y,
 		1, 0, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET);
 
-	D3D12_HEAP_PROPERTIES heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_CPU_PAGE_PROPERTY_WRITE_BACK, D3D12_MEMORY_POOL_L0);
-	D3D12_CLEAR_VALUE clearValue = CD3DX12_CLEAR_VALUE(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, CLEAR_COLOR);
+	CD3DX12_CLEAR_VALUE clearValue(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, CLEAR_COLOR);
 
 	result = device->CreateCommittedResource(
-		&heapProp, D3D12_HEAP_FLAG_NONE,
+		new CD3DX12_HEAP_PROPERTIES(D3D12_CPU_PAGE_PROPERTY_WRITE_BACK, D3D12_MEMORY_POOL_L0),
+		D3D12_HEAP_FLAG_NONE,
 		&texresDesc,
 		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
-		&clearValue, IID_PPV_ARGS(&texBuff));
+		&clearValue,
+		IID_PPV_ARGS(&texBuff));
 
 	const UINT PIXEL_COUNT = (UINT)WIN_SIZE.x * (UINT)WIN_SIZE.y;
 	const UINT ROW_PITCH = sizeof(UINT) * (UINT)WIN_SIZE.x;
@@ -67,52 +68,48 @@ void PostEffect::CreateBuffers()
 
 void PostEffect::CreateSRV()
 {
-	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
-
-	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc{};
-	srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-	srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
-	srvHeapDesc.NumDescriptors = 1;
-	Result result = device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&descHeapSRV));
+	srvIndex = staticSRVIndex++;
 
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
 	srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Texture2D.MipLevels = 1;
-	device->CreateShaderResourceView(texBuff.Get(), &srvDesc, descHeapSRV->GetCPUDescriptorHandleForHeapStart());
+	device->CreateShaderResourceView(texBuff.Get(), &srvDesc,
+		CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapSRV->GetCPUDescriptorHandleForHeapStart(), srvIndex,
+			device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV)));
 }
 
 void PostEffect::CreateRTV()
 {
-	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
-
 	D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc{};
 	rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 	rtvHeapDesc.NumDescriptors = 1;
 	Result result = device->CreateDescriptorHeap(&rtvHeapDesc, IID_PPV_ARGS(&descHeapRTV));
 
-	device->CreateRenderTargetView(texBuff.Get(), nullptr, descHeapRTV->GetCPUDescriptorHandleForHeapStart());
+	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
+	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
+
+	device->CreateRenderTargetView(texBuff.Get(), &rtvDesc, descHeapRTV->GetCPUDescriptorHandleForHeapStart());
 }
 
 void PostEffect::CreateDSV()
 {
-	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
-
 	CD3DX12_RESOURCE_DESC depthResourceDesc =
 		CD3DX12_RESOURCE_DESC::Tex2D(
 			DXGI_FORMAT_D32_FLOAT,
 			(UINT64)WIN_SIZE.x, (UINT)WIN_SIZE.y,
 			1, 0, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
 
-	D3D12_HEAP_PROPERTIES heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
-	D3D12_CLEAR_VALUE clearValue = CD3DX12_CLEAR_VALUE(DXGI_FORMAT_D32_FLOAT, 1.0f, 0);
+	CD3DX12_CLEAR_VALUE clearValue(DXGI_FORMAT_D32_FLOAT, 1.0f, 0);
 
 	Result result = device->CreateCommittedResource(
-		&heapProp, D3D12_HEAP_FLAG_NONE,
-		&depthResourceDesc,
+		new CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
+		D3D12_HEAP_FLAG_NONE, &depthResourceDesc,
 		D3D12_RESOURCE_STATE_DEPTH_WRITE,
-		&clearValue, IID_PPV_ARGS(&depthBuff));
+		&clearValue,
+		IID_PPV_ARGS(&depthBuff));
 
 	D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc{};
 	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
@@ -134,6 +131,18 @@ void PostEffect::Initialize()
 	CreateDSV();
 }
 
+void PostEffect::StaticInitialize()
+{
+	device = DirectXCommon::GetInstance()->GetDevice();
+
+	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc{};
+	srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+	srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+	srvHeapDesc.NumDescriptors = 16;
+
+	Result result = device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&descHeapSRV));
+}
+
 void PostEffect::Draw()
 {
 	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
@@ -146,7 +155,7 @@ void PostEffect::Draw()
 	ID3D12DescriptorHeap* ppHeaps[] = { descHeapSRV.Get() };
 	cmdList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
 
-	cmdList->SetGraphicsRootDescriptorTable(0, descHeapSRV->GetGPUDescriptorHandleForHeapStart());
+	cmdList->SetGraphicsRootDescriptorTable(0, GetGPUHandle());
 
 	// 頂点バッファビューの設定コマンド
 	cmdList->IASetVertexBuffers(0, 1, &vbView);
@@ -159,17 +168,17 @@ void PostEffect::PreDrawScene()
 {
 	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
 
-	D3D12_RESOURCE_BARRIER resourceBarrier = CD3DX12_RESOURCE_BARRIER::Transition(
+	CD3DX12_RESOURCE_BARRIER resBarrier = CD3DX12_RESOURCE_BARRIER::Transition(
 		texBuff.Get(), D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET);
 
-	cmdList->ResourceBarrier(1, &resourceBarrier);
+	cmdList->ResourceBarrier(1, &resBarrier);
 
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = descHeapRTV->GetCPUDescriptorHandleForHeapStart();
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = descHeapDSV->GetCPUDescriptorHandleForHeapStart();
 	cmdList->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
 
-	D3D12_VIEWPORT viewport = CD3DX12_VIEWPORT(0.0f, 0.0f, WIN_SIZE.x, WIN_SIZE.y);
-	D3D12_RECT rect = CD3DX12_RECT(0, 0, (LONG)WIN_SIZE.x, (LONG)WIN_SIZE.y);
+	CD3DX12_VIEWPORT viewport(0.0f, 0.0f, WIN_SIZE.x, WIN_SIZE.y);
+	CD3DX12_RECT rect(0, 0, (LONG)WIN_SIZE.x, (LONG)WIN_SIZE.y);
 	// ビューポート設定コマンドを、コマンドリストに積む
 	cmdList->RSSetViewports(1, &viewport);
 	cmdList->RSSetScissorRects(1, &rect); // シザー矩形設定コマンドを、コマンドリストに積む
@@ -178,12 +187,19 @@ void PostEffect::PreDrawScene()
 	cmdList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 
+D3D12_GPU_DESCRIPTOR_HANDLE PostEffect::GetGPUHandle()
+{
+	return CD3DX12_GPU_DESCRIPTOR_HANDLE(
+		descHeapSRV->GetGPUDescriptorHandleForHeapStart(), srvIndex,
+		device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV));
+}
+
 void PostEffect::PostDrawScene()
 {
 	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
-
-	D3D12_RESOURCE_BARRIER resourceBarrier = CD3DX12_RESOURCE_BARRIER::Transition(
+	
+	CD3DX12_RESOURCE_BARRIER resBarrier = CD3DX12_RESOURCE_BARRIER::Transition(
 		texBuff.Get(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
-
-	cmdList->ResourceBarrier(1, &resourceBarrier);
+	
+	cmdList->ResourceBarrier(1, &resBarrier);
 }

@@ -92,7 +92,7 @@ namespace WristerEngine
 		D3D12_CULL_MODE cullMode = D3D12_CULL_MODE_BACK;
 	};
 
-	enum class PipelineType { Sprite, PostEffect, Object, Dissolve, Particle };
+	enum class PipelineType { Sprite, PostEffect, MultiTexture,Object, Dissolve, Particle };
 
 	// パイプライン管理クラス
 	class PipelineManager

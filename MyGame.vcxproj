@@ -63,7 +63,7 @@
       <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <ConformanceMode>false</ConformanceMode>
       <ExceptionHandling>Sync</ExceptionHandling>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -88,7 +88,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <ConformanceMode>false</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <ExceptionHandling>Sync</ExceptionHandling>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -117,6 +117,11 @@
     <None Include="Resources\shaders\Sprite.hlsli" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Resources\Shaders\MultiTexturePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="Resources\shaders\ObjPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
@@ -177,6 +182,7 @@
     <ClCompile Include="SourceFiles\Application\GameScenes\TutorialScene\TutorialScene.cpp" />
     <ClCompile Include="SourceFiles\Application\OperateDrawer\OperateDrawer.cpp" />
     <ClCompile Include="SourceFiles\Engine\2d\BitMapNumber.cpp" />
+    <ClCompile Include="SourceFiles\Engine\2d\MultiTexture.cpp" />
     <ClCompile Include="SourceFiles\Engine\3d\Camera\CameraShake.cpp" />
     <ClCompile Include="SourceFiles\Engine\3d\Object\Object3d.cpp" />
     <ClCompile Include="SourceFiles\Engine\3d\Object\Material.cpp" />
@@ -244,6 +250,7 @@
     <ClInclude Include="SourceFiles\Application\OperateDrawer\OperateDrawer.h" />
     <ClInclude Include="SourceFiles\Engine\2d\AbstractUIDrawer.h" />
     <ClInclude Include="SourceFiles\Engine\2d\BitMapNumber.h" />
+    <ClInclude Include="SourceFiles\Engine\2d\MultiTexture.h" />
     <ClInclude Include="SourceFiles\Engine\3d\Camera\CameraShake.h" />
     <ClInclude Include="SourceFiles\Engine\3d\Object\Object3d.h" />
     <ClInclude Include="SourceFiles\Engine\3d\Object\Material.h" />

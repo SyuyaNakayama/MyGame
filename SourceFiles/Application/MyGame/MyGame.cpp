@@ -24,8 +24,10 @@ void MyGame::Initialize()
 	WristerEngine::ParticleManager::AddParticleGroup("CollisionParticle.png");
 	ImGuiManager::Initialize();
 	WristerEngine::AudioManager::Initialize();
+	PostEffect::StaticInitialize();
 	postEffect = std::make_unique<PostEffect>();
 	postEffect->Initialize();
+	postEffect->SetEffectType(6);
 }
 
 void MyGame::Update()
