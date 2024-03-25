@@ -29,6 +29,10 @@ void TutorialEvent::Initialize()
 		{ 0.5f,0.5f }, { 96,96 });
 	sprites["Enter"]->size *= 0.5f;
 	sprites["Enter"]->isInvisible = true;
+
+	// Enterキー(アニメーション)
+	enter.Initialize("UI/Key/key_Enter.png", (int)sprites["Enter"]->textureSize.x, 30);
+
 }
 
 void TutorialEvent::Update()

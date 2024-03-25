@@ -1,5 +1,5 @@
 #pragma once
-#include "Sprite.h"
+#include "SpriteAnimation.h"
 #include <map>
 
 // チュートリアルの説明
@@ -11,6 +11,7 @@ private:
 	std::map<std::string, std::unique_ptr<WristerEngine::_2D::Sprite>> sprites;
 	// チュートリアルの説明番号
 	UINT32 phase = 0;
+	WristerEngine::_2D::SpriteAnimation enter;
 
 public:
 	// 初期化

@@ -4,7 +4,7 @@
 using namespace WristerEngine;
 using namespace WristerEngine::_2D;
 
-const float PostEffect::CLEAR_COLOR[4] = { 0.25f,0.5f,0.1f,1.0f };
+const float PostEffect::CLEAR_COLOR[4] = { 0,0,0,1 };
 Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> PostEffect::descHeapSRV;
 Microsoft::WRL::ComPtr<ID3D12RootSignature> PostEffect::rootSignature;
 Microsoft::WRL::ComPtr<ID3D12PipelineState> PostEffect::pipelineState;
@@ -123,12 +123,13 @@ void PostEffect::CreateDSV()
 }
 #pragma endregion
 
-void PostEffect::Initialize()
+void PostEffect::Initialize(Type effectType)
 {
 	CreateBuffers();
 	CreateSRV();
 	CreateRTV();
 	CreateDSV();
+	SetEffectType(effectType);
 }
 
 void PostEffect::StaticInitialize()
@@ -187,7 +188,7 @@ void PostEffect::PreDrawScene()
 	cmdList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 
-D3D12_GPU_DESCRIPTOR_HANDLE PostEffect::GetGPUHandle()
+D3D12_GPU_DESCRIPTOR_HANDLE PostEffect::GetGPUHandle() const
 {
 	return CD3DX12_GPU_DESCRIPTOR_HANDLE(
 		descHeapSRV->GetGPUDescriptorHandleForHeapStart(), srvIndex,

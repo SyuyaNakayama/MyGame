@@ -10,7 +10,6 @@ namespace WristerEngine
 	protected:
 		std::wstring windowName;
 		WindowsAPI* wAPI = WindowsAPI::GetInstance();
-		DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 		Input* input = Input::GetInstance();
 		SceneManager* sceneManager = SceneManager::GetInstance();
 

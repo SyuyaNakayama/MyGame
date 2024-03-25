@@ -6,7 +6,7 @@
 class MyGame : public WristerEngine::Framework
 {
 private:
-	std::unique_ptr<WristerEngine::_2D::PostEffect> postEffect;
+	WristerEngine::_2D::PostEffect postEffect;
 
 public:
 	// 初期化(オーバーライド)

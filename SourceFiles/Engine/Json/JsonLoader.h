@@ -44,10 +44,9 @@ namespace WristerEngine
 	// Jsonファイル読み込みクラス
 	class JsonLoader
 	{
-	private:
+	public:
 		const static std::string DEFAULT_BASE_DIRECTORY;
 
-	public:
 		/// <summary>
 		/// Jsonファイル読み込み
 		/// </summary>

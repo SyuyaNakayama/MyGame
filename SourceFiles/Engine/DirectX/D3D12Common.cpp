@@ -67,7 +67,7 @@ void PipelineManager::Initialize()
 	pipelines[PipelineType::Sprite].CreatePipeline(pipelineProp);
 
 	pipelineProp.shaderNames = { L"PostEffectVS", L"PostEffectPS" };
-	pipelineProp.textureAddressMode = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
+	pipelineProp.textureAddressMode = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
 	pipelines[PipelineType::PostEffect].CreatePipeline(pipelineProp);
 	
 	pipelineProp.shaderNames = { L"PostEffectVS", L"MultiTexturePS" };

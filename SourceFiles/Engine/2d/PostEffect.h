@@ -8,6 +8,20 @@ namespace WristerEngine::_2D
 {
 	class PostEffect
 	{
+	public:
+		enum class Type
+		{
+			None, // なし
+			ColorFlip, // 色反転
+			GrayScale, // グレースケール
+			GetHighLumi, // 高輝度抽出
+			Blur, // 平均ぼかし
+			GaussianBlur, // ガウシアンブラー
+			GaussianBlurLinear, // 単方向のガウシアンブラー
+			CreateDotFilter, // クロスフィルタ
+			Bloom // ブルーム
+		};
+
 	private:
 		struct Vertex { Vector2 pos, uv; };
 
@@ -15,6 +29,8 @@ namespace WristerEngine::_2D
 		{
 			UINT32 effectType = 0;
 			float angle = 0;
+			float brightness = 1;
+			Vector2 uvOffset;
 		};
 
 		template<class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
@@ -42,11 +58,11 @@ namespace WristerEngine::_2D
 
 	public:
 		static void StaticInitialize();
-		void Initialize();
-		void SetEffectType(UINT32 effectType) { constMap->effectType = effectType; }
+		void Initialize(Type effectType = Type::None);
+		void SetEffectType(Type effectType) { constMap->effectType = (UINT32)effectType; }
 		void SetAngle(float angle) { constMap->angle = angle; }
 		static ID3D12DescriptorHeap* GetSRV() { return descHeapSRV.Get(); }
-		D3D12_GPU_DESCRIPTOR_HANDLE GetGPUHandle();
+		D3D12_GPU_DESCRIPTOR_HANDLE GetGPUHandle() const;
 		void Draw();
 		void PreDrawScene();
 		void PostDrawScene();

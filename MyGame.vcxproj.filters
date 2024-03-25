@@ -372,6 +372,9 @@
     <ClCompile Include="SourceFiles\Engine\2d\MultiTexture.cpp">
       <Filter>ソース ファイル\Engine\2d</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFiles\Engine\Json\Constant.cpp">
+      <Filter>ソース ファイル\Engine\Json</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\Engine\Math\Matrix4.h">
@@ -589,6 +592,9 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\2d\MultiTexture.h">
       <Filter>ソース ファイル\Engine\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Engine\Json\Constant.h">
+      <Filter>ソース ファイル\Engine\Json</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

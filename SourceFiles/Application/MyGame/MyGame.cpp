@@ -25,9 +25,7 @@ void MyGame::Initialize()
 	ImGuiManager::Initialize();
 	WristerEngine::AudioManager::Initialize();
 	PostEffect::StaticInitialize();
-	postEffect = std::make_unique<PostEffect>();
-	postEffect->Initialize();
-	postEffect->SetEffectType(6);
+	postEffect.Initialize(PostEffect::Type::None);
 }
 
 void MyGame::Update()
@@ -44,15 +42,15 @@ void MyGame::Update()
 
 void MyGame::Draw()
 {
-	postEffect->PreDrawScene();
+	postEffect.PreDrawScene();
 	ModelManager::DrawObjects();
 	WristerEngine::ParticleManager::Draw();
-	Sprite::PreDraw();
-	sceneManager->Draw();
-	postEffect->PostDrawScene();
+	postEffect.PostDrawScene();
 
 	dxCommon->PreDraw();
-	postEffect->Draw();
+	postEffect.Draw();
+	Sprite::PreDraw();
+	sceneManager->Draw();
 	ImGuiManager::Draw();
 	dxCommon->PostDraw();
 }
