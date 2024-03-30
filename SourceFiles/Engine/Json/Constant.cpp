@@ -11,17 +11,20 @@ Constant* Constant::GetInstance()
 
 void Constant::LoadConstant()
 {
-	// フルパス
-	const std::string fullpath = JsonLoader::DEFAULT_BASE_DIRECTORY + "constant.json";
-	std::ifstream file; // ファイルストリーム
-	// ファイルを開く
-	file.open(fullpath);
-	// 読み込み失敗の時
-	if (file.fail()) { assert(0); }
+	nlohmann::json deserialized = LoadJson("constant");
 
-	// JSON文字列から解凍したデータ
-	nlohmann::json deserialized;
-	// 解凍
-	file >> deserialized;
-	file.close();
+	for (auto& object : deserialized["int"])
+	{
+		const auto& list = object.get<std::map<std::string, int>>();
+		for (const auto& val : list)
+		{
+			constants[val.first] = new int(val.second);
+		}
+	}
+}
+
+int WristerEngine::Constant::GetConstant(const std::string& name)
+{
+	int* num = (int*)constants[name];
+	return *num;
 }

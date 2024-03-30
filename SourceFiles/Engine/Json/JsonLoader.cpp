@@ -1,11 +1,7 @@
 #include "JsonLoader.h"
-#include <fstream>
 #include <cassert>
 #include "ModelManager.h"
-using namespace WristerEngine;
 using namespace WristerEngine::_3D;
-
-const std::string JsonLoader::DEFAULT_BASE_DIRECTORY = "Resources/levels/";
 
 void LevelData::LoadJsonRecursive(nlohmann::json& object, Transform* parent)
 {
@@ -48,7 +44,7 @@ void LevelData::LoadJsonRecursive(nlohmann::json& object, Transform* parent)
 		worldTransform->scale.x = (float)transform["scaling"][1];
 		worldTransform->scale.y = (float)transform["scaling"][2];
 		worldTransform->scale.z = (float)transform["scaling"][0];
-		
+
 		// コライダーのパラメータ読み込み
 		if (object.contains("collider"))
 		{
@@ -81,21 +77,10 @@ void LevelData::LoadJsonRecursive(nlohmann::json& object, Transform* parent)
 	}
 }
 
-LevelData* JsonLoader::LoadJson(const std::string& fileName)
+LevelData* JsonLoader::LoadLevel(const std::string& fileName)
 {
-	// フルパス
-	const std::string fullpath = DEFAULT_BASE_DIRECTORY + fileName + ".json";
-	std::ifstream file; // ファイルストリーム
-	// ファイルを開く
-	file.open(fullpath);
-	// 読み込み失敗の時
-	if (file.fail()) { assert(0); }
+	nlohmann::json deserialized = LoadJson(fileName);
 
-	// JSON文字列から解凍したデータ
-	nlohmann::json deserialized;
-	// 解凍
-	file >> deserialized;
-	file.close();
 	// 正しいレベルデータファイルかチェック
 	assert(deserialized.is_object());
 	assert(deserialized.contains("name"));

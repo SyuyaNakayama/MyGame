@@ -9,7 +9,7 @@ using namespace WristerEngine::_3D;
 
 int Object::instanceNum = 0;
 
-void Object::Initialize(const WristerEngine::ObjectData& objectData)
+void Object::Initialize(const ObjectData& objectData)
 {
 	object = ModelManager::Create("player", true);
 	object->worldTransform.reset(objectData.worldTransform);

@@ -8,7 +8,7 @@ class BaseSpawnObject : public WristerEngine::AbstractSpawnPoint, public Wrister
 {
 protected:
 	static std::list<std::unique_ptr<WristerEngine::_3D::GameObject>>* objects;
-	WristerEngine::ObjectData objectData;
+	ObjectData objectData;
 	Vector3 initialPos;
 	std::unique_ptr<const int> SPAWN_MAX = nullptr;
 
@@ -17,7 +17,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="objectData">Jsonファイルから読み込んだデータ</param>
-	virtual void Initialize(const WristerEngine::ObjectData& objectData);
+	virtual void Initialize(const ObjectData& objectData);
 
 	// 更新
 	virtual void Update();
@@ -35,7 +35,7 @@ class SpawnObject : public BaseSpawnObject
 	WristerEngine::Roulette roulette;
 
 public:
-	void Initialize(const WristerEngine::ObjectData& objectData_) override;
+	void Initialize(const ObjectData& objectData_) override;
 
 	// 更新
 	void Update();
@@ -48,7 +48,7 @@ public:
 class TutorialSpawnObject : public BaseSpawnObject
 {
 public:
-	void Initialize(const WristerEngine::ObjectData& objectData_) override;
+	void Initialize(const ObjectData& objectData_) override;
 
 	// 更新
 	void Update();

@@ -3,7 +3,7 @@
 
 std::list<std::unique_ptr<WristerEngine::_3D::GameObject>>* BaseSpawnObject::objects;
 
-void BaseSpawnObject::Initialize(const WristerEngine::ObjectData& objectData_)
+void BaseSpawnObject::Initialize(const ObjectData& objectData_)
 {
 	// 情報読み取り
 	objectData = objectData_;
@@ -17,7 +17,7 @@ void BaseSpawnObject::Update()
 	if (!spawnTimer.Update() || Object::GetInstanceNum() >= *SPAWN_MAX) { return; }
 	// オブジェクトの生成
 	std::unique_ptr<Object> newObj = std::make_unique<Object>();
-	WristerEngine::ObjectData objectDataTemp = objectData;
+	ObjectData objectDataTemp = objectData;
 	objectDataTemp.worldTransform = new WristerEngine::_3D::Transform;
 	*objectDataTemp.worldTransform = *objectData.worldTransform;
 	objectDataTemp.worldTransform->Initialize();
@@ -26,7 +26,7 @@ void BaseSpawnObject::Update()
 	objects->push_back(std::move(newObj));
 }
 
-void SpawnObject::Initialize(const WristerEngine::ObjectData& objectData_)
+void SpawnObject::Initialize(const ObjectData& objectData_)
 {
 	BaseSpawnObject::Initialize(objectData_);
 	roulette.Initialize({ 6,1,1 });
@@ -60,7 +60,7 @@ ObjectType SpawnObject::GetType()
 	return ObjectType::White;
 }
 
-void TutorialSpawnObject::Initialize(const WristerEngine::ObjectData& objectData_)
+void TutorialSpawnObject::Initialize(const ObjectData& objectData_)
 {
 	BaseSpawnObject::Initialize(objectData_);
 }

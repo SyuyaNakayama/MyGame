@@ -7,7 +7,7 @@ using namespace WristerEngine;
 void Framework::Initialize()
 {
 	wAPI->Initialize(windowName);
-	DirectXCommon::GetInstance()->Initialize();
+	dxCommon->Initialize();
 	_2D::Sprite::StaticInitialize();
 	input->Initialize();
 	sceneManager->Initialize();

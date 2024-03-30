@@ -188,6 +188,7 @@
     <ClCompile Include="SourceFiles\Engine\3d\Object\Material.cpp" />
     <ClCompile Include="SourceFiles\Application\Camera\PlayerCamera.cpp" />
     <ClCompile Include="SourceFiles\Engine\Audio\AudioManager.cpp" />
+    <ClCompile Include="SourceFiles\Engine\Json\BaseJsonLoader.cpp" />
     <ClCompile Include="SourceFiles\Engine\Json\Constant.cpp" />
     <ClCompile Include="SourceFiles\Engine\Math\Easing.cpp" />
     <ClCompile Include="SourceFiles\Engine\Timer\FPS.cpp" />
@@ -258,6 +259,7 @@
     <ClInclude Include="SourceFiles\Application\Camera\PlayerCamera.h" />
     <ClInclude Include="SourceFiles\Engine\Audio\AudioManager.h" />
     <ClInclude Include="SourceFiles\Engine\Functions\AbstractSpawnPoint.h" />
+    <ClInclude Include="SourceFiles\Engine\Json\BaseJsonLoader.h" />
     <ClInclude Include="SourceFiles\Engine\Json\Constant.h" />
     <ClInclude Include="SourceFiles\Engine\Light\Light.h" />
     <ClInclude Include="SourceFiles\Engine\Math\Easing.h" />

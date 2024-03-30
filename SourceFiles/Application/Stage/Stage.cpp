@@ -10,7 +10,7 @@ float Stage::GROUND_POS_Y = 5.0f;
 void Stage::Initialize()
 {
 	SpawnObject::SetObjectList(&gameObjects);
-	levelData = WristerEngine::JsonLoader::LoadJson("stage");
+	levelData = JsonLoader::LoadLevel("stage");
 
 	std::unique_ptr<GameObject> gameObject;
 	for (auto& objectData : levelData->objects)

@@ -27,7 +27,7 @@ bool Goal::isScoreChange = false;
 WristerEngine::Random_Int Goal::randScore(0, (int)SCORE_TABLE.size() - 1);
 WristerEngine::Roulette Goal::roulette;
 
-void Block::Initialize(const WristerEngine::ObjectData& objectData)
+void Block::Initialize(const ObjectData& objectData)
 {
 	object = ModelManager::Create("cube");
 	object->worldTransform.reset(objectData.worldTransform);
@@ -72,7 +72,7 @@ void Goal::StaticUpdate()
 	isScoreChange = scoreChangeTimer.Update();
 }
 
-void Goal::Initialize(const WristerEngine::ObjectData& objectData)
+void Goal::Initialize(const ObjectData& objectData)
 {
 	object = ModelManager::Create("cube");
 	object->worldTransform.reset(objectData.worldTransform);

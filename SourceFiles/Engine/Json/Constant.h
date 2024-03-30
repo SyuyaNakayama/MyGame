@@ -1,12 +1,12 @@
 #pragma once
 #include <unordered_map>
 #include <string>
-#include <JsonLoader.h>
+#include "BaseJsonLoader.h"
 
 namespace WristerEngine
 {
 	// ’è”‚Ìî•ñ‚ğ"constant.json"‚©‚ç“Ç‚İæ‚é
-	class Constant
+	class Constant : public WristerEngine::BaseJsonLoader
 	{
 	private:
 		std::unordered_map<std::string, void*> constants;
@@ -22,5 +22,7 @@ namespace WristerEngine
 
 		// ’è”‚ğ“Ç‚İ‚Ş
 		void LoadConstant();
+
+		int GetConstant(const std::string& name);
 	};
 }

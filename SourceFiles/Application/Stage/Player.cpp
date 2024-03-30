@@ -6,7 +6,7 @@ using namespace WristerEngine::_3D;
 
 const float Player::PLAYER_MOVE_FORCE = 0.15f;
 
-void Player::Initialize(const WristerEngine::ObjectData& objectData)
+void Player::Initialize(const ObjectData& objectData)
 {
 	object = ModelManager::Create("player", true);
 	object->worldTransform.reset(objectData.worldTransform);

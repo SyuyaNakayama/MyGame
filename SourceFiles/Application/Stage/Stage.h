@@ -11,7 +11,7 @@ class Stage
 	static const int STAGE_TIME = 60;
 
 	std::list<std::unique_ptr<WristerEngine::_3D::GameObject>> gameObjects; // プレイヤー、壁、床、ゴール、障害物
-	WristerEngine::LevelData* levelData = nullptr;
+	LevelData* levelData = nullptr;
 	static int score;
 	WristerEngine::FrameTimer stageTime;
 	bool isFinished;

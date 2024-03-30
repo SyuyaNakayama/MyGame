@@ -4,6 +4,7 @@
 #include "ModelManager.h"
 #include "MyGame.h"
 #include "ParticleManager.h"
+#include "Constant.h"
 using namespace WristerEngine::_2D;
 using namespace WristerEngine::_3D;
 

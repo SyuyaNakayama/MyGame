@@ -30,7 +30,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="objectData">Jsonファイルから読み込んだデータ</param>
-	void Initialize(const WristerEngine::ObjectData& objectData);
+	void Initialize(const ObjectData& objectData);
 	// 更新
 	void Update();
 
