@@ -120,6 +120,9 @@
     <Filter Include="ソース ファイル\Application\Stage\SpawnObject">
       <UniqueIdentifier>{598d76cd-2b94-44b4-8ef7-1a85278aa3e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Application\LevelLoader">
+      <UniqueIdentifier>{7d6061fd-907a-46ca-a21f-3dcedc49720d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Sprite.hlsli">
@@ -142,6 +145,9 @@
     </None>
     <None Include="Resources\shaders\Functions.hlsli">
       <Filter>シェーダー ファイル</Filter>
+    </None>
+    <None Include="Resources\levels\constant.json">
+      <Filter>ソース ファイル\Engine\Json</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -375,6 +381,9 @@
     <ClCompile Include="SourceFiles\Engine\Json\Constant.cpp">
       <Filter>ソース ファイル\Engine\Json</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFiles\Engine\Json\LevelLoader.cpp">
+      <Filter>ソース ファイル\Application\LevelLoader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\Engine\Math\Matrix4.h">
@@ -595,6 +604,9 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\Json\Constant.h">
       <Filter>ソース ファイル\Engine\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Engine\Json\LevelLoader.h">
+      <Filter>ソース ファイル\Application\LevelLoader</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

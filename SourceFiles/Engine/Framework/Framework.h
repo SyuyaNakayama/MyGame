@@ -1,6 +1,7 @@
 #pragma once
 #include "SceneManager.h"
 #include "DirectXCommon.h"
+#include "Constant.h"
 
 namespace WristerEngine
 {
@@ -13,6 +14,7 @@ namespace WristerEngine
 		Input* input = Input::GetInstance();
 		DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 		SceneManager* sceneManager = SceneManager::GetInstance();
+		Constant* constant = Constant::GetInstance();
 
 	public:
 		virtual ~Framework() = default;

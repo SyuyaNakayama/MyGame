@@ -1,18 +1,26 @@
 #pragma once
 #include <unordered_map>
-#include <string>
-#include "BaseJsonLoader.h"
+#include "JsonLoader.h"
+#include <cassert>
+#include "Vector.h"
 
 namespace WristerEngine
 {
 	// ’è”‚Ìî•ñ‚ğ"constant.json"‚©‚ç“Ç‚İæ‚é
-	class Constant : public WristerEngine::BaseJsonLoader
+	class Constant : public WristerEngine::JsonLoader
 	{
 	private:
-		std::unordered_map<std::string, void*> constants;
-		
+		std::unordered_map<std::string, const void*> constants;
+		nlohmann::json deserialized;
+
 		Constant() = default;
 		~Constant() = default;
+
+		// Œ^•Ê“Ç‚İ‚İ
+		void LoadInt();
+		void LoadFloat();
+		void LoadVector();
+		void LoadColor();
 
 	public:
 		Constant(const Constant& obj) = delete;
@@ -21,8 +29,17 @@ namespace WristerEngine
 		static Constant* GetInstance();
 
 		// ’è”‚ğ“Ç‚İ‚Ş
-		void LoadConstant();
+		void LoadConstants();
 
-		int GetConstant(const std::string& name);
+		template<class T>
+		T GetConstant(const std::string& name)
+		{
+			T* num = (T*)constants[name];
+			assert(num);
+			return *num;
+		}
+
+		// I—¹ˆ—
+		void Finalize();
 	};
 }

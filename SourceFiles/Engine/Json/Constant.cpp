@@ -1,4 +1,5 @@
 #include "Constant.h"
+#include "Color.h"
 #include <fstream>
 
 using namespace WristerEngine;
@@ -9,22 +10,73 @@ Constant* Constant::GetInstance()
 	return &instance;
 }
 
-void Constant::LoadConstant()
+void WristerEngine::Constant::LoadInt()
 {
-	nlohmann::json deserialized = LoadJson("constant");
+	if (!deserialized.contains("int")) { return; }
+	// 定数リスト取得とインスタンス生成(int)
+	const auto& list = deserialized["int"].get<std::map<std::string, int>>();
+	for (const auto& val : list) { constants[val.first] = new int(val.second); }
+}
 
-	for (auto& object : deserialized["int"])
+void WristerEngine::Constant::LoadFloat()
+{
+	if (!deserialized.contains("float")) { return; }
+	// 定数リスト取得とインスタンス生成(float)
+	const auto& list = deserialized["float"].get<std::map<std::string, float>>();
+	for (const auto& val : list) { constants[val.first] = new int(val.second); }
+}
+
+void WristerEngine::Constant::LoadVector()
+{
+	if (deserialized.contains("Vector2"))
 	{
-		const auto& list = object.get<std::map<std::string, int>>();
-		for (const auto& val : list)
-		{
-			constants[val.first] = new int(val.second);
-		}
+		// 定数リスト取得とインスタンス生成(Vector2)
+		const auto& list = deserialized["Vector2"].get<std::map<std::string, std::vector<float>>>();
+		for (const auto& val : list) { constants[val.first] = new Vector2(val.second[0], val.second[1]); }
+	}
+
+	if (deserialized.contains("Vector3"))
+	{
+		// 定数リスト取得とインスタンス生成(Vector3)
+		const auto& list = deserialized["Vector3"].get<std::map<std::string, std::vector<float>>>();
+		for (const auto& val : list) { constants[val.first] = new Vector3(val.second[0], val.second[1], val.second[2]); }
 	}
 }
 
-int WristerEngine::Constant::GetConstant(const std::string& name)
+void WristerEngine::Constant::LoadColor()
 {
-	int* num = (int*)constants[name];
-	return *num;
+	if (deserialized.contains("ColorRGB"))
+	{
+		// 定数リスト取得とインスタンス生成(ColorRGB)
+		const auto& list = deserialized["ColorRGB"].get<std::map<std::string, std::vector<float>>>();
+		for (const auto& val : list) { constants[val.first] = new ColorRGB(val.second[0], val.second[1], val.second[2]); }
+	}
+
+	if (deserialized.contains("ColorRGBA"))
+	{
+		// 定数リスト取得とインスタンス生成(ColorRGBA)
+		const auto& list = deserialized["ColorRGBA"].get<std::map<std::string, std::vector<float>>>();
+		for (const auto& val : list) { constants[val.first] = new ColorRGBA(val.second[0], val.second[1], val.second[2], val.second[3]); }
+	}
+}
+
+void Constant::LoadConstants()
+{
+	deserialized = LoadJson("constant");
+
+	LoadInt();
+	LoadFloat();
+	LoadVector();
+	LoadColor();
+}
+
+void WristerEngine::Constant::Finalize()
+{
+	for (auto& p : constants)
+	{
+		// メモリ解放
+		delete p.second;
+		p.second = nullptr;
+	}
+	constants.clear();
 }

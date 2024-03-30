@@ -8,10 +8,8 @@ class Vector2
 public:
 	float x = 0, y = 0;
 
-#ifdef NDEBUG
 	// コンストラクタ
 	Vector2(float x_ = 0, float y_ = 0) { x = x_, y = y_; }
-#endif // NDEBUG
 
 	// ノルム(長さ)
 	float Length() const { return sqrtf(x * x + y * y); }

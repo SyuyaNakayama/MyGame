@@ -4,7 +4,6 @@
 #include "ModelManager.h"
 #include "MyGame.h"
 #include "ParticleManager.h"
-#include "Constant.h"
 using namespace WristerEngine::_2D;
 using namespace WristerEngine::_3D;
 
@@ -27,6 +26,9 @@ void MyGame::Initialize()
 	WristerEngine::AudioManager::Initialize();
 	PostEffect::StaticInitialize();
 	postEffect.Initialize(PostEffect::Type::None);
+
+	Vector2 a = constant->GetConstant<Vector2>("bb2");
+	a = 0;
 }
 
 void MyGame::Update()

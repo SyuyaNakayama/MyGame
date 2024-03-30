@@ -1,7 +1,6 @@
 #include "Framework.h"
 #include "Sprite.h"
 #include "D3D12Common.h"
-#include "Constant.h"
 using namespace WristerEngine;
 
 void Framework::Initialize()
@@ -12,7 +11,7 @@ void Framework::Initialize()
 	input->Initialize();
 	sceneManager->Initialize();
 	PipelineManager::Initialize();
-	Constant::GetInstance()->LoadConstant();
+	constant->LoadConstants();
 }
 
 void Framework::Update()
@@ -23,6 +22,7 @@ void Framework::Update()
 
 void Framework::Finalize()
 {
+	constant->Finalize();
 	sceneManager->Finalize();
 	wAPI->Finalize();
 }
