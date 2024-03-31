@@ -1,5 +1,6 @@
 #include "TutorialEvent.h"
 #include "Input.h"
+#include <imgui.h>
 using namespace WristerEngine::_2D;
 
 const float TutorialEvent::TEX_SIZE_Y = 32.0f;
@@ -32,21 +33,45 @@ void TutorialEvent::Initialize()
 
 	// Enterキー(アニメーション)
 	enter.Initialize("UI/Key/key_Enter.png", (int)sprites["Enter"]->textureSize.x, 30);
+	enter.GetSprite()->position = constant->GetConstant<Vector2>("uiEnterAnimePos");
+	enter.GetSprite()->size = constant->GetConstant<Vector2>("uiEnterAnimeSize");
+}
 
+void TutorialEvent::EnterEventManager()
+{
+	if (IsAny(phase, constant->GetConstant<std::vector<UINT32>>("TutorialEventPhase")))
+	{
+		EnterEvent = &TutorialEvent::PrintFlip;
+	}
+	else
+	{
+		EnterEvent = &TutorialEvent::NextPhase;
+	}
+}
+
+void TutorialEvent::PrintFlip()
+{
+	enter.GetSprite()->isInvisible = !enter.GetSprite()->isInvisible;
+	for (auto& s : sprites) { s.second->isInvisible = !s.second->isInvisible; }
 }
 
 void TutorialEvent::Update()
 {
+	EnterEventManager();
+	enter.Update();
 	if (WristerEngine::Input::GetInstance()->IsTrigger(WristerEngine::Key::Return))
 	{
-		for (auto& s : sprites) { s.second->isInvisible = !s.second->isInvisible; }
+		if (EnterEvent) { (this->*EnterEvent)(); }
 	}
 	for (auto& s : sprites) { s.second->Update(); }
+
+	ImGui::Text("phase : %d", phase);
 }
 
 void TutorialEvent::Draw()
 {
 	for (auto& s : sprites) { s.second->Draw(); }
+	enter.Draw();
 }
 
 void TutorialEvent::NextPhase()

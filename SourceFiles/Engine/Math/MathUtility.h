@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 
 const float PI = 3.141592f; // 円周率
 const float ONE_DEG_RAD = PI / 180.0f; // 1°のラジアン変換
@@ -41,4 +42,22 @@ template<class T>
 T Half(T num)
 {
 	return num / 2;
+}
+
+/// <summary>
+/// 複数値比較
+/// </summary>
+/// <typeparam name="T">変数型</typeparam>
+/// <param name="n">値</param>
+/// <param name="list">比較する値の配列</param>
+/// <returns>listにnと同値があったらtrue</returns>
+template<class T>
+bool IsAny(T n, std::vector<T> list)
+{
+	bool flag = false;
+	for (T num : list)
+	{
+		if (n == num) { flag = true; }
+	}
+	return flag;
 }

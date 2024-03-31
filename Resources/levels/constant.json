@@ -1,14 +1,18 @@
 {
   "int": {
-    "aa": 1,
-    "bb": 2
+  },
+  "int[]": {
+    "TutorialEventPhase": [ 0, 4, 7, 10 ]
   },
   "float": {
-    "aa1": 1.0,
-    "bb1": 2.0
+
   },
   "Vector2": {
-    "aa2": [ 1, 2 ],
-    "bb2": [ 3, 4 ]
+    "uiScorePosition": [ 1160, 70 ],
+    "uiEnterAnimePos": [ 1120, 360 ],
+    "uiEnterAnimeSize": [ 48, 48 ]
+  },
+  "BitMapProp": {
+    "uiScore": [ 30, 30, 30, 30, 1100, 100, 4 ]
   }
 }

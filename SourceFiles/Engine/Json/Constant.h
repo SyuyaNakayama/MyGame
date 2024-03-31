@@ -21,6 +21,7 @@ namespace WristerEngine
 		void LoadFloat();
 		void LoadVector();
 		void LoadColor();
+		void LoadStruct();
 
 	public:
 		Constant(const Constant& obj) = delete;

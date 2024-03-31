@@ -1,5 +1,5 @@
 #include "SpawnObject.h"
-#include "SceneManager.h"
+#include "TutorialEventManager.h"
 
 std::list<std::unique_ptr<WristerEngine::_3D::GameObject>>* BaseSpawnObject::objects;
 
@@ -67,7 +67,8 @@ void TutorialSpawnObject::Initialize(const ObjectData& objectData_)
 
 void TutorialSpawnObject::Update()
 {
-	BaseSpawnObject::Update();
+	/*TutorialEventManager
+	if (IsAny())*/ { BaseSpawnObject::Update(); }
 }
 
 ObjectType TutorialSpawnObject::GetType()

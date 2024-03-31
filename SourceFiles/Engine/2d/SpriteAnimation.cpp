@@ -15,6 +15,7 @@ void SpriteAnimation::Initialize(const std::string& textureName, size_t spriteWi
 
 void SpriteAnimation::Update()
 {
+	if (sprite->isInvisible) { return; }
 	if (interval.Update())
 	{
 		if (++animeNum >= animeNumMax) { animeNum = 0; }

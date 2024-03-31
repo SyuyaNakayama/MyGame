@@ -1,6 +1,7 @@
 #include "Constant.h"
 #include "Color.h"
 #include <fstream>
+#include "BitMapNumber.h"
 
 using namespace WristerEngine;
 
@@ -12,10 +13,22 @@ Constant* Constant::GetInstance()
 
 void WristerEngine::Constant::LoadInt()
 {
-	if (!deserialized.contains("int")) { return; }
-	// 定数リスト取得とインスタンス生成(int)
-	const auto& list = deserialized["int"].get<std::map<std::string, int>>();
-	for (const auto& val : list) { constants[val.first] = new int(val.second); }
+	if (deserialized.contains("int"))
+	{
+		// 定数リスト取得とインスタンス生成(int)
+		const auto& list = deserialized["int"].get<std::map<std::string, int>>();
+		for (const auto& val : list) { constants[val.first] = new int(val.second); }
+	}
+
+	if (deserialized.contains("int[]"))
+	{
+		// 定数リスト取得とインスタンス生成(int配列)
+		const auto& list = deserialized["int[]"].get<std::map<std::string, std::vector<int>>>();
+		for (const auto& val : list) 
+		{
+			constants[val.first] = new std::vector<int>(val.second);
+		}
+	}
 }
 
 void WristerEngine::Constant::LoadFloat()
@@ -60,6 +73,24 @@ void WristerEngine::Constant::LoadColor()
 	}
 }
 
+void WristerEngine::Constant::LoadStruct()
+{
+	if (deserialized.contains("BitMapProp"))
+	{
+		const auto& list = deserialized["BitMapProp"].get<std::map<std::string, std::vector<float>>>();
+		for (const auto& val : list) 
+		{
+			_2D::BitMapProp* bProp = new _2D::BitMapProp;
+			bProp->rectSize = { val.second[0],val.second[1] };
+			bProp->size = { val.second[2],val.second[3] };
+			bProp->pos = { val.second[4],val.second[5] };
+			bProp->digit = val.second[6];
+			constants[val.first] = bProp;
+		}
+
+	}
+}
+
 void Constant::LoadConstants()
 {
 	deserialized = LoadJson("constant");
@@ -68,6 +99,7 @@ void Constant::LoadConstants()
 	LoadFloat();
 	LoadVector();
 	LoadColor();
+	LoadStruct();
 }
 
 void WristerEngine::Constant::Finalize()
