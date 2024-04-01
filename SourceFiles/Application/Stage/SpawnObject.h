@@ -11,6 +11,7 @@ protected:
 	ObjectData objectData;
 	Vector3 initialPos;
 	std::unique_ptr<const int> SPAWN_MAX = nullptr;
+	WristerEngine::Roulette roulette;
 
 public:
 	/// <summary>
@@ -32,7 +33,6 @@ public:
 // オブジェクト生成オブジェクト
 class SpawnObject : public BaseSpawnObject
 {
-	WristerEngine::Roulette roulette;
 
 public:
 	void Initialize(const ObjectData& objectData_) override;

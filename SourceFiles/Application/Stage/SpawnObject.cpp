@@ -10,6 +10,7 @@ void BaseSpawnObject::Initialize(const ObjectData& objectData_)
 	spawnTimer = objectData_.spawnInterval;
 	initialPos = objectData_.worldTransform->translation;
 	SPAWN_MAX = std::make_unique<const int>(objectData_.spawnMax);
+	roulette.Initialize({ 6,1,1 });
 }
 
 void BaseSpawnObject::Update()
@@ -29,7 +30,6 @@ void BaseSpawnObject::Update()
 void SpawnObject::Initialize(const ObjectData& objectData_)
 {
 	BaseSpawnObject::Initialize(objectData_);
-	roulette.Initialize({ 6,1,1 });
 }
 
 void SpawnObject::Update()
@@ -74,6 +74,19 @@ void TutorialSpawnObject::Update()
 
 ObjectType TutorialSpawnObject::GetType()
 {
+	if (tutorialEvent->IsEnd())
+	{
+		size_t rNum = roulette();
+
+		switch (rNum)
+		{
+		case 0:	return ObjectType::White;
+		case 1:	return ObjectType::Red;
+		case 2:	return ObjectType::Green;
+		}
+		return ObjectType::White;
+	}
+
 	if (phase == (*tutorialEventPhase)[0]) { return ObjectType::White; }
 	if (phase == (*tutorialEventPhase)[1]) { return ObjectType::Red; }
 	return ObjectType::Green;

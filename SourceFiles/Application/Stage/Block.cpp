@@ -97,7 +97,7 @@ void Goal::Initialize(const ObjectData& objectData)
 void Goal::ChangeScore()
 {
 	Scene nowScene = GetNowScene();
-	if (nowScene == Scene::Play) { score = SCORE_TABLE[randScore()]; }
+	if (nowScene == Scene::Play || tutorialEvent->IsEnd()) { score = SCORE_TABLE[randScore()]; }
 	else if (nowScene == Scene::Tutorial)
 	{
 		if (phase != (*tutorialEventPhase)[4])
