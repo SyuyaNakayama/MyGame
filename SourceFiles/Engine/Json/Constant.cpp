@@ -87,7 +87,6 @@ void WristerEngine::Constant::LoadStruct()
 			bProp->digit = val.second[6];
 			constants[val.first] = bProp;
 		}
-
 	}
 }
 

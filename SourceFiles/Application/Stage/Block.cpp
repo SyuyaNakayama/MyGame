@@ -87,7 +87,18 @@ void Goal::ChangeScore()
 {
 	Scene nowScene = GetNowScene();
 	if (nowScene == Scene::Play) { score = SCORE_TABLE[randScore()]; }
-	else if (nowScene == Scene::Tutorial) { score = Score::_10; }
+	else if (nowScene == Scene::Tutorial)
+	{
+		const TutorialEvent* tutorialEvent = TutorialEvent::GetInstance();
+		UINT32 phase = tutorialEvent->GetPhase();
+		auto* tutorialEventPhase = tutorialEvent->GetTutorialEventPhase();
+		if (phase != (*tutorialEventPhase)[4])
+		{
+			if (score == Score::_M10) { return; }
+			if (phase == (*tutorialEventPhase)[3]) { score = Score::_M10; }
+			else { score = Score::_10; }
+		}
+	}
 	std::unique_ptr<WristerEngine::_2D::Sprite> newSprite = Sprite::Create(Goal::SCORE_TEX_NAME[score]);
 
 	switch (score)
@@ -121,7 +132,14 @@ void Goal::ChangeScore()
 
 void Goal::Update()
 {
-	if (GetNowScene() == Scene::Tutorial) { return; }
+	if (GetNowScene() == Scene::Tutorial)
+	{
+		const TutorialEvent* tutorialEvent = TutorialEvent::GetInstance();
+		UINT32 phase = tutorialEvent->GetPhase();
+		auto* tutorialEventPhase = tutorialEvent->GetTutorialEventPhase();
+		if (phase == (*tutorialEventPhase)[3]) { ChangeScore(); }
+		if (phase != (*tutorialEventPhase)[4]) { return; }
+	}
 	// スコアの変更
 	if (isScoreChange) { ChangeScore(); }
 
@@ -167,7 +185,7 @@ void Goal::OnCollision(BoxCollider* collider)
 
 		if (GetNowScene() == Scene::Tutorial)
 		{
-			TutorialEventManager::GetInstance()->NextPhase();
+			TutorialEvent::GetInstance()->NextPhase();
 		}
 	}
 }

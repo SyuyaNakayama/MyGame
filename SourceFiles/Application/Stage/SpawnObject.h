@@ -47,6 +47,11 @@ public:
 // チュートリアルのスポーンオブジェクト
 class TutorialSpawnObject : public BaseSpawnObject
 {
+private:
+	UINT32 phase;
+	const TutorialEvent* tutorialEvent = TutorialEvent::GetInstance();
+	const std::vector<UINT32>* tutorialEventPhase = nullptr;
+
 public:
 	void Initialize(const ObjectData& objectData_) override;
 

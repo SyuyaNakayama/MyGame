@@ -2,6 +2,7 @@
 #include "LevelLoader.h"
 #include "Input.h"
 #include "SceneManager.h"
+#include "Constant.h"
 
 namespace WristerEngine
 {
@@ -12,6 +13,7 @@ namespace WristerEngine
 		{
 		protected:
 			Input* input = Input::GetInstance();
+			Constant* constant = Constant::GetInstance();
 
 		public:
 			// 仮想デストラクタ

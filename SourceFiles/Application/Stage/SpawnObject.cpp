@@ -1,5 +1,5 @@
 #include "SpawnObject.h"
-#include "TutorialEventManager.h"
+#include "TutorialEvent.h"
 
 std::list<std::unique_ptr<WristerEngine::_3D::GameObject>>* BaseSpawnObject::objects;
 
@@ -63,15 +63,18 @@ ObjectType SpawnObject::GetType()
 void TutorialSpawnObject::Initialize(const ObjectData& objectData_)
 {
 	BaseSpawnObject::Initialize(objectData_);
+	tutorialEventPhase = tutorialEvent->GetTutorialEventPhase();
 }
 
 void TutorialSpawnObject::Update()
 {
-	/*TutorialEventManager
-	if (IsAny())*/ { BaseSpawnObject::Update(); }
+	phase = tutorialEvent->GetPhase();
+	if (IsAny(phase, *tutorialEventPhase)) { BaseSpawnObject::Update(); }
 }
 
 ObjectType TutorialSpawnObject::GetType()
 {
-	return ObjectType::White;
+	if (phase == (*tutorialEventPhase)[0]) { return ObjectType::White; }
+	if (phase == (*tutorialEventPhase)[1]) { return ObjectType::Red; }
+	return ObjectType::Green;
 }

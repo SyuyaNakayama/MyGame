@@ -8,9 +8,9 @@ using namespace WristerEngine::_2D;
 
 void TutorialScene::Initialize()
 {
-	stage.Initialize();
 	uiDrawer = std::make_unique<UIDrawerTutorialScene>();
 	uiDrawer->Initialize();
+	stage.Initialize();
 }
 
 void TutorialScene::Update()
@@ -42,7 +42,7 @@ void UIDrawerTutorialScene::Initialize()
 	keyUI[Key::Space]->anchorPoint = { 0.5f,2 };
 	keyUI[Key::Space]->position = { Half(WristerEngine::WIN_SIZE.x), WristerEngine::WIN_SIZE.y };
 
-	eventManager->Initialize();
+	tutorialEvent->Initialize();
 }
 
 void UIDrawerTutorialScene::Update()
@@ -50,14 +50,14 @@ void UIDrawerTutorialScene::Update()
 	PlayMode::Update();
 	if (WristerEngine::Input::GetInstance()->IsTrigger(WristerEngine::Key::Return))
 	{
-		//eventManager->NextPhase();
+		//tutorialEvent->NextPhase();
 	}
 
-	eventManager->Update();
+	tutorialEvent->Update();
 }
 
 void UIDrawerTutorialScene::Draw()
 {
 	PlayMode::Draw();
-	eventManager->Draw();
+	tutorialEvent->Draw();
 }

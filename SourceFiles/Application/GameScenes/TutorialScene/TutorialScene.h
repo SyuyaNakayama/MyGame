@@ -1,7 +1,7 @@
 #pragma once
 #include "BaseScene.h"
 #include "PlayMode.h"
-#include "TutorialEventManager.h"
+#include "TutorialEvent.h"
 
 class TutorialScene : public WristerEngine::BaseScene
 {
@@ -16,7 +16,7 @@ class TutorialScene : public WristerEngine::BaseScene
 
 class UIDrawerTutorialScene : public PlayMode
 {
-	TutorialEventManager* eventManager = TutorialEventManager::GetInstance();
+	TutorialEvent* tutorialEvent = TutorialEvent::GetInstance();
 
 	// AbstractUIDrawer ÇâÓÇµÇƒåpè≥Ç≥ÇÍÇ‹ÇµÇΩ
 	void Initialize() override;

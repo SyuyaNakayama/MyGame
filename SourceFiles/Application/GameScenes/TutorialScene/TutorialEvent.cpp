@@ -5,6 +5,12 @@ using namespace WristerEngine::_2D;
 
 const float TutorialEvent::TEX_SIZE_Y = 32.0f;
 
+TutorialEvent* TutorialEvent::GetInstance()
+{
+	static TutorialEvent instance;
+	return &instance;
+}
+
 void TutorialEvent::Initialize()
 {
 	// チュートリアルのテキスト画像
@@ -35,11 +41,13 @@ void TutorialEvent::Initialize()
 	enter.Initialize("UI/Key/key_Enter.png", (int)sprites["Enter"]->textureSize.x, 30);
 	enter.GetSprite()->position = constant->GetConstant<Vector2>("uiEnterAnimePos");
 	enter.GetSprite()->size = constant->GetConstant<Vector2>("uiEnterAnimeSize");
+	
+	tutorialEventPhase = constant->GetConstant<std::vector<UINT32>>("TutorialEventPhase");
 }
 
 void TutorialEvent::EnterEventManager()
 {
-	if (IsAny(phase, constant->GetConstant<std::vector<UINT32>>("TutorialEventPhase")))
+	if (IsAny(phase, tutorialEventPhase))
 	{
 		EnterEvent = &TutorialEvent::PrintFlip;
 	}
@@ -64,8 +72,6 @@ void TutorialEvent::Update()
 		if (EnterEvent) { (this->*EnterEvent)(); }
 	}
 	for (auto& s : sprites) { s.second->Update(); }
-
-	ImGui::Text("phase : %d", phase);
 }
 
 void TutorialEvent::Draw()
@@ -76,6 +82,8 @@ void TutorialEvent::Draw()
 
 void TutorialEvent::NextPhase()
 {
-	phase++;
+	if (!sprites["Enter"]->isInvisible) { PrintFlip(); }
+	phase = min(phase + 1, tutorialEventPhase.back());
 	sprites["text"]->textureLeftTop.y = TEX_SIZE_Y * (float)phase;
+	sprites["text"]->Update();
 }

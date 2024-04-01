@@ -179,7 +179,6 @@
     <ClCompile Include="SourceFiles\Application\GameScenes\ResultScene\RankAnimation.cpp" />
     <ClCompile Include="SourceFiles\Application\GameScenes\ResultScene\ScoreGauge.cpp" />
     <ClCompile Include="SourceFiles\Application\GameScenes\TutorialScene\TutorialEvent.cpp" />
-    <ClCompile Include="SourceFiles\Application\GameScenes\TutorialScene\TutorialEventManager.cpp" />
     <ClCompile Include="SourceFiles\Application\GameScenes\TutorialScene\TutorialScene.cpp" />
     <ClCompile Include="SourceFiles\Application\OperateDrawer\OperateDrawer.cpp" />
     <ClCompile Include="SourceFiles\Engine\2d\BitMapNumber.cpp" />
@@ -248,7 +247,6 @@
     <ClInclude Include="SourceFiles\Application\GameScenes\ResultScene\RankAnimation.h" />
     <ClInclude Include="SourceFiles\Application\GameScenes\ResultScene\ScoreGauge.h" />
     <ClInclude Include="SourceFiles\Application\GameScenes\TutorialScene\TutorialEvent.h" />
-    <ClInclude Include="SourceFiles\Application\GameScenes\TutorialScene\TutorialEventManager.h" />
     <ClInclude Include="SourceFiles\Application\GameScenes\TutorialScene\TutorialScene.h" />
     <ClInclude Include="SourceFiles\Application\OperateDrawer\OperateDrawer.h" />
     <ClInclude Include="SourceFiles\Engine\2d\AbstractUIDrawer.h" />
