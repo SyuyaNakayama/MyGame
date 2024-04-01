@@ -26,6 +26,9 @@ WristerEngine::FrameTimer Goal::scoreChangeTimer = 600;
 bool Goal::isScoreChange = false;
 WristerEngine::Random_Int Goal::randScore(0, (int)SCORE_TABLE.size() - 1);
 WristerEngine::Roulette Goal::roulette;
+TutorialEvent* Goal::tutorialEvent = TutorialEvent::GetInstance();
+const std::vector<UINT32>* Goal::tutorialEventPhase = nullptr;
+UINT32 Goal::phase = 0;
 
 void Block::Initialize(const ObjectData& objectData)
 {
@@ -67,9 +70,17 @@ void Block::OnCollision(BoxCollider* collider)
 	}
 }
 
+void Goal::StaticInitialize()
+{
+	scoreChangeTimer = 600;
+	tutorialEvent = TutorialEvent::GetInstance();
+	tutorialEventPhase = tutorialEvent->GetTutorialEventPhase();
+}
+
 void Goal::StaticUpdate()
 {
 	isScoreChange = scoreChangeTimer.Update();
+	phase = tutorialEvent->GetPhase();
 }
 
 void Goal::Initialize(const ObjectData& objectData)
@@ -89,9 +100,6 @@ void Goal::ChangeScore()
 	if (nowScene == Scene::Play) { score = SCORE_TABLE[randScore()]; }
 	else if (nowScene == Scene::Tutorial)
 	{
-		const TutorialEvent* tutorialEvent = TutorialEvent::GetInstance();
-		UINT32 phase = tutorialEvent->GetPhase();
-		auto* tutorialEventPhase = tutorialEvent->GetTutorialEventPhase();
 		if (phase != (*tutorialEventPhase)[4])
 		{
 			if (score == Score::_M10) { return; }
@@ -134,9 +142,6 @@ void Goal::Update()
 {
 	if (GetNowScene() == Scene::Tutorial)
 	{
-		const TutorialEvent* tutorialEvent = TutorialEvent::GetInstance();
-		UINT32 phase = tutorialEvent->GetPhase();
-		auto* tutorialEventPhase = tutorialEvent->GetTutorialEventPhase();
 		if (phase == (*tutorialEventPhase)[3]) { ChangeScore(); }
 		if (phase != (*tutorialEventPhase)[4]) { return; }
 	}
@@ -185,7 +190,7 @@ void Goal::OnCollision(BoxCollider* collider)
 
 		if (GetNowScene() == Scene::Tutorial)
 		{
-			TutorialEvent::GetInstance()->NextPhase();
+			tutorialEvent->NextPhase();
 		}
 	}
 }

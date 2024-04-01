@@ -15,6 +15,7 @@ private:
 	WristerEngine::_2D::SpriteAnimation enter;
 	WristerEngine::Constant* constant = WristerEngine::Constant::GetInstance();
 	std::vector<UINT32> tutorialEventPhase;
+	bool isEnd = false; // イベントが終わったか
 
 	// コンストラクタなどをprivateに
 	TutorialEvent() = default;
@@ -31,6 +32,7 @@ public:
 	TutorialEvent(const TutorialEvent& obj) = delete;
 	TutorialEvent& operator=(const TutorialEvent& obj) = delete;
 
+	// インスタンスを取得
 	static TutorialEvent* GetInstance();
 
 	// 初期化
@@ -47,5 +49,9 @@ public:
 	/// <returns>phase値</returns>
 	UINT32 GetPhase() const { return phase; }
 
+	// tutorialEventPhaseのポインタを取得
 	const std::vector<UINT32>* GetTutorialEventPhase() const { return &tutorialEventPhase; }
+
+	// isEndを取得
+	bool IsEnd() const { return isEnd; }
 };

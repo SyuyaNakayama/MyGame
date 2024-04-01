@@ -2,6 +2,7 @@
 #include "Collider.h"
 #include "GameObject.h"
 #include "Random.h"
+#include "TutorialEvent.h"
 
 // 床と壁のオブジェクト
 class Block : public WristerEngine::BoxCollider, public WristerEngine::_3D::GameObject
@@ -39,6 +40,9 @@ class Goal : public WristerEngine::BoxCollider, public WristerEngine::_3D::GameO
 	static bool isScoreChange;
 	static WristerEngine::Random_Int randScore;
 	static WristerEngine::Roulette roulette;
+	static TutorialEvent* tutorialEvent;
+	static const std::vector<UINT32>* tutorialEventPhase;
+	static UINT32 phase;
 
 	WristerEngine::_3D::Object3d* object;
 	Vector3 normal;
@@ -49,7 +53,7 @@ class Goal : public WristerEngine::BoxCollider, public WristerEngine::_3D::GameO
 
 public:
 	// 静的初期化
-	static void StaticInitialize() { scoreChangeTimer = 600; }
+	static void StaticInitialize();
 	// 静的更新
 	static void StaticUpdate();
 

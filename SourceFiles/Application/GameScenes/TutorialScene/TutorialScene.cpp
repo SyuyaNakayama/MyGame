@@ -48,11 +48,6 @@ void UIDrawerTutorialScene::Initialize()
 void UIDrawerTutorialScene::Update()
 {
 	PlayMode::Update();
-	if (WristerEngine::Input::GetInstance()->IsTrigger(WristerEngine::Key::Return))
-	{
-		//tutorialEvent->NextPhase();
-	}
-
 	tutorialEvent->Update();
 }
 

@@ -82,8 +82,10 @@ void TutorialEvent::Draw()
 
 void TutorialEvent::NextPhase()
 {
+	if (isEnd) { return; }
 	if (!sprites["Enter"]->isInvisible) { PrintFlip(); }
 	phase = min(phase + 1, tutorialEventPhase.back());
+	if (phase == tutorialEventPhase.back()) { isEnd = true; }
 	sprites["text"]->textureLeftTop.y = TEX_SIZE_Y * (float)phase;
 	sprites["text"]->Update();
 }

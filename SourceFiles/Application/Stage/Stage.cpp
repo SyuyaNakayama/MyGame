@@ -11,6 +11,7 @@ void Stage::Initialize()
 {
 	SpawnObject::SetObjectList(&gameObjects);
 	levelData = LevelLoader::LoadLevel("stage");
+	Goal::StaticInitialize();
 
 	std::unique_ptr<GameObject> gameObject;
 	for (auto& objectData : levelData->objects)
@@ -59,7 +60,6 @@ void Stage::Initialize()
 
 	fps = WristerEngine::MAX_FPS;
 	ResetTime();
-	Goal::StaticInitialize();
 }
 
 void Stage::Update()
