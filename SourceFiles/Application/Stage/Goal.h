@@ -4,6 +4,21 @@
 #include "Random.h"
 #include "TutorialEvent.h"
 
+// ゴールの共通部分を管理
+class GoalManager final
+{
+private:
+	GoalManager() = default;
+	~GoalManager() = default;
+	
+public:
+	GoalManager(const GoalManager& obj) = delete;
+	GoalManager& operator=(const GoalManager& obj) = delete;
+
+	static GoalManager* GetInstance();
+
+};
+
 // ゴールのオブジェクト
 class Goal : public WristerEngine::BoxCollider, public WristerEngine::_3D::GameObject
 {

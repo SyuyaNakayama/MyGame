@@ -5,6 +5,12 @@
 using namespace WristerEngine::_2D;
 using namespace WristerEngine::_3D;
 
+GoalManager* GoalManager::GetInstance()
+{
+	static GoalManager instance;
+	return &instance;
+}
+
 std::map<Goal::Score, std::string> Goal::SCORE_TEX_NAME =
 {
 	{ Score::_M10,"Textures/score-10.png" },
