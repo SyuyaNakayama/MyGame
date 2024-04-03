@@ -4,41 +4,51 @@
 #include "Random.h"
 #include "TutorialEvent.h"
 
+enum class Score
+{
+	_M10 = -10,
+	_10 = 10,
+	_20 = 20,
+	_30 = 30,
+	_50 = 50,
+};
+
 // ゴールの共通部分を管理
 class GoalManager final
 {
 private:
+	std::map<Score, std::string> SCORE_TEX_NAME;
+	WristerEngine::FrameTimer scoreChangeTimer = 600;
+	bool isScoreChange = false;
+	WristerEngine::Roulette roulette;
+	TutorialEvent* tutorialEvent = TutorialEvent::GetInstance();
+	const std::vector<UINT32>* tutorialEventPhase = nullptr;
+	UINT32 phase = 0;
+
 	GoalManager() = default;
 	~GoalManager() = default;
-	
+
 public:
 	GoalManager(const GoalManager& obj) = delete;
 	GoalManager& operator=(const GoalManager& obj) = delete;
 
 	static GoalManager* GetInstance();
+	// 初期化
+	void Initialize();
+	// 更新
+	void Update();
+	
+	/// <summary>
+	/// スコアを取得
+	/// </summary>
+	/// <returns>次のスコア</returns>
+	Score GetScore() const;
 
 };
 
 // ゴールのオブジェクト
 class Goal : public WristerEngine::BoxCollider, public WristerEngine::_3D::GameObject
 {
-	enum class Score
-	{
-		_M10 = -10,
-		_10 = 10,
-		_20 = 20,
-		_30 = 30,
-		_50 = 50,
-	};
-
-	static std::map<Score, std::string> SCORE_TEX_NAME;
-	static WristerEngine::FrameTimer scoreChangeTimer;
-	static bool isScoreChange;
-	static WristerEngine::Roulette roulette;
-	static TutorialEvent* tutorialEvent;
-	static const std::vector<UINT32>* tutorialEventPhase;
-	static UINT32 phase;
-
 	WristerEngine::_3D::Object3d* object = nullptr;
 	Vector3 normal;
 	Score score = Score::_10;
@@ -46,18 +56,8 @@ class Goal : public WristerEngine::BoxCollider, public WristerEngine::_3D::GameO
 
 	// スコア変更処理
 	void ChangeScore();
-	/// <summary>
-	/// スコアを取得
-	/// </summary>
-	/// <returns>次のスコア</returns>
-	Score GetScore() const;
 
 public:
-	// 静的初期化
-	static void StaticInitialize();
-	// 静的更新
-	static void StaticUpdate();
-
 	/// <summary>
 	/// 初期化
 	/// </summary>

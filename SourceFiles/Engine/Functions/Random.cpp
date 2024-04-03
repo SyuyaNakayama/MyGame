@@ -22,7 +22,7 @@ void Roulette::Initialize(const std::vector<uint32_t>& rateTable_)
 	random = std::make_unique<Random_Int>(1, max);
 }
 
-size_t Roulette::operator()()
+size_t Roulette::operator()() const
 {
 	size_t randNum = (*random)();
 	for (size_t i = 0; i < rateTable.size(); i++)

@@ -51,6 +51,6 @@ namespace WristerEngine
 		void Initialize(const std::vector<uint32_t>& rateTable);
 
 		// –Û‚Ìo—Í
-		size_t operator()();
+		size_t operator()() const;
 	};
 }
