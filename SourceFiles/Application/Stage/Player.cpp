@@ -32,7 +32,9 @@ void Player::Move_Play()
 	std::vector<Key> keys = { Key::D,Key::A,Key::W,Key::S };
 	if (input->IsAnyInput(keys))
 	{
-		physics->SetForce(PLAYER_MOVE_FORCE);
+		float force = PLAYER_MOVE_FORCE;
+		if (input->IsInput(Key::Lshift) || input->IsInput(Key::Rshift)) { force *= 2.0f; }
+		physics->SetForce(force);
 		Vector3 forcedir;
 		forcedir.x = (float)(input->IsInput(Key::D) - input->IsInput(Key::A));
 		forcedir.z = (float)(input->IsInput(Key::W) - input->IsInput(Key::S));

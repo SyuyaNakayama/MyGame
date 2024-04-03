@@ -1,5 +1,4 @@
 #include "Stage.h"
-#include "Goal.h"
 #include <imgui.h>
 #include "SceneManager.h"
 
@@ -12,7 +11,7 @@ void Stage::Initialize()
 {
 	// 静的初期化
 	spawnObjectManager->SetObjectList(&gameObjects);
-	Goal::StaticInitialize();
+	goalManager->Initialize();
 
 	levelData = LevelLoader::LoadLevel("stage");
 
@@ -84,7 +83,7 @@ void Stage::Update()
 	spawnObjectManager->ChangeSpawnObject();
 
 	// ゴールの静的更新
-	Goal::StaticUpdate();
+	goalManager->Update();
 	// 全ゲームオブジェクトの更新
 	for (auto& gameObject : gameObjects)
 	{

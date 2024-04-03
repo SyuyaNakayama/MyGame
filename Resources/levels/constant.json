@@ -3,7 +3,7 @@
   },
   "int[]": {
     "TutorialEventPhase": [ 0, 4, 7, 10, 13 ],
-    "ScoreRate": [ 4, 3, 3, 1, 1 ]
+    "ScoreRate": [ 4, 4, 3, 1, 2 ]
   },
   "float": {
 

@@ -16,15 +16,6 @@ void GoalManager::Initialize()
 	scoreChangeTimer = 600;
 	tutorialEventPhase = tutorialEvent->GetTutorialEventPhase();
 	roulette.Initialize(WristerEngine::Constant::GetInstance()->GetConstant<std::vector<UINT>>("ScoreRate"));
-
-	SCORE_TEX_NAME =
-	{
-		{ Score::_M10,"Textures/score-10.png" },
-		{ Score::_10, "Textures/score10.png" },
-		{ Score::_20, "Textures/score20.png" },
-		{ Score::_30, "Textures/score30.png" },
-		{ Score::_50, "Textures/score50.png" }
-	};
 }
 
 void GoalManager::Update()
@@ -59,9 +50,12 @@ Score GoalManager::GetScore() const
 void Goal::ChangeScore()
 {
 	Scene nowScene = GetNowScene();
-	if (nowScene == Scene::Play || tutorialEvent->IsEnd()) { score = GetScore(); }
+	if (nowScene == Scene::Play || manager->IsTutorialEnd()) { score = manager->GetScore(); }
 	else if (nowScene == Scene::Tutorial)
 	{
+		UINT32 phase = manager->GetPhase();
+		auto* tutorialEventPhase = manager->GetTutorialEventPhase();
+
 		if (phase != (*tutorialEventPhase)[4])
 		{
 			if (score == Score::_M10) { return; }
@@ -69,23 +63,23 @@ void Goal::ChangeScore()
 			else { score = Score::_10; }
 		}
 	}
-	std::unique_ptr<Sprite> newSprite = Sprite::Create(Goal::SCORE_TEX_NAME[score]);
+	std::unique_ptr<Sprite> newSprite = Sprite::Create(manager->SCORE_TEX_NAME[score]);
 
 	switch (score)
 	{
-	case Goal::Score::_M10:
+	case Score::_M10:
 		newSprite->color = WristerEngine::ColorRGBA::Blue();
 		break;
-	case Goal::Score::_10:
+	case Score::_10:
 		newSprite->color = WristerEngine::ColorRGBA::White();
 		break;
-	case Goal::Score::_20:
+	case Score::_20:
 		newSprite->color = { 1,1,0.5f,1 };
 		break;
-	case Goal::Score::_30:
+	case Score::_30:
 		newSprite->color = WristerEngine::ColorRGBA::Yellow();
 		break;
-	case Goal::Score::_50:
+	case Score::_50:
 		newSprite->color = WristerEngine::ColorRGBA::Red();
 		break;
 	}
@@ -104,18 +98,20 @@ void Goal::Update()
 {
 	if (GetNowScene() == Scene::Tutorial)
 	{
+		UINT32 phase = manager->GetPhase();
+		auto* tutorialEventPhase = manager->GetTutorialEventPhase();
 		if (phase == (*tutorialEventPhase)[3]) { ChangeScore(); }
 		if (phase != (*tutorialEventPhase)[4]) { return; }
 	}
 	// スコアの変更
-	if (isScoreChange) { ChangeScore(); }
+	if (manager->IsScoreChange()) { ChangeScore(); }
 
 	// ゴールの点滅開始時間
 	const int START_BLINK_TIME = 120;
 	// 点滅回数
 	const int BLINK_NUM = 4;
 
-	int remainTime = scoreChangeTimer.GetRemainTime();
+	int remainTime = manager->GetChangeRemainTime();
 	if (remainTime <= START_BLINK_TIME)
 	{
 		const int BLINK_INTERVAL = START_BLINK_TIME / BLINK_NUM;
@@ -152,7 +148,7 @@ void Goal::OnCollision(BoxCollider* collider)
 
 		if (GetNowScene() == Scene::Tutorial)
 		{
-			tutorialEvent->NextPhase();
+			manager->NextPhase();
 		}
 	}
 }

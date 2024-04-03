@@ -1,5 +1,6 @@
 #pragma once
 #include "Block.h"
+#include "Goal.h"
 #include "LevelLoader.h"
 #include "Player.h"
 #include "SpawnObject.h"
@@ -10,6 +11,7 @@ class Stage
 {
 	static const int STAGE_TIME = 60;
 
+	GoalManager* goalManager = GoalManager::GetInstance();
 	std::list<std::unique_ptr<WristerEngine::_3D::GameObject>> gameObjects; // プレイヤー、壁、床、ゴール、障害物
 	LevelData* levelData = nullptr;
 	static int score;
