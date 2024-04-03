@@ -7,7 +7,7 @@
 // 床と壁のオブジェクト
 class Block : public WristerEngine::BoxCollider, public WristerEngine::_3D::GameObject
 {
-	WristerEngine::_3D::Object3d* object;
+	WristerEngine::_3D::Object3d* object = nullptr;
 	Vector3 normal;
 
 public:
@@ -44,9 +44,9 @@ class Goal : public WristerEngine::BoxCollider, public WristerEngine::_3D::GameO
 	static const std::vector<UINT32>* tutorialEventPhase;
 	static UINT32 phase;
 
-	WristerEngine::_3D::Object3d* object;
+	WristerEngine::_3D::Object3d* object = nullptr;
 	Vector3 normal;
-	Score score;
+	Score score = Score::_10;
 	WristerEngine::ColorRGBA initColor;
 
 	void ChangeScore();

@@ -16,6 +16,7 @@ class Stage
 	WristerEngine::FrameTimer stageTime;
 	bool isFinished;
 	int fps = 0; // Žæ“¾‚µ‚½FPS
+	SpawnObjectManager* spawnObjectManager = SpawnObjectManager::GetInstance();
 
 public:
 	static float GROUND_POS_Y;

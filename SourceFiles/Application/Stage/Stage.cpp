@@ -9,9 +9,11 @@ float Stage::GROUND_POS_Y = 5.0f;
 
 void Stage::Initialize()
 {
-	SpawnObject::SetObjectList(&gameObjects);
-	levelData = LevelLoader::LoadLevel("stage");
+	// 静的初期化
+	spawnObjectManager->SetObjectList(&gameObjects);
 	Goal::StaticInitialize();
+
+	levelData = LevelLoader::LoadLevel("stage");
 
 	std::unique_ptr<GameObject> gameObject;
 	for (auto& objectData : levelData->objects)
@@ -42,13 +44,14 @@ void Stage::Initialize()
 			Scene nowScene = WristerEngine::SceneManager::GetInstance()->GetNowScene();
 			objectData.spawnMax = 10;
 
-			if (nowScene == Scene::Tutorial) 
+			if (nowScene == Scene::Tutorial)
 			{
-				gameObject = std::make_unique<TutorialSpawnObject>(); 
+				gameObject = std::make_unique<TutorialSpawnObject>();
 				objectData.spawnMax = 1;
 			}
 			else { gameObject = std::make_unique<SpawnObject>(); }
 			objectData.spawnInterval = spawnIntervals[nowScene];
+			spawnObjectManager->SetSpawnObject(gameObject.get());
 		}
 		// オブジェクトの登録
 		if (gameObject)
@@ -77,10 +80,15 @@ void Stage::Update()
 			return false;
 		});
 
+	spawnObjectManager->ChangeSpawnObject();
+
 	// ゴールの静的更新
 	Goal::StaticUpdate();
 	// 全ゲームオブジェクトの更新
-	for (auto& gameObject : gameObjects) { gameObject->Update(); }
+	for (auto& gameObject : gameObjects)
+	{
+		gameObject->Update();
+	}
 }
 
 std::array<int, 2> Stage::GetRemainTime() const

@@ -21,9 +21,9 @@ private:
 	// タイトルシーンでの動き
 	void Move_Title();
 	// タイトルシーンでの移動のステートパターン
-	void (Player::* Move_Title_State)();
+	void (Player::* Move_Title_State)() = nullptr;
 	// プレイシーンでの移動のステートパターン
-	void (Player::* Move)();
+	void (Player::* Move)() = nullptr;
 
 public:
 	/// <summary>
