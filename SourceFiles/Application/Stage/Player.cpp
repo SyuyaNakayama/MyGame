@@ -4,8 +4,6 @@
 
 using namespace WristerEngine::_3D;
 
-const float Player::PLAYER_MOVE_FORCE = 0.15f;
-
 void Player::Initialize(const ObjectData& objectData)
 {
 	object = ModelManager::Create("player", true);
@@ -32,7 +30,7 @@ void Player::Move_Play()
 	std::vector<Key> keys = { Key::D,Key::A,Key::W,Key::S };
 	if (input->IsAnyInput(keys))
 	{
-		float force = PLAYER_MOVE_FORCE;
+		float force = GetMoveForce();
 		if (input->IsInput(Key::Lshift) || input->IsInput(Key::Rshift)) { force *= 2.0f; }
 		physics->SetForce(force);
 		Vector3 forcedir;
@@ -53,7 +51,7 @@ void Player::Move_Play()
 
 void Player::Move_Title()
 {
-	physics->SetForce(PLAYER_MOVE_FORCE);
+	physics->SetForce(GetMoveForce());
 	const float PLAYER_MAX_Z = 50.0f;
 
 	if (isTurn == 0)

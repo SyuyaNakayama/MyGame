@@ -36,7 +36,7 @@ void WristerEngine::Constant::LoadFloat()
 	if (!deserialized.contains("float")) { return; }
 	// 定数リスト取得とインスタンス生成(float)
 	const auto& list = deserialized["float"].get<std::map<std::string, float>>();
-	for (const auto& val : list) { constants[val.first] = new int(val.second); }
+	for (const auto& val : list) { constants[val.first] = new float(val.second); }
 }
 
 void WristerEngine::Constant::LoadVector()

@@ -10,7 +10,6 @@ class Stage;
 class Player : public WristerEngine::SphereCollider, public WristerEngine::BoxCollider, public WristerEngine::_3D::GameObject
 {
 private:
-	static const float PLAYER_MOVE_FORCE;
 	WristerEngine::_3D::Object3d* object;
 	std::unique_ptr<WristerEngine::_3D::BaseCamera> camera;
 	int isTurn = 0; // falseの時z+の方向に移動、trueの時にz-の方向に移動
@@ -24,6 +23,8 @@ private:
 	void (Player::* Move_Title_State)() = nullptr;
 	// プレイシーンでの移動のステートパターン
 	void (Player::* Move)() = nullptr;
+
+	float GetMoveForce() const { return constant->GetConstant<float>("PlayerMoveForce"); }
 
 public:
 	/// <summary>
