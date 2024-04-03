@@ -14,16 +14,8 @@ std::map<Goal::Score, std::string> Goal::SCORE_TEX_NAME =
 	{ Score::_50, "Textures/score50.png" }
 };
 
-const std::vector<Goal::Score> Goal::SCORE_TABLE =
-{
-	Score::_10, Score::_10, Score::_10, Score::_10,
-	Score::_20, Score::_20, Score::_20, Score::_M10,
-	Score::_30, Score::_30, Score::_30, Score::_50
-};
-
 WristerEngine::FrameTimer Goal::scoreChangeTimer = 600;
 bool Goal::isScoreChange = false;
-WristerEngine::Random_Int Goal::randScore(0, (int)SCORE_TABLE.size() - 1);
 WristerEngine::Roulette Goal::roulette;
 TutorialEvent* Goal::tutorialEvent = TutorialEvent::GetInstance();
 const std::vector<UINT32>* Goal::tutorialEventPhase = nullptr;
@@ -34,6 +26,7 @@ void Goal::StaticInitialize()
 	scoreChangeTimer = 600;
 	tutorialEvent = TutorialEvent::GetInstance();
 	tutorialEventPhase = tutorialEvent->GetTutorialEventPhase();
+	roulette.Initialize(WristerEngine::Constant::GetInstance()->GetConstant<std::vector<UINT>>("ScoreRate"));
 }
 
 void Goal::StaticUpdate()
@@ -53,10 +46,22 @@ void Goal::Initialize(const ObjectData& objectData)
 	collisionMask = CollisionMask::Goal;
 }
 
+Goal::Score Goal::GetScore() const
+{
+	switch (roulette())
+	{
+	default: return Score::_10;
+	case 1: return Score::_20;
+	case 2: return Score::_30;
+	case 3: return Score::_50;
+	case 4: return Score::_M10;
+	}
+}
+
 void Goal::ChangeScore()
 {
 	Scene nowScene = GetNowScene();
-	if (nowScene == Scene::Play || tutorialEvent->IsEnd()) { score = SCORE_TABLE[randScore()]; }
+	if (nowScene == Scene::Play || tutorialEvent->IsEnd()) { score = GetScore(); }
 	else if (nowScene == Scene::Tutorial)
 	{
 		if (phase != (*tutorialEventPhase)[4])
@@ -66,7 +71,7 @@ void Goal::ChangeScore()
 			else { score = Score::_10; }
 		}
 	}
-	std::unique_ptr<WristerEngine::_2D::Sprite> newSprite = Sprite::Create(Goal::SCORE_TEX_NAME[score]);
+	std::unique_ptr<Sprite> newSprite = Sprite::Create(Goal::SCORE_TEX_NAME[score]);
 
 	switch (score)
 	{

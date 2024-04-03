@@ -147,7 +147,7 @@
       <Filter>シェーダー ファイル</Filter>
     </None>
     <None Include="Resources\levels\constant.json">
-      <Filter>ソース ファイル\Engine\Json</Filter>
+      <Filter>ソース ファイル\Application\LevelLoader</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

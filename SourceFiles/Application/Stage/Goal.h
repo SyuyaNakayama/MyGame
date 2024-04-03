@@ -17,10 +17,8 @@ class Goal : public WristerEngine::BoxCollider, public WristerEngine::_3D::GameO
 	};
 
 	static std::map<Score, std::string> SCORE_TEX_NAME;
-	static const std::vector<Score> SCORE_TABLE;
 	static WristerEngine::FrameTimer scoreChangeTimer;
 	static bool isScoreChange;
-	static WristerEngine::Random_Int randScore;
 	static WristerEngine::Roulette roulette;
 	static TutorialEvent* tutorialEvent;
 	static const std::vector<UINT32>* tutorialEventPhase;
@@ -31,7 +29,13 @@ class Goal : public WristerEngine::BoxCollider, public WristerEngine::_3D::GameO
 	Score score = Score::_10;
 	WristerEngine::ColorRGBA initColor;
 
+	// スコア変更処理
 	void ChangeScore();
+	/// <summary>
+	/// スコアを取得
+	/// </summary>
+	/// <returns>次のスコア</returns>
+	Score GetScore() const;
 
 public:
 	// 静的初期化
