@@ -52,6 +52,9 @@ void Physics::Backlash(Physics* p1, Physics* p2, float e)
 	p1->vel = v;
 	p2->vel = V;
 	collideList.push_back({ p1,p2 });
+	// ‰Ÿ‚µo‚µˆ—
+	p1->vel += Normalize(p1->worldTransform->translation - p2->worldTransform->translation) * 0.25f;
+	p2->vel += Normalize(p2->worldTransform->translation - p1->worldTransform->translation) * 0.25f;
 }
 
 void Physics::Update()
