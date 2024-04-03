@@ -40,6 +40,9 @@ void Material::TransferCBV()
 			sprites[i]->textureSize.y / sprites[i]->size.y
 		};
 
+		if (sprites[i]->isFlipX) { constMap->texTrans[i].tiling.x *= -1.0f; }
+		if (sprites[i]->isFlipY) { constMap->texTrans[i].tiling.y *= -1.0f; }
+
 		constMap->texTrans[i].uvOffset =
 		{
 			sprites[i]->textureLeftTop.x / sprites[i]->size.x,

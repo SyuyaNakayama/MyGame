@@ -89,7 +89,7 @@ void Goal::ChangeScore()
 	if (score == Score::_M10) { material.ambient = { 1,1,1 }; }
 	else { material.ambient = { 0.2f,0.2f,0.2f }; }
 
-	newSprite->size.x *= -1.0f;
+	newSprite->isFlipX = true;
 	newSprite->Update();
 	material.SetSprite(std::move(newSprite), TexType::Main);
 }
