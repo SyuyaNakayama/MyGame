@@ -366,9 +366,6 @@
     <ClCompile Include="SourceFiles\Application\GameScenes\TutorialScene\TutorialEvent.cpp">
       <Filter>ソース ファイル\Application\GameScenes\PlayMode\TutorialScene</Filter>
     </ClCompile>
-    <ClCompile Include="SourceFiles\Application\GameScenes\TutorialScene\TutorialEventManager.cpp">
-      <Filter>ソース ファイル\Application\GameScenes\PlayMode\TutorialScene</Filter>
-    </ClCompile>
     <ClCompile Include="SourceFiles\Application\GameScenes\TutorialScene\TutorialScene.cpp">
       <Filter>ソース ファイル\Application\GameScenes\PlayMode\TutorialScene</Filter>
     </ClCompile>
@@ -383,6 +380,9 @@
     </ClCompile>
     <ClCompile Include="SourceFiles\Engine\Json\LevelLoader.cpp">
       <Filter>ソース ファイル\Application\LevelLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\Stage\Goal.cpp">
+      <Filter>ソース ファイル\Application\Stage\GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -590,9 +590,6 @@
     <ClInclude Include="SourceFiles\Application\GameScenes\TutorialScene\TutorialEvent.h">
       <Filter>ソース ファイル\Application\GameScenes\PlayMode\TutorialScene</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\Application\GameScenes\TutorialScene\TutorialEventManager.h">
-      <Filter>ソース ファイル\Application\GameScenes\PlayMode\TutorialScene</Filter>
-    </ClInclude>
     <ClInclude Include="SourceFiles\Application\GameScenes\TutorialScene\TutorialScene.h">
       <Filter>ソース ファイル\Application\GameScenes\PlayMode\TutorialScene</Filter>
     </ClInclude>
@@ -607,6 +604,9 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Engine\Json\LevelLoader.h">
       <Filter>ソース ファイル\Application\LevelLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\Stage\Goal.h">
+      <Filter>ソース ファイル\Application\Stage\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

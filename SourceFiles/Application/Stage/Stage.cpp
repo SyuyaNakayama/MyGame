@@ -1,4 +1,5 @@
 #include "Stage.h"
+#include "Goal.h"
 #include <imgui.h>
 #include "SceneManager.h"
 

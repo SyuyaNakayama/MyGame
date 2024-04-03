@@ -181,6 +181,7 @@
     <ClCompile Include="SourceFiles\Application\GameScenes\TutorialScene\TutorialEvent.cpp" />
     <ClCompile Include="SourceFiles\Application\GameScenes\TutorialScene\TutorialScene.cpp" />
     <ClCompile Include="SourceFiles\Application\OperateDrawer\OperateDrawer.cpp" />
+    <ClCompile Include="SourceFiles\Application\Stage\Goal.cpp" />
     <ClCompile Include="SourceFiles\Engine\2d\BitMapNumber.cpp" />
     <ClCompile Include="SourceFiles\Engine\2d\MultiTexture.cpp" />
     <ClCompile Include="SourceFiles\Engine\3d\Camera\CameraShake.cpp" />
@@ -249,6 +250,7 @@
     <ClInclude Include="SourceFiles\Application\GameScenes\TutorialScene\TutorialEvent.h" />
     <ClInclude Include="SourceFiles\Application\GameScenes\TutorialScene\TutorialScene.h" />
     <ClInclude Include="SourceFiles\Application\OperateDrawer\OperateDrawer.h" />
+    <ClInclude Include="SourceFiles\Application\Stage\Goal.h" />
     <ClInclude Include="SourceFiles\Engine\2d\AbstractUIDrawer.h" />
     <ClInclude Include="SourceFiles\Engine\2d\BitMapNumber.h" />
     <ClInclude Include="SourceFiles\Engine\2d\MultiTexture.h" />
