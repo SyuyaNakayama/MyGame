@@ -43,6 +43,7 @@ public:
 	void Draw();
 	// 次のフェーズへ進める
 	void NextPhase();
+
 	/// <summary>
 	/// phaseを取得
 	/// </summary>

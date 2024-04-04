@@ -36,8 +36,11 @@ void Physics::Backlash(Physics* p1, Physics* p2, float e)
 		}
 		if (isCollided == 0b11) { return; }
 	}
+	// ポジションを取得
+	Vector3 p1Pos = p1->worldTransform->GetWorldPosition();
+	Vector3 p2Pos = p2->worldTransform->GetWorldPosition();
 	// 衝突の法線ベクトル
-	Vector3 n = Normalize(p2->worldTransform->GetWorldPosition() - p1->worldTransform->GetWorldPosition());
+	Vector3 n = Normalize(p2Pos - p1Pos);
 	// 2物体の速度
 	Vector3 v0 = p1->vel;
 	Vector3 V0 = p2->vel;
@@ -53,15 +56,15 @@ void Physics::Backlash(Physics* p1, Physics* p2, float e)
 	p2->vel = V;
 	collideList.push_back({ p1,p2 });
 	// 押し出し処理
-	p1->vel += Normalize(p1->worldTransform->translation - p2->worldTransform->translation) * 0.25f;
-	p2->vel += Normalize(p2->worldTransform->translation - p1->worldTransform->translation) * 0.25f;
+	p1->vel += Normalize(p1Pos - p2Pos) * 0.25f;
+	p2->vel += Normalize(p2Pos - p1Pos) * 0.25f;
 }
 
 void Physics::Update()
 {
-	worldTransform->translation += vel; // 位置に速度加算
 	accel = force / mass; // 加速度を計算
 	vel += accel * forceDir; // 速度に加速度を加算
+	worldTransform->translation += vel; // 位置に速度加算
 
 	// 落下処理
 	if (isFreeFall)

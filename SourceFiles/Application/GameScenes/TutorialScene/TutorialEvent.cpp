@@ -13,6 +13,8 @@ TutorialEvent* TutorialEvent::GetInstance()
 
 void TutorialEvent::Initialize()
 {
+	phase = 0;
+	isEnd = false;
 	// チュートリアルのテキスト画像
 	sprites["text"] = Sprite::Create("UI/TutorialText.png");
 	sprites["text"]->textureLeftTop.y = TEX_SIZE_Y * (float)phase;
@@ -41,20 +43,14 @@ void TutorialEvent::Initialize()
 	enter.Initialize("UI/Key/key_Enter.png", (int)sprites["Enter"]->textureSize.x, 30);
 	enter.GetSprite()->position = constant->GetConstant<Vector2>("uiEnterAnimePos");
 	enter.GetSprite()->size = constant->GetConstant<Vector2>("uiEnterAnimeSize");
-	
+
 	tutorialEventPhase = constant->GetConstant<std::vector<UINT32>>("TutorialEventPhase");
 }
 
 void TutorialEvent::EnterEventManager()
 {
-	if (IsAny(phase, tutorialEventPhase))
-	{
-		EnterEvent = &TutorialEvent::PrintFlip;
-	}
-	else
-	{
-		EnterEvent = &TutorialEvent::NextPhase;
-	}
+	if (IsAny(phase, tutorialEventPhase)) { EnterEvent = &TutorialEvent::PrintFlip; }
+	else { EnterEvent = &TutorialEvent::NextPhase; }
 }
 
 void TutorialEvent::PrintFlip()
@@ -86,6 +82,7 @@ void TutorialEvent::NextPhase()
 	if (!sprites["Enter"]->isInvisible) { PrintFlip(); }
 	phase = min(phase + 1, tutorialEventPhase.back());
 	if (phase == tutorialEventPhase.back()) { isEnd = true; }
+	// 説明の表示を変える
 	sprites["text"]->textureLeftTop.y = TEX_SIZE_Y * (float)phase;
 	sprites["text"]->Update();
 }

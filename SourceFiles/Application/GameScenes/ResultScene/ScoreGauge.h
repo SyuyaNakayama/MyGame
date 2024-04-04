@@ -4,7 +4,7 @@
 
 enum class Rank
 {
-	Max = 500,
+	Max = 600,
 	S = Max * 9 / 10,
 	A = Max * 7 / 10,
 	B = Max * 5 / 10,
