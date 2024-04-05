@@ -99,9 +99,6 @@
     <Filter Include="シェーダー ファイル\Sprite">
       <UniqueIdentifier>{334c1d61-d821-4703-b572-92fc31f59c7f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Application\UIDrawer">
-      <UniqueIdentifier>{8cc62927-b3fb-4854-9791-0b44f0593b20}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Application\GameScenes\PlayMode">
       <UniqueIdentifier>{e7ccf470-68e2-43ee-87dd-da0ed0b1fe02}</UniqueIdentifier>
     </Filter>
@@ -333,9 +330,6 @@
     <ClCompile Include="SourceFiles\Engine\Math\Easing.cpp">
       <Filter>ソース ファイル\Engine\Math</Filter>
     </ClCompile>
-    <ClCompile Include="SourceFiles\Application\OperateDrawer\OperateDrawer.cpp">
-      <Filter>ソース ファイル\Application\UIDrawer</Filter>
-    </ClCompile>
     <ClCompile Include="SourceFiles\Engine\3d\Camera\CameraShake.cpp">
       <Filter>ソース ファイル\Engine\3d\Camera</Filter>
     </ClCompile>
@@ -383,6 +377,9 @@
     </ClCompile>
     <ClCompile Include="SourceFiles\Application\Stage\Goal.cpp">
       <Filter>ソース ファイル\Application\Stage\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\OperateDrawer\OperateDrawer.cpp">
+      <Filter>ソース ファイル\Application\GameScenes\PlayMode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -554,9 +551,6 @@
     <ClInclude Include="SourceFiles\Engine\GameObject\GameObject.h">
       <Filter>ソース ファイル\Engine\3d\Object</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\Application\OperateDrawer\OperateDrawer.h">
-      <Filter>ソース ファイル\Application\UIDrawer</Filter>
-    </ClInclude>
     <ClInclude Include="SourceFiles\Engine\3d\Camera\CameraShake.h">
       <Filter>ソース ファイル\Engine\3d\Camera</Filter>
     </ClInclude>
@@ -607,6 +601,9 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Application\Stage\Goal.h">
       <Filter>ソース ファイル\Application\Stage\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\OperateDrawer\OperateDrawer.h">
+      <Filter>ソース ファイル\Application\GameScenes\PlayMode</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

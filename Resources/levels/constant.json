@@ -7,12 +7,18 @@
     "ScoreRate": [ 4, 4, 3, 1, 2 ]
   },
   "float": {
-    "PlayerMoveForce": 0.15
+    "PlayerMoveForce": 0.15,
+    "UiPosCompress": 15,
+    "DistanceKeyArrow": 100
   },
   "Vector2": {
     "uiScorePosition": [ 1160, 70 ],
     "uiEnterAnimePos": [ 1120, 360 ],
-    "uiEnterAnimeSize": [ 48, 48 ]
+    "uiEnterAnimeSize": [ 48, 48 ],
+    "UiShiftPos": [ 115, 670 ],
+    "OperateFramePos": [ 50, 420 ],
+    "OperateFrameSize": [ 350, 286 ]
+
   },
   "BitMapProp": {
     "uiScore": [ 30, 30, 30, 30, 1100, 100, 4 ]

@@ -15,6 +15,13 @@ void TutorialScene::Initialize()
 
 void TutorialScene::Update()
 {
+	if (input->IsTrigger(WristerEngine::Key::R))
+	{
+		// ’è”Ä“Ç‚Ýž‚Ý
+		WristerEngine::Constant::GetInstance()->LoadConstants();
+		sceneManager->ChangeScene(Scene::Tutorial, true, true, false);
+	}
+
 	if (input->IsTrigger(WristerEngine::Key::Space))
 	{
 		sceneManager->ChangeScene(Scene::Play);

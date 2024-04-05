@@ -4,6 +4,8 @@
 #include <cassert>
 #include "Vector.h"
 
+#define Const(type, str) constant->GetConstant<type>(str)
+
 namespace WristerEngine
 {
 	// ’è”‚Ìî•ñ‚ğ"constant.json"‚©‚ç“Ç‚İæ‚é
@@ -39,6 +41,8 @@ namespace WristerEngine
 			assert(num);
 			return *num;
 		}
+
+		int operator*() { return 0; }
 
 		// I—¹ˆ—
 		void Finalize();

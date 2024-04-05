@@ -1,14 +1,16 @@
 #include "OperateDrawer.h"
+#include "Constant.h"
 
 using namespace WristerEngine::_2D;
 
 void OperateDrawer::Initialize()
 {
-	frame = Sprite::Create("UI/uiFrame.png");
-	frame->position = { 50,420 };
-	frame->size = { 350,286 };
-	frame->Update();
+	WristerEngine::Constant* constant = WristerEngine::Constant::GetInstance();
 
+	frame = Sprite::Create("UI/uiFrame.png");
+	frame->position = constant->GetConstant<Vector2>("OperateFramePos");
+	frame->size = constant->GetConstant<Vector2>("OperateFrameSize");
+	frame->Update();
 	using Key = WristerEngine::Key;
 
 	keyUI[Key::A] = Sprite::Create("UI/Key/key_A.png");
@@ -21,6 +23,7 @@ void OperateDrawer::Initialize()
 	keyUI[Key::Up] = Sprite::Create("UI/Key/key_Up.png");
 	keyUI[Key::Down] = Sprite::Create("UI/Key/key_Down.png");
 
+
 	for (auto& s : keyUI)
 	{
 		s.second->textureSize.x /= 2.0f;
@@ -28,8 +31,12 @@ void OperateDrawer::Initialize()
 		s.second->position = frame->position;
 	}
 
-	const float UI_POS_COMPRESS = 10.0f; // 操作UI間の距離を圧縮するための変数
-	const float DISTANCE_BETWEEN_KEY_ARROW = 148.0f; // キー操作UIとアローUI間の距離
+	keyUI[Key::Rshift] = Sprite::Create("UI/Key/key_SHIFT.png",
+		constant->GetConstant<Vector2>("UiShiftPos"), { 0.5f,0.5f });
+	keyUI[Key::Rshift]->textureSize.x /= 2.0f;
+	keyUI[Key::Rshift]->size.x /= 2.0f;
+
+	const float UI_POS_COMPRESS = constant->GetConstant<float>("UiPosCompress"); // 操作UI間の距離を圧縮するための変数
 
 	keyUI[Key::A]->position += { UI_POS_COMPRESS, keyUI[Key::A]->size.y };
 	keyUI[Key::D]->position += { keyUI[Key::D]->size.x * 2.0f - UI_POS_COMPRESS, keyUI[Key::D]->size.y };
@@ -41,13 +48,14 @@ void OperateDrawer::Initialize()
 		{Key::Left,Key::A},
 		{Key::Right,Key::D},
 		{Key::Up,Key::W},
-		{Key::Down,Key::S}
+		{Key::Down,Key::S},
 	};
 
 	for (auto& pair : keyPair)
 	{
 		keyUI[pair.first]->position = keyUI[pair.second]->position;
-		keyUI[pair.first]->position.y += DISTANCE_BETWEEN_KEY_ARROW;
+		// キー操作UIとアローUI間の距離を足す
+		keyUI[pair.first]->position.y += constant->GetConstant<float>("DistanceKeyArrow");
 	}
 
 	operateUI["player"] = Sprite::Create("UI/Move.png");
@@ -60,15 +68,26 @@ void OperateDrawer::Initialize()
 	operateUI["camera"]->position = { keyUI[Key::Right]->position.x, keyUI[Key::Up]->position.y };
 	operateUI["camera"]->position += { keyUI[Key::D]->size.x, Half(keyUI[Key::D]->size.y) };
 
+	operateUI["dash"] = Sprite::Create("UI/Dash.png");
+	operateUI["dash"]->anchorPoint.y = 0.5f;
+	operateUI["dash"]->position = keyUI[Key::Rshift]->position;
+	operateUI["dash"]->position.x += Half(keyUI[Key::Rshift]->size.x);
+
 	for (auto& s : operateUI) { s.second->Update(); }
 }
 
 void OperateDrawer::Update()
 {
+	WristerEngine::Input* input = WristerEngine::Input::GetInstance();
 	for (auto& s : keyUI)
 	{
 		// キーを押したらレクト位置を変える
-		s.second->textureLeftTop.x = WristerEngine::Input::GetInstance()->IsInput(s.first) * s.second->size.x;
+		s.second->textureLeftTop.x = input->IsInput(s.first) * s.second->textureSize.x;
+		// LShiftにも対応させる
+		if (s.first == WristerEngine::Key::Rshift && input->IsInput(WristerEngine::Key::Lshift))
+		{
+			s.second->textureLeftTop.x = input->IsInput(WristerEngine::Key::Lshift) * s.second->textureSize.x;
+		}
 		s.second->Update();
 	}
 }
