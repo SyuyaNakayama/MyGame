@@ -120,6 +120,9 @@
     <Filter Include="ソース ファイル\Application\LevelLoader">
       <UniqueIdentifier>{7d6061fd-907a-46ca-a21f-3dcedc49720d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Application\GameScenes\PlayMode\OperateDrawer">
+      <UniqueIdentifier>{27b531fa-baad-4576-90bf-75307260cbf5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Sprite.hlsli">
@@ -378,8 +381,14 @@
     <ClCompile Include="SourceFiles\Application\Stage\Goal.cpp">
       <Filter>ソース ファイル\Application\Stage\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFiles\Engine\2d\BaseMapChip.cpp">
+      <Filter>ソース ファイル\Engine\2d</Filter>
+    </ClCompile>
     <ClCompile Include="SourceFiles\Application\OperateDrawer\OperateDrawer.cpp">
-      <Filter>ソース ファイル\Application\GameScenes\PlayMode</Filter>
+      <Filter>ソース ファイル\Application\GameScenes\PlayMode\OperateDrawer</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\OperateDrawer\MapChip.cpp">
+      <Filter>ソース ファイル\Application\GameScenes\PlayMode\OperateDrawer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -602,8 +611,14 @@
     <ClInclude Include="SourceFiles\Application\Stage\Goal.h">
       <Filter>ソース ファイル\Application\Stage\GameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="SourceFiles\Engine\2d\BaseMapChip.h">
+      <Filter>ソース ファイル\Engine\2d</Filter>
+    </ClInclude>
     <ClInclude Include="SourceFiles\Application\OperateDrawer\OperateDrawer.h">
-      <Filter>ソース ファイル\Application\GameScenes\PlayMode</Filter>
+      <Filter>ソース ファイル\Application\GameScenes\PlayMode\OperateDrawer</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\OperateDrawer\MapChip.h">
+      <Filter>ソース ファイル\Application\GameScenes\PlayMode\OperateDrawer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

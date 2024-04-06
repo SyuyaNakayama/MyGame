@@ -74,6 +74,10 @@ void OperateDrawer::Initialize()
 	operateUI["dash"]->position.x += Half(keyUI[Key::Rshift]->size.x);
 
 	for (auto& s : operateUI) { s.second->Update(); }
+
+	mapChip = std::make_unique<MapChip>();
+	mapChip->Initialize(Const(Vector2, "ChipLTPos"), Const(Vector2, "ChipSize"), Const(Vector2, "ChipAnchor"));
+	mapChip->AddSprite("UI/Key/key_A.png", { 0,1 });
 }
 
 void OperateDrawer::Update()
@@ -90,6 +94,7 @@ void OperateDrawer::Update()
 		}
 		s.second->Update();
 	}
+	mapChip->Update();
 }
 
 void OperateDrawer::Draw()
@@ -97,4 +102,5 @@ void OperateDrawer::Draw()
 	frame->Draw();
 	for (auto& s : keyUI) { s.second->Draw(); }
 	for (auto& s : operateUI) { s.second->Draw(); }
+	mapChip->Draw();
 }
