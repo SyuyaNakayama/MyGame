@@ -21,7 +21,7 @@ namespace WristerEngine::_2D
 		/// <param name="chipAnchor">チップのアンカーポイント</param>
 		void Initialize(const Vector2& leftTopPos, const Vector2& chipSize, const Vector2& chipAnchor);
 
-		virtual void VirtualInitialize(Sprite* sprite) {}
+		virtual void VirtualInitialize([[maybe_unused]]Sprite* sprite) {}
 
 		/// <summary>
 		/// スプライト情報追加

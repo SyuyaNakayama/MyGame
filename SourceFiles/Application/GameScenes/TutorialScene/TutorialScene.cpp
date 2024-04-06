@@ -48,6 +48,9 @@ void UIDrawerTutorialScene::Initialize()
 	PlayMode::Initialize();
 	keyUI[Key::Space]->anchorPoint = { 0.5f,2 };
 	keyUI[Key::Space]->position = { Half(WristerEngine::WIN_SIZE.x), WristerEngine::WIN_SIZE.y };
+	keyUI[Key::Space]->Split({ 2,1 });
+
+	for (auto& s : keyUI) { s.second->Update(); }
 
 	tutorialEvent->Initialize();
 }
@@ -62,4 +65,5 @@ void UIDrawerTutorialScene::Draw()
 {
 	PlayMode::Draw();
 	tutorialEvent->Draw();
+	for (auto& s : keyUI) { s.second->Draw(); }
 }

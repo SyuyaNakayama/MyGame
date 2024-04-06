@@ -48,6 +48,14 @@ void WristerEngine::_2D::Sprite::SetRect(const Vector2& textureSize_, const Vect
 	textureLeftTop = textureLeftTop_;
 }
 
+void WristerEngine::_2D::Sprite::Split(const Vector2& spritNum)
+{
+	textureSize.x /= spritNum.x;
+	textureSize.y /= spritNum.y;
+	size.x /= spritNum.x;
+	size.y /= spritNum.y;
+}
+
 TextureData* Sprite::LoadTexture(const std::string& fileName, uint32_t mipLevels)
 {
 	// テクスチャの重複読み込みを検出

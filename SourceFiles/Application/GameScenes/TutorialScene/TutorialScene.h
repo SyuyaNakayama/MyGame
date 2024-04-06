@@ -17,6 +17,7 @@ class TutorialScene : public WristerEngine::BaseScene
 class UIDrawerTutorialScene : public PlayMode
 {
 	TutorialEvent* tutorialEvent = TutorialEvent::GetInstance();
+	std::map<WristerEngine::Key, std::unique_ptr<WristerEngine::_2D::Sprite>> keyUI;
 
 	// AbstractUIDrawer ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
 	void Initialize() override;
