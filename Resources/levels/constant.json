@@ -12,10 +12,13 @@
     "DistanceKeyArrow": 100
   },
   "Vector2": {
-    "uiScorePosition": [ 1160, 70 ],
-    "uiEnterAnimePos": [ 1120, 360 ],
-    "uiEnterAnimeSize": [ 48, 48 ],
+    "UiScorePosition": [ 1160, 70 ],
+    "UiEnterAnimePos": [ 1120, 360 ],
+    "UiEnterAnimeSize": [ 48, 48 ],
     "UiShiftPos": [ 115, 670 ],
+    "UiPlayerStringPos": [ 224, 488 ],
+    "UiCameraStringPos": [ 224, 584 ],
+    "UiDashStringPos": [ 176, 656 ],
     "OperateFramePos": [ 50, 420 ],
     "OperateFrameSize": [ 350, 286 ],
     "ChipLTPos": [ 65, 435 ],
@@ -23,6 +26,6 @@
     "ChipAnchor": [ 0, 0 ]
   },
   "BitMapProp": {
-    "uiScore": [ 30, 30, 30, 30, 1100, 100, 4 ]
+    "UiScore": [ 30, 30, 30, 30, 1100, 100, 4 ]
   }
 }

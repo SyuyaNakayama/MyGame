@@ -41,10 +41,10 @@ void TutorialEvent::Initialize()
 
 	// Enterキー(アニメーション)
 	enter.Initialize("UI/Key/key_Enter.png", (int)sprites["Enter"]->textureSize.x, 30);
-	enter.GetSprite()->position = constant->GetConstant<Vector2>("uiEnterAnimePos");
-	enter.GetSprite()->size = constant->GetConstant<Vector2>("uiEnterAnimeSize");
+	enter.GetSprite()->position = Const(Vector2, "UiEnterAnimePos");
+	enter.GetSprite()->size = Const(Vector2, "UiEnterAnimeSize");
 
-	tutorialEventPhase = constant->GetConstant<std::vector<UINT32>>("TutorialEventPhase");
+	tutorialEventPhase = Const(std::vector<UINT32>, "TutorialEventPhase");
 }
 
 void TutorialEvent::EnterEventManager()

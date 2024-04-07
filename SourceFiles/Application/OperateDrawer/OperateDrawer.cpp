@@ -26,20 +26,14 @@ void OperateDrawer::Initialize()
 	mapChip->AddSprite("UI/Key/key_Down.png", { 1,3 });
 	mapChip->AddSprite("UI/Key/key_SHIFT.png", { 0,4 });
 
-	operateUI["player"] = Sprite::Create("UI/Move.png");
-	operateUI["player"]->anchorPoint.y = 0.25f;
-	//operateUI["player"]->position = { keyUI[Key::D]->position.x, keyUI[Key::W]->position.y };
-	//operateUI["player"]->position += { keyUI[Key::D]->size.x, Half(keyUI[Key::D]->size.y) };
+	operateUI["player"] = Sprite::Create("UI/Move.png", Const(Vector2, "UiPlayerStringPos"));
+	operateUI["player"]->anchorPoint.y = 0.5f;
 
-	operateUI["camera"] = Sprite::Create("UI/Camera.png");
-	operateUI["camera"]->anchorPoint.y = 0.25f;
-	//operateUI["camera"]->position = { keyUI[Key::Right]->position.x, keyUI[Key::Up]->position.y };
-	//operateUI["camera"]->position += { keyUI[Key::D]->size.x, Half(keyUI[Key::D]->size.y) };
+	operateUI["camera"] = Sprite::Create("UI/Camera.png", Const(Vector2, "UiCameraStringPos"));
+	operateUI["camera"]->anchorPoint.y = 0.5f;
 
-	operateUI["dash"] = Sprite::Create("UI/Dash.png");
+	operateUI["dash"] = Sprite::Create("UI/Dash.png", Const(Vector2, "UiDashStringPos"));
 	operateUI["dash"]->anchorPoint.y = 0.5f;
-	//operateUI["dash"]->position = keyUI[Key::Rshift]->position;
-	//operateUI["dash"]->position.x += Half(keyUI[Key::Rshift]->size.x);
 
 	for (auto& s : operateUI) { s.second->Update(); }
 }

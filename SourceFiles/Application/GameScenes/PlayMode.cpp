@@ -10,7 +10,7 @@ void PlayMode::Initialize()
 	WristerEngine::Constant* constant = WristerEngine::Constant::GetInstance();
 
 	// ビットマップの設定
-	BitMapProp bitMapProp = constant->GetConstant<BitMapProp>("uiScore");
+	BitMapProp bitMapProp = Const(BitMapProp, "UiScore");
 	bitMapProp.fileName = "ui/num.png";
 
 	// スコア
@@ -18,7 +18,7 @@ void PlayMode::Initialize()
 	scoreSprite.Initialize();
 	uiScore = Sprite::Create("ui/score.png");
 	uiScore->SetCenterAnchor();
-	uiScore->position = constant->GetConstant<Vector2>("uiScorePosition");
+	uiScore->position = Const(Vector2, "UiScorePosition");
 	uiScore->Update();
 }
 
