@@ -84,7 +84,7 @@ void WristerEngine::Constant::LoadStruct()
 			bProp->rectSize = { val.second[0],val.second[1] };
 			bProp->size = { val.second[2],val.second[3] };
 			bProp->pos = { val.second[4],val.second[5] };
-			bProp->digit = val.second[6];
+			bProp->digit = (int)val.second[6];
 			constants[val.first] = bProp;
 		}
 	}
