@@ -13,19 +13,28 @@ enum class Score
 	_50 = 50,
 };
 
+class Goal;
+
 // ゴールの共通部分を管理
 class GoalManager final
 {
 private:
+	Scene nowScene = Scene::Null;
+	WristerEngine::Constant* constant = WristerEngine::Constant::GetInstance();
 	WristerEngine::FrameTimer scoreChangeTimer = 600;
 	bool isScoreChange = false;
 	WristerEngine::Roulette roulette;
 	TutorialEvent* tutorialEvent = TutorialEvent::GetInstance();
 	const std::vector<UINT32>* tutorialEventPhase = nullptr;
 	UINT32 phase = 0;
+	std::vector<Goal*> goals;
+	WristerEngine::LoopEasing goalColor;
+	bool preTutorialEnd = false; // 前フレームのチュートリアル終了フラグ
 
 	GoalManager() = default;
 	~GoalManager() = default;
+	// チュートリアルではないかを取得
+	bool IsNotTutorial() const { return nowScene != Scene::Tutorial || tutorialEvent->IsEnd(); }
 
 public:
 	std::map<Score, std::string> SCORE_TEX_NAME =
@@ -40,6 +49,7 @@ public:
 	GoalManager(const GoalManager& obj) = delete;
 	GoalManager& operator=(const GoalManager& obj) = delete;
 
+	// インスタンス取得
 	static GoalManager* GetInstance();
 	// 初期化
 	void Initialize();
@@ -52,42 +62,44 @@ public:
 	/// <returns>次のスコア</returns>
 	Score GetScore() const;
 
-	/// <summary>
-	/// isScoreChangeを取得
-	/// </summary>
-	/// <returns>isScoreChange</returns>
-	bool IsScoreChange() const { return isScoreChange; }
-
-	int GetChangeRemainTime() const { return scoreChangeTimer.GetRemainTime(); }
-
-	UINT32 GetPhase() const { return phase; }
-	const std::vector<UINT32>* GetTutorialEventPhase() const { return tutorialEventPhase; }
-
-	bool IsTutorialEnd() const { return tutorialEvent->IsEnd(); }
-
+	// チュートリアルの説明を進める
 	void NextPhase() { tutorialEvent->NextPhase(); }
+	// ゴールオブジェクトのポインタを追加
+	void AddGoalPointer(Goal* pGoal) { goals.push_back(pGoal); }
+	// ゴールオブジェクトのポインタを消す
+	void ResetGoalPointer() { goals.clear(); }
 };
 
 // ゴールのオブジェクト
 class Goal : public WristerEngine::BoxCollider, public WristerEngine::_3D::GameObject
 {
+	friend GoalManager;
+
 	GoalManager* manager = GoalManager::GetInstance();
 	WristerEngine::_3D::Object3d* object = nullptr;
 	Vector3 normal;
 	Score score = Score::_10;
 	WristerEngine::ColorRGBA initColor;
 
-	// スコア変更処理
-	void ChangeScore();
+	/// <summary>
+	/// スコア変更処理
+	/// </summary>
+	/// <param name="nextScore">次のスコア</param>
+	void ChangeScore(Score nextScore);
 
-public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
 	/// <param name="objectData">Jsonファイルから読み込んだデータ</param>
 	void Initialize(const ObjectData& objectData);
 	// 更新
-	void Update();
+	void Update(){}
 	// 衝突コールバック関数(BoxCollider版)
 	void OnCollision(BoxCollider* collider);
+
+	/// <summary>
+	/// 色を変える
+	/// </summary>
+	/// <param name="colorRate">明度</param>
+	void ChangeColor(float colorRate);
 };

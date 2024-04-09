@@ -13,15 +13,62 @@ GoalManager* GoalManager::GetInstance()
 
 void GoalManager::Initialize()
 {
-	scoreChangeTimer = 600;
+	nowScene = WristerEngine::SceneManager::GetInstance()->GetNowScene();
+	scoreChangeTimer = Const(int, "ScoreChangeTimer");
 	tutorialEventPhase = tutorialEvent->GetTutorialEventPhase();
-	roulette.Initialize(WristerEngine::Constant::GetInstance()->GetConstant<std::vector<UINT>>("ScoreRate"));
+	roulette.Initialize(Const(std::vector<UINT>, "ScoreRate"));
+	goalColor.Initialize(
+		Const(int, "GoalBlinkTime") / Const(int, "GoalBlinkNum"),
+		WristerEngine::LoopEasing::Type::Cos);
 }
 
 void GoalManager::Update()
 {
-	isScoreChange = scoreChangeTimer.Update();
-	phase = tutorialEvent->GetPhase();
+	nowScene = WristerEngine::SceneManager::GetInstance()->GetNowScene();
+
+	if (IsNotTutorial())
+	{
+		isScoreChange = scoreChangeTimer.Update();
+		// ゴールの点滅処理
+		if (scoreChangeTimer.GetRemainTime() <= Const(int, "GoalBlinkTime"))
+		{
+			float colorRate = goalColor.Update();
+			for (auto* g : goals) { g->ChangeColor(colorRate); }
+		}
+	}
+	else
+	{
+		phase = tutorialEvent->GetPhase();
+		isScoreChange = (phase == (*tutorialEventPhase)[3]);
+	}
+
+	if (!preTutorialEnd && IsNotTutorial()) { isScoreChange = true; }
+
+	// スコアの変更
+	if (isScoreChange) { for (auto* g : goals) { g->ChangeScore(GetScore()); } }
+	preTutorialEnd = IsNotTutorial();
+}
+
+Score GoalManager::GetScore() const
+{
+	if (IsNotTutorial())
+	{
+		// 通常プレイの点数変化
+		switch (roulette())
+		{
+		default: return Score::_10;
+		case 1: return Score::_20;
+		case 2: return Score::_30;
+		case 3: return Score::_50;
+		case 4: return Score::_M10;
+		}
+	}
+	else
+	{
+		// チュートリアルの点数変化
+		if (phase == (*tutorialEventPhase)[3]) { return Score::_M10; }
+		else { return Score::_10; }
+	}
 }
 
 void Goal::Initialize(const ObjectData& objectData)
@@ -29,40 +76,15 @@ void Goal::Initialize(const ObjectData& objectData)
 	object = ModelManager::Create("cube");
 	object->worldTransform.reset(objectData.worldTransform);
 	worldTransform = object->worldTransform.get();
-	ChangeScore();
+	ChangeScore(manager->GetScore());
 	if (objectData.collider.type == "PLANE") { normal = objectData.collider.normal; }
 	collisionAttribute = CollisionAttribute::Goal;
 	collisionMask = CollisionMask::Goal;
 }
 
-Score GoalManager::GetScore() const
+void Goal::ChangeScore(Score nextScore)
 {
-	switch (roulette())
-	{
-	default: return Score::_10;
-	case 1: return Score::_20;
-	case 2: return Score::_30;
-	case 3: return Score::_50;
-	case 4: return Score::_M10;
-	}
-}
-
-void Goal::ChangeScore()
-{
-	Scene nowScene = GetNowScene();
-	if (nowScene == Scene::Play || manager->IsTutorialEnd()) { score = manager->GetScore(); }
-	else if (nowScene == Scene::Tutorial)
-	{
-		UINT32 phase = manager->GetPhase();
-		auto* tutorialEventPhase = manager->GetTutorialEventPhase();
-
-		if (phase != (*tutorialEventPhase)[4])
-		{
-			if (score == Score::_M10) { return; }
-			if (phase == (*tutorialEventPhase)[3]) { score = Score::_M10; }
-			else { score = Score::_10; }
-		}
-	}
+	score = nextScore;
 	std::unique_ptr<Sprite> newSprite = Sprite::Create(manager->SCORE_TEX_NAME[score]);
 
 	switch (score)
@@ -94,33 +116,6 @@ void Goal::ChangeScore()
 	material.SetSprite(std::move(newSprite), TexType::Main);
 }
 
-void Goal::Update()
-{
-	if (GetNowScene() == Scene::Tutorial)
-	{
-		UINT32 phase = manager->GetPhase();
-		auto* tutorialEventPhase = manager->GetTutorialEventPhase();
-		if (phase == (*tutorialEventPhase)[3]) { ChangeScore(); }
-		if (phase != (*tutorialEventPhase)[4]) { return; }
-	}
-	// スコアの変更
-	if (manager->IsScoreChange()) { ChangeScore(); }
-
-	// ゴールの点滅開始時間
-	const int START_BLINK_TIME = 120;
-	// 点滅回数
-	const int BLINK_NUM = 4;
-
-	int remainTime = manager->GetChangeRemainTime();
-	if (remainTime <= START_BLINK_TIME)
-	{
-		const int BLINK_INTERVAL = START_BLINK_TIME / BLINK_NUM;
-		int easingColor = NumberLoop(START_BLINK_TIME - remainTime, BLINK_INTERVAL);
-		float colorRate = (cos(2.0f * PI * (float)easingColor / (float)BLINK_INTERVAL) + 1) * 0.5f;
-		object->material.GetSprite(TexType::Main)->color = initColor * colorRate;
-	}
-}
-
 void Goal::OnCollision(BoxCollider* collider)
 {
 	WristerEngine::Physics* physics_ = collider->GetPhysics();
@@ -146,9 +141,11 @@ void Goal::OnCollision(BoxCollider* collider)
 		addProp.accOffset.y = 0.01f;
 		pGroup->Add(addProp);
 
-		if (GetNowScene() == Scene::Tutorial)
-		{
-			manager->NextPhase();
-		}
+		if (GetNowScene() == Scene::Tutorial) { manager->NextPhase(); }
 	}
+}
+
+void Goal::ChangeColor(float colorRate)
+{
+	object->material.GetSprite(TexType::Main)->color = initColor * colorRate;
 }

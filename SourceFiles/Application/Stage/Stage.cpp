@@ -4,7 +4,7 @@
 
 using namespace WristerEngine::_3D;
 
-int Stage::score = 0;
+int Stage::score = 600;
 float Stage::GROUND_POS_Y = 5.0f;
 
 void Stage::Initialize()
@@ -25,6 +25,7 @@ void Stage::Initialize()
 		else if (objectData.fileName == "Goal")
 		{
 			gameObject = std::make_unique<Goal>();
+			goalManager->AddGoalPointer(dynamic_cast<Goal*>(gameObject.get()));
 		}
 		else if (objectData.fileName == "Player")
 		{

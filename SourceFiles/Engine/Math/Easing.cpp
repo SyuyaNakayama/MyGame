@@ -12,6 +12,11 @@ float(Easing::* Easing::Ease[])() =
 	&Easing::OutBounce,
 };
 
+float(LoopEasing::* LoopEasing::Ease[])() =
+{
+	&LoopEasing::Cos,
+};
+
 float Easing::OutElastic()
 {
 	const float c4 = (2.0f * PI) / 3.0f;
@@ -43,5 +48,24 @@ float Easing::Update()
 	x = timer.GetTimeRate();
 	float easeNum = (this->*Ease[(int)type])();
 	isFinish = timer.Update();
+	return easeNum;
+}
+
+float LoopEasing::Cos()
+{
+	return (cos(2.0f * PI * x) + 1) * 0.5f;
+}
+
+void LoopEasing::Initialize(int easeTime, Type type_)
+{
+	timer = easeTime;
+	type = type_;
+}
+
+float LoopEasing::Update()
+{
+	x = timer.GetTimeRate();
+	float easeNum = (this->*Ease[(int)type])();
+	timer.Update();
 	return easeNum;
 }

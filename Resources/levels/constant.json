@@ -1,6 +1,9 @@
 {
   "int": {
-    "SpriteAnimationInterval": 30
+    "SpriteAnimationInterval": 30,
+    "ScoreChangeTimer": 600,
+    "GoalBlinkTime": 120,
+    "GoalBlinkNum": 4
   },
   "int[]": {
     "TutorialEventPhase": [ 0, 4, 7, 10, 13 ],

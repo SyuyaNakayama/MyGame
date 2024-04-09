@@ -50,12 +50,44 @@ namespace WristerEngine
 		void Restart() { timer = timer.GetInterval(); isFinish = false; }
 
 		// 終了したか
-		bool IsFinish() { return isFinish; }
+		bool IsFinish() const { return isFinish; }
 	};
 
 	// ループするイージング
 	class LoopEasing
 	{
+	public:
+		enum class Type
+		{
+			Cos,	// cos(x)
+		};
+
+	private:
+		FrameTimer timer = 0; // タイマー
+		float x = 0; // イージングの割合
+		Type type;
+
+		// イージングの関数テーブル
+		static float (LoopEasing::* Ease[])();
+
+		// √x
+		float Cos();
+
+	public:
+		/// <summary>
+		/// 初期化
+		/// </summary>
+		/// <param name="easeTime">イージングの時間</param>
+		void Initialize(int easeTime, Type type_);
+
+		/// <summary>
+		/// 更新
+		/// </summary>
+		/// <returns>イージングの値(0~1)</returns>
+		float Update();
+
+		// リスタート
+		void Restart() { timer = timer.GetInterval(); }
 
 	};
 }

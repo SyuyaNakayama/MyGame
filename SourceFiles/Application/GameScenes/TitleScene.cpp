@@ -24,6 +24,7 @@ void TitleScene::Update()
 	{
 		sceneManager->ChangeScene(Scene::Tutorial);
 		Stage::ResetScore();
+		GoalManager::GetInstance()->ResetGoalPointer();
 		return;
 	}
 

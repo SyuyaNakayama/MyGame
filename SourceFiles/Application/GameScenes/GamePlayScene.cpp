@@ -43,6 +43,7 @@ void GamePlayScene::Update()
 	if (stage.IsFinished())
 	{
 		sceneManager->ChangeScene(Scene::Result);
+		GoalManager::GetInstance()->ResetGoalPointer();
 	}
 
 	if (input->IsTrigger(WristerEngine::Key::Space))
