@@ -1,9 +1,14 @@
 #pragma once
 #include "BaseScene.h"
 
-class PauseMenu : public WristerEngine::BaseScene
+class PauseMenu
 {
-	// BaseScene ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
-	void Initialize() override;
-	void Update() override;
+	bool isPause = false;
+
+public:
+	void Initialize();
+	void Update();
+	void Draw();
+	void Pause() { isPause = !isPause; }
+	bool IsPause() const { return isPause; }
 };

@@ -4,6 +4,7 @@
 #include "Easing.h"
 #include "MathUtility.h"
 #include "PlayMode.h"
+#include "PauseMenu.h"
 
 // スタート前のカウントダウン演出
 class StartCountDown
@@ -73,13 +74,15 @@ class GamePlayScene : public WristerEngine::BaseScene
 {
 private:
 	Stage stage;
-	WristerEngine::_3D::Camera viewProjection;
+	PauseMenu pauseMenu;
 	WristerEngine::Audio* audio = nullptr;
 
 	// 初期化(オーバーライド)
 	void Initialize();
 	// 更新(オーバーライド)
 	void Update();
+	// 描画
+	void Draw();
 	// 終了
 	void Finalize() { stage.Finalize(); }
 };

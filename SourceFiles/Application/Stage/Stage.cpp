@@ -4,7 +4,7 @@
 
 using namespace WristerEngine::_3D;
 
-int Stage::score = 600;
+int Stage::score = 0;
 float Stage::GROUND_POS_Y = 5.0f;
 
 void Stage::Initialize()

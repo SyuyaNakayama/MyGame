@@ -11,32 +11,35 @@ int StartCountDown::fps = 0;
 void GamePlayScene::Initialize()
 {
 	debugCamera.Initialize({ 0,0 });
-	viewProjection.Initialize();
-	viewProjection.eye = { 0,350,0 };
-	viewProjection.eye.y = 350;
-	viewProjection.eye.z = -75;
 	stage.Initialize();
-	
+
 	// UI描画クラスのインスタンス生成
 	uiDrawer = std::make_unique<UIDrawerGameScene>(&stage);
 	uiDrawer->Initialize();
-	//ModelManager::SetViewProjection(&debugCamera);
 	// カウントダウン前に一回更新する
 	stage.Update();
 	uiDrawer->Update();
+	// ポーズメニュー初期化
+	pauseMenu.Initialize();
 }
 
 void GamePlayScene::Update()
 {
-#ifdef _DEBUG
-	if (input->IsTrigger(WristerEngine::Key::_1)) { ModelManager::SetViewProjection(&viewProjection); }
-	if (input->IsTrigger(WristerEngine::Key::_2)) { ModelManager::SetViewProjection(&debugCamera); }
-#endif // _DEBUG
+	// ポーズメニュー切り替え
+	if (input->IsInput(WristerEngine::Key::Space)) { pauseMenu.Pause(); }
+	// ポーズメニュー更新
+	if(pauseMenu.IsPause())
+	{
+		pauseMenu.Update();
+		return;
+	}
+
+	// UIの更新
 	uiDrawer->Update();
 	UIDrawerGameScene* uiDrawer_ = dynamic_cast<UIDrawerGameScene*>(uiDrawer.get());
 	if (uiDrawer_) { if (uiDrawer_->IsCountDown()) { return; } }
 
-	debugCamera.Update();
+	// ステージの更新
 	stage.Update();
 
 	// ゲーム終了時にリザルト画面へ飛ぶ
@@ -45,11 +48,12 @@ void GamePlayScene::Update()
 		sceneManager->ChangeScene(Scene::Result);
 		GoalManager::GetInstance()->ResetGoalPointer();
 	}
+}
 
-	if (input->IsTrigger(WristerEngine::Key::Space))
-	{
-		sceneManager->ChangeScene(Scene::Title);
-	}
+void GamePlayScene::Draw()
+{
+	WristerEngine::BaseScene::Draw();
+	pauseMenu.Draw();
 }
 
 std::unique_ptr<StartCountDown> StartCountDown::Create()
