@@ -3,6 +3,7 @@
 #include "DebugCamera.h"
 #include "AbstractUIDrawer.h"
 #include <memory>
+#include "OperateConfig.h"
 
 namespace WristerEngine
 {
@@ -16,6 +17,7 @@ namespace WristerEngine
 		Input* input = Input::GetInstance();
 		_3D::DebugCamera debugCamera;
 		std::unique_ptr<_2D::AbstractUIDrawer> uiDrawer;
+		OperateConfig* operateConfig = OperateConfig::GetInstance();
 		
 	public:
 		// コンストラクタ

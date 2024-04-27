@@ -181,6 +181,7 @@ namespace WristerEngine
 		DIMOUSESTATE2 mouseState{}, mouseStatePre{};
 		ComPtr<IDirectInputDevice8> joystick;
 		DIJOYSTATE joyState{}, joyStatePre{};
+		float unresponsiveRange = 200; // コントローラーが反応しない範囲
 
 		// コントローラー接続を確認した際に呼ばれるコールバック関数
 		static int CALLBACK DeviceFindCallBack(LPCDIDEVICEINSTANCE lpddi, LPVOID pvRef);
@@ -242,5 +243,7 @@ namespace WristerEngine
 		MouseMove GetMouseMove() const { return MouseMove(mouseState.lX, mouseState.lY, mouseState.lZ); }
 		PadState GetPadState() const;
 		bool IsConnectGamePad() const { return joystick; }
+		// コントローラーが反応しない範囲を変更
+		void SetUnresponsiveRange(float range) { unresponsiveRange = range; }
 	};
 }

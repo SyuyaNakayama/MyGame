@@ -1,6 +1,7 @@
 #include "TutorialEvent.h"
 #include "Input.h"
 #include <imgui.h>
+#include "OperateConfig.h"
 using namespace WristerEngine::_2D;
 
 const float TutorialEvent::TEX_SIZE_Y = 32.0f;
@@ -63,7 +64,7 @@ void TutorialEvent::Update()
 {
 	EnterEventManager();
 	enter.Update();
-	if (WristerEngine::Input::GetInstance()->IsTrigger(WristerEngine::Key::Return))
+	if (OperateConfig::GetInstance()->GetTrigger("Select"))
 	{
 		if (EnterEvent) { (this->*EnterEvent)(); }
 	}

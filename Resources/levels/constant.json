@@ -21,12 +21,12 @@
     "UiShiftPos": [ 115, 670 ],
     "UiPlayerStringPos": [ 224, 488 ],
     "UiCameraStringPos": [ 224, 584 ],
-    "UiDashStringPos": [ 176, 656 ],
+    "UiDashStringPos": [ 224, 656 ],
     "OperateFramePos": [ 50, 420 ],
     "OperateFrameSize": [ 350, 286 ],
-    "ChipLTPos": [ 65, 435 ],
+    "ChipLTPos": [ 84, 435 ],
     "ChipSize": [ 48, 48 ],
-    "ChipAnchor": [ 0, 0 ]
+    "ChipAnchor": [ 0.5, 0 ]
   },
   "BitMapProp": {
     "UiScore": [ 30, 30, 30, 30, 1100, 100, 4 ]

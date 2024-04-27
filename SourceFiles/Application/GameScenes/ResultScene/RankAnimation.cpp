@@ -1,5 +1,6 @@
 #include "RankAnimation.h"
 #include "Input.h"
+#include "OperateConfig.h"
 
 using namespace WristerEngine::_2D;
 
@@ -147,7 +148,7 @@ void ResultAnimation::Initialize(RankAnimation* pRankAnimation_)
 	blind->color = { 0,0,0,0.5f };
 	blind->Update();
 
-	Phase = &ResultAnimation::PrePushEnter;
+	Phase = &ResultAnimation::PrePushSelect;
 }
 
 void ResultAnimation::Update()
@@ -156,20 +157,20 @@ void ResultAnimation::Update()
 	rankUI->Update();
 }
 
-void ResultAnimation::PrePushEnter()
+void ResultAnimation::PrePushSelect()
 {
 	rankUI->size = rankSpriteSizeMem * rankSpriteScale.Update();
 	enterUI.Update();
 
-	if (WristerEngine::Input::GetInstance()->IsTrigger(WristerEngine::Key::Return))
+	if (OperateConfig::GetInstance()->GetTrigger("Select"))
 	{
 		enterUI.GetSprite()->isInvisible = true;
 		rankSpriteScale.Restart();
-		Phase = &ResultAnimation::PostPushEnter;
+		Phase = &ResultAnimation::PostPushSelect;
 	}
 }
 
-void ResultAnimation::PostPushEnter()
+void ResultAnimation::PostPushSelect()
 {
 	rankUI->size = rankSpriteSizeMem * (1.0f - rankSpriteScale.Update());
 	if (rankSpriteScale.IsFinish()) { pRankAnimation->ReservePhase(AnimationPhase::End); }

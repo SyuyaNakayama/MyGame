@@ -390,6 +390,9 @@
     <ClCompile Include="SourceFiles\Application\OperateDrawer\MapChip.cpp">
       <Filter>ソース ファイル\Application\GameScenes\PlayMode\OperateDrawer</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFiles\Application\GameScenes\OperateConfig.cpp">
+      <Filter>ソース ファイル\Application</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\Engine\Math\Matrix4.h">
@@ -619,6 +622,9 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Application\OperateDrawer\MapChip.h">
       <Filter>ソース ファイル\Application\GameScenes\PlayMode\OperateDrawer</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\GameScenes\OperateConfig.h">
+      <Filter>ソース ファイル\Application</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

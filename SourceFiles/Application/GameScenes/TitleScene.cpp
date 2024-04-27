@@ -20,7 +20,7 @@ void TitleScene::Initialize()
 
 void TitleScene::Update()
 {
-	if (input->IsTrigger(WristerEngine::Key::Space))
+	if (operateConfig->GetTrigger("SceneChange"))
 	{
 		sceneManager->ChangeScene(Scene::Tutorial);
 		Stage::ResetScore();

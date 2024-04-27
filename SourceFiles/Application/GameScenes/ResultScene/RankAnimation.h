@@ -70,8 +70,8 @@ class ResultAnimation : public BaseAnimation
 	std::unique_ptr<WristerEngine::_2D::Sprite> blind; // ‰æ–Ê‚ğˆÃ‚­‚·‚é
 
 	void (ResultAnimation::* Phase)() = nullptr;
-	void PrePushEnter();
-	void PostPushEnter();
+	void PrePushSelect();
+	void PostPushSelect();
 
 	// BaseAnimation ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
 	void Initialize(RankAnimation* pRankAnimation) override;

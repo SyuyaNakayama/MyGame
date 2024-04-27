@@ -13,6 +13,8 @@ namespace WristerEngine::_2D
 		std::vector<std::unique_ptr<Sprite>> sprites; // 描画に使うスプライト
 
 	public:
+		virtual ~BaseMapChip() = default;
+
 		/// <summary>
 		/// 初期化
 		/// </summary>
@@ -21,18 +23,19 @@ namespace WristerEngine::_2D
 		/// <param name="chipAnchor">チップのアンカーポイント</param>
 		void Initialize(const Vector2& leftTopPos, const Vector2& chipSize, const Vector2& chipAnchor);
 
-		virtual void VirtualInitialize([[maybe_unused]]Sprite* sprite) {}
+		virtual void VirtualInitialize(Sprite* sprite, float splitNum) = 0;
 
 		/// <summary>
 		/// スプライト情報追加
 		/// </summary>
 		/// <param name="fileName">テクスチャファイル名</param>
 		/// <param name="chipPos">チップ単位での場所</param>
+		/// <param name="splitNum">分割数</param>
 		/// <param name="drawSize">描画サイズ(0,0だと規定サイズ)</param>
-		void AddSprite(const std::string& fileName, const Vector2& chipPos, const Vector2& drawSize = {});
+		void AddSprite(const std::string& fileName, const Vector2& chipPos, float splitNum = 2.0f, const Vector2& drawSize = {});
 
 		// 更新
-		virtual void Update() {}
+		virtual void Update() = 0;
 		// 描画
 		void Draw();
 	};

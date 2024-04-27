@@ -15,7 +15,7 @@ void ResultScene::Initialize()
 
 void ResultScene::Update()
 {
-	if (input->IsTrigger(WristerEngine::Key::Space))
+	if (operateConfig->GetTrigger("SceneChange"))
 	{
 		sceneManager->ChangeScene(Scene::Title);
 		Stage::ResetScore();

@@ -199,7 +199,6 @@ Vector2 Input::PadState::RNormalize() const
 
 Vector2 Input::ConLStick(const float spd) const
 {
-	float unresponsiveRange = 200;
 	Vector2 vec;
 	// XŽ²‚É‚Â‚¢‚Ä
 	if (std::abs(GetPadState().lX) > unresponsiveRange) { vec.x = (float)GetPadState().lX; }
@@ -213,7 +212,6 @@ Vector2 Input::ConLStick(const float spd) const
 
 Vector2 Input::ConRStick(const float spd) const
 {
-	float unresponsiveRange = 200;
 	Vector2 vec;
 	// XŽ²‚É‚Â‚¢‚Ä
 	if (std::abs(GetPadState().rX) > unresponsiveRange) { vec.x = (float)GetPadState().rX; }

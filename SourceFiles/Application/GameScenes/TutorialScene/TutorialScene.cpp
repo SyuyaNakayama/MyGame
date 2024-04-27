@@ -22,7 +22,8 @@ void TutorialScene::Update()
 		sceneManager->ChangeScene(Scene::Tutorial, true, true, false);
 	}
 
-	if (input->IsTrigger(WristerEngine::Key::Space))
+	//if (input->IsTrigger(WristerEngine::Key::Space))
+	if (operateConfig->GetTrigger("SceneChange"))
 	{
 		sceneManager->ChangeScene(Scene::Play);
 		Stage::ResetScore();
