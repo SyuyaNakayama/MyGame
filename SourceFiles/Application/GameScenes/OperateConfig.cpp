@@ -1,4 +1,5 @@
 #include "OperateConfig.h"
+using namespace WristerEngine::_2D;
 
 OperateConfig* OperateConfig::GetInstance()
 {
@@ -42,4 +43,32 @@ bool OperateConfig::GetTrigger(const std::string& str)
 		if (input->IsConnectGamePad()) { pad = input->IsTrigger(Pad::X); }
 	}
 	return key || pad;
+}
+
+std::unique_ptr<Sprite> OperateConfig::CreateOperateSprite(const std::string& str)
+{
+	std::unique_ptr<Sprite> sprite;
+	if (str == "Select")
+	{
+	}
+	else if (str == "SceneChange")
+	{
+	}
+	return std::unique_ptr<WristerEngine::_2D::Sprite>();
+}
+
+std::unique_ptr<SpriteAnimation> OperateConfig::CreateOperateSpriteAnimation(const std::string& str)
+{
+	std::unique_ptr<SpriteAnimation> spriteAnimation = std::make_unique<SpriteAnimation>();
+	int aInterval = Const(int, "SpriteAnimationInterval");
+	if (str == "Select")
+	{
+		if (!input->IsConnectGamePad()) { spriteAnimation->Initialize("UI/Key/key_Enter.png", 96, aInterval); }
+	}
+	else if (str == "SceneChange")
+	{
+		if (!input->IsConnectGamePad()) { spriteAnimation->Initialize("ui/Key/key_SPACE.png", 128, aInterval); }
+	}
+
+	return spriteAnimation;
 }

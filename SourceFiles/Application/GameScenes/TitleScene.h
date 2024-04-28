@@ -21,7 +21,7 @@ class TitleScene : public WristerEngine::BaseScene
 class UIDrawerTitleScene : public WristerEngine::_2D::AbstractUIDrawer
 {
 	std::map<std::string, std::unique_ptr<WristerEngine::_2D::Sprite>> title;
-	WristerEngine::_2D::SpriteAnimation spaceKey;
+	WristerEngine::_2D::SpriteAnimation operateKey;
 	std::unique_ptr<WristerEngine::_2D::Sprite> selectCursorUI;
 	Angle cosAngle = 0;
 
