@@ -12,7 +12,7 @@ private:
 	std::map<std::string, std::unique_ptr<WristerEngine::_2D::Sprite>> sprites;
 	// チュートリアルの説明番号
 	UINT32 phase = 0;
-	WristerEngine::_2D::SpriteAnimation enter;
+	std::unique_ptr<WristerEngine::_2D::SpriteAnimation> select;
 	WristerEngine::Constant* constant = WristerEngine::Constant::GetInstance();
 	std::vector<UINT32> tutorialEventPhase;
 	bool isEnd = false; // イベントが終わったか

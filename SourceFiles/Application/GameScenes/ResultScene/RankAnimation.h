@@ -2,6 +2,7 @@
 #include "ScoreGauge.h"
 #include "Easing.h"
 #include "SpriteAnimation.h"
+#include "OperateConfig.h"
 
 enum class AnimationPhase { Null, Judge, Disappear, Appear, Result, End };
 // 前方定義
@@ -15,6 +16,7 @@ protected:
 	const ScoreGauge* pScoreGauge = nullptr;
 	RankAnimation* pRankAnimation = nullptr;
 	std::unique_ptr<WristerEngine::_2D::Sprite> rankUI;
+	OperateConfig* operateConfig = OperateConfig::GetInstance();
 
 public:
 	// 仮想デストラクタ
@@ -32,7 +34,7 @@ public:
 // ランクとスコアの判定
 class JudgeAnimation : public BaseAnimation
 {
-	Rank preRank;
+	Rank preRank = Rank::C;
 
 	// BaseAnimation を介して継承されました
 	void Initialize(RankAnimation* pRankAnimation) override;
@@ -66,7 +68,7 @@ class ResultAnimation : public BaseAnimation
 {
 	Vector2 rankSpriteSizeMem;
 	WristerEngine::Easing rankSpriteScale;
-	WristerEngine::_2D::SpriteAnimation enterUI;
+	std::unique_ptr<WristerEngine::_2D::SpriteAnimation> operateKey;
 	std::unique_ptr<WristerEngine::_2D::Sprite> blind; // 画面を暗くする
 
 	void (ResultAnimation::* Phase)() = nullptr;
@@ -82,7 +84,7 @@ class ResultAnimation : public BaseAnimation
 // アニメーション終了
 class AnimationEnd : public BaseAnimation
 {
-	WristerEngine::_2D::SpriteAnimation spaceKey;
+	std::unique_ptr<WristerEngine::_2D::SpriteAnimation> operateKey;
 	// BaseAnimation を介して継承されました
 	void Initialize(RankAnimation* pRankAnimation) override;
 	void Update() override;

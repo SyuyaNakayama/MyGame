@@ -16,6 +16,7 @@ void TutorialEvent::Initialize()
 {
 	phase = 0;
 	isEnd = false;
+	OperateConfig* operateConfig = OperateConfig::GetInstance();
 	// チュートリアルのテキスト画像
 	sprites["text"] = Sprite::Create("UI/TutorialText.png");
 	sprites["text"]->textureLeftTop.y = TEX_SIZE_Y * (float)phase;
@@ -33,17 +34,15 @@ void TutorialEvent::Initialize()
 	sprites["Hint"] = Sprite::Create("UI/Hint.png", { 1150,s.position.y }, { 0.5f,0.5f });
 	sprites["Hint"]->size /= 8.0f;
 	sprites["Hint"]->isInvisible = true;
-	// Enterキー
-	sprites["Enter"] = Sprite::Create("UI/Key/key_Enter.png",
-		sprites["Hint"]->position + Vector2(sprites["Hint"]->size.x, 0),
-		{ 0.5f,0.5f }, { 96,96 });
-	sprites["Enter"]->size *= 0.5f;
-	sprites["Enter"]->isInvisible = true;
+	// Selectキー
+	sprites["Select"] = operateConfig->CreateOperateSprite("Select");
+	sprites["Select"]->position = sprites["Hint"]->position + Vector2(sprites["Hint"]->size.x, 0);
+	sprites["Select"]->SetCenterAnchor();
+	sprites["Select"]->isInvisible = true;
 
-	// Enterキー(アニメーション)
-	enter.Initialize("UI/Key/key_Enter.png", (int)sprites["Enter"]->textureSize.x, 30);
-	enter.GetSprite()->position = Const(Vector2, "UiEnterAnimePos");
-	enter.GetSprite()->size = Const(Vector2, "UiEnterAnimeSize");
+	// Selectキー(アニメーション)
+	select = operateConfig->CreateOperateSpriteAnimation("Select");
+	select->GetSprite()->position = Const(Vector2, "UiEnterAnimePos");
 
 	tutorialEventPhase = Const(std::vector<UINT32>, "TutorialEventPhase");
 }
@@ -56,14 +55,14 @@ void TutorialEvent::EnterEventManager()
 
 void TutorialEvent::PrintFlip()
 {
-	enter.GetSprite()->isInvisible = !enter.GetSprite()->isInvisible;
+	select->GetSprite()->isInvisible = !select->GetSprite()->isInvisible;
 	for (auto& s : sprites) { s.second->isInvisible = !s.second->isInvisible; }
 }
 
 void TutorialEvent::Update()
 {
 	EnterEventManager();
-	enter.Update();
+	select->Update();
 	if (OperateConfig::GetInstance()->GetTrigger("Select"))
 	{
 		if (EnterEvent) { (this->*EnterEvent)(); }
@@ -74,13 +73,13 @@ void TutorialEvent::Update()
 void TutorialEvent::Draw()
 {
 	for (auto& s : sprites) { s.second->Draw(); }
-	enter.Draw();
+	select->Draw();
 }
 
 void TutorialEvent::NextPhase()
 {
 	if (isEnd) { return; }
-	if (!sprites["Enter"]->isInvisible) { PrintFlip(); }
+	if (!sprites["Select"]->isInvisible) { PrintFlip(); }
 	phase = min(phase + 1, tutorialEventPhase.back());
 	if (phase == tutorialEventPhase.back()) { isEnd = true; }
 	// 説明の表示を変える

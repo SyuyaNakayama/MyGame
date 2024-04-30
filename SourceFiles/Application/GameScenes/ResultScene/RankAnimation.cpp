@@ -138,9 +138,10 @@ void ResultAnimation::Initialize(RankAnimation* pRankAnimation_)
 	rankSpriteSizeMem = rankUI->size * 6.0f;
 	rankSpriteScale.Initialize(RANK_ANIMATION_TIME * 6, WristerEngine::Easing::Type::OutBounce);
 
-	enterUI.Initialize("UI/Key/key_Enter.png", 96, 30);
-	enterUI.GetSprite()->SetCenterAnchor();
-	enterUI.GetSprite()->position = { Half(WristerEngine::WIN_SIZE.x),640 };
+	operateKey = operateConfig->CreateOperateSpriteAnimation("Select");
+	operateKey->GetSprite()->SetCenterAnchor();
+	operateKey->GetSprite()->position = { Half(WristerEngine::WIN_SIZE.x),640 };
+	if (!WristerEngine::Input::GetInstance()->IsConnectGamePad()) { operateKey->GetSprite()->size *= 2.0f; }
 
 	// ランク発表時に背景を暗くするためのスプライト
 	blind = Sprite::Create("white1x1.png");
@@ -160,11 +161,11 @@ void ResultAnimation::Update()
 void ResultAnimation::PrePushSelect()
 {
 	rankUI->size = rankSpriteSizeMem * rankSpriteScale.Update();
-	enterUI.Update();
+	operateKey->Update();
 
-	if (OperateConfig::GetInstance()->GetTrigger("Select"))
+	if (operateConfig->GetTrigger("Select"))
 	{
-		enterUI.GetSprite()->isInvisible = true;
+		operateKey->GetSprite()->isInvisible = true;
 		rankSpriteScale.Restart();
 		Phase = &ResultAnimation::PostPushSelect;
 	}
@@ -180,15 +181,15 @@ void ResultAnimation::Draw()
 {
 	blind->Draw();
 	rankUI->Draw();
-	enterUI.Draw();
+	operateKey->Draw();
 }
 
 void AnimationEnd::Initialize(RankAnimation* pRankAnimation_)
 {
 	BaseAnimation::Initialize(pRankAnimation_);
 
-	spaceKey.Initialize("ui/Key/key_SPACE.png", 128, 30);
-	Sprite* spaceKeySprite = spaceKey.GetSprite();
+	operateKey = operateConfig->CreateOperateSpriteAnimation("SceneChange");
+	Sprite* spaceKeySprite = operateKey->GetSprite();
 	spaceKeySprite->position = Half(WristerEngine::WIN_SIZE);
 	spaceKeySprite->position.y += 80;
 	spaceKeySprite->size *= 1.5f;
@@ -198,6 +199,6 @@ void AnimationEnd::Initialize(RankAnimation* pRankAnimation_)
 	rankUI->Update();
 }
 
-void AnimationEnd::Update() { spaceKey.Update(); }
+void AnimationEnd::Update() { operateKey->Update(); }
 
-void AnimationEnd::Draw() { spaceKey.Draw(); }
+void AnimationEnd::Draw() { operateKey->Draw(); }

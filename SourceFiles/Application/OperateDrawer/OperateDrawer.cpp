@@ -5,8 +5,6 @@ using namespace WristerEngine::_2D;
 
 void OperateDrawer::Initialize()
 {
-	WristerEngine::Constant* constant = WristerEngine::Constant::GetInstance();
-
 	frame = Sprite::Create("UI/uiFrame.png");
 	frame->position = constant->GetConstant<Vector2>("OperateFramePos");
 	frame->size = constant->GetConstant<Vector2>("OperateFrameSize");

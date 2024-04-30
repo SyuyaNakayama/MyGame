@@ -22,7 +22,6 @@ void TutorialScene::Update()
 		sceneManager->ChangeScene(Scene::Tutorial, true, true, false);
 	}
 
-	//if (input->IsTrigger(WristerEngine::Key::Space))
 	if (operateConfig->GetTrigger("SceneChange"))
 	{
 		sceneManager->ChangeScene(Scene::Play);
@@ -38,19 +37,18 @@ void TutorialScene::Update()
 void UIDrawerTutorialScene::Initialize()
 {
 	using Key = WristerEngine::Key;
-	keyUI[Key::Space] = Sprite::Create("UI/Key/key_SPACE.png");
 
 	operateUI["tutorial"] = Sprite::Create("UI/Tutorial.png");
 	operateUI["tutorial"]->anchorPoint = { -0.1f,-1 };
 
-	operateUI["play"] = Sprite::Create("UI/Skip.png");
-	operateUI["play"]->anchorPoint = { 0.5f,2 };
-	operateUI["play"]->position = { Half(WristerEngine::WIN_SIZE.x), WristerEngine::WIN_SIZE.y };
+	operateUI["skip"] = Sprite::Create("UI/Skip.png");
+	operateUI["skip"]->anchorPoint.x = 0.5f;
+	operateUI["skip"]->position = Const(Vector2, "UiSkipStringPos");
 
 	PlayMode::Initialize();
-	keyUI[Key::Space]->anchorPoint = { 0.5f,2 };
-	keyUI[Key::Space]->position = { Half(WristerEngine::WIN_SIZE.x), WristerEngine::WIN_SIZE.y };
-	keyUI[Key::Space]->Split({ 2,1 });
+	keyUI[Key::Space] = OperateConfig::GetInstance()->CreateOperateSprite("SceneChange");
+	keyUI[Key::Space]->anchorPoint.x = 0.5f;
+	keyUI[Key::Space]->position = Const(Vector2, "UiSpacePosTutorial");
 
 	for (auto& s : keyUI) { s.second->Update(); }
 

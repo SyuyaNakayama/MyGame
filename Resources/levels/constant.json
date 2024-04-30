@@ -10,18 +10,17 @@
     "ScoreRate": [ 4, 4, 3, 1, 2 ]
   },
   "float": {
-    "PlayerMoveForce": 0.15,
-    "UiPosCompress": 15,
-    "DistanceKeyArrow": 100
+    "PlayerMoveForce": 0.15
   },
   "Vector2": {
+    "UiSpacePosTutorial": [ 640, 592 ],
     "UiScorePosition": [ 1160, 70 ],
     "UiEnterAnimePos": [ 1120, 360 ],
-    "UiEnterAnimeSize": [ 48, 48 ],
     "UiShiftPos": [ 115, 670 ],
     "UiPlayerStringPos": [ 224, 488 ],
     "UiCameraStringPos": [ 224, 584 ],
     "UiDashStringPos": [ 224, 656 ],
+    "UiSkipStringPos": [ 640, 656 ],
     "OperateFramePos": [ 50, 420 ],
     "OperateFrameSize": [ 350, 286 ],
     "ChipLTPos": [ 84, 435 ],

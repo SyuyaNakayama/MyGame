@@ -12,7 +12,7 @@ void MyGame::Initialize()
 	windowName = L"クアッドホッケー";
 	Framework::Initialize();
 #ifdef _DEBUG
-	sceneManager->ChangeScene(Scene::Tutorial, false, false, false);
+	sceneManager->ChangeScene(Scene::Result, false, false, false);
 #endif // _DEBUG
 #ifdef NDEBUG
 	sceneManager->ChangeScene(Scene::Title, false, false, false);

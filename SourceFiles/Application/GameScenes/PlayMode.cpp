@@ -7,7 +7,6 @@ using namespace WristerEngine::_3D;
 void PlayMode::Initialize()
 {
 	OperateDrawer::Initialize();
-	WristerEngine::Constant* constant = WristerEngine::Constant::GetInstance();
 
 	// ビットマップの設定
 	BitMapProp bitMapProp = Const(BitMapProp, "UiScore");

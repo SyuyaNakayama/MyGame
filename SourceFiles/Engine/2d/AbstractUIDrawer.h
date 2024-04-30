@@ -1,4 +1,5 @@
 #pragma once
+#include "Constant.h"
 
 namespace WristerEngine::_2D
 {
@@ -6,6 +7,9 @@ namespace WristerEngine::_2D
 	// 各シーンごとにUIDrawerクラスを定義する
 	class AbstractUIDrawer
 	{
+	protected:
+		Constant* constant = Constant::GetInstance();
+
 	public:
 		// 仮想デストラクタ
 		virtual ~AbstractUIDrawer() = default;

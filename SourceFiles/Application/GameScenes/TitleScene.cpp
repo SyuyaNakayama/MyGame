@@ -47,8 +47,8 @@ void UIDrawerTitleScene::Initialize()
 	title["JP"]->position.y -= 200;
 	title["EN"]->position.y -= 80;
 	for (auto& ui : title) { ui.second->Update(); }
-	operateKey.Initialize("ui/Key/key_SPACE.png", 128, 30);
-	Sprite* spaceKeySprite = operateKey.GetSprite();
+	operateKey = OperateConfig::GetInstance()->CreateOperateSpriteAnimation("SceneChange");
+	Sprite* spaceKeySprite = operateKey->GetSprite();
 	spaceKeySprite->position = Half(WristerEngine::WIN_SIZE);
 	spaceKeySprite->position.y += 80;
 	spaceKeySprite->size *= 1.5f;
@@ -62,7 +62,7 @@ void UIDrawerTitleScene::Initialize()
 
 void UIDrawerTitleScene::Update()
 {
-	operateKey.Update();
+	operateKey->Update();
 	cosAngle += 10;
 	selectCursorUI->size.y = 400 * (cos(cosAngle) + 1) * 0.5f;
 	selectCursorUI->Update();
@@ -71,6 +71,6 @@ void UIDrawerTitleScene::Update()
 void UIDrawerTitleScene::Draw()
 {
 	for (auto& ui : title) { ui.second->Draw(); }
-	operateKey.Draw();
+	operateKey->Draw();
 	//selectCursorUI->Draw();
 }
