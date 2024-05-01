@@ -19,21 +19,10 @@ void GamePlayScene::Initialize()
 	// カウントダウン前に一回更新する
 	stage.Update();
 	uiDrawer->Update();
-	// ポーズメニュー初期化
-	pauseMenu.Initialize();
 }
 
 void GamePlayScene::Update()
 {
-	// ポーズメニュー切り替え
-	if (input->IsInput(WristerEngine::Key::Space)) { pauseMenu.Pause(); }
-	// ポーズメニュー更新
-	if(pauseMenu.IsPause())
-	{
-		pauseMenu.Update();
-		return;
-	}
-
 	// UIの更新
 	uiDrawer->Update();
 	UIDrawerGameScene* uiDrawer_ = dynamic_cast<UIDrawerGameScene*>(uiDrawer.get());
@@ -53,7 +42,6 @@ void GamePlayScene::Update()
 void GamePlayScene::Draw()
 {
 	WristerEngine::BaseScene::Draw();
-	pauseMenu.Draw();
 }
 
 std::unique_ptr<StartCountDown> StartCountDown::Create()

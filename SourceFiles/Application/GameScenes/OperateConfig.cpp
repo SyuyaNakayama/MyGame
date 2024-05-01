@@ -40,6 +40,11 @@ bool OperateConfig::GetTrigger(const std::string& str)
 		key = input->IsTrigger(Key::Space);
 		if (input->IsConnectGamePad()) { pad = input->IsTrigger(Pad::X); }
 	}
+	else if (str == "Pause")
+	{
+		key = input->IsTrigger(Key::H);
+		if (input->IsConnectGamePad()) { pad = input->IsTrigger(Pad::Y); }
+	}
 	return key || pad;
 }
 

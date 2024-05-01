@@ -23,6 +23,13 @@ void PlayMode::Initialize()
 
 void PlayMode::Update()
 {
+	// ポーズメニュー切り替え
+	if (OperateConfig::GetInstance()->GetTrigger("Pause"))
+	{
+		WristerEngine::SceneManager::GetInstance()->Pause();
+		return;
+	}
+
 	OperateDrawer::Update();
 	scoreSprite.Update(stage->GetScore());
 }

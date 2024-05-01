@@ -176,6 +176,7 @@
   <ItemGroup>
     <ClCompile Include="SourceFiles\Application\GameScenes\OperateConfig.cpp" />
     <ClCompile Include="SourceFiles\Application\GameScenes\PauseMenu.cpp" />
+    <ClCompile Include="SourceFiles\Engine\Scene\BasePauseMenu.cpp" />
     <ClCompile Include="SourceFiles\Application\GameScenes\PlayMode.cpp" />
     <ClCompile Include="SourceFiles\Application\GameScenes\ResultScene\RankAnimation.cpp" />
     <ClCompile Include="SourceFiles\Application\GameScenes\ResultScene\ScoreGauge.cpp" />
@@ -248,6 +249,7 @@
   <ItemGroup>
     <ClInclude Include="SourceFiles\Application\GameScenes\OperateConfig.h" />
     <ClInclude Include="SourceFiles\Application\GameScenes\PauseMenu.h" />
+    <ClInclude Include="SourceFiles\Engine\Scene\BasePauseMenu.h" />
     <ClInclude Include="SourceFiles\Application\GameScenes\PlayMode.h" />
     <ClInclude Include="SourceFiles\Application\GameScenes\ResultScene\RankAnimation.h" />
     <ClInclude Include="SourceFiles\Application\GameScenes\ResultScene\ScoreGauge.h" />

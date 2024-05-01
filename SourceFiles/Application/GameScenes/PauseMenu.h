@@ -1,14 +1,21 @@
 #pragma once
-#include "BaseScene.h"
+#include "BasePauseMenu.h"
+#include "OperateConfig.h"
 
-class PauseMenu
+class PauseMenu final : public WristerEngine::BasePauseMenu
 {
-	bool isPause = false;
+	OperateConfig* operateConfig = OperateConfig::GetInstance();
+
+	PauseMenu() = default;
+	~PauseMenu() = default;
 
 public:
-	void Initialize();
-	void Update();
-	void Draw();
-	void Pause() { isPause = !isPause; }
-	bool IsPause() const { return isPause; }
+	PauseMenu(const PauseMenu& obj) = delete;
+	const PauseMenu& operator=(const PauseMenu& obj) = delete;
+
+	static PauseMenu* GetInstance();
+
+	// BasePauseMenu ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
+	void Initialize() override;
+	void Update() override;
 };

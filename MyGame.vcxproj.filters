@@ -348,9 +348,6 @@
     <ClCompile Include="SourceFiles\Application\GameScenes\GamePlayScene.cpp">
       <Filter>ソース ファイル\Application\GameScenes\PlayMode\GamePlayScene</Filter>
     </ClCompile>
-    <ClCompile Include="SourceFiles\Application\GameScenes\PauseMenu.cpp">
-      <Filter>ソース ファイル\Application\GameScenes\PlayMode\GamePlayScene</Filter>
-    </ClCompile>
     <ClCompile Include="SourceFiles\Application\GameScenes\PlayMode.cpp">
       <Filter>ソース ファイル\Application\GameScenes\PlayMode</Filter>
     </ClCompile>
@@ -392,6 +389,12 @@
     </ClCompile>
     <ClCompile Include="SourceFiles\Application\GameScenes\OperateConfig.cpp">
       <Filter>ソース ファイル\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Engine\Scene\BasePauseMenu.cpp">
+      <Filter>ソース ファイル\Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\GameScenes\PauseMenu.cpp">
+      <Filter>ソース ファイル\Application\GameScenes\PlayMode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -578,9 +581,6 @@
     <ClInclude Include="SourceFiles\Application\GameScenes\GamePlayScene.h">
       <Filter>ソース ファイル\Application\GameScenes\PlayMode\GamePlayScene</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\Application\GameScenes\PauseMenu.h">
-      <Filter>ソース ファイル\Application\GameScenes\PlayMode\GamePlayScene</Filter>
-    </ClInclude>
     <ClInclude Include="SourceFiles\Application\GameScenes\PlayMode.h">
       <Filter>ソース ファイル\Application\GameScenes\PlayMode</Filter>
     </ClInclude>
@@ -625,6 +625,12 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Application\GameScenes\OperateConfig.h">
       <Filter>ソース ファイル\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Engine\Scene\BasePauseMenu.h">
+      <Filter>ソース ファイル\Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\GameScenes\PauseMenu.h">
+      <Filter>ソース ファイル\Application\GameScenes\PlayMode</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

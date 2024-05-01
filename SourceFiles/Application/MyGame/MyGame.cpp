@@ -4,6 +4,7 @@
 #include "ModelManager.h"
 #include "MyGame.h"
 #include "ParticleManager.h"
+#include "PauseMenu.h"
 using namespace WristerEngine::_2D;
 using namespace WristerEngine::_3D;
 
@@ -12,7 +13,7 @@ void MyGame::Initialize()
 	windowName = L"クアッドホッケー";
 	Framework::Initialize();
 #ifdef _DEBUG
-	sceneManager->ChangeScene(Scene::Result, false, false, false);
+	sceneManager->ChangeScene(Scene::Tutorial, false, false, false);
 #endif // _DEBUG
 #ifdef NDEBUG
 	sceneManager->ChangeScene(Scene::Title, false, false, false);
@@ -26,6 +27,9 @@ void MyGame::Initialize()
 	WristerEngine::AudioManager::Initialize();
 	PostEffect::StaticInitialize();
 	postEffect.Initialize(PostEffect::Type::None);
+	WristerEngine::BasePauseMenu* pauseMenu = PauseMenu::GetInstance();
+	pauseMenu->Initialize();
+	sceneManager->SetPauseMenu(pauseMenu);
 }
 
 void MyGame::Update()

@@ -50,7 +50,13 @@ void SceneManager::Update()
 		scene->Update();
 	}
 
-	if (!fadeManager.IsFade()) { scene->Update(); }
+	if (fadeManager.IsFade()) { return; }
+	if (pauseMenu)
+	{
+		// ポーズ中ならシーンの更新をせずポーズメニューのみ更新する
+		if (pauseMenu->IsPause()) { pauseMenu->Update(); return; }
+	}
+	scene->Update();
 }
 
 void SceneManager::Draw()
@@ -61,6 +67,7 @@ void SceneManager::Draw()
 		_2D::Sprite::PreDraw();
 		fadeManager.Draw();
 	}
+	pauseMenu->Draw();
 }
 
 void SceneManager::ChangeScene(Scene nextScene_, bool isObjectClear_, bool isParticleClear_, bool isUseFade)

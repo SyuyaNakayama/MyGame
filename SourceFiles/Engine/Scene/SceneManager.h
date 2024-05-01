@@ -2,6 +2,7 @@
 #include "BaseScene.h"
 #include "FadeManager.h"
 #include "SceneFactory.h"
+#include "BasePauseMenu.h"
 
 namespace WristerEngine
 {
@@ -15,6 +16,7 @@ namespace WristerEngine
 		FadeManager fadeManager;
 		AbstractSceneFactory* sceneFactory = SceneFactory::GetInstance();
 		bool isObjectClear = false, isParticleClear = false;
+		BasePauseMenu* pauseMenu = nullptr;
 
 		SceneManager() = default;
 		~SceneManager() = default;
@@ -32,6 +34,10 @@ namespace WristerEngine
 		void Draw();
 		// 終了
 		void Finalize() { scene->Finalize(); }
+		// ポーズメニューをセット
+		void SetPauseMenu(BasePauseMenu* pauseMenu_) { pauseMenu = pauseMenu_; }
+		// ポーズ切り替え
+		void Pause() { pauseMenu->Pause(); }
 		// シーン切り替え
 		void ChangeScene(Scene nextScene_, bool isObjectClear = true, bool isParticleClear = true, bool isUseFade = true);
 		// 現在のシーン取得

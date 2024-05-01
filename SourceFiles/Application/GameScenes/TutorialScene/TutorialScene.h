@@ -2,6 +2,7 @@
 #include "BaseScene.h"
 #include "PlayMode.h"
 #include "TutorialEvent.h"
+#include "BasePauseMenu.h"
 
 class TutorialScene : public WristerEngine::BaseScene
 {

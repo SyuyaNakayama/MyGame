@@ -23,6 +23,7 @@
     "UiSkipStringPos": [ 640, 656 ],
     "OperateFramePos": [ 50, 420 ],
     "OperateFrameSize": [ 350, 286 ],
+    "BasePauseMenuFrameSize": [ 1080, 600 ],
     "ChipLTPos": [ 84, 435 ],
     "ChipSize": [ 48, 48 ],
     "ChipAnchor": [ 0.5, 0 ]
