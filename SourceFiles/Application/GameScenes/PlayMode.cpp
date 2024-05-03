@@ -15,10 +15,7 @@ void PlayMode::Initialize()
 	// ƒXƒRƒA
 	*scoreSprite.GetBitMapProp() = bitMapProp;
 	scoreSprite.Initialize();
-	uiScore = Sprite::Create("ui/score.png");
-	uiScore->SetCenterAnchor();
-	uiScore->position = Const(Vector2, "UiScorePosition");
-	uiScore->Update();
+	sprites["Score"] = Sprite::Create("ui/score.png", Const(Vector2, "UiScorePosition"), { 0.5f,0.5f });
 }
 
 void PlayMode::Update()
@@ -38,5 +35,4 @@ void PlayMode::Draw()
 {
 	OperateDrawer::Draw();
 	scoreSprite.Draw();
-	uiScore->Draw();
 }

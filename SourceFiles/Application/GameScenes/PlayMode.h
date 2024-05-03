@@ -7,7 +7,6 @@
 class PlayMode : public OperateDrawer
 {
 private:
-	std::unique_ptr<WristerEngine::_2D::Sprite> uiScore;
 	WristerEngine::_2D::BitMapNumber scoreSprite;
 
 protected:
