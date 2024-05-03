@@ -35,42 +35,31 @@ void TitleScene::Update()
 
 void UIDrawerTitleScene::Initialize()
 {
-	title["JP"] = Sprite::Create("ui/title_JP.png");
-	title["EN"] = Sprite::Create("ui/title_EN.png");
+	sprites["TitleJP"] = Sprite::Create("ui/title_JP.png", Const(Vector2, "UiTitleJPPos"));
+	sprites["TitleEN"] = Sprite::Create("ui/title_EN.png", Const(Vector2, "UiTitleENPos"));
 
-	for (auto& ui : title)
+	for (auto& ui : sprites)
 	{
-		ui.second->position = Half(WristerEngine::WIN_SIZE);
 		ui.second->anchorPoint = { 0.5f,1.0f };
 		ui.second->size *= 1.5f;
 	}
-	title["JP"]->position.y -= 200;
-	title["EN"]->position.y -= 80;
-	for (auto& ui : title) { ui.second->Update(); }
 	operateKey = OperateConfig::GetInstance()->CreateOperateSpriteAnimation("SceneChange");
 	Sprite* spaceKeySprite = operateKey->GetSprite();
-	spaceKeySprite->position = Half(WristerEngine::WIN_SIZE);
-	spaceKeySprite->position.y += 80;
+	spaceKeySprite->position = Const(Vector2, "UiSpacePosTitle");
 	spaceKeySprite->size *= 1.5f;
 	spaceKeySprite->anchorPoint.x = 0.5f;
 	spaceKeySprite->color = { 0.7f,0.7f,0.7f,1 };
 
-	selectCursorUI = Sprite::Create("UI/SelectCursor.png");
-	selectCursorUI->SetCenterAnchor();
-	selectCursorUI->SetCenterPos();
+	AbstractUIDrawer::Update();
 }
 
 void UIDrawerTitleScene::Update()
 {
 	operateKey->Update();
-	cosAngle += 10;
-	selectCursorUI->size.y = 400 * (cos(cosAngle) + 1) * 0.5f;
-	selectCursorUI->Update();
 }
 
 void UIDrawerTitleScene::Draw()
 {
-	for (auto& ui : title) { ui.second->Draw(); }
+	AbstractUIDrawer::Draw();
 	operateKey->Draw();
-	//selectCursorUI->Draw();
 }

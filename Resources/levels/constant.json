@@ -13,6 +13,9 @@
     "PlayerMoveForce": 0.15
   },
   "Vector2": {
+    "UiTitleJPPos": [ 640, 160 ],
+    "UiTitleENPos": [ 640, 280 ],
+    "UiSpacePosTitle": [ 640, 440 ],
     "UiSpacePosTutorial": [ 640, 592 ],
     "UiScorePosition": [ 1160, 70 ],
     "UiEnterAnimePos": [ 1120, 360 ],

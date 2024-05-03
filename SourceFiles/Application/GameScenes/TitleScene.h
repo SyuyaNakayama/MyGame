@@ -20,10 +20,8 @@ class TitleScene : public WristerEngine::BaseScene
 
 class UIDrawerTitleScene : public WristerEngine::_2D::AbstractUIDrawer
 {
-	std::map<std::string, std::unique_ptr<WristerEngine::_2D::Sprite>> title;
+	//std::map<std::string, std::unique_ptr<WristerEngine::_2D::Sprite>> title;
 	std::unique_ptr<WristerEngine::_2D::SpriteAnimation> operateKey;
-	std::unique_ptr<WristerEngine::_2D::Sprite> selectCursorUI;
-	Angle cosAngle = 0;
 
 	// AbstractUIDrawer ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
 	void Initialize() override;
