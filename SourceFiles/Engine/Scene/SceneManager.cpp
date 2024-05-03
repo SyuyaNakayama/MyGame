@@ -48,6 +48,11 @@ void SceneManager::Update()
 
 		scene->Initialize();
 		scene->Update();
+
+		if (pauseMenu)
+		{
+			pauseMenu->Initialize();
+		}
 	}
 
 	if (fadeManager.IsFade()) { return; }
