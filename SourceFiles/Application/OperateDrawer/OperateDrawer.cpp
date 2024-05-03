@@ -1,14 +1,12 @@
 #include "OperateDrawer.h"
-#include "Constant.h"
+#include "Input.h"
 
 using namespace WristerEngine::_2D;
 
 void OperateDrawer::Initialize()
 {
-	frame = Sprite::Create("UI/uiFrame.png");
-	frame->position = constant->GetConstant<Vector2>("OperateFramePos");
-	frame->size = constant->GetConstant<Vector2>("OperateFrameSize");
-	frame->Update();
+	sprites["01_frame"] = Sprite::Create("UI/uiFrame.png", Const(Vector2, "OperateFramePos"));
+	sprites["01_frame"]->size = Const(Vector2, "OperateFrameSize");
 	using Key = WristerEngine::Key;
 
 	// ‘€ìƒL[‚Ì‰æ‘œ‚Ì“Ç‚Ýž‚Ý‚ÆˆÊ’u’²®
@@ -35,16 +33,9 @@ void OperateDrawer::Initialize()
 		mapChip->AddSprite("UI/Key/button_B.png", { 1,4 });
 	}
 
-	operateUI["player"] = Sprite::Create("UI/Move.png", Const(Vector2, "UiPlayerStringPos"));
-	operateUI["player"]->anchorPoint.y = 0.5f;
-
-	operateUI["camera"] = Sprite::Create("UI/Camera.png", Const(Vector2, "UiCameraStringPos"));
-	operateUI["camera"]->anchorPoint.y = 0.5f;
-
-	operateUI["dash"] = Sprite::Create("UI/Dash.png", Const(Vector2, "UiDashStringPos"));
-	operateUI["dash"]->anchorPoint.y = 0.5f;
-
-	for (auto& s : operateUI) { s.second->Update(); }
+	sprites["player"] = Sprite::Create("UI/Move.png", Const(Vector2, "UiPlayerStringPos"), { 0,0.5f });
+	sprites["camera"] = Sprite::Create("UI/Camera.png", Const(Vector2, "UiCameraStringPos"), { 0,0.5f });
+	sprites["dash"] = Sprite::Create("UI/Dash.png", Const(Vector2, "UiDashStringPos"), { 0,0.5f });
 }
 
 void OperateDrawer::Update()
@@ -54,7 +45,6 @@ void OperateDrawer::Update()
 
 void OperateDrawer::Draw()
 {
-	frame->Draw();
-	for (auto& s : operateUI) { s.second->Draw(); }
+	AbstractUIDrawer::Draw();
 	mapChip->Draw();
 }

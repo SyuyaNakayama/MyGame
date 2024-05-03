@@ -38,12 +38,12 @@ void UIDrawerTutorialScene::Initialize()
 {
 	using Key = WristerEngine::Key;
 
-	operateUI["tutorial"] = Sprite::Create("UI/Tutorial.png");
-	operateUI["tutorial"]->anchorPoint = { -0.1f,-1 };
-
-	operateUI["skip"] = Sprite::Create("UI/Skip.png");
-	operateUI["skip"]->anchorPoint.x = 0.5f;
-	operateUI["skip"]->position = Const(Vector2, "UiSkipStringPos");
+	sprites["tutorial"] = Sprite::Create("UI/Tutorial.png");
+	sprites["tutorial"]->anchorPoint = { -0.1f,-1 };
+	
+	sprites["skip"] = Sprite::Create("UI/Skip.png");
+	sprites["skip"]->anchorPoint.x = 0.5f;
+	sprites["skip"]->position = Const(Vector2, "UiSkipStringPos");
 
 	PlayMode::Initialize();
 	keyUI[Key::Space] = OperateConfig::GetInstance()->CreateOperateSprite("SceneChange");
@@ -59,6 +59,7 @@ void UIDrawerTutorialScene::Update()
 {
 	PlayMode::Update();
 	tutorialEvent->Update();
+	AbstractUIDrawer::Update();
 }
 
 void UIDrawerTutorialScene::Draw()
