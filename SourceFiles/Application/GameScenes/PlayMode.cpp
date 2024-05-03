@@ -8,12 +8,9 @@ void PlayMode::Initialize()
 {
 	OperateDrawer::Initialize();
 
-	// ビットマップの設定
-	BitMapProp bitMapProp = Const(BitMapProp, "UiScore");
-	bitMapProp.fileName = "ui/num.png";
-
 	// スコア
-	*scoreSprite.GetBitMapProp() = bitMapProp;
+	*scoreSprite.GetBitMapProp() = Const(BitMapProp, "UiScore");
+	scoreSprite.GetBitMapProp()->fileName = "ui/num.png";
 	scoreSprite.Initialize();
 	sprites["Score"] = Sprite::Create("ui/score.png", Const(Vector2, "UiScorePosition"), { 0.5f,0.5f });
 }

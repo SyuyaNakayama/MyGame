@@ -37,12 +37,10 @@ class UIDrawerGameScene : public PlayMode
 private:
 	const float SLIDE_DIS_UI_GO = 500; // "Go!"のUIがスライドする距離
 
-	std::unique_ptr<WristerEngine::_2D::Sprite> uiClock;
 	WristerEngine::_2D::BitMapNumber timeIntSprite; // 残り時間整数部
 	WristerEngine::_2D::BitMapNumber timeDecSprite; // 残り時間小数部
 	Angle easingColor = 0; // 時間UI色のイージングに使う
 	std::unique_ptr<StartCountDown> countDown;
-	std::unique_ptr<WristerEngine::_2D::Sprite> uiGo;
 	Vector2 uiGoSize;
 	WristerEngine::Easing uiGoEasing;
 

@@ -1,6 +1,5 @@
 #include "GamePlayScene.h"
 #include "SceneManager.h"
-#include "AudioManager.h"
 #include <imgui.h>
 
 using namespace WristerEngine::_2D;
@@ -48,14 +47,8 @@ std::unique_ptr<StartCountDown> StartCountDown::Create()
 {
 	std::unique_ptr<StartCountDown> countDown = std::make_unique<StartCountDown>();
 
-	// ビットマップの設定
-	BitMapProp bitMapProp =
-	{
-		"ui/num.png",{30,30},{360,360},{},1
-	};
-
-	bitMapProp.pos = Half(WristerEngine::WIN_SIZE - bitMapProp.size);
-	*countDown->countUI.GetBitMapProp() = bitMapProp;
+	*countDown->countUI.GetBitMapProp() = WEConst(BitMapProp, "UiCountDown");
+	countDown->countUI.GetBitMapProp()->fileName = "ui/num.png";
 	countDown->countUI.Initialize();
 	if (fps == 0) { fps = WristerEngine::MAX_FPS; }
 	countDown->countTimer = COUNT_DOWN_TIME * fps;
@@ -93,39 +86,31 @@ void UIDrawerGameScene::Initialize()
 {
 	PlayMode::Initialize();
 
-	// ビットマップの設定
-	BitMapProp bitMapProp =
-	{
-		"ui/num.png",{30,30},{30,30},{1100,100},4
-	};
-
 	// 残り時間
 	// 整数部
-	bitMapProp.pos.x = 60;
-	bitMapProp.digit = 2;
-	*timeIntSprite.GetBitMapProp() = bitMapProp;
+	*timeIntSprite.GetBitMapProp() = Const(BitMapProp, "UiTimeInt");
+	timeIntSprite.GetBitMapProp()->fileName = "ui/num.png";
 	timeIntSprite.Initialize();
 	// 小数部
-	bitMapProp.pos = { 120,115 };
-	bitMapProp.digit = 3;
-	bitMapProp.size /= 2;
-	*timeDecSprite.GetBitMapProp() = bitMapProp;
+	*timeDecSprite.GetBitMapProp() = Const(BitMapProp, "UiTimeDec");
+	timeDecSprite.GetBitMapProp()->fileName = "ui/num.png";
 	timeDecSprite.Initialize();
 	// 時計アイコン
-	uiClock = Sprite::Create("ui/clock.png");
-	uiClock->SetCenterAnchor();
-	uiClock->position = { 112.5f,54 };
-	uiClock->Update();
+	sprites["Clock"] = Sprite::Create("ui/clock.png");
+	sprites["Clock"]->SetCenterAnchor();
+	sprites["Clock"]->position = { 112.5f,54 };
 
 	// カウントダウンUI
 	countDown = StartCountDown::Create();
-	uiGo = Sprite::Create("ui/GO.png");
-	uiGo->SetCenterAnchor();
-	uiGo->position = Half(WristerEngine::WIN_SIZE);
-	uiGo->isInvisible = true; // 透明
+	sprites["Go"] = Sprite::Create("ui/GO.png");
+	sprites["Go"]->SetCenterAnchor();
+	sprites["Go"]->position = Half(WristerEngine::WIN_SIZE);
+	sprites["Go"]->isInvisible = true; // 透明
 	const int GO_EASING_DEC = 4;
 	uiGoEasing.Initialize(StartCountDown::GetFPS() / GO_EASING_DEC, WristerEngine::Easing::Type::Sqrt);
 	UIGoAnimation = &UIDrawerGameScene::UIGoSlide;
+
+	AbstractUIDrawer::Update();
 }
 
 void UIDrawerGameScene::Update()
@@ -142,15 +127,15 @@ void UIDrawerGameScene::Update()
 		{
 			countDown.release();
 			stage->ResetTime();
-			uiGo->isInvisible = false;
+			sprites["Go"]->isInvisible = false;
 		}
 		else { return; }
 	}
 
-	if (!uiGo->isInvisible)
+	if (!sprites["Go"]->isInvisible)
 	{
 		(this->*UIGoAnimation)();
-		uiGo->Update();
+		sprites["Go"]->Update();
 	}
 
 	// 残り時間を取得
@@ -167,14 +152,16 @@ void UIDrawerGameScene::Update()
 
 	timeIntSprite.Update(remainTime[0]);
 	timeDecSprite.Update(remainTime[1]);
+
+	AbstractUIDrawer::Update();
 }
 
 void UIDrawerGameScene::UIGoSlide()
 {
 	float easingNum = uiGoEasing.Update();
-	uiGo->position.x = WristerEngine::WIN_SIZE.x / 2.0f + SLIDE_DIS_UI_GO * (1.0f - easingNum);
-	uiGo->color.a = easingNum;
-	if (easingNum == 1.0f)
+	sprites["Go"]->position.x = WristerEngine::WIN_SIZE.x / 2.0f + SLIDE_DIS_UI_GO * (1.0f - easingNum);
+	sprites["Go"]->color.a = easingNum;
+	if (uiGoEasing.IsFinish())
 	{
 		UIGoAnimation = &UIDrawerGameScene::UIGoIdle;
 	}
@@ -186,7 +173,7 @@ void UIDrawerGameScene::UIGoIdle()
 	static WristerEngine::FrameTimer idle = IDLE_TIME;
 	if (idle.Update())
 	{
-		uiGoSize = uiGo->size;
+		uiGoSize = sprites["Go"]->size;
 		UIGoAnimation = &UIDrawerGameScene::UIGoZoom;
 		uiGoEasing.Restart();
 	}
@@ -195,11 +182,11 @@ void UIDrawerGameScene::UIGoIdle()
 void UIDrawerGameScene::UIGoZoom()
 {
 	float easingNum = uiGoEasing.Update();
-	uiGo->size = uiGoSize * (1.0f + easingNum);
-	uiGo->color.a = (1.0f - easingNum);
-	if (easingNum == 1.0f)
+	sprites["Go"]->size = uiGoSize * (1.0f + easingNum);
+	sprites["Go"]->color.a = (1.0f - easingNum);
+	if (uiGoEasing.IsFinish())
 	{
-		uiGo->isInvisible = false;
+		sprites["Go"]->isInvisible = false;
 	}
 }
 
@@ -207,8 +194,6 @@ void UIDrawerGameScene::Draw()
 {
 	timeIntSprite.Draw();
 	timeDecSprite.Draw();
-	uiClock->Draw();
 	PlayMode::Draw();
 	if (countDown) { countDown->Draw(); }
-	uiGo->Draw();
 }

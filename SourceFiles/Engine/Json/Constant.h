@@ -5,6 +5,7 @@
 #include "Vector.h"
 
 #define Const(type, str) constant->GetConstant<type>(str)
+#define WEConst(type, str) WristerEngine::Constant::GetInstance()->GetConstant<type>(str)
 
 namespace WristerEngine
 {
@@ -35,7 +36,7 @@ namespace WristerEngine
 		void LoadConstants();
 
 		template<class T>
-		T GetConstant(const std::string& name)
+		T& GetConstant(const std::string& name)
 		{
 			T* num = (T*)constants[name];
 			assert(num);
