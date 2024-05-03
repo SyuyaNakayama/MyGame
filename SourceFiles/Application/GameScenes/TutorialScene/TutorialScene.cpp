@@ -15,13 +15,14 @@ void TutorialScene::Initialize()
 
 void TutorialScene::Update()
 {
+	// 定数再読み込み
 	if (input->IsTrigger(WristerEngine::Key::R))
 	{
-		// 定数再読み込み
 		WristerEngine::Constant::GetInstance()->LoadConstants();
 		sceneManager->ChangeScene(Scene::Tutorial, true, true, false);
 	}
 
+	// シーンチェンジ
 	if (operateConfig->GetTrigger("SceneChange"))
 	{
 		sceneManager->ChangeScene(Scene::Play);
@@ -36,21 +37,14 @@ void TutorialScene::Update()
 
 void UIDrawerTutorialScene::Initialize()
 {
+	PlayMode::Initialize();
 	using Key = WristerEngine::Key;
 
-	sprites["tutorial"] = Sprite::Create("UI/Tutorial.png");
-	sprites["tutorial"]->anchorPoint = { -0.1f,-1 };
-	
-	sprites["skip"] = Sprite::Create("UI/Skip.png");
-	sprites["skip"]->anchorPoint.x = 0.5f;
-	sprites["skip"]->position = Const(Vector2, "UiSkipStringPos");
-
-	PlayMode::Initialize();
-	keyUI[Key::Space] = OperateConfig::GetInstance()->CreateOperateSprite("SceneChange");
-	keyUI[Key::Space]->anchorPoint.x = 0.5f;
-	keyUI[Key::Space]->position = Const(Vector2, "UiSpacePosTutorial");
-
-	for (auto& s : keyUI) { s.second->Update(); }
+	sprites["tutorial"] = Sprite::Create("UI/Tutorial.png", {}, { -0.1f,-1 });
+	sprites["skip"] = Sprite::Create("UI/Skip.png", Const(Vector2, "UiSkipStringPos"), { 0.5f,0 });
+	sprites["SceneChange"] = OperateConfig::GetInstance()->CreateOperateSprite("SceneChange");
+	sprites["SceneChange"]->anchorPoint.x = 0.5f;
+	sprites["SceneChange"]->position = Const(Vector2, "UiSpacePosTutorial");
 
 	tutorialEvent->Initialize();
 }
@@ -66,5 +60,4 @@ void UIDrawerTutorialScene::Draw()
 {
 	PlayMode::Draw();
 	tutorialEvent->Draw();
-	for (auto& s : keyUI) { s.second->Draw(); }
 }

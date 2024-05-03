@@ -56,7 +56,7 @@ std::unique_ptr<Sprite> OperateConfig::CreateOperateSprite(const std::string& st
 		if (!input->IsConnectGamePad())
 		{
 			sprite = Sprite::Create("UI/Key/key_enter.png");
-			sprite->SetRect({ 96,96 });
+			sprite->Split({ 2,1 });
 			sprite->size *= 0.5f;
 		}
 		else
