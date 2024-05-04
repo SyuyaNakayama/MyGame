@@ -64,10 +64,12 @@ void PipelineManager::Initialize()
 	pipelineProp.inputLayoutProps.push_back({ "POSITION", DXGI_FORMAT_R32G32_FLOAT });
 	pipelineProp.inputLayoutProps.push_back({ "TEXCOORD", DXGI_FORMAT_R32G32_FLOAT });
 	pipelineProp.rootParamProp = { 1,1 };
+	pipelineProp.cullMode = D3D12_CULL_MODE_NONE;
 	pipelines[PipelineType::Sprite].CreatePipeline(pipelineProp);
 
 	pipelineProp.shaderNames = { L"PostEffectVS", L"PostEffectPS" };
 	pipelineProp.textureAddressMode = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	pipelineProp.cullMode = D3D12_CULL_MODE_BACK;
 	pipelines[PipelineType::PostEffect].CreatePipeline(pipelineProp);
 	
 	pipelineProp.shaderNames = { L"PostEffectVS", L"MultiTexturePS" };

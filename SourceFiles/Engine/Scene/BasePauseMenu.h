@@ -1,24 +1,19 @@
 #pragma once
 #include "BaseScene.h"
-#include "Sprite.h"
-#include "Constant.h"
+#include "AbstractUIDrawer.h"
 #include <map>
 
 namespace WristerEngine
 {
-	class BasePauseMenu
+	class BasePauseMenu:public _2D::AbstractUIDrawer
 	{
 	protected:
 		bool isPause = false;
 
-		std::map<std::string, std::unique_ptr<_2D::Sprite>> sprites;
-		Constant* constant = Constant::GetInstance();
-
 	public:
 		virtual ~BasePauseMenu() = default;
-		virtual void Initialize() = 0;
-		virtual void Update();
-		void Draw();
+		virtual void Update() override;
+		virtual void Draw() override;
 		void Pause() { isPause = !isPause; }
 		bool IsPause() const { return isPause; }
 	};
