@@ -23,24 +23,21 @@ public:
 	void Update() override;
 	void Draw() override { AbstractUIDrawer::Draw(); }
 
-	virtual void SpriteMove() = 0; // スプライトアニメーション
+	virtual void SpriteMove()=0; // スプライトアニメーション
 	virtual void Idle() = 0; // 操作待機中
-	virtual void IdleAction(float uiMoveDis) = 0; // 左右キー入力時の挙動
+	void IdleAction(float uiMoveDis, const std::string& indexName); // 左右キー入力時の挙動
 
 	// posYを設定
 	void SetPosY(float posY_) { posY = posY_; }
 
 	// 調整項目の値を返す
 	float GetParam() const { return param; }
-	// カーソルを非表示にする
-	void CursorInvisible();
 };
 
 class CameraModeItem : public BaseItem
 {
 	void SpriteMove(); // スプライトアニメーション
 	void Idle(); // 操作待機中
-	void IdleAction(float uiMoveDis); // 左右キー入力時の挙動
 
 	void Initialize() override;
 };
@@ -51,7 +48,9 @@ class Spd_DisItem : public BaseItem
 
 	void SpriteMove(); // スプライトアニメーション
 	void Idle(); // 操作待機中
-	void IdleAction(float uiMoveDis); // 左右キー入力時の挙動
+
+	// パラメーター値を計算する
+	float CalcParam() const { return 0.2f * paramVal; }
 
 	void Initialize() override;
 };

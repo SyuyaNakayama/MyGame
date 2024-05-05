@@ -14,6 +14,12 @@ void PauseMenu::Initialize()
 	sprites["01_bg"] = Sprite::Create("UI/uiFrame.png", Half(WristerEngine::WIN_SIZE), { 0.5f,0.5f });
 	sprites["01_bg"]->size = Const(Vector2, "BasePauseMenuFrameSize");
 
+	sprites["RightCursor"] = Sprite::Create("UI/SelectCursor.png", Const(Vector2, "RightCursor"));
+	sprites["RightCursor"]->size = { 64,64 };
+	sprites["LeftCursor"] = Sprite::Create("UI/SelectCursor.png", Const(Vector2, "LeftCursor"));
+	sprites["LeftCursor"]->size = { 64,64 };
+	sprites["LeftCursor"]->isFlipX = true;
+
 	std::vector<std::string> optionNames = { "Option","CameraSettings","Rot","Spd","Dis" };
 	for (size_t i = 0; i < optionNames.size(); i++)
 	{
@@ -40,11 +46,8 @@ void PauseMenu::Initialize()
 		i.second->Initialize();
 	}
 
-	for (auto& i : items)
-	{
-		i.second->Update();// UIを表示させる
-		i.second->CursorInvisible();// カーソルは非表示に
-	}
+	// UIを表示させる
+	for (auto& i : items) { i.second->Update(); }
 
 	// 調整項目初期値
 	param.moveSpd = items["Rot"]->GetParam();
@@ -60,11 +63,12 @@ void PauseMenu::Update()
 		WristerEngine::SceneManager::GetInstance()->Pause();
 	}
 
+	// 選択中の項目だけ更新する
 	if (operateConfig->GetTrigger("Up")) { select--; }
 	if (operateConfig->GetTrigger("Down")) { select++; }
 	select = std::clamp(select, 0, (int)SELECT_STR.size() - 1);
-
-	for (auto& i : items) { i.second->CursorInvisible(); } // カーソルを非表示にする
+	sprites["RightCursor"]->position.y = sprites[SELECT_STR[select]]->position.y;
+	sprites["LeftCursor"]->position.y = sprites[SELECT_STR[select]]->position.y;
 	items[SELECT_STR[select]]->Update();
 
 	// 調整項目を渡す
@@ -81,36 +85,30 @@ void PauseMenu::Draw()
 void BaseItem::Initialize()
 {
 	animation.Initialize(Const(int, "ItemUiAnimationTime"), WristerEngine::Easing::Type::EaseOutQuint);
-	sprites["RightCursor"] = Sprite::Create("UI/SelectCursor.png", Const(Vector2, "RightCursor"));
-	sprites["RightCursor"]->size = { 64,64 };
-	sprites["LeftCursor"] = Sprite::Create("UI/SelectCursor.png", Const(Vector2, "LeftCursor"));
-	sprites["LeftCursor"]->size = { 64,64 };
-	sprites["LeftCursor"]->isFlipX = true;
+	for (auto& s : sprites) { s.second->position.y = posY; }
 }
 
 void BaseItem::Update()
 {
 	(this->*State)();
-	sprites["RightCursor"]->isInvisible = false;
-	sprites["LeftCursor"]->isInvisible = false;
 	AbstractUIDrawer::Update();
 }
 
-void BaseItem::CursorInvisible()
+void BaseItem::IdleAction(float uiMoveDis_, const std::string& indexName)
 {
-	sprites["RightCursor"]->isInvisible = true;
-	sprites["LeftCursor"]->isInvisible = true;
+	State = &BaseItem::SpriteMove;
+	uiMoveDis = uiMoveDis_;
+	ltMemX = sprites[indexName]->textureLeftTop.x;
 }
 
 void CameraModeItem::Initialize()
 {
-	BaseItem::Initialize();
 	sprites["RotMode"] = Sprite::Create("UI/OptionText.png");
 	sprites["RotMode"]->SetRect({ 64,32 }, { 0,128 });
 	sprites["RotMode"]->size *= 2.0f;
 	sprites["RotMode"]->position = Const(Vector2, "RotModeStringPos");
 
-	for (auto& s : sprites) { s.second->position.y = posY; }
+	BaseItem::Initialize();
 
 	param = -1.0f; // 初期値
 }
@@ -126,45 +124,6 @@ void CameraModeItem::SpriteMove()
 	}
 }
 
-void CameraModeItem::Idle()
-{
-	if (operateConfig->GetTrigger("Right"))
-	{
-		if (Half(Const(float, "CameraModeUiLTMoveDis")) < sprites["RotMode"]->textureLeftTop.x) { return; }
-		IdleAction(Const(float, "CameraModeUiLTMoveDis"));
-		param = 1.0f;
-	}
-	else if (operateConfig->GetTrigger("Left"))
-	{
-		if (Half(Const(float, "CameraModeUiLTMoveDis")) > sprites["RotMode"]->textureLeftTop.x) { return; }
-		IdleAction(-Const(float, "CameraModeUiLTMoveDis"));
-		param = -1.0f;
-	}
-}
-
-void CameraModeItem::IdleAction(float uiMoveDis_)
-{
-	State = &BaseItem::SpriteMove;
-	uiMoveDis = uiMoveDis_;
-	ltMemX = sprites["RotMode"]->textureLeftTop.x;
-}
-
-void Spd_DisItem::Initialize()
-{
-	BaseItem::Initialize();
-	sprites["Num"] = Sprite::Create("UI/num.png", Const(Vector2, "SpdItemNumPos"));
-	sprites["Num"]->SetRect({ 30,30 }, { 30 * paramVal,0 });
-	sprites["Num"]->size = { 64,64 };
-	sprites["Num"]->anchorPoint.x = 0.5f;
-
-	sprites["RightCursor"]->position.y += 80;
-	sprites["LeftCursor"]->position.y += 80;
-
-	for (auto& s : sprites) { s.second->position.y = posY; }
-
-	param = 0.2f * paramVal; // 初期値
-}
-
 void Spd_DisItem::SpriteMove()
 {
 	float easeVal = animation.Update();
@@ -176,26 +135,47 @@ void Spd_DisItem::SpriteMove()
 	}
 }
 
+void CameraModeItem::Idle()
+{
+	if (operateConfig->GetTrigger("Right"))
+	{
+		if (Half(Const(float, "CameraModeUiLTMoveDis")) < sprites["RotMode"]->textureLeftTop.x) { return; }
+		IdleAction(Const(float, "CameraModeUiLTMoveDis"), "RotMode");
+		param = 1.0f;
+	}
+	else if (operateConfig->GetTrigger("Left"))
+	{
+		if (Half(Const(float, "CameraModeUiLTMoveDis")) > sprites["RotMode"]->textureLeftTop.x) { return; }
+		IdleAction(-Const(float, "CameraModeUiLTMoveDis"), "RotMode");
+		param = -1.0f;
+	}
+}
+
+void Spd_DisItem::Initialize()
+{
+	sprites["Num"] = Sprite::Create("UI/num.png", Const(Vector2, "SpdItemNumPos"));
+	sprites["Num"]->SetRect({ 30,30 }, { 30 * paramVal,0 });
+	sprites["Num"]->size = { 64,64 };
+	sprites["Num"]->anchorPoint.x = 0.5f;
+
+	BaseItem::Initialize();
+
+	param = CalcParam(); // 初期値
+}
+
 void Spd_DisItem::Idle()
 {
 	if (operateConfig->GetTrigger("Right"))
 	{
 		if (Const(float, "Spd_DisNumLTMoveDis") * 9.0f - 1.0f < sprites["Num"]->textureLeftTop.x) { return; }
-		IdleAction(Const(float, "Spd_DisNumLTMoveDis"));
+		IdleAction(Const(float, "Spd_DisNumLTMoveDis"), "Num");
 		paramVal++;
 	}
 	else if (operateConfig->GetTrigger("Left"))
 	{
 		if (Const(float, "Spd_DisNumLTMoveDis") + 1.0f > sprites["Num"]->textureLeftTop.x) { return; }
-		IdleAction(-Const(float, "Spd_DisNumLTMoveDis"));
+		IdleAction(-Const(float, "Spd_DisNumLTMoveDis"), "Num");
 		paramVal--;
 	}
-	param = 0.2f * paramVal;
-}
-
-void Spd_DisItem::IdleAction(float uiMoveDis_)
-{
-	State = &BaseItem::SpriteMove;
-	uiMoveDis = uiMoveDis_;
-	ltMemX = sprites["Num"]->textureLeftTop.x;
+	param = CalcParam();
 }
