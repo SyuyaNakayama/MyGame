@@ -10,6 +10,9 @@ float(Easing::* Easing::Ease[])() =
 	&Easing::Sqrt,
 	&Easing::OutElastic,
 	&Easing::OutBounce,
+	&Easing::EaseInOutBack,
+	&Easing::EaseOutQuint,
+	&Easing::EaseInOutQuint,
 };
 
 float(LoopEasing::* LoopEasing::Ease[])() =
@@ -34,6 +37,21 @@ float Easing::OutBounce()
 	else if (x < 2.0f / d1) { return n1 * (x -= 1.5f / d1) * x + 0.75f; }
 	else if (x < 2.5f / d1) { return n1 * (x -= 2.25f / d1) * x + 0.9375f; }
 	else { return n1 * (x -= 2.625f / d1) * x + 0.984375f; }
+}
+
+float Easing::EaseInOutBack()
+{
+	const float c1 = 1.70158f;
+	const float c2 = c1 * 1.525f;
+
+	return x < 0.5f
+		? (powf(2 * x, 2) * ((c2 + 1) * 2 * x - c2)) / 2
+		: (powf(2 * x - 2, 2) * ((c2 + 1) * (x * 2 - 2) + c2) + 2) / 2;
+}
+
+float Easing::EaseInOutQuint()
+{
+	return x < 0.5f ? 16 * powf(x, 5) : 1 - powf(-2 * x + 2, 5) / 2;
 }
 
 void Easing::Initialize(int easeTime, Type type_)

@@ -2,6 +2,7 @@
 #include "Input.h"
 #include "SceneManager.h"
 #include <algorithm>
+#include "PauseMenu.h"
 using namespace WristerEngine::_2D;
 using namespace WristerEngine::_3D;
 
@@ -17,21 +18,21 @@ void PlayerCamera::Initialize(Transform* parent)
 
 void PlayerCamera::Update()
 {
+	const PauseMenu* pauseMenu = PauseMenu::GetInstance();
 	Vector2 cameraMove;
-	const float MOVE_SPD = 1.0f;
+	const float MOVE_SPD = pauseMenu->GetCameraParam().moveSpd / rotSpdDec;
 
 	WristerEngine::Input* input = WristerEngine::Input::GetInstance();
 	if (!input->IsConnectGamePad())
 	{
-		cameraMove.x = input->Move(WristerEngine::Key::Left, WristerEngine::Key::Right, MOVE_SPD);
+		cameraMove.x = input->Move(WristerEngine::Key::Right, WristerEngine::Key::Left, MOVE_SPD);
 	}
 	else
 	{
-		cameraMove = input->ConRStick(MOVE_SPD);
-		cameraMove.y = 0;
+		cameraMove.x = input->ConRStick(MOVE_SPD).x;
 	}
 
-	angle += cameraMove / rotSpdDec;
+	angle += cameraMove;
 	BaseCamera::Update();
 	parentPrePos = worldTransform.parent->GetWorldPosition();
 }

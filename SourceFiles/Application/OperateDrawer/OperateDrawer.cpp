@@ -19,10 +19,8 @@ void OperateDrawer::Initialize()
 		mapChip->AddSprite("UI/Key/key_D.png", { 2,1 });
 		mapChip->AddSprite("UI/Key/key_W.png", { 1,0 });
 		mapChip->AddSprite("UI/Key/key_S.png", { 1,1 });
-		mapChip->AddSprite("UI/Key/key_Left.png", { 0,3 });
-		mapChip->AddSprite("UI/Key/key_Right.png", { 2,3 });
-		mapChip->AddSprite("UI/Key/key_Up.png", { 1,2 });
-		mapChip->AddSprite("UI/Key/key_Down.png", { 1,3 });
+		mapChip->AddSprite("UI/Key/key_Left.png", { 0.5f,2.5f });
+		mapChip->AddSprite("UI/Key/key_Right.png", { 1.5f,2.5f });
 		mapChip->AddSprite("UI/Key/key_SHIFT.png", { 1,4 });
 	}
 	else

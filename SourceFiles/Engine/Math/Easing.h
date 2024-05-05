@@ -4,14 +4,18 @@
 namespace WristerEngine
 {
 	// イージング
+	// 参考 : https://easings.net/ja#
 	class Easing
 	{
 	public:
 		enum class Type
 		{
-			Sqrt,	// √x
-			OutElastic, // https://easings.net/ja#easeOutElastic
-			OutBounce, // https://easings.net/ja#easeOutBounce
+			Sqrt, // √x
+			OutElastic,
+			OutBounce,
+			EaseInOutBack,
+			EaseOutQuint,
+			EaseInOutQuint,
 		};
 
 		// イージングの最大値
@@ -32,6 +36,12 @@ namespace WristerEngine
 		float OutElastic();
 		// https://easings.net/ja#easeOutBounce
 		float OutBounce();
+		// https://easings.net/ja#easeInOutBack
+		float EaseInOutBack();
+		// https://easings.net/ja#easeOutQuint
+		float EaseOutQuint(){ return 1 - powf(1 - x, 5); }
+		// https://easings.net/ja#easeInOutQuint
+		float EaseInOutQuint();
 
 	public:
 		/// <summary>

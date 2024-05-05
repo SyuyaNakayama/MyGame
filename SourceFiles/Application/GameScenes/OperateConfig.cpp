@@ -45,6 +45,24 @@ bool OperateConfig::GetTrigger(const std::string& str)
 		key = input->IsTrigger(Key::H);
 		if (input->IsConnectGamePad()) { pad = input->IsTrigger(Pad::Y); }
 	}
+	else if (str == "Left")
+	{
+		key = input->IsTrigger(Key::Left);
+		if (input->IsConnectGamePad())
+		{
+			float horizontal = input->ConLStick(1.0f).x;
+			pad = horizontal < 0.0f;
+		}
+	}
+	else if (str == "Right")
+	{
+		key = input->IsTrigger(Key::Right);
+		if (input->IsConnectGamePad())
+		{
+			float horizontal = input->ConLStick(1.0f).x;
+			pad = horizontal > 0.0f;
+		}
+	}
 	return key || pad;
 }
 
@@ -87,9 +105,9 @@ std::unique_ptr<SpriteAnimation> OperateConfig::CreateOperateSpriteAnimation(con
 	int aInterval = Const(int, "SpriteAnimationInterval");
 	if (str == "Select")
 	{
-		if (!input->IsConnectGamePad()) 
+		if (!input->IsConnectGamePad())
 		{
-			spriteAnimation->Initialize("UI/Key/key_Enter.png", 96, aInterval); 
+			spriteAnimation->Initialize("UI/Key/key_Enter.png", 96, aInterval);
 			spriteAnimation->GetSprite()->size *= 0.5f;
 		}
 		else { spriteAnimation->Initialize("ui/Key/button_A.png", 64, aInterval); }

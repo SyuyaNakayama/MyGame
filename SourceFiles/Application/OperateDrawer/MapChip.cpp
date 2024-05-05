@@ -28,8 +28,6 @@ void MapChip::Update()
 			input->IsInput(Key::S),
 			input->IsInput(Key::Left),
 			input->IsInput(Key::Right),
-			input->IsInput(Key::Up),
-			input->IsInput(Key::Down),
 			OperateConfig::GetInstance()->GetPush("Dash")
 		};
 	}

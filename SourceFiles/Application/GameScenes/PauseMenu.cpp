@@ -30,9 +30,11 @@ void PauseMenu::Initialize()
 		sprites[optionNames[i]]->position = Const(Vector2, str);
 	}
 
-	items.resize(1);
-	items[0] = std::make_unique<CameraModeItem>();
-	for (auto& i : items) { i->Initialize(); }
+	items["CameraMode"] = std::make_unique<CameraModeItem>();
+	for (auto& i : items) { i.second->Initialize(); }
+
+	// ’²®€–Ú‰Šú’l
+	param.moveSpd = items["CameraMode"]->GetParam();
 }
 
 void PauseMenu::Update()
@@ -44,22 +46,25 @@ void PauseMenu::Update()
 	{
 		WristerEngine::SceneManager::GetInstance()->Pause();
 	}
-	for (auto& i : items) { i->Update(); }
+	for (auto& i : items) { i.second->Update(); }
+
+	// ’²®€–Ú‚ð“n‚·
+	param.moveSpd = items["CameraMode"]->GetParam();
 }
 
 void PauseMenu::Draw()
 {
 	WristerEngine::BasePauseMenu::Draw();
-	for (auto& i : items) { i->Draw(); }
+	for (auto& i : items) { i.second->Draw(); }
 }
 
 void BaseItem::Initialize()
 {
-	sprites["Cursor_01"] = Sprite::Create("UI/SelectCursor.png");
-	sprites["Cursor_01"]->isFlipX = true;
-	sprites["Cursor_01"]->position.x = 400.0f;
-	sprites["Cursor_01"]->Update();
-	//sprites["Cursor_02"] = Sprite::Create("UI/SelectCursor.png");
+	sprites["RightCursor"] = Sprite::Create("UI/SelectCursor.png", Const(Vector2, "RightCursor"));
+	sprites["RightCursor"]->size = { 64,64 };
+	sprites["LeftCursor"] = Sprite::Create("UI/SelectCursor.png", Const(Vector2, "LeftCursor"));
+	sprites["LeftCursor"]->size = { 64,64 };
+	sprites["LeftCursor"]->isFlipX = true;
 }
 
 void CameraModeItem::Initialize()
@@ -69,9 +74,47 @@ void CameraModeItem::Initialize()
 	sprites["RotMode"]->SetRect({ 64,32 }, { 0,128 });
 	sprites["RotMode"]->size *= 2.0f;
 	sprites["RotMode"]->position = Const(Vector2, "RotModeStringPos");
+
+	param = -1.0f; // ‰Šú’l
+	animation.Initialize(Const(int, "CameraModeUiAnimationTime"), WristerEngine::Easing::Type::EaseOutQuint);
+}
+
+void CameraModeItem::SpriteMove()
+{
+	float easeVal = animation.Update();
+	sprites["RotMode"]->textureLeftTop.x = ltMemX + easeVal * uiMoveDis;
+	if (animation.IsFinish()) 
+	{
+		State = &CameraModeItem::Idle; 
+		animation.Restart();
+	}
+}
+
+void CameraModeItem::Idle()
+{
+	if (operateConfig->GetTrigger("Right"))
+	{
+		if (Half(Const(float, "CameraModeUiLTMoveDis")) < sprites["RotMode"]->textureLeftTop.x) { return; }
+		IdleAction(Const(float, "CameraModeUiLTMoveDis"));
+		param = 1.0f;
+	}
+	else if (operateConfig->GetTrigger("Left"))
+	{
+		if (Half(Const(float, "CameraModeUiLTMoveDis")) > sprites["RotMode"]->textureLeftTop.x) { return; }
+		IdleAction(-Const(float, "CameraModeUiLTMoveDis"));
+		param = -1.0f;
+	}
+}
+
+void CameraModeItem::IdleAction(float uiMoveDis_)
+{
+	State = &CameraModeItem::SpriteMove;
+	uiMoveDis = uiMoveDis_;
+	ltMemX = sprites["RotMode"]->textureLeftTop.x;
 }
 
 void CameraModeItem::Update()
 {
+	(this->*State)();
 	AbstractUIDrawer::Update();
 }
