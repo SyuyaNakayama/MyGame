@@ -1,5 +1,6 @@
 #include "PauseMenu.h"
 #include "SceneManager.h"
+#include <algorithm>
 using namespace WristerEngine::_2D;
 
 PauseMenu* PauseMenu::GetInstance()
@@ -39,6 +40,12 @@ void PauseMenu::Initialize()
 		i.second->Initialize();
 	}
 
+	for (auto& i : items)
+	{
+		i.second->Update();// UIを表示させる
+		i.second->CursorInvisible();// カーソルは非表示に
+	}
+
 	// 調整項目初期値
 	param.moveSpd = items["Rot"]->GetParam();
 }
@@ -52,7 +59,13 @@ void PauseMenu::Update()
 	{
 		WristerEngine::SceneManager::GetInstance()->Pause();
 	}
-	for (auto& i : items) { i.second->Update(); }
+
+	if (operateConfig->GetTrigger("Up")) { select--; }
+	if (operateConfig->GetTrigger("Down")) { select++; }
+	select = std::clamp(select, 0, (int)SELECT_STR.size() - 1);
+
+	for (auto& i : items) { i.second->CursorInvisible(); } // カーソルを非表示にする
+	items[SELECT_STR[select]]->Update();
 
 	// 調整項目を渡す
 	param.moveSpd = items["Rot"]->GetParam() * items["Spd"]->GetParam();
@@ -78,7 +91,15 @@ void BaseItem::Initialize()
 void BaseItem::Update()
 {
 	(this->*State)();
+	sprites["RightCursor"]->isInvisible = false;
+	sprites["LeftCursor"]->isInvisible = false;
 	AbstractUIDrawer::Update();
+}
+
+void BaseItem::CursorInvisible()
+{
+	sprites["RightCursor"]->isInvisible = true;
+	sprites["LeftCursor"]->isInvisible = true;
 }
 
 void CameraModeItem::Initialize()

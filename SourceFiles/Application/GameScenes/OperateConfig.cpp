@@ -63,6 +63,24 @@ bool OperateConfig::GetTrigger(const std::string& str)
 			pad = horizontal > 0.0f;
 		}
 	}
+	else if (str == "Up")
+	{
+		key = input->IsTrigger(Key::Up);
+		if (input->IsConnectGamePad())
+		{
+			float vertical = input->ConLStick(1.0f).y;
+			pad = vertical < 0.0f;
+		}
+	}
+	else if (str == "Down")
+	{
+		key = input->IsTrigger(Key::Down);
+		if (input->IsConnectGamePad())
+		{
+			float vertical = input->ConLStick(1.0f).y;
+			pad = vertical > 0.0f;
+		}
+	}
 	return key || pad;
 }
 

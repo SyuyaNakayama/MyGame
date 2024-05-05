@@ -22,7 +22,7 @@ public:
 	virtual void Initialize() override;
 	void Update() override;
 	void Draw() override { AbstractUIDrawer::Draw(); }
-	
+
 	virtual void SpriteMove() = 0; // スプライトアニメーション
 	virtual void Idle() = 0; // 操作待機中
 	virtual void IdleAction(float uiMoveDis) = 0; // 左右キー入力時の挙動
@@ -32,6 +32,8 @@ public:
 
 	// 調整項目の値を返す
 	float GetParam() const { return param; }
+	// カーソルを非表示にする
+	void CursorInvisible();
 };
 
 class CameraModeItem : public BaseItem
@@ -65,6 +67,10 @@ class PauseMenu final : public WristerEngine::BasePauseMenu
 	OperateConfig* operateConfig = OperateConfig::GetInstance();
 	std::map<std::string, std::unique_ptr<BaseItem>> items; // 設定項目
 	CameraParam param;
+
+	// 項目の選択
+	int select = 0;
+	std::vector<std::string> SELECT_STR = { "Rot","Spd","Dis" };
 
 	PauseMenu() = default;
 	~PauseMenu() = default;
