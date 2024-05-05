@@ -20,6 +20,25 @@ bool OperateConfig::GetPush(const std::string& str)
 		pad = false;
 		if (input->IsConnectGamePad()) { pad = input->IsInput(Pad::B); }
 	}
+	else if (str == "Left")
+	{
+		key = input->IsInput(Key::Left);
+		if (input->IsConnectGamePad())
+		{
+			float horizontal = input->ConLStick(1.0f).x;
+			pad = horizontal < 0.0f;
+		}
+	}
+	else if (str == "Right")
+	{
+		key = input->IsInput(Key::Right);
+		if (input->IsConnectGamePad())
+		{
+			float horizontal = input->ConLStick(1.0f).x;
+			pad = horizontal > 0.0f;
+		}
+	}
+
 	return key || pad;
 }
 
@@ -81,6 +100,25 @@ bool OperateConfig::GetTrigger(const std::string& str)
 			pad = vertical > 0.0f;
 		}
 	}
+	else if (str == "Left")
+	{
+		key = input->IsTrigger(Key::Left);
+		if (input->IsConnectGamePad())
+		{
+			float horizontal = input->ConLStick(1.0f).x;
+			pad = horizontal < 0.0f;
+		}
+	}
+	else if (str == "Right")
+	{
+		key = input->IsTrigger(Key::Right);
+		if (input->IsConnectGamePad())
+		{
+			float horizontal = input->ConLStick(1.0f).x;
+			pad = horizontal > 0.0f;
+		}
+	}
+
 	return key || pad;
 }
 

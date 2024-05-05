@@ -94,40 +94,30 @@ void BaseItem::Update()
 	AbstractUIDrawer::Update();
 }
 
-void BaseItem::IdleAction(float uiMoveDis_, const std::string& indexName)
+void BaseItem::IdleAction(float uiMoveDis_)
 {
 	State = &BaseItem::SpriteMove;
 	uiMoveDis = uiMoveDis_;
-	ltMemX = sprites[indexName]->textureLeftTop.x;
+	ltMemX = sprites[spriteIndexName]->textureLeftTop.x;
 }
 
 void CameraModeItem::Initialize()
 {
-	sprites["RotMode"] = Sprite::Create("UI/OptionText.png");
-	sprites["RotMode"]->SetRect({ 64,32 }, { 0,128 });
-	sprites["RotMode"]->size *= 2.0f;
-	sprites["RotMode"]->position = Const(Vector2, "RotModeStringPos");
+	spriteIndexName = "RotMode";
+	sprites[spriteIndexName] = Sprite::Create("UI/OptionText.png");
+	sprites[spriteIndexName]->SetRect({ 64,32 }, { 0,128 });
+	sprites[spriteIndexName]->size *= 2.0f;
+	sprites[spriteIndexName]->position = Const(Vector2, "RotModeStringPos");
 
 	BaseItem::Initialize();
 
 	param = -1.0f; // ‰Šú’l
 }
 
-void CameraModeItem::SpriteMove()
+void BaseItem::SpriteMove()
 {
 	float easeVal = animation.Update();
-	sprites["RotMode"]->textureLeftTop.x = ltMemX + easeVal * uiMoveDis;
-	if (animation.IsFinish())
-	{
-		State = &BaseItem::Idle;
-		animation.Restart();
-	}
-}
-
-void Spd_DisItem::SpriteMove()
-{
-	float easeVal = animation.Update();
-	sprites["Num"]->textureLeftTop.x = ltMemX + easeVal * uiMoveDis;
+	sprites[spriteIndexName]->textureLeftTop.x = ltMemX + easeVal * uiMoveDis;
 	if (animation.IsFinish())
 	{
 		State = &BaseItem::Idle;
@@ -137,26 +127,27 @@ void Spd_DisItem::SpriteMove()
 
 void CameraModeItem::Idle()
 {
-	if (operateConfig->GetTrigger("Right"))
+	if (operateConfig->GetPush("Right"))
 	{
-		if (Half(Const(float, "CameraModeUiLTMoveDis")) < sprites["RotMode"]->textureLeftTop.x) { return; }
-		IdleAction(Const(float, "CameraModeUiLTMoveDis"), "RotMode");
+		if (Half(Const(float, "CameraModeUiLTMoveDis")) < sprites[spriteIndexName]->textureLeftTop.x) { return; }
+		IdleAction(Const(float, "CameraModeUiLTMoveDis"));
 		param = 1.0f;
 	}
-	else if (operateConfig->GetTrigger("Left"))
+	else if (operateConfig->GetPush("Left"))
 	{
-		if (Half(Const(float, "CameraModeUiLTMoveDis")) > sprites["RotMode"]->textureLeftTop.x) { return; }
-		IdleAction(-Const(float, "CameraModeUiLTMoveDis"), "RotMode");
+		if (Half(Const(float, "CameraModeUiLTMoveDis")) > sprites[spriteIndexName]->textureLeftTop.x) { return; }
+		IdleAction(-Const(float, "CameraModeUiLTMoveDis"));
 		param = -1.0f;
 	}
 }
 
 void Spd_DisItem::Initialize()
 {
-	sprites["Num"] = Sprite::Create("UI/num.png", Const(Vector2, "SpdItemNumPos"));
-	sprites["Num"]->SetRect({ 30,30 }, { 30 * paramVal,0 });
-	sprites["Num"]->size = { 64,64 };
-	sprites["Num"]->anchorPoint.x = 0.5f;
+	spriteIndexName = "Num";
+	sprites[spriteIndexName] = Sprite::Create("UI/num.png", Const(Vector2, "SpdItemNumPos"));
+	sprites[spriteIndexName]->SetRect({ 30,30 }, { 30 * paramVal,0 });
+	sprites[spriteIndexName]->size = { 64,64 };
+	sprites[spriteIndexName]->anchorPoint.x = 0.5f;
 
 	BaseItem::Initialize();
 
@@ -165,16 +156,16 @@ void Spd_DisItem::Initialize()
 
 void Spd_DisItem::Idle()
 {
-	if (operateConfig->GetTrigger("Right"))
+	if (operateConfig->GetPush("Right"))
 	{
-		if (Const(float, "Spd_DisNumLTMoveDis") * 9.0f - 1.0f < sprites["Num"]->textureLeftTop.x) { return; }
-		IdleAction(Const(float, "Spd_DisNumLTMoveDis"), "Num");
+		if (Const(float, "Spd_DisNumLTMoveDis") * 9.0f - 1.0f < sprites[spriteIndexName]->textureLeftTop.x) { return; }
+		IdleAction(Const(float, "Spd_DisNumLTMoveDis"));
 		paramVal++;
 	}
-	else if (operateConfig->GetTrigger("Left"))
+	else if (operateConfig->GetPush("Left"))
 	{
-		if (Const(float, "Spd_DisNumLTMoveDis") + 1.0f > sprites["Num"]->textureLeftTop.x) { return; }
-		IdleAction(-Const(float, "Spd_DisNumLTMoveDis"), "Num");
+		if (Const(float, "Spd_DisNumLTMoveDis") + 1.0f > sprites[spriteIndexName]->textureLeftTop.x) { return; }
+		IdleAction(-Const(float, "Spd_DisNumLTMoveDis"));
 		paramVal--;
 	}
 	param = CalcParam();

@@ -12,6 +12,7 @@ protected:
 	WristerEngine::Easing animation; // アニメーションに使うイージング
 	float ltMemX = 0; // LeftTop.x記憶変数
 	float posY = 0; // 表示する場所(Y軸成分)
+	std::string spriteIndexName; // スプライトの配列の添え字の名前
 
 	// 操作切り替えの関数
 	void (BaseItem::* State)() = &BaseItem::Idle;
@@ -23,9 +24,9 @@ public:
 	void Update() override;
 	void Draw() override { AbstractUIDrawer::Draw(); }
 
-	virtual void SpriteMove()=0; // スプライトアニメーション
+	void SpriteMove(); // スプライトアニメーション
 	virtual void Idle() = 0; // 操作待機中
-	void IdleAction(float uiMoveDis, const std::string& indexName); // 左右キー入力時の挙動
+	void IdleAction(float uiMoveDis); // 左右キー入力時の挙動
 
 	// posYを設定
 	void SetPosY(float posY_) { posY = posY_; }
@@ -36,7 +37,6 @@ public:
 
 class CameraModeItem : public BaseItem
 {
-	void SpriteMove(); // スプライトアニメーション
 	void Idle(); // 操作待機中
 
 	void Initialize() override;
@@ -46,7 +46,6 @@ class Spd_DisItem : public BaseItem
 {
 	float paramVal = 5.0f;
 
-	void SpriteMove(); // スプライトアニメーション
 	void Idle(); // 操作待機中
 
 	// パラメーター値を計算する
