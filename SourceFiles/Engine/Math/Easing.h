@@ -24,8 +24,8 @@ namespace WristerEngine
 	private:
 		FrameTimer timer = 0; // タイマー
 		float x = 0; // イージングの割合
-		Type type;
-		bool isFinish;
+		Type type = Type::Sqrt;
+		bool isFinish = false;
 
 		// イージングの関数テーブル
 		static float (Easing::* Ease[])();
@@ -39,7 +39,7 @@ namespace WristerEngine
 		// https://easings.net/ja#easeInOutBack
 		float EaseInOutBack();
 		// https://easings.net/ja#easeOutQuint
-		float EaseOutQuint(){ return 1 - powf(1 - x, 5); }
+		float EaseOutQuint() { return 1 - powf(1 - x, 5); }
 		// https://easings.net/ja#easeInOutQuint
 		float EaseInOutQuint();
 

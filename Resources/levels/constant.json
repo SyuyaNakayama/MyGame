@@ -1,6 +1,6 @@
 {
   "int": {
-    "CameraModeUiAnimationTime": 30,
+    "ItemUiAnimationTime": 20,
     "GoalBlinkNum": 4,
     "GoalBlinkTime": 120,
     "ScoreChangeTimer": 600,
@@ -12,7 +12,9 @@
   },
   "float": {
     "PlayerMoveForce": 0.15,
-    "CameraModeUiLTMoveDis": 96
+    "CameraModeUiLTMoveDis": 96,
+    "Spd_DisNumLTMoveDis": 30,
+    "PlayerCameraInitDis": 40
   },
   "Vector2": {
     "UiTitleJPPos": [ 640, 160 ],
@@ -39,7 +41,8 @@
     "DisStringPos": [ 278, 440 ],
     "RotModeStringPos": [ 598, 280 ],
     "RightCursor": [ 790, 280 ],
-    "LeftCursor": [ 534, 280 ]
+    "LeftCursor": [ 534, 280 ],
+    "SpdItemNumPos": [ 662, 362 ]
   },
   "BitMapProp": {
     "UiScore": [ 30, 30, 30, 30, 1100, 100, 4 ],

@@ -7,7 +7,6 @@
 // プレイヤーに追従するカメラ
 class PlayerCamera : public WristerEngine::_3D::BaseCamera
 {
-	Vector3 parentPrePos;
 	float rotSpdDec = 25;
 	
 	/// <summary>

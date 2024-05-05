@@ -8,48 +8,51 @@ class BaseItem : public WristerEngine::_2D::AbstractUIDrawer
 protected:
 	OperateConfig* operateConfig = OperateConfig::GetInstance();
 	float param = 0; // PauseMenuクラスに渡す調整項目の値
+	float uiMoveDis = 0; // UIのLeftTop.x移動距離
+	WristerEngine::Easing animation; // アニメーションに使うイージング
+	float ltMemX = 0; // LeftTop.x記憶変数
+	float posY = 0; // 表示する場所(Y軸成分)
+
+	// 操作切り替えの関数
+	void (BaseItem::* State)() = &BaseItem::Idle;
 
 public:
 	virtual ~BaseItem() = default;
 	// AbstractUIDrawer を介して継承されました
 	virtual void Initialize() override;
-	virtual void Update() override { for (auto& s : sprites) { s.second->Draw(); } }
-	void Draw() override { for (auto& s : sprites) { s.second->Draw(); } }
+	void Update() override;
+	void Draw() override { AbstractUIDrawer::Draw(); }
+	
+	virtual void SpriteMove() = 0; // スプライトアニメーション
+	virtual void Idle() = 0; // 操作待機中
+	virtual void IdleAction(float uiMoveDis) = 0; // 左右キー入力時の挙動
+
+	// posYを設定
+	void SetPosY(float posY_) { posY = posY_; }
+
 	// 調整項目の値を返す
 	float GetParam() const { return param; }
 };
 
 class CameraModeItem : public BaseItem
 {
-	float uiMoveDis = 0; // UIのLeftTop.x移動距離
-	WristerEngine::Easing animation; // アニメーションに使うイージング
-	float ltMemX = 0; // LeftTop.x記憶変数
-
-	// 操作切り替えの関数
-	void (CameraModeItem::* State)() = &CameraModeItem::Idle;
 	void SpriteMove(); // スプライトアニメーション
 	void Idle(); // 操作待機中
 	void IdleAction(float uiMoveDis); // 左右キー入力時の挙動
 
 	void Initialize() override;
-	void Update() override;
 };
 
-//class Spd_DisItem : public BaseItem
-//{
-//	float uiMoveDis = 0; // UIのLeftTop.x移動距離
-//	WristerEngine::Easing animation; // アニメーションに使うイージング
-//	float ltMemX = 0; // LeftTop.x記憶変数
-//
-//	// 操作切り替えの関数
-//	void (CameraModeItem::* State)() = &CameraModeItem::Idle;
-//	void SpriteMove(); // スプライトアニメーション
-//	void Idle(); // 操作待機中
-//	void IdleAction(float uiMoveDis); // 左右キー入力時の挙動
-//
-//	void Initialize() override;
-//	void Update() override;
-//};
+class Spd_DisItem : public BaseItem
+{
+	float paramVal = 5.0f;
+
+	void SpriteMove(); // スプライトアニメーション
+	void Idle(); // 操作待機中
+	void IdleAction(float uiMoveDis); // 左右キー入力時の挙動
+
+	void Initialize() override;
+};
 
 // カメラの調整項目
 struct CameraParam
