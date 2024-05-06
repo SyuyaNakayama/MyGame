@@ -88,7 +88,7 @@ bool OperateConfig::GetTrigger(const std::string& str)
 		if (input->IsConnectGamePad())
 		{
 			float vertical = input->ConLStick(1.0f).y;
-			pad = vertical < 0.0f;
+			pad = vertical > 0.0f;
 		}
 	}
 	else if (str == "Down")
@@ -97,7 +97,7 @@ bool OperateConfig::GetTrigger(const std::string& str)
 		if (input->IsConnectGamePad())
 		{
 			float vertical = input->ConLStick(1.0f).y;
-			pad = vertical > 0.0f;
+			pad = vertical < 0.0f;
 		}
 	}
 	else if (str == "Left")
@@ -149,6 +149,19 @@ std::unique_ptr<Sprite> OperateConfig::CreateOperateSprite(const std::string& st
 		else
 		{
 			sprite = Sprite::Create("UI/Key/button_X.png");
+			sprite->Split({ 2,1 });
+		}
+	}
+	else if (str == "Pause")
+	{
+		if (!input->IsConnectGamePad())
+		{
+			sprite = Sprite::Create("UI/Key/key_H.png");
+			sprite->Split({ 2,1 });
+		}
+		else
+		{
+			sprite = Sprite::Create("UI/Key/button_Y.png");
 			sprite->Split({ 2,1 });
 		}
 	}

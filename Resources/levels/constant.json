@@ -42,7 +42,9 @@
     "RotModeStringPos": [ 598, 280 ],
     "RightCursor": [ 790, 280 ],
     "LeftCursor": [ 534, 280 ],
-    "SpdItemNumPos": [ 662, 362 ]
+    "SpdItemNumPos": [ 662, 362 ],
+    "PauseIconPos": [ 1110, 620 ],
+    "PauseKeyPos": [ 1180, 620 ]
   },
   "BitMapProp": {
     "UiScore": [ 30, 30, 30, 30, 1100, 100, 4 ],

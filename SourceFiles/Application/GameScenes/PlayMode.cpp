@@ -13,6 +13,13 @@ void PlayMode::Initialize()
 	scoreSprite.GetBitMapProp()->fileName = "ui/num.png";
 	scoreSprite.Initialize();
 	sprites["Score"] = Sprite::Create("ui/score.png", Const(Vector2, "UiScorePosition"), { 0.5f,0.5f });
+
+	// ポーズメニュー
+	sprites["PauseIcon"] = Sprite::Create("UI/PauseIcon.png", Const(Vector2, "PauseIconPos"));
+	sprites["PauseIcon"]->size = { 64,64 };
+	sprites["PauseKey"] = OperateConfig::GetInstance()->CreateOperateSprite("Pause");
+	sprites["PauseKey"]->position = Const(Vector2, "PauseKeyPos");
+	sprites["PauseKey"]->size = { 64,64 };
 }
 
 void PlayMode::Update()
