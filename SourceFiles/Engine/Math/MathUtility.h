@@ -30,7 +30,13 @@ public:
 enum class Axis { X, Y, Z };
 
 // ”‚ğƒ‹[ƒv‚³‚¹‚éŠÖ”
-int NumberLoop(int num, int max, int min = 0);
+template <class T>
+T NumberLoop(T num, T max, T min = 0)
+{
+	if (num > max) { return num - max + min; }
+	if (num < min) { return max - min + num; }
+	return num;
+}
 
 /// <summary>
 /// ”¼•ª‚Ì’l‚ğ•Ô‚·

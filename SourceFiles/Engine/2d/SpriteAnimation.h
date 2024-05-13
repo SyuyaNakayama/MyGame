@@ -30,4 +30,24 @@ namespace WristerEngine::_2D
 		// スプライトの取得
 		Sprite* GetSprite() { return sprite.get(); }
 	};
+
+	class SpriteAnimationTest
+	{
+	private:
+		Sprite* sprite;
+		float width = 0;
+		FrameTimer interval;
+		size_t animeNum = 0;
+		size_t animeNumMax = 0;
+
+	public:
+		/// <summary>
+		/// 初期化
+		/// </summary>
+		/// <param name="spriteWidth">アニメーション一枚の切り取り枚数</param>
+		/// <param name="animationIntervel">アニメーション速度</param>
+		void Initialize(size_t spriteNum, int animationIntervel);
+		// 更新
+		void Update();
+	};
 }

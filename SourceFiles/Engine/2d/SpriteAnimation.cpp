@@ -23,3 +23,18 @@ void SpriteAnimation::Update()
 	}
 	sprite->Update();
 }
+
+void WristerEngine::_2D::SpriteAnimationTest::Initialize(size_t spriteNum, int animationIntervel)
+{
+	width = sprite->textureSize.x / spriteNum;
+	interval = animationIntervel;
+	animeNumMax = spriteNum;
+	sprite->SetRect({ width,sprite->textureSize.y });
+}
+
+void WristerEngine::_2D::SpriteAnimationTest::Update()
+{
+	if (!interval.Update()) { return; }
+	animeNum = NumberLoop(animeNum + 1, animeNumMax);
+	sprite->textureLeftTop = { (float)animeNum * width ,0 };
+}
