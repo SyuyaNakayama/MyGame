@@ -199,9 +199,17 @@ void Sprite::AdjustTextureSize()
 	textureSize.y = static_cast<float>(resDesc.Height);
 }
 
+void WristerEngine::_2D::Sprite::Animation(size_t spriteNum, int animationIntervel)
+{
+	animation = std::make_unique<SpriteAnimationTest>();
+	animation->Initialize(this, spriteNum, animationIntervel);
+}
+
 void Sprite::Update()
 {
 	if (isInvisible) { return; }
+
+	if (animation) { animation->Update(); }
 
 	float left = (0.0f - anchorPoint.x) * size.x;
 	float right = (1.0f - anchorPoint.x) * size.x;
@@ -253,4 +261,20 @@ void Sprite::Draw()
 	cmdList->SetGraphicsRootConstantBufferView(1, constBuff->GetGPUVirtualAddress());
 	// 描画コマンド
 	cmdList->DrawInstanced((UINT)vertices.size(), 1, 0, 0); // 全ての頂点を使って描画
+}
+
+void SpriteAnimationTest::Initialize(Sprite* sprite_, size_t spriteNum, int animationIntervel)
+{
+	sprite = sprite_;
+	width = sprite->textureSize.x / spriteNum;
+	interval = animationIntervel;
+	animeNumMax = spriteNum;
+	sprite->SetRect({ width,sprite->textureSize.y });
+}
+
+void SpriteAnimationTest::Update()
+{
+	if (!interval.Update()) { return; }
+	animeNum = NumberLoop(animeNum + 1, animeNumMax);
+	sprite->textureLeftTop = { (float)animeNum * width ,0 };
 }

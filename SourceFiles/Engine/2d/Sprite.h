@@ -15,6 +15,28 @@ namespace WristerEngine::_2D
 		D3D12_GPU_DESCRIPTOR_HANDLE	gpuHandle{};
 	};
 
+	struct Sprite;
+
+	class SpriteAnimationTest
+	{
+	private:
+		Sprite* sprite = nullptr;
+		float width = 0;
+		FrameTimer interval;
+		size_t animeNum = 0;
+		size_t animeNumMax = 0;
+
+	public:
+		/// <summary>
+		/// 初期化
+		/// </summary>
+		/// <param name="spriteWidth">アニメーション一枚の切り取り枚数</param>
+		/// <param name="animationIntervel">アニメーション速度</param>
+		void Initialize(Sprite* sprite, size_t spriteNum, int animationIntervel);
+		// 更新
+		void Update();
+	};
+
 	// スプライト
 	struct Sprite
 	{
@@ -63,6 +85,7 @@ namespace WristerEngine::_2D
 		ConstBufferData* constMap = nullptr;
 		Vertex* vertMap = nullptr;
 		Matrix4 matWorld;
+		std::unique_ptr<SpriteAnimationTest> animation = nullptr;
 
 		// テクスチャサイズをイメージに合わせる
 		void AdjustTextureSize();
@@ -70,6 +93,7 @@ namespace WristerEngine::_2D
 		void Initialize();
 
 	public:
+		void Animation(size_t spriteNum, int animationIntervel);
 		// 更新
 		void Update();
 		// 描画
