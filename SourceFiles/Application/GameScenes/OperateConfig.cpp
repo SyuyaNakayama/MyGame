@@ -122,6 +122,31 @@ bool OperateConfig::GetTrigger(const std::string& str)
 	return key || pad;
 }
 
+std::unique_ptr<Sprite> OperateConfig::LoadSprite(const std::string& str)
+{
+	std::unique_ptr<Sprite> sprite;
+	if (str == "Select")
+	{
+		if (!input->IsConnectGamePad()) 
+		{
+			sprite = Sprite::Create("UI/Key/key_enter.png"); 
+			sprite->size *= 0.5f;
+		}
+		else { sprite = Sprite::Create("UI/Key/button_A.png"); }
+	}
+	else if (str == "SceneChange")
+	{
+		if (!input->IsConnectGamePad()) { sprite = Sprite::Create("UI/Key/key_SPACE.png"); }
+		else { sprite = Sprite::Create("UI/Key/button_X.png"); }
+	}
+	else if (str == "Pause")
+	{
+		if (!input->IsConnectGamePad()) { sprite = Sprite::Create("UI/Key/key_H.png"); }
+		else { sprite = Sprite::Create("UI/Key/button_Y.png"); }
+	}
+	return sprite;
+}
+
 std::unique_ptr<Sprite> OperateConfig::CreateOperateSprite(const std::string& str)
 {
 	std::unique_ptr<Sprite> sprite;
@@ -168,27 +193,10 @@ std::unique_ptr<Sprite> OperateConfig::CreateOperateSprite(const std::string& st
 	return sprite;
 }
 
-std::unique_ptr<SpriteAnimation> OperateConfig::CreateOperateSpriteAnimation(const std::string& str)
+std::unique_ptr<Sprite> OperateConfig::CreateOperateSpriteAnimation(const std::string& str)
 {
-	std::unique_ptr<SpriteAnimation> spriteAnimation = std::make_unique<SpriteAnimation>();
+	std::unique_ptr<Sprite> sprite = LoadSprite(str);
 	int aInterval = Const(int, "SpriteAnimationInterval");
-	if (str == "Select")
-	{
-		if (!input->IsConnectGamePad())
-		{
-			spriteAnimation->Initialize("UI/Key/key_Enter.png", 96, aInterval);
-			spriteAnimation->GetSprite()->size *= 0.5f;
-		}
-		else { spriteAnimation->Initialize("ui/Key/button_A.png", 64, aInterval); }
-	}
-	else if (str == "SceneChange")
-	{
-		if (!input->IsConnectGamePad()) 
-		{
-			spriteAnimation->Initialize("ui/Key/key_SPACE.png", 128, aInterval); 
-		}
-		else { spriteAnimation->Initialize("ui/Key/button_X.png", 64, aInterval); }
-	}
-
-	return spriteAnimation;
+	sprite->SetAnimation(2, aInterval);
+	return sprite;
 }

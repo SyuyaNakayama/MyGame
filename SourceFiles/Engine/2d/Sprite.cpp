@@ -44,7 +44,11 @@ void Sprite::SetDescriptorHeaps()
 
 void WristerEngine::_2D::Sprite::SetRect(const Vector2& textureSize_, const Vector2& textureLeftTop_)
 {
+	// 拡大比率を保ったまま切り取り領域を変更する
+	Vector2 sizeRate = { size.x / textureSize.x ,size.y / textureSize.y };
 	size = textureSize = textureSize_;
+	size.x *= sizeRate.x;
+	size.y *= sizeRate.y;
 	textureLeftTop = textureLeftTop_;
 }
 
@@ -199,9 +203,9 @@ void Sprite::AdjustTextureSize()
 	textureSize.y = static_cast<float>(resDesc.Height);
 }
 
-void WristerEngine::_2D::Sprite::Animation(size_t spriteNum, int animationIntervel)
+void Sprite::SetAnimation(size_t spriteNum, int animationIntervel)
 {
-	animation = new SpriteAnimationTest;
+	animation = std::make_unique<Animation>();
 	animation->Initialize(this, spriteNum, animationIntervel);
 }
 
@@ -263,7 +267,7 @@ void Sprite::Draw()
 	cmdList->DrawInstanced((UINT)vertices.size(), 1, 0, 0); // 全ての頂点を使って描画
 }
 
-void SpriteAnimationTest::Initialize(Sprite* sprite_, size_t spriteNum, int animationIntervel)
+void Sprite::Animation::Initialize(Sprite* sprite_, size_t spriteNum, int animationIntervel)
 {
 	sprite = sprite_;
 	width = sprite->textureSize.x / spriteNum;
@@ -272,7 +276,7 @@ void SpriteAnimationTest::Initialize(Sprite* sprite_, size_t spriteNum, int anim
 	sprite->SetRect({ width,sprite->textureSize.y });
 }
 
-void SpriteAnimationTest::Update()
+void Sprite::Animation::Update()
 {
 	if (!interval.Update()) { return; }
 	animeNum = NumberLoop(animeNum + 1, animeNumMax);

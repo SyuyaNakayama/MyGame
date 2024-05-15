@@ -1,6 +1,6 @@
 #pragma once
 #include "BaseScene.h"
-#include "SpriteAnimation.h"
+#include "Sprite.h"
 #include "Stage.h"
 #include "CameraShake.h"
 
@@ -20,11 +20,7 @@ class TitleScene : public WristerEngine::BaseScene
 
 class UIDrawerTitleScene : public WristerEngine::_2D::AbstractUIDrawer
 {
-	//std::map<std::string, std::unique_ptr<WristerEngine::_2D::Sprite>> title;
-	std::unique_ptr<WristerEngine::_2D::SpriteAnimation> operateKey;
-
 	// AbstractUIDrawer ÇâÓÇµÇƒåpè≥Ç≥ÇÍÇ‹ÇµÇΩ
 	void Initialize() override;
-	void Update() override;
 	void Draw() override;
 };

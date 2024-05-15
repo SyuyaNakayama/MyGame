@@ -1,7 +1,7 @@
 #pragma once
 #include "ScoreGauge.h"
 #include "Easing.h"
-#include "SpriteAnimation.h"
+#include "Sprite.h"
 #include "OperateConfig.h"
 
 enum class AnimationPhase { Null, Judge, Disappear, Appear, Result, End };
@@ -68,7 +68,7 @@ class ResultAnimation : public BaseAnimation
 {
 	Vector2 rankSpriteSizeMem;
 	WristerEngine::Easing rankSpriteScale;
-	std::unique_ptr<WristerEngine::_2D::SpriteAnimation> operateKey;
+	std::unique_ptr<WristerEngine::_2D::Sprite> operateKey;
 	std::unique_ptr<WristerEngine::_2D::Sprite> blind; // 画面を暗くする
 
 	void (ResultAnimation::* Phase)() = nullptr;
@@ -84,7 +84,7 @@ class ResultAnimation : public BaseAnimation
 // アニメーション終了
 class AnimationEnd : public BaseAnimation
 {
-	std::unique_ptr<WristerEngine::_2D::SpriteAnimation> operateKey;
+	std::unique_ptr<WristerEngine::_2D::Sprite> operateKey;
 	// BaseAnimation を介して継承されました
 	void Initialize(RankAnimation* pRankAnimation) override;
 	void Update() override;

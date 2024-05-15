@@ -42,7 +42,7 @@ void TutorialEvent::Initialize()
 
 	// Selectキー(アニメーション)
 	select = operateConfig->CreateOperateSpriteAnimation("Select");
-	select->GetSprite()->position = Const(Vector2, "UiEnterAnimePos");
+	select->position = Const(Vector2, "UiEnterAnimePos");
 
 	tutorialEventPhase = Const(std::vector<UINT32>, "TutorialEventPhase");
 }
@@ -55,7 +55,7 @@ void TutorialEvent::EnterEventManager()
 
 void TutorialEvent::PrintFlip()
 {
-	select->GetSprite()->isInvisible = !select->GetSprite()->isInvisible;
+	select->isInvisible = !select->isInvisible;
 	for (auto& s : sprites) { s.second->isInvisible = !s.second->isInvisible; }
 }
 

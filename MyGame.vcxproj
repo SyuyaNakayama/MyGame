@@ -210,7 +210,6 @@
     <ClCompile Include="SourceFiles\Engine\2d\ImGuiManager.cpp" />
     <ClCompile Include="SourceFiles\Engine\2d\PostEffect.cpp" />
     <ClCompile Include="SourceFiles\Engine\2d\Sprite.cpp" />
-    <ClCompile Include="SourceFiles\Engine\2d\SpriteAnimation.cpp" />
     <ClCompile Include="SourceFiles\Engine\3d\Camera\DebugCamera.cpp" />
     <ClCompile Include="SourceFiles\Engine\3d\Object\Mesh.cpp" />
     <ClCompile Include="SourceFiles\Engine\3d\Object\ModelManager.cpp" />
@@ -287,7 +286,6 @@
     <ClInclude Include="SourceFiles\Engine\2d\ImGuiManager.h" />
     <ClInclude Include="SourceFiles\Engine\2d\PostEffect.h" />
     <ClInclude Include="SourceFiles\Engine\2d\Sprite.h" />
-    <ClInclude Include="SourceFiles\Engine\2d\SpriteAnimation.h" />
     <ClInclude Include="SourceFiles\Engine\3d\Camera\DebugCamera.h" />
     <ClInclude Include="SourceFiles\Engine\3d\Object\Mesh.h" />
     <ClInclude Include="SourceFiles\Engine\3d\Object\ModelManager.h" />

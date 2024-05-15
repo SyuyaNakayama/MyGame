@@ -1,5 +1,5 @@
 #pragma once
-#include "SpriteAnimation.h"
+#include "Sprite.h"
 #include <map>
 #include "Constant.h"
 
@@ -12,7 +12,7 @@ private:
 	std::map<std::string, std::unique_ptr<WristerEngine::_2D::Sprite>> sprites;
 	// チュートリアルの説明番号
 	UINT32 phase = 0;
-	std::unique_ptr<WristerEngine::_2D::SpriteAnimation> select;
+	std::unique_ptr<WristerEngine::_2D::Sprite> select;
 	WristerEngine::Constant* constant = WristerEngine::Constant::GetInstance();
 	std::vector<UINT32> tutorialEventPhase;
 	bool isEnd = false; // イベントが終わったか

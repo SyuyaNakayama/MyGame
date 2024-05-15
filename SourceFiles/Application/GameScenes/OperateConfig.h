@@ -1,7 +1,7 @@
 #pragma once
 #include "Input.h"
-#include "SpriteAnimation.h"
 #include "Constant.h"
+#include <Sprite.h>
 
 // ゲームの操作を管理するクラス
 class OperateConfig final
@@ -12,6 +12,8 @@ private:
 
 	OperateConfig() = default;
 	~OperateConfig() = default;
+
+	std::unique_ptr<WristerEngine::_2D::Sprite> LoadSprite(const std::string& str);
 
 public:
 	OperateConfig(const OperateConfig& obj) = delete;
@@ -44,10 +46,5 @@ public:
 	/// <returns>操作キーのSpriteインスタンス(unique_ptr)</returns>
 	std::unique_ptr<WristerEngine::_2D::Sprite> CreateOperateSprite(const std::string& str);
 	
-	/// <summary>
-	/// 操作キーのUIを生成
-	/// </summary>
-	/// <param name="str">操作キー</param>
-	/// <returns>操作キーのSpriteAnimationインスタンス(unique_ptr)</returns>
-	std::unique_ptr<WristerEngine::_2D::SpriteAnimation> CreateOperateSpriteAnimation(const std::string& str);
+	std::unique_ptr<WristerEngine::_2D::Sprite> CreateOperateSpriteAnimation(const std::string& str);
 };

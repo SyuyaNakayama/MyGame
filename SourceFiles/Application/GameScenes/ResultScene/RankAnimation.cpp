@@ -139,9 +139,9 @@ void ResultAnimation::Initialize(RankAnimation* pRankAnimation_)
 	rankSpriteScale.Initialize(RANK_ANIMATION_TIME * 6, WristerEngine::Easing::Type::OutBounce);
 
 	operateKey = operateConfig->CreateOperateSpriteAnimation("Select");
-	operateKey->GetSprite()->SetCenterAnchor();
-	operateKey->GetSprite()->position = { Half(WristerEngine::WIN_SIZE.x),640 };
-	if (!WristerEngine::Input::GetInstance()->IsConnectGamePad()) { operateKey->GetSprite()->size *= 2.0f; }
+	operateKey->SetCenterAnchor();
+	operateKey->position = { Half(WristerEngine::WIN_SIZE.x),640 };
+	if (!WristerEngine::Input::GetInstance()->IsConnectGamePad()) { operateKey->size *= 2.0f; }
 
 	// ランク発表時に背景を暗くするためのスプライト
 	blind = Sprite::Create("white1x1.png");
@@ -165,7 +165,7 @@ void ResultAnimation::PrePushSelect()
 
 	if (operateConfig->GetTrigger("Select"))
 	{
-		operateKey->GetSprite()->isInvisible = true;
+		operateKey->isInvisible = true;
 		rankSpriteScale.Restart();
 		Phase = &ResultAnimation::PostPushSelect;
 	}
@@ -189,12 +189,11 @@ void AnimationEnd::Initialize(RankAnimation* pRankAnimation_)
 	BaseAnimation::Initialize(pRankAnimation_);
 
 	operateKey = operateConfig->CreateOperateSpriteAnimation("SceneChange");
-	Sprite* spaceKeySprite = operateKey->GetSprite();
-	spaceKeySprite->position = Half(WristerEngine::WIN_SIZE);
-	spaceKeySprite->position.y += 80;
-	spaceKeySprite->size *= 1.5f;
-	spaceKeySprite->anchorPoint.x = 0.5f;
-	spaceKeySprite->color = { 0.7f,0.7f,0.7f,1 };
+	operateKey->position = Half(WristerEngine::WIN_SIZE);
+	operateKey->position.y += 80;
+	operateKey->size *= 1.5f;
+	operateKey->anchorPoint.x = 0.5f;
+	operateKey->color = { 0.7f,0.7f,0.7f,1 };
 
 	rankUI->Update();
 }
