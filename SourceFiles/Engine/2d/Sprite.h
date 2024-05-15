@@ -85,7 +85,8 @@ namespace WristerEngine::_2D
 		ConstBufferData* constMap = nullptr;
 		Vertex* vertMap = nullptr;
 		Matrix4 matWorld;
-		std::unique_ptr<SpriteAnimationTest> animation = nullptr;
+		//std::unique_ptr<SpriteAnimationTest> animation = nullptr;
+		SpriteAnimationTest* animation = nullptr;
 
 		// テクスチャサイズをイメージに合わせる
 		void AdjustTextureSize();

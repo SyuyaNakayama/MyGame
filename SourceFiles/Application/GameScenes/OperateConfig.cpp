@@ -183,7 +183,10 @@ std::unique_ptr<SpriteAnimation> OperateConfig::CreateOperateSpriteAnimation(con
 	}
 	else if (str == "SceneChange")
 	{
-		if (!input->IsConnectGamePad()) { spriteAnimation->Initialize("ui/Key/key_SPACE.png", 128, aInterval); }
+		if (!input->IsConnectGamePad()) 
+		{
+			spriteAnimation->Initialize("ui/Key/key_SPACE.png", 128, aInterval); 
+		}
 		else { spriteAnimation->Initialize("ui/Key/button_X.png", 64, aInterval); }
 	}
 

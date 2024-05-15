@@ -35,31 +35,28 @@ void TitleScene::Update()
 
 void UIDrawerTitleScene::Initialize()
 {
-	sprites["TitleJP"] = Sprite::Create("ui/title_JP.png", Const(Vector2, "UiTitleJPPos"));
-	sprites["TitleEN"] = Sprite::Create("ui/title_EN.png", Const(Vector2, "UiTitleENPos"));
+	//sprites["TitleJP"] = Sprite::Create("ui/title_JP.png", Const(Vector2, "UiTitleJPPos"));
+	//sprites["TitleEN"] = Sprite::Create("ui/title_EN.png", Const(Vector2, "UiTitleENPos"));
 
 	for (auto& ui : sprites)
 	{
 		ui.second->anchorPoint = { 0.5f,1.0f };
 		ui.second->size *= 1.5f;
 	}
-	operateKey = OperateConfig::GetInstance()->CreateOperateSpriteAnimation("SceneChange");
-	Sprite* spaceKeySprite = operateKey->GetSprite();
-	spaceKeySprite->position = Const(Vector2, "UiSpacePosTitle");
-	spaceKeySprite->size *= 1.5f;
-	spaceKeySprite->anchorPoint.x = 0.5f;
-	spaceKeySprite->color = { 0.7f,0.7f,0.7f,1 };
-
-	AbstractUIDrawer::Update();
+	sprites["operate"] = OperateConfig::GetInstance()->CreateOperateSprite("SceneChange");
+	sprites["operate"]->Animation(2, 30);
+	sprites["operate"]->position = Const(Vector2, "UiSpacePosTitle");
+	sprites["operate"]->size *= 1.5f;
+	sprites["operate"]->anchorPoint.x = 0.5f;
+	sprites["operate"]->color = { 0.7f,0.7f,0.7f,1 };
 }
 
 void UIDrawerTitleScene::Update()
 {
-	operateKey->Update();
+	sprites["operate"]->Update();
 }
 
 void UIDrawerTitleScene::Draw()
 {
 	AbstractUIDrawer::Draw();
-	operateKey->Draw();
 }

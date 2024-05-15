@@ -201,7 +201,7 @@ void Sprite::AdjustTextureSize()
 
 void WristerEngine::_2D::Sprite::Animation(size_t spriteNum, int animationIntervel)
 {
-	animation = std::make_unique<SpriteAnimationTest>();
+	animation = new SpriteAnimationTest;
 	animation->Initialize(this, spriteNum, animationIntervel);
 }
 
