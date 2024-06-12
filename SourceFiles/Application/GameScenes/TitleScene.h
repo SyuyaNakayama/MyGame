@@ -1,8 +1,6 @@
 #pragma once
 #include "BaseScene.h"
-#include "Sprite.h"
 #include "Stage.h"
-#include "CameraShake.h"
 
 // タイトルシーンの処理
 class TitleScene : public WristerEngine::BaseScene

@@ -13,7 +13,6 @@ void PauseMenu::Initialize()
 {
 	sprites["01_bg"] = Sprite::Create("UI/uiFrame.png", Half(WristerEngine::WIN_SIZE), { 0.5f,0.5f });
 	sprites["01_bg"]->size = Const(Vector2, "BasePauseMenuFrameSize");
-
 	sprites["RightCursor"] = Sprite::Create("UI/SelectCursor.png", Const(Vector2, "RightCursor"));
 	sprites["RightCursor"]->size = { 64,64 };
 	sprites["LeftCursor"] = Sprite::Create("UI/SelectCursor.png", Const(Vector2, "LeftCursor"));
